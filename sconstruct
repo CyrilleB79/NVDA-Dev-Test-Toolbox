@@ -79,7 +79,7 @@ if env["dev"]:
 	import datetime
 	buildDate = datetime.datetime.now()
 	year, month, day = str(buildDate.year), str(buildDate.month), str(buildDate.day)
-	env["addon_version"] = "".join([year, month.zfill(2), day.zfill(2), "-dev"])
+	env["addon_version"] = "".join([env["addon_version"], "-dev-", year, month.zfill(2), day.zfill(2)])
 	env["channel"] = "dev"
 elif env["version"] is not None:
 	env["addon_version"] = env["version"]
