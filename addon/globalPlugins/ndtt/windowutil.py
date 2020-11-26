@@ -60,7 +60,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		('pythonClassMRO', lambda o: str(type(o).mro()).replace('>, <', ',\r\n').replace('[<', '\r\n', 1).replace('>]',''))]
 	
 	def __init__(self):
-		globalPluginHandler.GlobalPlugin.__init__(self)
+		super(GlobalPlugin, self).__init__()
 		self.index = 0
 		
 	def script_announceObjectInfo(self, gesture):

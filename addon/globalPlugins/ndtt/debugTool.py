@@ -43,7 +43,7 @@ def functionWithStackTraceLog(*args, **kwargs):
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	
 	def __init__(self):
-		globalPluginHandler.GlobalPlugin.__init__(self)
+		super(GlobalPlugin, self).__init__()
 		self.logEnabled = False
 		
 	@script(
@@ -73,4 +73,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	    	'=== End stack trace log ===')
 	    log.debug(msgStackTrace)
 	
+	def terminate(self):
+		# zzz Write termination code here
+		super(GlobalPlugin, self).terminate()
+		from logHandler import log
+		log.error('TO DO: terminate stack trace log where there is zzz.')
 	

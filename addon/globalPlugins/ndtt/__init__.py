@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
 # Copyright (C) 2020 Cyrille Bougot
-#This file is covered by the GNU General Public License.
+# This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
 
@@ -13,7 +13,7 @@ from .windowutil import GlobalPlugin as WindowutilGP
 
 class GlobalPlugin(
 	BeepErrorGP,
-	debugHelpModeGP,
+	DebugHelpModeGP,
 	DebugToolGP,
 	WindowutilGP
 ):

@@ -49,6 +49,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def terminate(self):
 		self.debugHelpMode = False
 		self.setDebugHelpMode(self.debugHelpMode)
+		super(GlobalPlugin, self).terminate()
 		
 	def setDebugHelpMode(self, enable):
 		if enable:

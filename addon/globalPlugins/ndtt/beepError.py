@@ -57,5 +57,4 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			
 	def terminate(self):
 		self.beepOnErrorConfigure(False, silent=True)
-
-     
+		super(GlobalPlugin, self).terminate()
