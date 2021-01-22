@@ -53,16 +53,21 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def script_toggleStackTraceLog(self, gesture):
 		global _originalFunction
 		self.logEnabled = not self.logEnabled
+		self.enableStackTraceLog(self.logEnabled)
 		if self.logEnabled:
-			newFun = functionWithStackTraceLog
 			msg = 'Stacktrace log enabled'
 		else:
-			newFun = _originalFunction
 			msg = 'Stacktrace log disabled'
+		ui.message(msg)
+		
+	def enableStackTraceLog(self, enable=True):
+		if enable:
+			newFun = functionWithStackTraceLog
+		else:
+			newFun = _originalFunction
 		#ToBeCustomized: the function from which you want the stack trace
 		speech.speak = newFun
 		#braille.BrailleHandler.update = newFun
-		ui.message(msg)
 		
 	@staticmethod
 	def logStackTrace():
@@ -74,8 +79,6 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	    log.debug(msgStackTrace)
 	
 	def terminate(self):
-		# zzz Write termination code here
+		self.enableStackTraceLog(False)
 		super(GlobalPlugin, self).terminate()
-		from logHandler import log
-		log.error('TO DO: terminate stack trace log where there is zzz.')
 	
