@@ -9,13 +9,15 @@ import globalPluginHandler
 from .beepError import GlobalPlugin as BeepErrorGP
 from .debugHelpMode import GlobalPlugin as DebugHelpModeGP
 from .debugTool import GlobalPlugin as DebugToolGP
+from .restartWithOptions import GlobalPlugin as RestartWithOptionsGP
 from .windowutil import GlobalPlugin as WindowutilGP
 
 class GlobalPlugin(
 	BeepErrorGP,
 	DebugHelpModeGP,
 	DebugToolGP,
-	WindowutilGP
+	RestartWithOptionsGP,
+	WindowutilGP,
 ):
 	pass
 	
