@@ -21,15 +21,26 @@ This feature is disabled from NVDA 2021.3 and above since an equivalent feature 
 
 ## Script information in input help mode
 
-This feature allow to get information on any script in input help mode.
+This feature allow to get information on any script in input help mode (NVDA+1).
 If the executed script has no description, the script's name and location/class are announced instead.
+The gesture to activate or deactivate this feature is NVDA+control+alt+H.
 
 Executing a gesture bound to a script without description in input help mode also create an entry for this script in the gesture management dialog.
 This entry is located in a dedicated category called "Scripts without description (modify at your own risk!)".
 This allow to easily add, delete or change the native NVDA gestures for these script.
 Be aware however that it is often intended that such script do not have any description to prevent the user to modify the associated gesture.
 Indeed, the gesture may be defined to match an application shortcut key.
-For example the script script_toggleItalic on NVDAObjects.window.winword.WordDocument is bound to control+I and this should not be modified since the gesture is passed to the application to actually execute the shortcut key.
+For example the script script_toggleItalic on NVDAObjects.window.winword.WordDocument is bound to control+I and this should not be modified since the gesture is passed to the application to actually execute the shortcut key. But control+shift+I also toggle italic in Word, even if it is not natively reported by NVDA. To have the control+shift+I result reported by NVDA as control+I, you should perform the following steps:
+
+* Open a Word document.
+* Enable the debug help mode with NVDA+control+alt+H.
+* Enter help mode with NVDA+1.
+* Press control+I to report the italic script and have it added in the gesture dialog.
+* Exit help mode with NVDA+1.
+* Open the input gestures dialog.
+* In the category 'niveau 0  Scripts without description (modify at your own risk!)', select the command 'toggleItalic on NVDAObjects.window.winword.WordDocument'.
+* Add the control+shift+I shortcut and validate.
+* If you want, exit the debug help mode with NVDA+control+alt+H.
 
 Known bug: A script added for a specific class is visible even if gesture manager is opened in another context.
 
