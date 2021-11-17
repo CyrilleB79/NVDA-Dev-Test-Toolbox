@@ -37,11 +37,22 @@ def restartWithOptions(options):
 		showCmd=winUser.SW_SHOWNORMAL
 	)
 
-class FileSelectionHelper(object):
+
+class SecuredPathSelectionHelper(gui.guiHelper.PathSelectionHelper):
+	"""A PathSelectionHelper usable on secure screen. The browse button is then disabled.
+	"""
+	
+	def __init__(self, parent, buttonText, browseForDirectoryTitle):
+		super().__init__(parent, buttonText, browseForDirectoryTitle)
+		if globalVars.appArgs.secure:
+			self._browseButton.Disable()
+
+class SecuredFileSelectionHelper(object):
 	"""
 	Abstracts away details for creating a file selection helper. The file selection helper is a textCtrl with a
 	button in horizontal layout. The Button launches a file explorer. To get the path selected by the user, use the
 	`pathControl` property which exposes a wx.TextCtrl.
+	For security concerns, the button is disabled in secure environment.
 	"""
 	def __init__(self, parent, buttonText, wildcard, browseForFileTitle):
 		""" @param parent: An instance of the parent wx window. EG wx.Dialog
@@ -55,6 +66,8 @@ class FileSelectionHelper(object):
 		object.__init__(self)
 		self._textCtrl = wx.TextCtrl(parent)
 		self._browseButton = wx.Button(parent, label=buttonText)
+		if globalVars.appArgs.secure:
+			self._browseButton.Disable()
 		self._wildcard = wildcard
 		self._browseForFileTitle = browseForFileTitle
 		self._browseButton.Bind(wx.EVT_BUTTON, self.onBrowseForFile)
@@ -155,7 +168,7 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 				if isinstance(defaultValue, FolderStr):
 					# Translators: The title of the dialog presented when browsing for the directory.
 					dirDialogTitle = _("Select a directory")
-					directoryPathHelper = gui.guiHelper.PathSelectionHelper(groupBox, browseText, dirDialogTitle)
+					directoryPathHelper = SecuredPathSelectionHelper(groupBox, browseText, dirDialogTitle)
 					directoryEntryControl = groupHelper.addItem(directoryPathHelper)
 					directoryEdit = directoryEntryControl.pathControl
 					directoryEdit.Value = defaultValue
@@ -165,7 +178,7 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 					wildcard = (_("NVDA log file (*.{ext})")+"|*.{ext}").format(ext="log")
 					# Translators: The title of the dialog presented when browsing for the file.
 					fileDialogTitle = _("Select a file")
-					filePathHelper = FileSelectionHelper(groupBox, browseText, wildcard, fileDialogTitle)
+					filePathHelper = SecuredFileSelectionHelper(groupBox, browseText, wildcard, fileDialogTitle)
 					shouldAddSpacer = groupHelper.hasFirstItemBeenAdded
 					if shouldAddSpacer:
 						groupHelper.sizer.AddSpacer(SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
