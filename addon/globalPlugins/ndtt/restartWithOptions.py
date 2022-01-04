@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # Restart with options scripts for NVDA
-# Copyright (C) 2021 Cyrille Bougot
+# Copyright (C) 2021-2022 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 import gui
@@ -9,9 +9,11 @@ import core
 import globalVars
 import globalPluginHandler
 from scriptHandler import script
+import languageHandler
 
 import wx
 import sys
+import os
 
 from types import MethodType
 
@@ -26,7 +28,7 @@ def restartWithOptions(options):
 	import winUser
 	import shellapi
 	if not hasattr(sys, "frozen"):
-		options.append(os.path.basename(sys.argv[0]))
+		options.insert(0, os.path.basename(sys.argv[0]))
 	shellapi.ShellExecute(
 		hwnd=None,
 		operation=None,
@@ -96,6 +98,8 @@ class FolderStr(str):
 	pass
 class FileStr(str):
 	pass
+class LangStr(str):
+	pass
 class LogLevelStr(str):
 	pass
 
@@ -103,6 +107,19 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 	# Translators: This is the title for the Restart with options dialog
 	title = _("Specify some options and restart")
 	helpId = "CommandLineOptions"
+	
+	# Check the possibility of forcing the language from the command line (NVDA 2022.1+)
+	# to decide if the language option should be added.
+	try:
+		languageHandler.isLanguageForced
+	except AttributeError:
+		langOptList = []
+	else:
+		langOptList = [[
+			"Override the configured NVDA language",
+			["--lang={LANGUAGE}"],
+			LangStr(""),
+		]]
 	
 	OPTION_LIST = [
 		[
@@ -117,7 +134,7 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 			"The path where all settings for NVDA are stored",
 			["-&c {CONFIGPATH}", "--config-path={CONFIGPATH}"],
 			FolderStr(""),
-		], [
+		], *langOptList, [
 			"No sounds, no interface, no start message, etc.",
 			["-&m", "--minimal"],
 			False,
@@ -152,17 +169,22 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 				sHelper.addItem(checkBox)
 				self.options.append(checkBox)
 			elif isinstance(defaultValue, LogLevelStr):
-				logLevelLabelText=_("L&ogging level:")
 				logLevelChoices = ['{level} ({name})'.format(name=name, level=level) for level, name in gui.settingsDialogs.GeneralSettingsPanel.LOG_LEVELS]
 				logLevelChoices.insert(0, '')
 				logLevelList = sHelper.addLabeledControl("{label}:\n{flags}".format(label=label, flags=flagList), wx.Choice, choices=logLevelChoices)
 				logLevelList.SetSelection(0)
 				self.options.append(logLevelList)
+			elif isinstance(defaultValue, LangStr):
+				self.languages = languageHandler.getAvailableLanguages(presentational=True)
+				langChoices = ['{code} - {lng}'.format(code=c, lng=l) for (c, l) in self.languages]
+				langChoices.insert(0, '')
+				langList = sHelper.addLabeledControl("{label}:\n{flags}".format(label=label, flags=flagList), wx.Choice, choices=langChoices)
+				langList.SetSelection(0)
+				self.options.append(langList)
 			elif isinstance(defaultValue, str):
 				groupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label="{label}:   {flags}".format(label=label, flags=flagList))
 				groupBox = groupSizer.GetStaticBox()
 				groupHelper = sHelper.addItem(gui.guiHelper.BoxSizerHelper(self, sizer=groupSizer))
-				from logHandler import log
 				# Translators: The label of a button to browse for a directory or a file.
 				browseText = _("Browse...")
 				if isinstance(defaultValue, FolderStr):
@@ -193,9 +215,6 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 					raise			
 			else:
 				raise Exception('Unknown option type')
-			#self.displayList = sHelper.addLabeledControl(displayLabelText, wx.Choice, choices=[])
-			#self.bindHelpEvent("SelectBrailleDisplayDisplay", self.displayList)
-			#self.Bind(wx.EVT_CHOICE, self.onDisplayNameChanged, self.displayList)
 
 	def postInit(self):
 		# Finally, ensure that focus is on the first option.
