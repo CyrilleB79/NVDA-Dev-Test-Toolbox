@@ -10,6 +10,7 @@ This add-on gathers various features for NVDA debugging and testing.
 
 * Manage beep on error / play error sound in stable versions
 * Get script info in input help mode.
+* Provide a window to specify option when restarting NVDA.
 * Log stack trace for a function.
 * Get object's information
 
@@ -45,6 +46,11 @@ For example the script script_toggleItalic on NVDAObjects.window.winword.WordDoc
 * If you want, exit the debug help mode with NVDA+control+alt+H.
 
 Known bug: A script added for a specific class is visible even if gesture manager is opened in another context.
+
+## Specify some options when restarting NVDA
+
+The NVDA+shift+Q command allows to display a window to specify some options before restarting NVDA.
+The options that can be specified correspond to the [command line options](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#CommandLineOptions) that can be used with `nvda.exe`, e.g. `-c` for config path, `--disable-addons` to disable add-ons, etc.
 
 ## Log stack trace for a function
 
