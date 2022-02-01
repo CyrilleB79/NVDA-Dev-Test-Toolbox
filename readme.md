@@ -8,19 +8,23 @@ This add-on gathers various features for NVDA debugging and testing.
 
 ## Features
 
-* Manage beep on error / play error sound in stable versions
+* Manage play error sound in stable versions
 * Get script info in input help mode.
 * Provide a window to specify option when restarting NVDA.
 * Log stack trace for a function.
 * Get object's information
 
-## Beep on error
+## Play a sound for logged errors
 
-This feature allows NVDA to beep on error even in NVDA non-test versions.
-To activate or de-activate beep error feature, press NVDA+control+alt+B.
-With NVDA 2021.2 and below, the beep on error is enabled by default and is not saved to NVDA's configuration.
-With NVDA 2021.3 and above, NVDA+control+alt+B toggles the 'Play a sound for logged errors' parameter in advanced settings. It can be saved in NVDA's configuration.
+This feature provides a toggle command (NVDA+control+alt+E) to specify if NVDA will play an error sound in case an error is logged.
+You can choose:
+* "Only in test versions" (default) to make NVDA play error sounds only if the current NVDA version is a test version (alpha, beta or run from source).
+* "Yes" to enable error sounds whatever your current NVDA version is. 
 
+
+Please note the following points regarding the version of NVDA you are using:
+* For NVDA 2021.3 onwards, this feature has been integrated in NVDA's core and it can be configured in the Advanced settings panel. But this extension add the possibility to control it with the keyboard command.
+* For NVDA prior to 2021.3, this extension provides the backport of this feature and the possibility to control it with the keyboard command. The checkbox in the Advanced settings panel is not backported however.
 
 ## Script information in input help mode
 
