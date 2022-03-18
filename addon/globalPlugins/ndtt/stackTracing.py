@@ -1,23 +1,14 @@
 # -*- coding: UTF-8 -*-
-#Stack trace log script for NVDA
-#Copyright (C) 2019 Cyrille Bougot
-#This file is covered by the GNU General Public License.
+# NVDA Dev & Test Toolbox add-on for NVDA
+# Copyright (C) 2019 Cyrille Bougot
+# This file is covered by the GNU General Public License.
 
-#This script allows to enable the stack trace logging of the speech function when pressing NVDA+control+alt+S. You may modify this file to pathc another function.
-#To use it, put it in the globalPlugins folder.
-
-#INSTRUCTIONS:
-#- Put this file in the globalPlugins subfolder of NVDA user config folder.
-#- Reload NVDA's pllugins (NVDA+Control+F3)
-#- Press NVDA+control+alt+S to enable stack trace log
-#A stack trace wille be logged each time the speak function will be called.
-#- Press again NVDA+control+alt+S to disable stack trace log when you do not need it anymore.
-
-#To change the trigger function search this file for "ToBeCustomized" strings.
-#E.g. to trigger stack trace log on braille.BrailleHandler.update
-#- import braille instead of speech
-#- replace speech.speak function by braille.BrailleHandler.update function
-#Good candidate functions may be the ones found in NVDA's journal on lines beginning with 'IO - ', e.g. braille.update, braille.BrailleBuffer.update, tones.beep, etc.
+# INSTRUCTIONS to modify the function whose stack trrace is logged:
+# To change the trigger function search this file for "ToBeCustomized" strings.
+# E.g. to trigger stack trace log on braille.BrailleHandler.update
+# - import braille instead of speech
+# - replace speech.speak function by braille.BrailleHandler.update function
+# Good candidate functions may be the ones found in NVDA's journal on lines beginning with 'IO - ', e.g. braille.update, braille.BrailleBuffer.update, tones.beep, etc.
 
 
 import globalPluginHandler
@@ -55,7 +46,8 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		self.logEnabled = False
 		
 	@script(
-		description = "Toggle stack trace log on the defined function.",
+		# Translators: Input help mode message for a toggle command.
+		description = _("Toggle the stack trace log when the speech function is called."),
 		gesture = "kb:nvda+control+alt+S",
 		category = ADDON_SUMMARY,
 	)

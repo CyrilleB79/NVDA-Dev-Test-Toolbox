@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-# Config for NDTT
+# NVDA Dev & Test Toolbox add-on for NVDA
 # Copyright (C) 2021 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 

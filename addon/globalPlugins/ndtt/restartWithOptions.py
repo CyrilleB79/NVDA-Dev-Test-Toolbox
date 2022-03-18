@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-# Restart with options scripts for NVDA
+# NVDA Dev & Test Toolbox add-on for NVDA
 # Copyright (C) 2021-2022 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
@@ -89,6 +89,7 @@ class SecuredFileSelectionHelper(object):
 
 	def onBrowseForFile(self, evt):
 		startPath = self.getDefaultBrowseForFilePath()
+		# Translators: The title of a file selector window
 		filename = wx.FileSelector(_("Save As"), default_path=startPath, default_filename="nvda.log", wildcard=self._wildcard, flags=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT, parent=self._parent)
 		if filename:
 			self._textCtrl.Value = filename
@@ -123,32 +124,39 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 	
 	OPTION_LIST = [
 		[
+			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
 			"The file where log messages should be written to",
 			["-&f {LOGFILENAME}", "--log-file={LOGFILENAME}"],
 			FileStr(""),
 		], [
+			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
 			"The lowest level of message logged", #(debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default is warning
 			["-&l {LOGLEVEL}", "--log-level={LOGLEVEL}"],
 			LogLevelStr(""),
 		], [
+			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
 			"The path where all settings for NVDA are stored",
 			["-&c {CONFIGPATH}", "--config-path={CONFIGPATH}"],
 			FolderStr(""),
 		], *langOptList, [
+			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
 			"No sounds, no interface, no start message, etc.",
 			["-&m", "--minimal"],
 			False,
 		], [
+			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
 			"Secure mode",
 			["-&s", "--secure"],
 			False
 		], [
+			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
 			"Add-ons will have no effect",
 			["--disable-addons"],
 			False,
 		# --debug-logging (Enable debug level logging just for this run. This setting will override any other log level ( --loglevel, -l) argument given, including no logging option.)
 		# --no-logging (Disable logging altogether while using NVDA. This setting can be overridden if a log level ( --loglevel, -l) is specified from command line or if debug logging is turned on.)
 		], [
+			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
 			"Don't change the global system screen reader flag",
 			["--no-sr-flag"],
 			False,

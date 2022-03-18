@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-# NVDA Debug & Test Tools add-on for NVDA
+# NVDA Dev & Test Toolbox add-on for NVDA
 # Copyright (C) 2021-2022 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
@@ -46,11 +46,13 @@ class SourceFileOpener(threading.Thread):
 
 def openSourceFile(path, line):
 	if not os.path.isfile(path):
+		# Translators: A message reported when trying to open a source file.
 		ui.message(_('File not found: {file}'.format(file=path)))
 		return
 	try:
 		SourceFileOpener(path, line).start()
 	except ConfigError as e:
+		# Translators: A message reported when trying to open a source file.
 		ui.message(_('Configuration error: {err}. Please see the documentation to configure this feature.').format(err=e.args[0]))
 		raise e
 
@@ -62,6 +64,7 @@ def getNvdaCodePath():
 		if nvdaSourcePath:
 			return nvdaSourcePath
 		else:
+			# Translators: A message reported when trying to open a source file.
 			ui.message(_('No path configured for NVDA sources; please see documentation to configure it.'))
 			return None
 	else:

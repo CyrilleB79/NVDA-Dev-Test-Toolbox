@@ -1,10 +1,7 @@
 # -*- coding: UTF-8 -*-
-# debug help mode script for NVDA
+# NVDA Dev & Test Toolbox add-on for NVDA
 # Copyright (C) 2020-2021 Cyrille Bougot
 # This file is covered by the GNU General Public License.
-
-# This global plugin allows to also announce unbound script in help mode.
-# To use it, put it in the globalPlugins folder.
 
 from types import MethodType
 
@@ -53,28 +50,31 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	
 	def __init__(self):
 		super(GlobalPlugin, self).__init__()
-		self.configureDebugHelpMode(False, silent=True)
+		self.configureESDMode(False, silent=True)
 		
 	def terminate(self):
-		self.configureDebugHelpMode(False, silent=True)
+		self.configureESDMode(False, silent=True)
 		super(GlobalPlugin, self).terminate()
 		
 	@script(
-		description = "Toggle debug help mode.",
-		gesture = "kb:nvda+control+alt+H",
+		# Translators: Input help mode message for a toggle command.
+		description = _("Toggle extended script description mode."),
+		gesture = "kb:nvda+control+alt+D",
 		category = ADDON_SUMMARY,
 	)
-	def script_tobbleDebugHelpMode(self, gesture):
-		self.configureDebugHelpMode(not self.debugHelpMode)
+	def script_tobbleESDMode(self, gesture):
+		self.configureESDMode(not self.esdMode)
 	
-	def configureDebugHelpMode(self, enable, silent=False):
-		self.debugHelpMode = enable
+	def configureESDMode(self, enable, silent=False):
+		self.esdMode = enable
 		if enable:
 			inputCore.manager._handleInputHelp = MethodType(newHandleInputHelp, _originalMethod.__self__)
-			msg = 'Debug help mode enabled'
+			# Translators: A message reported when toggling Extended script description mode.
+			msg = _('Extended script description mode enabled')
 		else:
 			inputCore.manager._handleInputHelp = _originalMethod
-			msg = 'Debug help mode disabled'
+			# Translators: A message reported when toggling Extended script description mode.
+			msg = _('Extended script description mode disabled')
 			for script in self.__class__.scriptsWithAddedDoc:
 				del script.__func__.__doc__
 				del script.__func__.category

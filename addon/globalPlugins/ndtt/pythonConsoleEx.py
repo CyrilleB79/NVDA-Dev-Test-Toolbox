@@ -1,5 +1,5 @@
-# pythonConsoleEx.py
-# A part of NVDA Debug & Test Toolbox add-on for NVDA
+# -*- coding: UTF-8 -*-
+# NVDA Dev & Test Toolbox add-on for NVDA
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2022 Cyrille Bougot
@@ -19,6 +19,9 @@ import inspect
 
 
 def openCodeFile(obj):
+	"""Opens the source code that has been used to construct the object passed as parameter.
+	"""
+	
 	path = None
 	line = None
 	try:
@@ -61,7 +64,7 @@ def openCodeFile(obj):
 		nvdaPath = getNvdaCodePath()
 		path = os.path.join(nvdaPath, path)
 	if not line:
-		reClassLine = re.compile('\s*class\s+{}'.format(className))
+		reClassLine = re.compile(r'\s*class\s+{}'.format(className))
 		with open(path, 'r') as f:
 			for (n, l) in enumerate(f):
 				if reClassLine.match(l):

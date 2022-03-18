@@ -10,21 +10,21 @@ import globalPluginHandler
 from . import configNDTT
 
 from .beepError import GlobalPlugin as BeepErrorGP
-from .debugHelpMode import GlobalPlugin as DebugHelpModeGP
-from .debugTool import GlobalPlugin as DebugToolGP
+from .extScriptDesc import GlobalPlugin as ExtScriptDescGP
+from .stackTracing import GlobalPlugin as StackTracingGP
 from .logReader import GlobalPlugin as LogReaderGP
 from .pythonConsoleEx import GlobalPlugin as PythonConsoleExGP
 from .restartWithOptions import GlobalPlugin as RestartWithOptionsGP
-from .windowutil import GlobalPlugin as WindowutilGP
+from .objPropExplorer import GlobalPlugin as ObjPropExplorerGP
 
 class GlobalPlugin(
 	BeepErrorGP,
-	DebugHelpModeGP,
-	DebugToolGP,
+	ExtScriptDescGP,
+	StackTracingGP,
 	LogReaderGP,
 	PythonConsoleExGP,
 	RestartWithOptionsGP,
-	WindowutilGP,
+	ObjPropExplorerGP,
 ):
 	
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):

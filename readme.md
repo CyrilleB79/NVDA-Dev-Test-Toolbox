@@ -1,61 +1,96 @@
 # NVDA Dev & Test Toolbox
 
 * Author: Cyrille Bougot
-* NVDA compatibility: 2018.3 and beyond
+* NVDA compatibility: 2019.3 and beyond
 * Download [stable version][1]
 
 This add-on gathers various features for NVDA debugging and testing.
 
 ## Features
 
-* Manage play error sound in stable versions
-* Get script info in input help mode.
+* An enhanced restart dialog to specify some extra options when restarting NVDA.
+* A toggle script and a backport of NVDA's "Play a sound for logged errors" feature.
+* An object property explorer.
+* An extended script description mode: when enabled input help mode report information on scripts that have no description.
 * Commands to help log reading and analyzing.
-* Provide a window to specify option when restarting NVDA.
-* Log stack trace for a function.
-* Python console extension
-* Get object's information
+* In the Python console workspace, a function to open the source code of an object.
+* A command to log the stack trace of the speech.speak function.
+
+## Enhanced restart dialog
+
+The NVDA+shift+Q command opens a dialog to specify some extra options before restarting NVDA.
+The options that can be specified correspond to the [command line options][2] that can be used with `nvda.exe`, e.g. `-c` for config path, `--disable-addons` to disable add-ons, etc.
 
 ## Play a sound for logged errors
 
-This feature provides a toggle command (NVDA+control+alt+E) to specify if NVDA will play an error sound in case an error is logged.
+The ["Play a sound for logged errors" setting][4] has been introduced in NVDA 2021.3 and allows to specify if NVDA will play an error sound in case an error is logged.
+
+This add-on provides an additional command (NVDA+control+alt+E) to toggle this setting.
 You can choose:
+
 * "Only in test versions" (default) to make NVDA play error sounds only if the current NVDA version is a test version (alpha, beta or run from source).
 * "Yes" to enable error sounds whatever your current NVDA version is. 
 
+For NVDA prior to 2021.3, this add-on provides the backport of this feature and the possibility to control it with the keyboard command.
+The checkbox in the Advanced settings panel is not backported however.
 
-Please note the following points regarding the version of NVDA you are using:
-* For NVDA 2021.3 onwards, this feature has been integrated in NVDA's core and it can be configured in the Advanced settings panel. But this extension add the possibility to control it with the keyboard command.
-* For NVDA prior to 2021.3, this extension provides the backport of this feature and the possibility to control it with the keyboard command. The checkbox in the Advanced settings panel is not backported however.
+## Object property explorer
 
-## Script information in input help mode
+This feature allows to report some properties of the current navigator object without opening the log viewer.
 
-This feature allow to get information on any script in input help mode (NVDA+1).
-If the executed script has no description, the script's name and location/class are announced instead.
-The gesture to activate or deactivate this feature is NVDA+control+alt+H.
+To list the properties of an object, move the navigator object to it and use the following commands:
+
+* NVDA+Shift+LeftArrow or NVDA+Shift+RightArrow: select previous or next property and announce it for the navigator object.
+* NVDA+LeftArrow : Announce the navigator object's currently selected property.
+
+The list of the supported properties is the following:
+name, role, state, value, windowClassName, windowControlID, windowHandle, location, Python class, Python class mro.
+
+This feature is an improvement of [NVDA developer guide][2] example 3
+
+If you have installed [Speech history review and copying][3]  add-on from Tyler Spivey and James Scholes, you may use it to copy and paste the announced property to review it.
+Review via copy/paste is especially useful for pythonClassMRO since it may be long.
+
+
+## Extended script description mode
+
+When the Extended script description mode is active, the input help mode (NVDA+1) is modified as follows.
+If a script has no description, the script's name and class are reported.
+If a script has a description, its description is reported as usual.
+The gesture to activate or deactivate this feature is NVDA+control+alt+D.
 
 Executing a gesture bound to a script without description in input help mode also create an entry for this script in the gesture management dialog.
 This entry is located in a dedicated category called "Scripts without description (modify at your own risk!)".
 This allow to easily add, delete or change the native NVDA gestures for these script.
 Be aware however that it is often intended that such script do not have any description to prevent the user to modify the associated gesture.
 Indeed, the gesture may be defined to match an application shortcut key.
-For example the script script_toggleItalic on NVDAObjects.window.winword.WordDocument is bound to control+I and this should not be modified since the gesture is passed to the application to actually execute the shortcut key. But control+shift+I also toggle italic in Word, even if it is not natively reported by NVDA. To have the control+shift+I result reported by NVDA as control+I, you should perform the following steps:
+For example the script script_toggleItalic on NVDAObjects.window.winword.WordDocument is bound to control+I and this should not be modified since the gesture is passed to the application to actually execute the shortcut key.
+
+### Usage example
+
+Control+shift+I also toggle italic in Word, even if it is not natively reported by NVDA.
+To have the control+shift+I result reported by NVDA as control+I, you should perform the following steps:
 
 * Open a Word document.
-* Enable the debug help mode with NVDA+control+alt+H.
-* Enter help mode with NVDA+1.
+* Enable the extended script description mode with NVDA+control+alt+D.
+* Enter input help mode with NVDA+1.
 * Press control+I to report the italic script and have it added in the gesture dialog.
-* Exit help mode with NVDA+1.
+* Exit input help mode with NVDA+1.
 * Open the input gestures dialog.
-* In the category 'niveau 0  Scripts without description (modify at your own risk!)', select the command 'toggleItalic on NVDAObjects.window.winword.WordDocument'.
+* In the category "Scripts without description (modify at your own risk!)", select the command "toggleItalic on NVDAObjects.window.winword.WordDocument".
 * Add the control+shift+I shortcut and validate.
-* If you want, exit the debug help mode with NVDA+control+alt+H.
+* If you want, exit the extended script description mode with NVDA+control+alt+D.
 
 Known bug: A script added for a specific class is visible even if gesture manager is opened in another context.
 
-## Log reader
+## Log reading and analyzing commands
 
-The log reader provides commands to ease log reading and analyzing. In the log viewer window the log reading commands are available immediately. In another text reading area such as an editor (e.g. Notepat++) or a webpage (e.g. GitHub issue), you need to press NVDA+control+alt+L to enable log reader commands.
+A log reader mode provides commands to ease log reading and analyzing.
+In the log viewer window the log reader is enabled by default, thus log reading commands are available immediately.
+In another text reading area such as an editor (e.g. Notepad++) or a webpage (e.g. GitHub issue), you need to press NVDA+control+alt+L to enable log reader mode and use its commands.
+When you are done with log reading and analyzing tasks, you can disable again NVDA+control+alt+L to disable the log reader mode.
+
+The commands available in log reader mode are described hereafter.
 
 ### Quick navigation commands
 
@@ -74,16 +109,22 @@ Pressing the single letter moves to the next occurrence of this message. Combini
 
 When looking at a traceback, you may want to open one of the source files to understand the cause and the context of the issue.
 Press C to open the source code file corresponding to the current line of the traceback.
-For this feature to work, you need to have configured your favorite editor's command, as well as the location of NVDA source code in case you are not running NVDA from source.
+
+For this feature to work, you need to have configured your favorite editor's command.
+If you are not running NVDA from source, the location of NVDA source code also should have been configured.
+For more details regarding the configuration, please see the paragraph NVDA Debug & Test Tools configuration.
 
 ## Python console extension
 
-In the console, you can call the following command to view the source code that defines the variable `myVar`:  
+In the console, you can call the following function to view the source code that defines the variable `myVar`:  
 `openCodeFile(myVar)`
 
-For this feature to work, you need to have configured your favorite editor's command, as well as the location of NVDA source code in case you are not running NVDA from source.
+For this feature to work, you need to have configured your favorite editor's command.
+If you are not running NVDA from source, the location of NVDA source code also should have been configured.
+For more details regarding the configuration, please see the paragraph NVDA Debug & Test Tools configuration.
 
-The `openCodeFile` functions can be called on objects defined in NVDA's code or on objects defined by add-ons. It cannot be called on objects whose source code is not avaiable such as python builtins.
+The `openCodeFile` functions can be called on objects defined in NVDA's code or on objects defined by add-ons.
+It cannot be called on objects whose source code is not available such as python builtins.
 
 Below are examples of call in NVDA's code:
 
@@ -98,40 +139,22 @@ Below are examples of call in NVDA's code:
 * Open the file `api.py` defining the module `api`:  
   `openCodeFile(api)`
 
-## Specify some options when restarting NVDA
+## Log the stack trace of the speech function
 
-The NVDA+shift+Q command allows to display a window to specify some options before restarting NVDA.
-The options that can be specified correspond to the [command line options](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#CommandLineOptions) that can be used with `nvda.exe`, e.g. `-c` for config path, `--disable-addons` to disable add-ons, etc.
+Sometimes, you may want to see which part of the code is responsible for speaking something.
+For this, you can enable the stack trace logging of the speech function pressing NVDA+control+alt+S.
+Each time NVDA speaks, a corresponding stack trace will be logged in the log.
 
-## Log stack trace for a function
-
-This feature allows to enable the stack trace logging of the speech function when pressing NVDA+control+alt+S. You may modify the script's file directly to patch another function.
+Note: You may modify the script's file directly to patch another function.
 See all instructions in the file for details on usage.
-
-## Object's information
-
-This feature allows to get various information on the current navigator object or associated window.
-
-Usage:
-
-* NVDA+LeftArrow : Announce the navigator object's currently selected property.
-* NVDA+Shift+LeftArrow or NVDA+Shift+RightArrow: select previous or next property and announce it for the navigator object.
-
-The list of supported properties is the following:
-name, role, state, value, windowClassName, windowControlID, windowHandle, location, pythonClass, pythonClassMRO
-
-This feature is an improvement of [NVDA developer guide][2] example 3
-
-If you have installed [Speech history review and copying][3]  addon from Tyler Spivey and James Scholes, you may use it to copy and paste the announced property to review it;
-review via copy/paste is especially useful for pythonClassMRO since it may be long.
 
 ## NVDA Debug & Test Tools configuration
 
-The log reader and the python console extension feature may require a specific configuration.
-To use functions that allow to view source code in your editor, you should first configure your editor's command.
+The log reader commands and the python console extension feature may require a specific configuration.
+To use functions that allow to view source code in your editor, you should first configure your editor's command line.
 If NVDA's file need to be viewed and if you are not running from source, you also need to configure NVDA's source code path.
 
-### Editor's command configuration
+### Editor's command line configuration
 
 To use the 'open source code' command or the `openCodeFile` console command, you need first to configure the command that will be called to open the file in your favorite editor.
 For this, open the NVDA console (NVDA+control+Z) and type the following line and then Enter:
@@ -164,6 +187,11 @@ Be sure however that the version of your source file (e.g. GIT commit) is the sa
 
 [1]: https://addons.nvda-project.org/files/get.php?file=ndtt
 
+[2]: https://www.nvaccess.org/files/nvda/documentation/userGuide.html#CommandLineOptions
+
 [3]: https://addons.nvda-project.org/addons/speech_history.en.html
 
-[4]: https://github.com/CyrilleB79/startupOptionWorkaround
+
+[4]: https://www.nvaccess.org/files/nvda/documentation/userGuide.html#PlayErrorSound
+
+[5]: https://github.com/CyrilleB79/startupOptionWorkaround

@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-# NVDA add-on: NVDA Debug & Test Toolbox
+# NVDA Dev & Test Toolbox add-on for NVDA
 # Copyright (C) 2021-2022 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 

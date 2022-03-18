@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-# A part of NVDA Debug & Test Toolbox add-on for NVDA
+# NVDA Dev & Test Toolbox add-on for NVDA
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2019-2021 Cyrille Bougot
@@ -52,7 +52,8 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		super(GlobalPlugin, self).terminate()
 	
 	@script(
-		description = "Toggle play error sound for logged error.",
+# Translators: Input help mode message for a toggle command.
+		description = _("Toggle play a sound for logged error."),
 		gesture = "kb:nvda+control+alt+E",
 		category = ADDON_SUMMARY,
 	)

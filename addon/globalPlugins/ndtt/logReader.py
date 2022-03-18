@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-# Log reader scripts for NVDA
+# NVDA Dev & Test Toolbox add-on for NVDA
 # Copyright (C) 2021-2022 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
@@ -249,10 +249,10 @@ class LogContainer(ScriptableObject):
 
 	def moveToHeaderFactory(dir, searchType):
 		if dir == 1:
-			# Translators: Input help mode message for log navigation commands. {st} will be replaced by the search type (Io, Debug, Message, etc.)
+			# Translators: Input help mode message for log navigation commands. {st} will be replaced by the search type (Io, Debug, Message, etc.
 			description = _( "Move to next logged message of type {st}.").format(st=searchType)
 		elif dir == -1:
-			# Translators: Input help mode message for log navigation commands. {st} will be replaced by the search type (Io, Debug, Message, etc.)
+			# Translators: Input help mode message for log navigation commands. {st} will be replaced by the search type (Io, Debug, Message, etc.
 			description = _("Move to previous logged message of type {st}.").format(st=searchType)
 		else:
 			raise ValueError('Unexpected direction value: {dir}'.format(dir=dir))
