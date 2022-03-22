@@ -40,21 +40,11 @@ def restartWithOptions(options):
 	)
 
 
-class SecuredPathSelectionHelper(gui.guiHelper.PathSelectionHelper):
-	"""A PathSelectionHelper usable on secure screen. The browse button is then disabled.
-	"""
-	
-	def __init__(self, parent, buttonText, browseForDirectoryTitle):
-		super().__init__(parent, buttonText, browseForDirectoryTitle)
-		if globalVars.appArgs.secure:
-			self._browseButton.Disable()
-
-class SecuredFileSelectionHelper(object):
+class FileSelectionHelper(object):
 	"""
 	Abstracts away details for creating a file selection helper. The file selection helper is a textCtrl with a
 	button in horizontal layout. The Button launches a file explorer. To get the path selected by the user, use the
 	`pathControl` property which exposes a wx.TextCtrl.
-	For security concerns, the button is disabled in secure environment.
 	"""
 	def __init__(self, parent, buttonText, wildcard, browseForFileTitle):
 		""" @param parent: An instance of the parent wx window. EG wx.Dialog
@@ -68,8 +58,6 @@ class SecuredFileSelectionHelper(object):
 		object.__init__(self)
 		self._textCtrl = wx.TextCtrl(parent)
 		self._browseButton = wx.Button(parent, label=buttonText)
-		if globalVars.appArgs.secure:
-			self._browseButton.Disable()
 		self._wildcard = wildcard
 		self._browseForFileTitle = browseForFileTitle
 		self._browseButton.Bind(wx.EVT_BUTTON, self.onBrowseForFile)
@@ -128,31 +116,37 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 			"The file where log messages should be written to",
 			["-&f {LOGFILENAME}", "--log-file={LOGFILENAME}"],
 			FileStr(""),
+			False,  # Logging in secure mode should be disabled
 		], [
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
 			"The lowest level of message logged", #(debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default is warning
 			["-&l {LOGLEVEL}", "--log-level={LOGLEVEL}"],
 			LogLevelStr(""),
+			False,  # Logging in secure mode should be disabled
 		], [
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
 			"The path where all settings for NVDA are stored",
 			["-&c {CONFIGPATH}", "--config-path={CONFIGPATH}"],
 			FolderStr(""),
+			False,  # Targetting an unauthorized config folder should not be accepted.
 		], *langOptList, [
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
 			"No sounds, no interface, no start message, etc.",
 			["-&m", "--minimal"],
 			False,
+			True,  # Already active on secure screens
 		], [
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
 			"Secure mode",
 			["-&s", "--secure"],
-			False
+			False,
+			True,  # Already active on secure screens
 		], [
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
 			"Add-ons will have no effect",
 			["--disable-addons"],
 			False,
+			True,  # Restart with add-ons disabled allowed on secure screens by NVDA
 		# --debug-logging (Enable debug level logging just for this run. This setting will override any other log level ( --loglevel, -l) argument given, including no logging option.)
 		# --no-logging (Disable logging altogether while using NVDA. This setting can be overridden if a log level ( --loglevel, -l) is specified from command line or if debug logging is turned on.)
 		], [
@@ -160,6 +154,7 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 			"Don't change the global system screen reader flag",
 			["--no-sr-flag"],
 			False,
+			True,
 		#check? --create-portable (Creates a portable copy of NVDA (starting the newly created copy). Requires --portable-path to be specified)
 		#check? --create-portable-silent (Creates a portable copy of NVDA (does not start the newly installed copy). Requires --portable-path to be specified)
 		#check? --portable-path=PORTABLEPATH (The path where a portable copy will be created)
@@ -168,9 +163,10 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 	def makeSettings(self, settingsSizer):
 		sHelper = gui.guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self.options = []
-		for (label, flagList, defaultValue) in self.OPTION_LIST:
+		for (label, flagList, defaultValue, allowInSecureMode) in self.OPTION_LIST:
 			flagList = " ".join(flagList)
 			flagList = flagList.replace('{', '').replace('}', '')
+			additionalObject = None  # Additional object to disable in secure mode.
 			if isinstance(defaultValue, bool):
 				checkBox = wx.CheckBox(self, label="{label}:\n{flags}".format(label=label, flags=flagList))
 				checkBox.SetValue(defaultValue)
@@ -198,17 +194,18 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 				if isinstance(defaultValue, FolderStr):
 					# Translators: The title of the dialog presented when browsing for the directory.
 					dirDialogTitle = _("Select a directory")
-					directoryPathHelper = SecuredPathSelectionHelper(groupBox, browseText, dirDialogTitle)
+					directoryPathHelper = gui.guiHelper.PathSelectionHelper(groupBox, browseText, dirDialogTitle)
 					directoryEntryControl = groupHelper.addItem(directoryPathHelper)
 					directoryEdit = directoryEntryControl.pathControl
 					directoryEdit.Value = defaultValue
 					self.options.append(directoryEdit)		
+					additionalObject = directoryEntryControl._browseButton
 				elif isinstance(defaultValue, FileStr):
 					# Translators: the label for the NVDA log extension (log) file type
 					wildcard = (_("NVDA log file (*.{ext})")+"|*.{ext}").format(ext="log")
 					# Translators: The title of the dialog presented when browsing for the file.
 					fileDialogTitle = _("Select a file")
-					filePathHelper = SecuredFileSelectionHelper(groupBox, browseText, wildcard, fileDialogTitle)
+					filePathHelper = FileSelectionHelper(groupBox, browseText, wildcard, fileDialogTitle)
 					shouldAddSpacer = groupHelper.hasFirstItemBeenAdded
 					if shouldAddSpacer:
 						groupHelper.sizer.AddSpacer(SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
@@ -219,14 +216,22 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 					fileEdit = fileEntryControl.pathControl
 					fileEdit.Value = defaultValue
 					self.options.append(fileEdit)		
+					additionalObject = fileEntryControl._browseButton
 				else:
 					raise			
 			else:
 				raise Exception('Unknown option type')
+			if globalVars.appArgs.secure and not allowInSecureMode:
+				self.options[-1].Disable()
+				if additionalObject:
+					additionalObject.Disable()
 
 	def postInit(self):
 		# Finally, ensure that focus is on the first option.
-		self.options[0].SetFocus()
+		for o in self.options:
+			if o.IsEnabled():
+				o.SetFocus()
+				break
 
 	def onOk(self, evt):
 		options = []
