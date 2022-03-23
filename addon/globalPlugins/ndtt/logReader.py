@@ -3,6 +3,8 @@
 # Copyright (C) 2021-2022 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
+from __future__ import unicode_literals
+
 import globalPluginHandler
 import addonHandler
 from baseObject import ScriptableObject
@@ -12,20 +14,39 @@ from scriptHandler import script
 import ui
 import textInfos
 import speech
-from speech.commands import (
-	CharacterModeCommand,
-	LangChangeCommand,
-	BreakCommand,
-	EndUtteranceCommand,
-	PitchCommand,
-	VolumeCommand,
-	RateCommand,
-	PhonemeCommand,
-	CallbackCommand,
-	BeepCommand,
-	WaveFileCommand,
-	ConfigProfileTriggerCommand
-)
+try:
+	from speech.commands import (
+		CharacterModeCommand,
+		LangChangeCommand,
+		BreakCommand,
+		EndUtteranceCommand,
+		PitchCommand,
+		VolumeCommand,
+		RateCommand,
+		PhonemeCommand,
+		CallbackCommand,
+		BeepCommand,
+		WaveFileCommand,
+		ConfigProfileTriggerCommand,
+	)
+	preSpeechRefactor = False
+except ImportError:
+# NVDA <= 2019.2.1
+	from speech import (
+		CharacterModeCommand,
+		LangChangeCommand,
+		BreakCommand,
+		#EndUtteranceCommand,
+		PitchCommand,
+		VolumeCommand,
+		RateCommand,
+		PhonemeCommand,
+		#CallbackCommand,
+		#BeepCommand,
+		#WaveFileCommand,
+		#ConfigProfileTriggerCommand,
+	)
+	preSpeechRefactor = True
 from logHandler import log
 from treeInterceptorHandler import TreeInterceptor
 import editableText
@@ -55,11 +76,11 @@ RES_TIME = r'[^\r\n]+'
 RES_THREAD_NAME = r'[^\r\n]+'
 RES_THREAD = r'\d+'
 RES_MESSAGE_HEADER = (
-	rf"^(?P<level>{{levelName}}) - "
-	rf"(?P<codePath>{RES_CODE_PATH}) "
-	rf"\((?P<time>{RES_TIME})\)"
-	rf"( - (?P<threadName>{RES_THREAD_NAME}) \((?P<thread>{RES_THREAD})\))?"
-	":"
+	r"^(?P<level>{levelName}) - "
+	+ r"(?P<codePath>{cp}) ".format(cp=RES_CODE_PATH)
+	+ r"\((?P<time>{t})\)".format(t=RES_TIME)
+	+ r"( - (?P<threadName>{thrName}) \((?P<thread>{thr})\))?".format(thrName=RES_THREAD_NAME, thr=RES_THREAD)
+	+ ":"
 )
 
 RE_MESSAGE_HEADER = re.compile(RES_MESSAGE_HEADER.format(levelName=RES_ANY_LEVEL_NAME))
@@ -84,13 +105,23 @@ RE_CANCELLABLE_SPEECH = re.compile(
 RE_CALLBACK_COMMAND = re.compile(r'CallbackCommand\(name=say-all:[A-Za-z]+\)((?=\])|, )')
 
 # Regexps of log line containing a file path and a line number.
-RE_NVDA_FILEPATH = re.compile(r'^File "(?P<path>[^:"]+\.py)c?", line (?P<line>\d+)(?:, in .+)?$')
+RE_NVDA_FILEPATH = re.compile(r'^File "(?P<path>[^:"]+\.py)[co]?", line (?P<line>\d+)(?:, in .+)?$')
 RE_EXTERNAL_FILEPATH = re.compile(r'^File "(?P<path>[A-Z]:\\[^"]+\.py)", line (?P<line>\d+)(?:, in .+)?$')
 
 #zzz # Regexps of console output line containing an object definition
 #zzz RE_NVDA_HELP = re.compile(r'^File "(?P<path>[^:"]+\.py)c?", line (?P<line>\d+)(?:, in .+)?$')
 
 
+
+TYPE_STR = type('')
+
+def matchDict(m):
+	"""A helper function to get the match dictionary (useful in Python 2)
+	"""
+	
+	if not m:
+		return m
+	return m.groupdict()
 
 class LogMessageHeader:
 	def __init__(self, level, codePath, time, threadName=None, thread=None):
@@ -103,7 +134,7 @@ class LogMessageHeader:
 	@classmethod
 	def makeFromLine(cls, text):
 		"""Create a LogMessageHeader from a header line"""
-		match = RE_MESSAGE_HEADER.match(text)
+		match = matchDict(RE_MESSAGE_HEADER.match(text))
 		if not match:
 			raise LookupError
 		return cls(match['level'], match['codePath'], match['time'], match['threadName'], match['thread'])
@@ -115,21 +146,22 @@ class LogMessage:
 	
 	def getSpeakMessage(self, mode):
 		if self.header.level == 'IO':
-			match = RE_MSG_SPEAKING.match(self.msg)
+			match = matchDict(RE_MSG_SPEAKING.match(self.msg))
 			if match:
 				try:
 					txtSeq = match['seq']
 				except Exception:
-					log.error(f"Sequence cannot be spoken: {match['seq']}")
+					log.error("Sequence cannot be spoken: {seq}".format(seq=match['seq']))
 					return self.msg
 				txtSeq = RE_CANCELLABLE_SPEECH.sub('', txtSeq)
 				txtSeq = RE_CALLBACK_COMMAND.sub('', txtSeq)
 				seq = eval(txtSeq)
 				# Ignore CallbackCommand and ConfigProfileTriggerCommand to avoid producing errors or unexpected side effect.
-				seq = [c for c in seq if not isinstance(c, (CallbackCommand, ConfigProfileTriggerCommand))]
+				if not preSpeechRefactor:
+					seq = [c for c in seq if not isinstance(c, (CallbackCommand, ConfigProfileTriggerCommand))]
 				return seq
 				
-			match = RE_MSG_BEEP.match(self.msg)
+			match = matchDict(RE_MSG_BEEP.match(self.msg))
 			if match:
 				return [BeepCommand(
 					float(match['freq']),
@@ -139,28 +171,28 @@ class LogMessage:
 				)]
 			
 			# Check for input gesture:
-			match = RE_MSG_INPUT.match(self.msg)
+			match = matchDict(RE_MSG_INPUT.match(self.msg))
 			if match:
-				return f"Input: {match['key']}, {match['device']}"
+				return "Input: {key}, {device}".format(key=match['key'], device=match['device'])
 			
-			match = RE_MSG_TYPED_WORD.match(self.msg)
-			if match:
-				return self.msg
-			
-			match = RE_MSG_BRAILLE_REGION.match(self.msg)
+			match = matchDict(RE_MSG_TYPED_WORD.match(self.msg))
 			if match:
 				return self.msg
 			
-			match = RE_MSG_BRAILLE_DOTS.match(self.msg)
+			match = matchDict(RE_MSG_BRAILLE_REGION.match(self.msg))
 			if match:
 				return self.msg
 			
-			match = RE_MSG_TIME_SINCE_INPUT.match(self.msg)
+			match = matchDict(RE_MSG_BRAILLE_DOTS.match(self.msg))
+			if match:
+				return self.msg
+			
+			match = matchDict(RE_MSG_TIME_SINCE_INPUT.match(self.msg))
 			if match:
 				return self.msg
 			
 			# Unknown message format; to be implemented.
-			raise NotImplementedError(f'Message not implemented: {self.msg}')
+			raise NotImplementedError('Message not implemented: {msg}'.format(msg=self.msg))
 			
 		elif self.header.level == 'ERROR':
 			msgList = self.msg.split('\r')
@@ -177,10 +209,10 @@ class LogMessage:
 	
 	def speak(self, reason, mode):
 		seq = self.getSpeakMessage(mode)
-		if isinstance(seq, str):
+		if isinstance(seq, TYPE_STR):
 			seq = [seq]
 		if mode == 'Message':
-			seq = [self.header.level, ', ', *seq]
+			seq = [self.header.level, ', '] + seq
 		speech.speak(seq)
 	
 	@classmethod
@@ -343,14 +375,14 @@ class LogContainer(ScriptableObject):
 		ti.expand(textInfos.UNIT_LINE)
 		line = ti.text.strip()
 		path = None
-		match = RE_NVDA_FILEPATH.match(line)
+		match = matchDict(RE_NVDA_FILEPATH.match(line))
 		if match:
 			nvdaSourcePath = getNvdaCodePath()
 			if not nvdaSourcePath:
 				return
 			path = os.path.join(nvdaSourcePath, match['path'])
 		if not path:
-			match = RE_EXTERNAL_FILEPATH.match(line)
+			match = matchDict(RE_EXTERNAL_FILEPATH.match(line))
 			if match:
 				path = match['path']
 		if not path:
@@ -372,7 +404,8 @@ class DocumentWithLog(Window):
 	def _get_treeInterceptorClass(self):
 		cls = super(DocumentWithLog, self)._get_treeInterceptorClass()
 		bases = (DocumentWithLogTreeInterceptor, cls)
-		name = f'Mixed_[{"+".join([x.__name__ for x in bases])}]'
+		# Python 2/3: use str() to convert type since it is str in both version of Python
+		name = str('Mixed_[{classList}]').format(classList=str("+").join([x.__name__ for x in bases]))
 		newCls = type(name, bases, {"__module__": __name__})
 		return newCls
 	

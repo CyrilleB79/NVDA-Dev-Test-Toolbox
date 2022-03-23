@@ -12,13 +12,16 @@ from .fileOpener import openSourceFile, getNvdaCodePath
 import globalPluginHandler
 import pythonConsole
 from logHandler import log
+from scriptHandler import script
+import addonHandler
 
 import os
 import re
 import inspect
 
+ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
 
-def openCodeFile(obj):
+def getCodeFileAndLine(obj):
 	"""Opens the source code that has been used to construct the object passed as parameter.
 	"""
 	
@@ -48,31 +51,41 @@ def openCodeFile(obj):
 			line = 1
 		else:
 			# For classes, objects
+			if not inspect.isclass(obj):
+				# For obj, take its class
+				obj = obj.__class__
 			try:
-				# For classes
 				className = obj.__qualname__
 			except AttributeError:
-				# For objects
-				className = obj.__class__.__qualname__
+			# Python 2: __name__ instead of __qualname__
+				className = obj.__class__.__name__
 			className = className.split('.')[-1]
 	if not path:
-		print('Unsupported object type: {}'.format(type(obj)))
-		return
+		return None
 	if path.endswith('.pyc') or path.endswith('.pyo'):
 		path = path[:-1]
 	if ':' not in path:
 		nvdaPath = getNvdaCodePath()
 		path = os.path.join(nvdaPath, path)
 	if not line:
-		reClassLine = re.compile(r'\s*class\s+{}'.format(className))
-		with open(path, 'r') as f:
+		reClassLine = r'\s*class\s+{}'.format(className)
+		reComp = re.compile(reClassLine)
+		with open(path, 'r', encoding='utf8') as f:
 			for (n, l) in enumerate(f):
-				if reClassLine.match(l):
+				if reComp.match(l):
 					line = n + 1
 					break
 			else:
-				log.warning('Class definition line not found')
+				log.warning('Class definition line not found:\n{}'.format(reClassLine))
 				line = 1
+	return path, line
+	
+def openCodeFile(obj):
+	res = getCodeFileAndLine(obj)
+	if res is None:
+		log.error('Unsupported object type: {}'.format(type(obj)))
+		return
+	path, line = res
 	openSourceFile(path, line)
 
 
@@ -96,3 +109,48 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		except (AttributeError, KeyError):
 			pass
 		super(GlobalPlugin, self).terminate(*args, **kwargs)
+
+	def testCodeFinder(self):
+		nvdaCodePath = getNvdaCodePath()
+		import config
+		import api
+		import appModules
+		from appModules import excel as appModules_excel
+		import globalCommands
+		objList = [
+			# Module
+			(api, nvdaCodePath + r'\api.py', 1),
+			# Module-level function
+			(api.getFocusObject, nvdaCodePath + r'\api.py', 69),
+			# Class definition
+			(globalCommands.GlobalCommands, nvdaCodePath + r'\globalCommands.py', 99),
+			# Definition of the class of an object
+			(globalCommands.commands, nvdaCodePath + r'\globalCommands.py', 99),
+			# Method definition in a class
+			(globalCommands.GlobalCommands.script_cycleAudioDuckingMode, nvdaCodePath + r'\globalCommands.py', 103),
+			# Method definition of an object
+			(globalCommands.commands.script_cycleAudioDuckingMode, nvdaCodePath + r'\globalCommands.py', 103),
+			# Package
+			(appModules, nvdaCodePath + r'\appModules\__init__.py', 1),
+			# Module in subfolder
+			(appModules_excel, nvdaCodePath + r'\appModules\excel.py', 1),
+		]
+		hasErrorOccurred = False
+		for obj, file, line in objList:
+			file1, line1 = getCodeFileAndLine(obj)
+			if file.lower() == file1.lower() and (line != 1) == (line1 != 1):
+				pass
+			else:
+				log.error('FileRef: {} - {}\nFileGCP: {} - {}'.format(file, line, file1, line1))
+				hasErrorOccurred = True
+		if not hasErrorOccurred:
+			import ui
+			ui.message('test OK')
+			
+	
+	@script(
+		gesture="kb:nvda+<",
+		category=ADDON_SUMMARY,
+	)
+	def script_testCodeFinder(self, gesture):
+		self.testCodeFinder()

@@ -10,30 +10,39 @@ import globalVars
 
 from . import configNDTT
 
-
+# Plugins that may be used in any context, including secure context.
 from .extScriptDesc import GlobalPlugin as ExtScriptDescGP
 from .restartWithOptions import GlobalPlugin as RestartWithOptionsGP
 from .objPropExplorer import GlobalPlugin as ObjPropExplorerGP
 
-# Plugins that may be also used in secure context
-allContextGPList = [ExtScriptDescGP, RestartWithOptionsGP, ObjPropExplorerGP]
 
 if not globalVars.appArgs.secure:
+	# Plugins that may be used only in normal context, not in secure context.
 	from .beepError import GlobalPlugin as BeepErrorGP  # No error tone in secure mode
 	from .stackTracing import GlobalPlugin as StackTracingGP  # No log nor log viewer in secure mode
 	from .logReader import GlobalPlugin as LogReaderGP  # No log nor log viewer in secure mode.
 	from .pythonConsoleEx import GlobalPlugin as PythonConsoleExGP  # No Python console in secure mode
-	
-	# Plugins that may be used only in normal context, not in secure context.
-	normalContextGPList = [BeepErrorGP, StackTracingGP, LogReaderGP, PythonConsoleExGP]
 
 
-class GlobalPlugin(*allContextGPList):
-	pass
+if globalVars.appArgs.secure:
 
+	class GlobalPlugin(
+		ExtScriptDescGP,
+		RestartWithOptionsGP,
+		ObjPropExplorerGP,
+	):
+		pass
 
-if not globalVars.appArgs.secure:
-	class GlobalPlugin(*(allContextGPList + normalContextGPList)):
+else:
+	class GlobalPlugin(
+		ExtScriptDescGP,
+		RestartWithOptionsGP,
+		ObjPropExplorerGP,
+		BeepErrorGP,
+		StackTracingGP,
+		LogReaderGP,
+		PythonConsoleExGP
+	):
 		
 		def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 			# We need to call explicitely chooseNVDAObjectOverlayClasses of the child class; else NVDA will skip them.

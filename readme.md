@@ -1,7 +1,7 @@
 # NVDA Dev & Test Toolbox
 
 * Author: Cyrille Bougot
-* NVDA compatibility: 2019.3 and beyond
+* NVDA compatibility: 2019.2 and beyond
 * Download [stable version][1]
 
 This add-on gathers various features for NVDA debugging and testing.

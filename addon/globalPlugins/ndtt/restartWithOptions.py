@@ -3,6 +3,8 @@
 # Copyright (C) 2021-2022 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
+from __future__ import unicode_literals
+
 import gui
 import queueHandler
 import core
@@ -17,24 +19,53 @@ import os
 
 from types import MethodType
 
+def initializeAppDir():
+	if getattr(sys, "frozen", None):
+		# We are running as an executable.
+		appDir = sys.prefix
+	else:
+		# we are running from source
+		# We should always change directory to the location of an NVDA root module (e.g. globalVars), don't rely on sys.path[0]
+		appDir = os.path.normpath(os.path.dirname(globalVars.__file__))
+	appDir = os.path.abspath(appDir)
+	return appDir
+
+try:
+	globalVars.appDir
+except AttributeError:
+	globalVars.appDir = initializeAppDir
+
 def restartWithOptions(options):
 	"""Restarts NVDA by starting a new copy, providing some options."""
 	if globalVars.appArgs.launcher:
 		import gui
 		globalVars.exitCode=3
-		gui.safeAppExit()
+		try:
+			gui.safeAppExit()
+		except AttributeError:
+			wx.GetApp().ExitMainLoop()
 		return
 	import subprocess
 	import winUser
 	import shellapi
 	if not hasattr(sys, "frozen"):
 		options.insert(0, os.path.basename(sys.argv[0]))
+	if sys.version_info.major < 3 and "-r" not in options:
+	# NVDA <= 2019.2.1 (Python 2) do not restart automatically if a new instance is started.
+		options.append("-r")
+	file = sys.executable
+	parameters = subprocess.list2cmdline(options)
+	directory = globalVars.appDir
+	if sys.version_info.major < 3:
+		file = file.decode("mbcs")
+		parameters = parameters.decode("mbcs")
+		directory = None
 	shellapi.ShellExecute(
 		hwnd=None,
 		operation=None,
-		file=sys.executable,
-		parameters=subprocess.list2cmdline(options),
-		directory=globalVars.appDir,
+		file=file,
+		parameters=parameters,
+		directory=directory,
 		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
 		showCmd=winUser.SW_SHOWNORMAL
 	)
@@ -97,18 +128,13 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 	title = _("Specify some options and restart")
 	helpId = "CommandLineOptions"
 	
-	# Check the possibility of forcing the language from the command line (NVDA 2022.1+)
-	# to decide if the language option should be added.
-	try:
-		languageHandler.isLanguageForced
-	except AttributeError:
-		langOptList = []
-	else:
-		langOptList = [[
-			"Override the configured NVDA language",
-			["--lang={LANGUAGE}"],
-			LangStr(""),
-		]]
+	LANG_OVERRIDE_OPTION = [
+		# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+		_("Override the configured NVDA language"),
+		["--lang={LANGUAGE}"],
+		LangStr(""),
+		True,
+	]
 	
 	OPTION_LIST = [
 		[
@@ -129,18 +155,18 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 			["-&c {CONFIGPATH}", "--config-path={CONFIGPATH}"],
 			FolderStr(""),
 			False,  # Targetting an unauthorized config folder should not be accepted.
-		], *langOptList, [
+		], LANG_OVERRIDE_OPTION, [
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
 			"No sounds, no interface, no start message, etc.",
 			["-&m", "--minimal"],
 			False,
-			True,  # Already active on secure screens
+			True,  # Always active on secure screens even if the -m parameter is missing.
 		], [
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
 			"Secure mode",
 			["-&s", "--secure"],
 			False,
-			True,  # Already active on secure screens
+			True,  # Always active on secure screens even if the -s parameter is missing.
 		], [
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
 			"Add-ons will have no effect",
@@ -160,6 +186,14 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 		#check? --portable-path=PORTABLEPATH (The path where a portable copy will be created)
 		]
 	]
+	# Check the possibility of forcing the language from the command line (NVDA 2022.1+)
+	# to decide if the language option should be added or not.
+	try:
+		languageHandler.isLanguageForced
+	except AttributeError:
+		OPTION_LIST.remove(LANG_OVERRIDE_OPTION)
+	
+	
 	def makeSettings(self, settingsSizer):
 		sHelper = gui.guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self.options = []

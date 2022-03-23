@@ -9,6 +9,7 @@ import globalPluginHandler
 import ui
 import api
 import controlTypes
+from logHandler import log
 
 def _createDicControlTypesConstantes(prefix):
 	dic = {}
@@ -16,17 +17,29 @@ def _createDicControlTypesConstantes(prefix):
 	for name in attributes:
 		if name.startswith(prefix):
 			dic[getattr(controlTypes, name)] = name[len(prefix):]
-	#from logHandler import log
-	#log.debug(dic)
 	return dic
 _DIC_ROLES = _createDicControlTypesConstantes('ROLE_')
 _DIC_STATES = _createDicControlTypesConstantes('STATE_')
 
+def getRoleInfo(o):
+	try:
+		# NVDA 2021.2+ where controlTypes.Role and controlTypes.State are enums.
+		return '{} ({})'.format(o.role.name, o.role.value)
+	except AttributeError:
+		# Pre-NVDA 2021.2 where controlTypes.ROLE_ and controlTypes.STATE_ are constants
+		return '{} ({})'.format(_DIC_ROLES[o.role], o.role)
+
 def getStateInfo(o):
 	info = sorted(o.states)
-	names = ', '.join([_DIC_STATES[i] for i in info])
-	info = '{} ({})'.format(names, info)
-	return info
+	try:
+		# NVDA 2021.2+ where controlTypes.Role and controlTypes.State are enums.
+		names = ', '.join(str(i.name) for i in info)
+		values = ', '.join(str(i.value) for i in info)
+	except AttributeError:
+		# Pre-NVDA 2021.2 where controlTypes.ROLE_ and controlTypes.STATE_ are constants
+		names = ', '.join([_DIC_STATES[i] for i in info])
+		values = info
+	return '{} ({})'.format(names, values)
 	
 def getLocationInfo(o):
 	info = ', '.join('{}: {}'.format(i, getattr(o.location, i)) for i in ['left', 'top', 'width', 'height'])
@@ -38,7 +51,7 @@ def getLocationInfo(o):
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	
 	_INFO_TYPES = ['name',
-		('role', lambda o: '{} ({})'.format(_DIC_ROLES[o.role], o.role)),
+		('role', getRoleInfo),
 		('states', getStateInfo),
 		'value',
 		'windowClassName',
@@ -81,8 +94,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			fun = lambda o: getattr(o, infoType)
 		try:
 			info = fun(nav)
-		except:
+		except Exception as e:
 			info = 'Unavailable information'
+			log.debugWarning(e, exc_info=True)
 		ui.message('{}: {}'.format(infoType, info))
 		
 	__gestures = {

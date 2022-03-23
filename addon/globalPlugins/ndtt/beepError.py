@@ -17,6 +17,10 @@ ADDON_SUMMARY = addonHandler.getCodeAddon ().manifest["summary"]
 
 # Check if NVDA has "Play error sound" feature.
 try:
+	config.conf.spec['featureFlag']
+except KeyError:
+	config.conf.spec['featureFlag'] = {}
+try:
 	config.conf.spec['featureFlag']['playErrorSound']
 	hasPlayErrorSoundFeature = True
 except KeyError:
