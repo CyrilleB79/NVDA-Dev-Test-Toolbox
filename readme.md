@@ -191,7 +191,6 @@ Be sure however that the version of your source file (e.g. GIT commit) is the sa
 
 [3]: https://addons.nvda-project.org/addons/speech_history.en.html
 
-
 [4]: https://www.nvaccess.org/files/nvda/documentation/userGuide.html#PlayErrorSound
 
 [5]: https://github.com/CyrilleB79/startupOptionWorkaround

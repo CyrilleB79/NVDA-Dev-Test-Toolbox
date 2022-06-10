@@ -1,0 +1,59 @@
+name: Upload on new tags
+
+on:
+  push:
+    tags:
+      '*'
+env:
+    IS_DEV: ${{ contains(github.ref_name, '-dev-') }}
+
+jobs:
+  buildAndUpload:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set my timezone  # Useful when I push a release tag containing the date of today.
+      uses: szenius/set-timezone@v1.0
+      with:
+        timezoneLinux: "Europe/Paris"
+    #- name: Test timezone
+    #  run: date +"%Z %z"
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        pip install scons markdown
+        sudo apt update
+        sudo apt install gettext
+    - name: Extract change log
+      run: |
+        import re
+        pattern = r'[Vv](\d+.\d+.*?)(?:-dev-.*)?$'
+        refTag = '${{ github.ref_name }}'
+        print(f'===> Ref tag:{refTag}')
+        version = re.search(pattern, refTag).group(1)
+        print(f'===> Version:{version}')
+        pattern = rf'## Change log.*### Version {version}\s*(.*?)\s*(\n(### Version)|(\[\d+\]:)|$)'
+        fileContent = open('readme.md', 'r', encoding='utf8').read()
+        changeLog = re.search(pattern, fileContent, re.DOTALL).group(1) + '\n'
+        print(f'===> ChangeLog:\n<<<{changeLog}>>>\n')
+        open('changelog.md', 'w', encoding='utf-8').write(changeLog)
+      shell: python 
+    
+    - name: Build add-on
+      run: scons dev=${{ env.IS_DEV }}
+    - name: Calculate sha256
+      run: sha256sum *.nvda-addon >> changelog.md
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        files: |
+          *.nvda-addon
+        name: Release ${{ github.ref_name }}
+        body_path: changelog.md
+        prerelease: ${{ env.IS_DEV }}
