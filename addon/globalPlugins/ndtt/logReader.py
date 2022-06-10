@@ -90,9 +90,9 @@ RE_MSG_SPEAKING = re.compile(r'^Speaking (?P<seq>\[.+\])')
 RE_MSG_BEEP = re.compile(r'^Beep at pitch (?P<freq>[0-9.]+), for (?P<duration>\d+) ms, left volume (?P<leftVol>\d+), right volume (?P<rightVol>\d+)') 
 RE_MSG_INPUT = re.compile(r'^Input: (?P<device>.+?):(?P<key>.+)')
 RE_MSG_TYPED_WORD = re.compile(r'^typed word: (?P<word>.+)')
-RE_MSG_BRAILLE_REGION = re.compile(r'Braille regions text: \[.*\]')
-RE_MSG_BRAILLE_DOTS = re.compile(r'^Braille window dots:.*')
-RE_MSG_TIME_SINCE_INPUT = re.compile(r'^\d+.\d* sec since input')
+RE_MSG_BRAILLE_REGION = re.compile(r'^Braille regions text: \[(?P<text>.*)\]')
+RE_MSG_BRAILLE_DOTS = re.compile(r'^Braille window dots:(?P<dots>.*)')
+RE_MSG_TIME_SINCE_INPUT = re.compile(r'^(?P<time>\d+.\d*) sec since input')
 
 # Regexps for speech sequence commands
 RE_CANCELLABLE_SPEECH = re.compile(
@@ -182,6 +182,9 @@ class LogMessage:
 			match = matchDict(RE_MSG_BRAILLE_REGION.match(self.msg))
 			if match:
 				return self.msg
+			else:
+				import globalVars as gv
+				gv.dbg = self.msg
 			
 			match = matchDict(RE_MSG_BRAILLE_DOTS.match(self.msg))
 			if match:
@@ -192,7 +195,8 @@ class LogMessage:
 				return self.msg
 			
 			# Unknown message format; to be implemented.
-			raise NotImplementedError('Message not implemented: {msg}'.format(msg=self.msg))
+			log.debugWarning('Message not implemented: {msg}'.format(msg=self.msg))
+			return self.msg
 			
 		elif self.header.level == 'ERROR':
 			msgList = self.msg.split('\r')
