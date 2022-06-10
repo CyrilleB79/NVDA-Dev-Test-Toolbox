@@ -181,6 +181,17 @@ Be sure however that the version of your source file (e.g. GIT commit) is the sa
 
 ## Change log
 
+### Version 2.0
+
+* New feature: Enhanced restart dialog to specify some extra options when restarting NVDA.
+* New feature: extended description mode.
+* Play error sound feature harmonized between pre and post 2021.3 versions of NVDA.
+* New feature: Log reader commands are now available in the log viewer and also optionally in edit fields or webpages.
+* New feature: In the Python console, an `openCodeFile` function is available to view the source code of an object.
+* Some features are now disabled in secure mode for security reasons.
+* The add-on's compatibility range has been extended (from 2019.2 to 2021.1).
+* Releases are now performed with GitHub action instead of appVeyor.
+
 ### Version 1.0
 
 * Initial release.
