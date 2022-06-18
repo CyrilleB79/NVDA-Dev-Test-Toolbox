@@ -10,14 +10,16 @@ import queueHandler
 import core
 import globalVars
 import globalPluginHandler
+import addonHandler
 from scriptHandler import script
 import languageHandler
 
 import wx
 import sys
 import os
-
 from types import MethodType
+
+ADDON_SUMMARY = addonHandler.getCodeAddon ().manifest["summary"]
 
 def initializeAppDir():
 	if getattr(sys, "frozen", None):
@@ -355,8 +357,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	
 	@script(
 		# Translators: Input help mode message for Restart with options command.
-		description=_("Restart NVDA with specific options."),
-		gesture="kb:NVDA+shift+q"
+		description=_("Restarts NVDA with specific options."),
+		gesture="kb:NVDA+shift+q",
+		category=ADDON_SUMMARY,
 	)
 	def script_restartWithOptions(self,gesture):
 		wx.CallAfter(self.openRestartWithOptionsDialog)

@@ -10,6 +10,11 @@ import ui
 import api
 from .compa import controlTypesCompatWrapper as controlTypes
 from logHandler import log
+import addonHandler
+import scriptHandler
+from scriptHandler import script
+
+ADDON_SUMMARY = addonHandler.getCodeAddon ().manifest["summary"]
 
 def _createDicControlTypesConstantes(prefix):
 	dic = {}
@@ -42,13 +47,15 @@ def getStateInfo(o):
 	return '{} ({})'.format(names, values)
 	
 def getLocationInfo(o):
-	info = ', '.join('{}: {}'.format(i, getattr(o.location, i)) for i in ['left', 'top', 'width', 'height'])
+	info = ',\r\n'.join('{}: {}'.format(i, getattr(o.location, i)) for i in ['left', 'top', 'width', 'height'])
 	return info
 			
 	
 
 	
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
+
+	
 	
 	_INFO_TYPES = ['name',
 		('role', getRoleInfo),
@@ -59,33 +66,44 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		'windowHandle',
 		('location', getLocationInfo),
 		('pythonClass', lambda o: str(type(o))),
-		('pythonClassMRO', lambda o: str(type(o).mro()).replace('>, <', ',\r\n').replace('[<', '\r\n', 1).replace('>]',''))]
+		('pythonClassMRO', lambda o: str(type(o).mro()).replace('>, <', ',\r\n').replace('[<', '', 1).replace('>]',''))]
 	
 	def __init__(self):
 		super(GlobalPlugin, self).__init__()
 		self.index = 0
 		
+	@script(
+		# Translators: Input help mode message for a command of the object property explorer.
+		description=_("Reports the currently selected property for the navigator object; two presses displays this information in a browseable message."),
+		category=ADDON_SUMMARY,
+	)
 	def script_announceObjectInfo(self, gesture):
-		self.announceCurrentInfo()
-	# Translators: Input help mode message for a command of the object property explorer.
-	script_announceObjectInfo.__doc__=_("Announce current object property.")
-	script_announceObjectInfo.category=_("WindowsUtil")
+		self.announceCurrentInfo(scriptHandler.getLastScriptRepeatCount())
 		
+	@script(
+		# Translators: Input help mode message for a command of the object property explorer.
+		description=_("Selects the next property and reports it for the navigator object."),
+		category=ADDON_SUMMARY,
+	)
 	def script_nextObjectInfo(self, gesture):
 		self.index = (self.index + 1) % len(self._INFO_TYPES)
 		self.announceCurrentInfo()
-	# Translators: Input help mode message for a command of the object property explorer.
-	script_nextObjectInfo.__doc__=_("Select next object property and announce it.")
-	script_nextObjectInfo.category=_("WindowsUtil")
 		
+	@script(
+		# Translators: Input help mode message for a command of the object property explorer.
+		description=_("Selects the previous property and reports it for the navigator object."),
+		category=ADDON_SUMMARY,
+	)
 	def script_priorObjectInfo(self, gesture):
 		self.index = (self.index - 1) % len(self._INFO_TYPES)
 		self.announceCurrentInfo()
-	# Translators: Input help mode message for a command of the object property explorer.
-	script_priorObjectInfo.__doc__=_("Select prior object property and announce it.")
-	script_priorObjectInfo.category=_("WindowsUtil")	
 	
-	def announceCurrentInfo(self):
+	def announceCurrentInfo(self, nPress=0):
+		if nPress > 1:
+			return
+		elif nPress == 1:
+			ui.browseableMessage(self.lastInfo)
+			return
 		infoType = self._INFO_TYPES[self.index]
 		nav = api.getNavigatorObject()
 		if isinstance(infoType, tuple):
@@ -95,12 +113,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		try:
 			info = fun(nav)
 		except Exception as e:
-			info = 'Unavailable information'
+			info = 'Unavailable information.'
 			log.debugWarning(e, exc_info=True)
-		ui.message('{}: {}'.format(infoType, info))
-		
-	__gestures = {
-		"kb:NVDA+rightArrow": "announceObjectInfo",
-		"kb:NVDA+shift+leftArrow": "priorObjectInfo",
-		"kb:NVDA+shift+rightArrow": "nextObjectInfo",
-		}
+		self.lastInfo = '{}:\r\n{}'.format(infoType, info)
+		ui.message(self.lastInfo)

@@ -148,9 +148,8 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			ui.message('test OK')
 			
 	
-	@script(
-		gesture="kb:nvda+<",
-		category=ADDON_SUMMARY,
-	)
+	@script()
 	def script_testCodeFinder(self, gesture):
+		"""A maintenance script used to test more easily the code finder feature.
+		"""
 		self.testCodeFinder()

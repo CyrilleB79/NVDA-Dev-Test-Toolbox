@@ -284,10 +284,10 @@ class LogContainer(ScriptableObject):
 	def moveToHeaderFactory(dir, searchType):
 		if dir == 1:
 			# Translators: Input help mode message for log navigation commands. {st} will be replaced by the search type (Io, Debug, Message, etc.
-			description = _( "Move to next logged message of type {st}.").format(st=searchType)
+			description = _( "Moves to the next logged message of type {st}.").format(st=searchType)
 		elif dir == -1:
 			# Translators: Input help mode message for log navigation commands. {st} will be replaced by the search type (Io, Debug, Message, etc.
-			description = _("Move to previous logged message of type {st}.").format(st=searchType)
+			description = _("Moves to the previous logged message of type {st}.").format(st=searchType)
 		else:
 			raise ValueError('Unexpected direction value: {dir}'.format(dir=dir))
 		@script(
@@ -352,9 +352,9 @@ class LogContainer(ScriptableObject):
 	
 	@script(
 		# Translators: Input help mode message for Toggle log Reader script.
-		description=_("Activate or deactivate log Reader commands."),
+		description=_("Activates or deactivates the log Reader commands."),
 		category=ADDON_SUMMARY,
-		gesture = "kb:nvda+control+alt+L",
+		gesture="kb:nvda+control+alt+L",
 	)
 	def script_toggleReaderCommands(self, enabled):
 		self.isLogReaderEnabled = not self.isLogReaderEnabled
@@ -368,7 +368,7 @@ class LogContainer(ScriptableObject):
 	
 	@script(
 		# Translators: Input help mode message for Open source file script.
-		description=_("Open the source code file whose path is located at the caret's position."),
+		description=_("Opens the source code file whose path is located at the caret's position."),
 		category=ADDON_SUMMARY,
 	)
 	def script_openSourceFile(self, gesture):

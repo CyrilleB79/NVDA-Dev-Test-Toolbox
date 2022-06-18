@@ -40,16 +40,16 @@ This feature allows to report some properties of the current navigator object wi
 
 To list the properties of an object, move the navigator object to it and use the following commands:
 
-* NVDA+Shift+LeftArrow or NVDA+Shift+RightArrow: select previous or next property and announce it for the navigator object.
-* NVDA+LeftArrow : Announce the navigator object's currently selected property.
+* Selects the previous property and reports it for the navigator object.
+* Selects the next property and reports it for the navigator object.
+* Reports the currently selected property for the navigator object; two presses displays this information in a browseable message.
+
+These three commands are unassigned by default; you will have to assign them in the Input gesture dialog to use them.
 
 The list of the supported properties is the following:
 name, role, state, value, windowClassName, windowControlID, windowHandle, location, Python class, Python class mro.
 
-This feature is an improvement of [NVDA developer guide][2] example 3
-
-If you have installed [Speech history review and copying][3]  add-on from Tyler Spivey and James Scholes, you may use it to copy and paste the announced property to review it.
-Review via copy/paste is especially useful for pythonClassMRO since it may be long.
+This feature is an improvement of an example in [NVDA developer guide][5].
 
 
 ## Extended script description mode
@@ -200,8 +200,6 @@ Be sure however that the version of your source file (e.g. GIT commit) is the sa
 
 [2]: https://www.nvaccess.org/files/nvda/documentation/userGuide.html#CommandLineOptions
 
-[3]: https://addons.nvda-project.org/addons/speech_history.en.html
-
 [4]: https://www.nvaccess.org/files/nvda/documentation/userGuide.html#PlayErrorSound
 
-[5]: https://github.com/CyrilleB79/startupOptionWorkaround
+[5]: https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#toc22

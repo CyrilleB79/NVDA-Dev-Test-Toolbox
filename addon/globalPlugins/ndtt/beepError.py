@@ -63,7 +63,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	
 	@script(
 # Translators: Input help mode message for a toggle command.
-		description = _("Toggle play a sound for logged error."),
+		description = _("Toggles play a sound for logged error."),
 		gesture = "kb:nvda+control+alt+E",
 		category = ADDON_SUMMARY,
 	)

@@ -47,7 +47,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		
 	@script(
 		# Translators: Input help mode message for a toggle command.
-		description = _("Toggle the stack trace log when the speech function is called."),
+		description = _("Toggles the stack trace log when the speech function is called."),
 		gesture = "kb:nvda+control+alt+S",
 		category = ADDON_SUMMARY,
 	)

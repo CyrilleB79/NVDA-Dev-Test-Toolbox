@@ -3,7 +3,6 @@
 # Copyright (C) 2021-2022 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
-import addonHandler
 from logHandler import log
 import config
 import ui
@@ -16,8 +15,6 @@ import sys
 import shlex
 import threading
 import subprocess
-
-ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
 
 
 class ConfigError(Exception): pass

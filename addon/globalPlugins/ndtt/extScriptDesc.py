@@ -58,7 +58,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		
 	@script(
 		# Translators: Input help mode message for a toggle command.
-		description = _("Toggle extended script description mode."),
+		description = _("Toggles the extended script description mode."),
 		gesture = "kb:nvda+control+alt+D",
 		category = ADDON_SUMMARY,
 	)
