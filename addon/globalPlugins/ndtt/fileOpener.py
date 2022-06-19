@@ -9,6 +9,8 @@ import config
 import ui
 import globalVars
 
+from .compa import appDir
+
 import os
 import sys
 import shlex
@@ -95,4 +97,4 @@ def getNvdaCodePath():
 			return None
 	else:
 		# NVDA running from source
-		return globalVars.appDir
+		return appDir

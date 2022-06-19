@@ -53,16 +53,14 @@ import editableText
 import winUser
 import config
 from inputCore import normalizeGestureIdentifier
+import gui.logViewer
 
-from .compa import controlTypes, appDir
+from .compa import controlTypesCompatWrapper as controlTypes
 from .fileOpener import openSourceFile, getNvdaCodePath
 
 import re
 import os
 
-
-# Save NVDA translations before setting the add-on's translations
-nvdaTranslations = _
 
 addonHandler.initTranslation()
 
@@ -123,7 +121,7 @@ def matchDict(m):
 		return m
 	return m.groupdict()
 
-class LogMessageHeader:
+class LogMessageHeader(object):
 	def __init__(self, level, codePath, time, threadName=None, thread=None):
 		self.level = level
 		self.codePath = codePath
@@ -139,7 +137,7 @@ class LogMessageHeader:
 			raise LookupError
 		return cls(match['level'], match['codePath'], match['time'], match['threadName'], match['thread'])
 
-class LogMessage:
+class LogMessage(object):
 	def __init__(self, header, msg):
 		self.header = header
 		self.msg = msg.strip()
@@ -223,7 +221,7 @@ class LogMessage:
 	def makeFromTextInfo(cls, info, atStart=False):
 		info = info.copy()
 		if not atStart:
-			raise NotImplemented
+			raise NotImplementedError
 		info.expand(textInfos.UNIT_LINE)
 		header = LogMessageHeader.makeFromLine(info.text.strip())
 		info.collapse(end=True)
@@ -243,7 +241,7 @@ class LogMessage:
 		return cls(header, msg)	
 
 
-class LogReader:
+class LogReader(object):
 
 	SEARCHERS = {k: re.compile(RES_MESSAGE_HEADER.format(levelName=k.upper())) for k in (
 		'Debug',
@@ -456,9 +454,11 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		if isEditable:
 			isLogViewer = False
 			hParent = winUser.getAncestor(obj.windowHandle, winUser.GA_PARENT)
-			if hParent:
-				text = winUser.getWindowText(hParent)
-				isLogViewer = text == nvdaTranslations("NVDA Log Viewer")
+			try:
+				hLogViewer = gui.logViewer.logViewer.GetHandle()
+				isLogViewer = hLogViewer == hParent
+			except (AttributeError, RuntimeError):  # Error when logViewer is None or when its windows has been dismissedor closed.
+				isLogViewer = False
 			if isLogViewer:
 				clsList.insert(0, LogViewerLogContainer)
 			else:

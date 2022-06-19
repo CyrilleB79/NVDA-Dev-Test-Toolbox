@@ -8,7 +8,7 @@ from __future__ import unicode_literals
 import globalPluginHandler
 import ui
 import api
-import controlTypes
+from .compa import controlTypesCompatWrapper as controlTypes
 from logHandler import log
 
 def _createDicControlTypesConstantes(prefix):

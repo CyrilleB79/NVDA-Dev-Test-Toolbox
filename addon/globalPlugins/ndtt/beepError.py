@@ -12,18 +12,25 @@ import logging
 import buildVersion
 import ui
 import config
+import globalVars
+
+from .compa import appDir
 
 ADDON_SUMMARY = addonHandler.getCodeAddon ().manifest["summary"]
 
 # Check if NVDA has "Play error sound" feature.
 try:
+	# Present in NVDA 2020.2+
 	config.conf.spec['featureFlag']
 except KeyError:
+	# For NVDA < 2020.2
 	config.conf.spec['featureFlag'] = {}
 try:
+	# OK for NVDA 2021.3+
 	config.conf.spec['featureFlag']['playErrorSound']
 	hasPlayErrorSoundFeature = True
 except KeyError:
+	# For NVDA < 2021.3
 	config.conf.spec['featureFlag']['playErrorSound'] = 'integer(0, 1, default=0)'
 	hasPlayErrorSoundFeature = False
 
@@ -33,11 +40,10 @@ def myHandle(fh,record, *args, **kwargs):
 	# Only controls the play of the error sound if this is NOT a test version.
 	#If test version, error sound will be played by built-in function
 	shouldPlayErrorSound =  not buildVersion.isTestVersion and config.conf['featureFlag']['playErrorSound'] == 1
-	import api
 	if record.levelno>=logging.ERROR and shouldPlayErrorSound:
 		import nvwave
 		try:
-			nvwave.playWaveFile("waves\\error.wav")
+			nvwave.playWaveFile(os.path.join(appDir, "waves", "error.wav"))
 		except:
 			pass
 	return builtinHandle(fh, record, *args, **kwargs)

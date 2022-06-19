@@ -52,7 +52,6 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		category = ADDON_SUMMARY,
 	)
 	def script_toggleStackTraceLog(self, gesture):
-		global _originalFunction
 		self.logEnabled = not self.logEnabled
 		self.enableStackTraceLog(self.logEnabled)
 		if self.logEnabled:

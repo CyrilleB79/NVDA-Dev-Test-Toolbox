@@ -59,7 +59,7 @@ def restartWithOptions(options):
 	if sys.version_info.major < 3:
 		file = file.decode("mbcs")
 		parameters = parameters.decode("mbcs")
-		directory = None
+		directory = None  # Set directory to None as per NVDA 2019.2.1's code; specifying the directory seems to cause issue.
 	shellapi.ShellExecute(
 		hwnd=None,
 		operation=None,
@@ -114,176 +114,233 @@ class FileSelectionHelper(object):
 			self._textCtrl.Value = filename
 
 
-class FolderStr(str):
-	pass
-class FileStr(str):
-	pass
-class LangStr(str):
-	pass
-class LogLevelStr(str):
-	pass
+class CommandLineOption(object):
+	def __init__(self, description, flagList, allowInSecureMode):
+		self.description = description
+		self.flagList = flagList
+		self.allowInSecureMode = allowInSecureMode
+		self.controls = []
+	
+	def shouldBeDisabled(self):
+		return globalVars.appArgs.secure and not allowInSecureMode
+		
+	def shouldBeDisplayed(self):
+		return True
+	
+	def addWithGuiHelper(self, parent, sHelper):
+		raise NotImplementedError
+	
+	@property
+	def flagListLabel(self):
+		label = " ".join(self.flagList)
+		return label.replace('{', '').replace('}', '')
+	
+	def disable(self):
+		for c in self.controls:
+			c.Disable()
+	
+	@property
+	def value(self):
+		return self.mainControl.Value
+	
+	@property
+	def mainControl(self):
+		return self.controls[0]
+
+class CommandLineBooleanOption(CommandLineOption):
+	"""A simple command line option only controlled by the presence or not of a flags.
+	E.g. --disable-addons or -s
+	"""
+	
+	def addWithGuiHelper(self, parent, sHelper):
+		checkBox = wx.CheckBox(
+			parent,
+			label="{description}:\n{flags}".format(
+				description=self.description,
+				flags=self.flagListLabel,
+			)
+		)
+		checkBox.SetValue(False)
+		sHelper.addItem(checkBox)
+		self.controls.append(checkBox)
+	
+	def makeFlagValueString(self):
+		if self.value:
+			return self.flagList[-1]
+		else:
+			return ""
+
+class CommandLineStringOption(CommandLineOption):
+	"""A command line option with an associated parameter, i.e. a flag with a value.
+	E.g. --lang=en
+	"""
+	def __init__(self, *args, **kw):
+		super(CommandLineStringOption, self).__init__(*args, **kw)
+	
+	def makeFlagValueString(self):
+		val = self.value
+		if val:
+			# We use the last element of flagList since it is the long form ("--flag=value"), which exists for all the options.
+			flagLHS, flagRHS = self.flagList[-1].split('=')
+			return flagLHS + '={}'.format(val)
+		else:
+			return ""
+
+class CommandLineChoiceOption(CommandLineStringOption):
+	def __init__(self, choices, *args, **kw):
+		super(CommandLineChoiceOption, self).__init__(*args, **kw)
+		self.choices = choices
+	
+	def addWithGuiHelper(self, parent, sHelper):
+		choice = sHelper.addLabeledControl(
+			"{description}:\n{flags}".format(description=self.description, flags=self.flagListLabel),
+			wx.Choice,
+			choices=self.choices,
+		)
+		choice.SetSelection(0)
+		self.controls.append(choice)
+	
+	@property
+	def value(self):
+		# List items are of the form "10 (debug)" or "en - English, en"
+		return self.mainControl.StringSelection.split(' ')[0]			
+
+
+class CommandLineLanguageOption(CommandLineChoiceOption):
+	def shouldBeDisplayed(self):
+		try:
+			# Forcing the language from the command line is available in NVDA 2022.1+.
+			languageHandler.isLanguageForced
+			return True
+		except AttributeError:
+			return False
+
+class CommandLineFileOption(CommandLineStringOption):
+	def addWithGuiHelper(self, parent, sHelper):
+		groupSizer = wx.StaticBoxSizer(wx.VERTICAL, parent, label="{description}:   {flags}".format(description=self.description, flags=self.flagListLabel))
+		groupBox = groupSizer.GetStaticBox()
+		groupHelper = sHelper.addItem(gui.guiHelper.BoxSizerHelper(parent, sizer=groupSizer))
+		# Translators: The label of a button to browse for a directory or a file.
+		browseText = _("Browse...")
+		# Translators: the label for the NVDA log extension (log) file type
+		wildcard = (_("NVDA log file (*.{ext})")+"|*.{ext}").format(ext="log")
+		# Translators: The title of the dialog presented when browsing for the file.
+		fileDialogTitle = _("Select a file")
+		filePathHelper = FileSelectionHelper(groupBox, browseText, wildcard, fileDialogTitle)
+		shouldAddSpacer = groupHelper.hasFirstItemBeenAdded
+		if shouldAddSpacer:
+			groupHelper.sizer.AddSpacer(SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
+		groupHelper.sizer.Add(filePathHelper.sizer, flag=wx.EXPAND)
+		groupHelper.hasFirstItemBeenAdded = True
+		fileEntryControl = filePathHelper
+		
+		fileEdit = fileEntryControl.pathControl
+		fileEdit.Value = ""
+		self.controls.append(fileEdit)
+		self.controls.append(fileEntryControl._browseButton)
+
+class CommandLineFolderOption(CommandLineStringOption):
+	def addWithGuiHelper(self, parent, sHelper):
+		groupSizer = wx.StaticBoxSizer(wx.VERTICAL, parent, label="{description}:   {flags}".format(description=self.description, flags=self.flagListLabel))
+		groupBox = groupSizer.GetStaticBox()
+		groupHelper = sHelper.addItem(gui.guiHelper.BoxSizerHelper(parent, sizer=groupSizer))
+		# Translators: The label of a button to browse for a directory or a file.
+		browseText = _("Browse...")
+		# Translators: The title of the dialog presented when browsing for the directory.
+		dirDialogTitle = _("Select a directory")
+		directoryPathHelper = gui.guiHelper.PathSelectionHelper(groupBox, browseText, dirDialogTitle)
+		directoryEntryControl = groupHelper.addItem(directoryPathHelper)
+		directoryEdit = directoryEntryControl.pathControl
+		directoryEdit.Value = ""
+		self.controls.append(directoryEdit)		
+		self.controls.append(directoryEntryControl._browseButton)
 
 class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 	# Translators: This is the title for the Restart with options dialog
 	title = _("Specify some options and restart")
 	helpId = "CommandLineOptions"
 	
-	LANG_OVERRIDE_OPTION = [
-		# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
-		_("Override the configured NVDA language"),
-		["--lang={LANGUAGE}"],
-		LangStr(""),
-		True,
-	]
-	
 	OPTION_LIST = [
-		[
+		CommandLineFileOption(
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
-			"The file where log messages should be written to",
-			["-&f {LOGFILENAME}", "--log-file={LOGFILENAME}"],
-			FileStr(""),
-			False,  # Logging in secure mode should be disabled
-		], [
+			description="The file where log messages should be written to",
+			flagList=["-&f {LOGFILENAME}", "--log-file={LOGFILENAME}"],
+			allowInSecureMode=False,  # Logging in secure mode should be disabled
+		),
+		CommandLineChoiceOption(
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
-			"The lowest level of message logged", #(debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default is warning
-			["-&l {LOGLEVEL}", "--log-level={LOGLEVEL}"],
-			LogLevelStr(""),
-			False,  # Logging in secure mode should be disabled
-		], [
+			description="The lowest level of message logged", #(debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default is warning",
+			flagList=["-&l {LOGLEVEL}", "--log-level={LOGLEVEL}"],
+			allowInSecureMode=False,  # Logging in secure mode should be disabled
+			choices=[''] + ['{level} ({name})'.format(name=name, level=level) for level, name in gui.settingsDialogs.GeneralSettingsPanel.LOG_LEVELS],
+		),
+		CommandLineFolderOption(
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
-			"The path where all settings for NVDA are stored",
-			["-&c {CONFIGPATH}", "--config-path={CONFIGPATH}"],
-			FolderStr(""),
-			False,  # Targetting an unauthorized config folder should not be accepted.
-		], LANG_OVERRIDE_OPTION, [
+			description="The path where all settings for NVDA are stored",
+			flagList=["-&c {CONFIGPATH}", "--config-path={CONFIGPATH}"],
+			allowInSecureMode=False,  # Targetting an unauthorized config folder should not be accepted.
+		),
+		CommandLineLanguageOption(
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
-			"No sounds, no interface, no start message, etc.",
-			["-&m", "--minimal"],
-			False,
-			True,  # Always active on secure screens even if the -m parameter is missing.
-		], [
+			description=_("Override the configured NVDA language"),
+			flagList=["--lang={LANGUAGE}"],
+			allowInSecureMode=True,
+			choices=[''] + ['{code} - {lng}'.format(code=c, lng=l) for (c, l) in languageHandler.getAvailableLanguages(presentational=True)],
+		),
+		CommandLineBooleanOption(
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
-			"Secure mode",
-			["-&s", "--secure"],
-			False,
-			True,  # Always active on secure screens even if the -s parameter is missing.
-		], [
+			description="No sounds, no interface, no start message, etc.",
+			flagList=["-&m", "--minimal"],
+			allowInSecureMode=True,  # Always active on secure screens even if the -m parameter is missing.
+		),
+		CommandLineBooleanOption(
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
-			"Add-ons will have no effect",
-			["--disable-addons"],
-			False,
-			True,  # Restart with add-ons disabled allowed on secure screens by NVDA
+			description="Secure mode",
+			flagList=["-&s", "--secure"],
+			allowInSecureMode=True,  # Always active on secure screens even if the -s parameter is missing.
+		),
+		CommandLineBooleanOption(
+			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+			description="Add-ons will have no effect",
+			flagList=["--disable-addons"],
+			allowInSecureMode=True,  # Restart with add-ons disabled allowed on secure screens by NVDA
+		),
 		# --debug-logging (Enable debug level logging just for this run. This setting will override any other log level ( --loglevel, -l) argument given, including no logging option.)
 		# --no-logging (Disable logging altogether while using NVDA. This setting can be overridden if a log level ( --loglevel, -l) is specified from command line or if debug logging is turned on.)
-		], [
+		CommandLineBooleanOption(
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
-			"Don't change the global system screen reader flag",
-			["--no-sr-flag"],
-			False,
-			True,
+			description="Don't change the global system screen reader flag",
+			flagList=["--no-sr-flag"],
+			allowInSecureMode=True,
+		),
 		#check? --create-portable (Creates a portable copy of NVDA (starting the newly created copy). Requires --portable-path to be specified)
 		#check? --create-portable-silent (Creates a portable copy of NVDA (does not start the newly installed copy). Requires --portable-path to be specified)
 		#check? --portable-path=PORTABLEPATH (The path where a portable copy will be created)
-		]
 	]
-	# Check the possibility of forcing the language from the command line (NVDA 2022.1+)
-	# to decide if the language option should be added or not.
-	try:
-		languageHandler.isLanguageForced
-	except AttributeError:
-		OPTION_LIST.remove(LANG_OVERRIDE_OPTION)
-	
 	
 	def makeSettings(self, settingsSizer):
 		sHelper = gui.guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self.options = []
-		for (label, flagList, defaultValue, allowInSecureMode) in self.OPTION_LIST:
-			flagList = " ".join(flagList)
-			flagList = flagList.replace('{', '').replace('}', '')
-			additionalObject = None  # Additional object to disable in secure mode.
-			if isinstance(defaultValue, bool):
-				checkBox = wx.CheckBox(self, label="{label}:\n{flags}".format(label=label, flags=flagList))
-				checkBox.SetValue(defaultValue)
-				sHelper.addItem(checkBox)
-				self.options.append(checkBox)
-			elif isinstance(defaultValue, LogLevelStr):
-				logLevelChoices = ['{level} ({name})'.format(name=name, level=level) for level, name in gui.settingsDialogs.GeneralSettingsPanel.LOG_LEVELS]
-				logLevelChoices.insert(0, '')
-				logLevelList = sHelper.addLabeledControl("{label}:\n{flags}".format(label=label, flags=flagList), wx.Choice, choices=logLevelChoices)
-				logLevelList.SetSelection(0)
-				self.options.append(logLevelList)
-			elif isinstance(defaultValue, LangStr):
-				self.languages = languageHandler.getAvailableLanguages(presentational=True)
-				langChoices = ['{code} - {lng}'.format(code=c, lng=l) for (c, l) in self.languages]
-				langChoices.insert(0, '')
-				langList = sHelper.addLabeledControl("{label}:\n{flags}".format(label=label, flags=flagList), wx.Choice, choices=langChoices)
-				langList.SetSelection(0)
-				self.options.append(langList)
-			elif isinstance(defaultValue, str):
-				groupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label="{label}:   {flags}".format(label=label, flags=flagList))
-				groupBox = groupSizer.GetStaticBox()
-				groupHelper = sHelper.addItem(gui.guiHelper.BoxSizerHelper(self, sizer=groupSizer))
-				# Translators: The label of a button to browse for a directory or a file.
-				browseText = _("Browse...")
-				if isinstance(defaultValue, FolderStr):
-					# Translators: The title of the dialog presented when browsing for the directory.
-					dirDialogTitle = _("Select a directory")
-					directoryPathHelper = gui.guiHelper.PathSelectionHelper(groupBox, browseText, dirDialogTitle)
-					directoryEntryControl = groupHelper.addItem(directoryPathHelper)
-					directoryEdit = directoryEntryControl.pathControl
-					directoryEdit.Value = defaultValue
-					self.options.append(directoryEdit)		
-					additionalObject = directoryEntryControl._browseButton
-				elif isinstance(defaultValue, FileStr):
-					# Translators: the label for the NVDA log extension (log) file type
-					wildcard = (_("NVDA log file (*.{ext})")+"|*.{ext}").format(ext="log")
-					# Translators: The title of the dialog presented when browsing for the file.
-					fileDialogTitle = _("Select a file")
-					filePathHelper = FileSelectionHelper(groupBox, browseText, wildcard, fileDialogTitle)
-					shouldAddSpacer = groupHelper.hasFirstItemBeenAdded
-					if shouldAddSpacer:
-						groupHelper.sizer.AddSpacer(SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
-					groupHelper.sizer.Add(filePathHelper.sizer, flag=wx.EXPAND)
-					groupHelper.hasFirstItemBeenAdded = True
-					fileEntryControl = filePathHelper
-					
-					fileEdit = fileEntryControl.pathControl
-					fileEdit.Value = defaultValue
-					self.options.append(fileEdit)		
-					additionalObject = fileEntryControl._browseButton
-				else:
-					raise			
-			else:
-				raise Exception('Unknown option type')
-			if globalVars.appArgs.secure and not allowInSecureMode:
-				self.options[-1].Disable()
-				if additionalObject:
-					additionalObject.Disable()
+		for option in self.OPTION_LIST:
+			if option.shouldBeDisplayed():
+				option.addWithGuiHelper(self, sHelper)
+				if option.shouldBeDisabled():
+					option.disable()
+				self.options.append(option)
 
 	def postInit(self):
 		# Finally, ensure that focus is on the first option.
 		for o in self.options:
-			if o.IsEnabled():
-				o.SetFocus()
+			if o.mainControl.IsEnabled():
+				o.mainControl.SetFocus()
 				break
 
 	def onOk(self, evt):
 		options = []
-		for (ctrl, optionInfo) in zip(self.options, self.OPTION_LIST):
-			try:
-				value = ctrl.Value
-			except AttributeError:
-				value = ctrl.StringSelection.split(' ')[0]
-			if value:
-				splitFlag = optionInfo[1][-1].split('=')
-				flag = splitFlag[0]
-				if len(splitFlag) == 1:
-					pass
-				elif len(splitFlag) == 2:
-					flag = flag + '={}'.format(value)
-				else:
-					raise ValueError('Unexpected value {}'.format(optionInfo[1][-1]))
-				options.append(flag)
+		for option in self.options:
+			flagString = option.makeFlagValueString()
+			if flagString:
+				options.append(flagString)
 		queueHandler.queueFunction(queueHandler.eventQueue, restartWithOptions, options)
 		super(RestartWithOptionsDialog, self).onOk(evt)
 
