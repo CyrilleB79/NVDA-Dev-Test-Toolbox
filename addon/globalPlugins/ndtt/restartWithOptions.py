@@ -17,6 +17,7 @@ import languageHandler
 import wx
 import sys
 import os
+import weakref
 from types import MethodType
 
 ADDON_SUMMARY = addonHandler.getCodeAddon ().manifest["summary"]
@@ -258,9 +259,29 @@ class CommandLineFolderOption(CommandLineStringOption):
 		self.controls.append(directoryEntryControl._browseButton)
 
 class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
+#class RestartWithOptionsDialog(wx.):
 	# Translators: This is the title for the Restart with options dialog
 	title = _("Specify some options and restart")
 	helpId = "CommandLineOptions"
+	
+	_instance = None
+	
+	def __new__(cls, parent):
+		# Make this a singleton.
+		inst = cls._instance() if cls._instance else None
+		if not inst:
+			return super(cls, cls).__new__(cls, parent)
+		return inst
+	
+	def __init__(self, parent):
+		inst = RestartWithOptionsDialog._instance() if RestartWithOptionsDialog._instance else None
+		if inst:
+			return
+		# Use a weakref so the instance can die.
+		RestartWithOptionsDialog._instance = weakref.ref(self)
+		# Translators: The title of the dialog to exit NVDA
+		#zzz
+		super(RestartWithOptionsDialog, self).__init__(parent)
 	
 	OPTION_LIST = [
 		CommandLineFileOption(
