@@ -3,10 +3,13 @@
 # Copyright (C) 2021-2022 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
+from __future__ import unicode_literals
+
 from logHandler import log
 import config
 import ui
-import globalVars
+import shellapi
+from winUser import SW_SHOWNORMAL
 
 from .compa import appDir
 
@@ -15,6 +18,7 @@ import sys
 import shlex
 import threading
 import subprocess
+import ctypes
 
 
 class ConfigError(Exception): pass
@@ -32,29 +36,13 @@ class SourceFileOpener(threading.Thread):
 			self.cmd = self.opener.format(path=self.path, line=self.line)
 		except KeyError:
 			raise ConfigError('BadOpenerDefinition')		
-		cmdLineItems = shlex.split(self.cmd)
+		cmdLineItems  = win_CommandLineToArgvW(self.cmd)
 		self.editor = cmdLineItems[0]
 		self.parameters = subprocess.list2cmdline(cmdLineItems[1:])
-		if sys.version_info.major < 3:
-			self.editor = self.editor.decode("mbcs")
-			self.parameters = self.parameters.decode("mbcs")
 		if not os.path.isfile(self.editor):
-			raise ConfigError('NoEditorFileFound')		
+			raise ConfigError('NoEditorFileFound at {}'.format(self.editor))
 
 	def run(self):
-		try:
-			ret = subprocess.call(
-				self.cmd,
-				stdout=subprocess.PIPE,
-				stderr=subprocess.PIPE,
-			)
-		except Exception:
-			log.debug('Error when executing the following command:\n{cmd}'.format(cmd=self.cmd))
-			raise
-
-	def run(self):
-		import shellapi
-		from winUser import SW_SHOWNORMAL
 		try:
 			shellapi.ShellExecute(
 				hwnd=None,
@@ -95,3 +83,12 @@ def getNvdaCodePath():
 	else:
 		# NVDA running from source
 		return appDir
+
+def win_CommandLineToArgvW(cmd):
+	nargs = ctypes.c_int()
+	ctypes.windll.shell32.CommandLineToArgvW.restype = ctypes.POINTER(ctypes.c_wchar_p)
+	lpargs = ctypes.windll.shell32.CommandLineToArgvW(cmd, ctypes.byref(nargs))
+	args = [lpargs[i] for i in range(nargs.value)]
+	if ctypes.windll.kernel32.LocalFree(lpargs):
+		raise AssertionError
+	return args

@@ -162,7 +162,7 @@ For this, open the NVDA console (NVDA+control+Z) and type the following line and
 You should of course modify this line according to the real name and location of your editor and the syntax used by it to open files.
 `{path}` will be replaced by the full path of the file to open and `{line}` by the line number where you want the cursor to be set.
 For Notepad++ for example the command to type in the console would be:
-`config.conf['ndtt']['sourceFileOpener'] = r'"C:\Program Files\Notepad++\notepad++.exe" {path} -n{line}'`
+`config.conf['ndtt']['sourceFileOpener'] = r'"C:\Program Files\Notepad++\notepad++.exe" "{path}" -n{line}'`
 
 ### NVDA source code path configuration
 
