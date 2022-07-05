@@ -3,8 +3,12 @@
 # Copyright (C) 2021-2022 Lukasz Golonka, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
-import controlTypes
 import operator
+import os
+import sys
+
+import controlTypes
+import globalVars
 
 try:
 # NVDA 2020.4+

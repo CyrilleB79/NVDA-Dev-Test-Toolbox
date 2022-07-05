@@ -12,7 +12,7 @@ import logging
 import buildVersion
 import ui
 import config
-import globalVars
+import os
 
 from .compa import appDir
 
