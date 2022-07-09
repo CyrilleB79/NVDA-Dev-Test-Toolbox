@@ -10,20 +10,6 @@ import sys
 import controlTypes
 import globalVars
 
-try:
-# NVDA 2020.4+
-	from globalVars import appDir
-except ImportError:
-# NVDA <= 2020.3
-	if getattr(sys, "frozen", None):
-		# We are running as an executable.
-		appDir = sys.prefix
-	else:
-		# we are running from source
-		# We should always change directory to the location of an NVDA root module (e.g. globalVars), don't rely on sys.path[0]
-		appDir = os.path.normpath(os.path.dirname(globalVars.__file__))
-	appDir = os.path.abspath(appDir)
-
 
 # Following code based on Lukasz Golonka's work.
 
@@ -76,4 +62,20 @@ class ControlTypesCompatWrapper(object):
 	def __getattr__(self, attr):
 		return getattr(controlTypes, attr)
 
+
+def getApDir():
+	try:
+		# NVDA 2020.4+
+		return globalVars.appDir
+	except AttributeError:
+		# NVDA <= 2020.3
+		if getattr(sys, "frozen", None):
+			# We are running as an executable.
+			return sys.prefix  # No normalization necessary
+		# we are running from source
+		# Since we cannot rely on CWD being correct create a path from one of NVDA's core modules.
+		return os.path.abspath(os.path.normpath(os.path.dirname(globalVars.__file__)))
+
+
+appDir = getApDir()
 controlTypesCompatWrapper = ControlTypesCompatWrapper()
