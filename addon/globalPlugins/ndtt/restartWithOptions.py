@@ -7,7 +7,6 @@ from __future__ import unicode_literals
 
 import gui
 import queueHandler
-import core
 import globalVars
 import globalPluginHandler
 import addonHandler
@@ -18,25 +17,10 @@ import wx
 import sys
 import os
 import weakref
-from types import MethodType
+from . import compa
 
 ADDON_SUMMARY = addonHandler.getCodeAddon ().manifest["summary"]
 
-def initializeAppDir():
-	if getattr(sys, "frozen", None):
-		# We are running as an executable.
-		appDir = sys.prefix
-	else:
-		# we are running from source
-		# We should always change directory to the location of an NVDA root module (e.g. globalVars), don't rely on sys.path[0]
-		appDir = os.path.normpath(os.path.dirname(globalVars.__file__))
-	appDir = os.path.abspath(appDir)
-	return appDir
-
-try:
-	globalVars.appDir
-except AttributeError:
-	globalVars.appDir = initializeAppDir
 
 def restartWithOptions(options):
 	"""Restarts NVDA by starting a new copy, providing some options."""
@@ -58,11 +42,10 @@ def restartWithOptions(options):
 		options.append("-r")
 	file = sys.executable
 	parameters = subprocess.list2cmdline(options)
-	directory = globalVars.appDir
+	directory = compa.appDir
 	if sys.version_info.major < 3:
 		file = file.decode("mbcs")
 		parameters = parameters.decode("mbcs")
-		directory = None  # Set directory to None as per NVDA 2019.2.1's code; specifying the directory seems to cause issue.
 	shellapi.ShellExecute(
 		hwnd=None,
 		operation=None,
