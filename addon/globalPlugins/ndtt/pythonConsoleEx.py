@@ -112,6 +112,8 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	def testCodeFinder(self):
 		nvdaCodePath = getNvdaCodePath()
+		if not nvdaCodePath:
+			return
 		import config
 		import api
 		import appModules
@@ -145,11 +147,15 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				hasErrorOccurred = True
 		if not hasErrorOccurred:
 			import ui
-			ui.message('test OK')
-			
+			ui.message('test OK')		
 	
 	@script()
 	def script_testCodeFinder(self, gesture):
 		"""A maintenance script used to test more easily the code finder feature.
+		
+		To assign a gesture to this script, the file gestures.ini has to be edited directly.
+		E.g. to assign the gesture NVDA+control+alt+F1, add the following lines:
+		[globalPlugins.ndtt.pythonConsoleEx.GlobalPlugin]
+		testCodeFinder = kb:alt+control+f1+nvda
 		"""
 		self.testCodeFinder()
