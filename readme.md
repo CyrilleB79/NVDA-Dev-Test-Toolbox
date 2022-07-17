@@ -181,6 +181,14 @@ Be sure however that the version of your source file (e.g. GIT commit) is the sa
 
 ## Change log
 
+### Version 2.1
+
+* Various bugfixes and code refactoring/cleaning to address all use cases: all supported versions, installed vs. run from source, etc. (contribution from Łukasz Golonka)
+* Rewriting of the compa module (contribution from Łukasz Golonka)
+* The restart dialog can now be opened only once.
+* The object explorer shortcuts are now unassigned by default and need to be mapped by the user.
+* With the object explorer, a double-press to call the script to report the current object's property now displays the reported information in a browseable message.
+
 ### Version 2.0
 
 * New feature: Enhanced restart dialog to specify some extra options when restarting NVDA.
