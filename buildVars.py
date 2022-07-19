@@ -23,7 +23,7 @@ addon_info = {
 	"addon_summary": _("NVDA Dev & Test Toolbox"),
 	# Add-on description
 	# Translators: Long description to be shown for this add-on on add-on information from add-ons manager
-	"addon_description": _("""A set of tools for NVDA developpers and testers."""),
+	"addon_description": _("""A set of tools for NVDA developers and testers."""),
 	# version
 	"addon_version": "2.1",
 	# Author(s)
