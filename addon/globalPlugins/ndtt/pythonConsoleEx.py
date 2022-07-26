@@ -29,6 +29,12 @@ def getCodeFileAndLine(obj):
 	line = None
 	try:
 		# For functions and methods
+		try:
+			# When using @functools.wraps target the original function decorated by the wrapper
+			# rather than the function defined in the wrapper's code.
+			obj = obj.__wrapped__
+		except AttributeError:
+			pass
 		path = obj.__code__.co_filename
 	except AttributeError:
 		pass
@@ -110,12 +116,19 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			pass
 		super(GlobalPlugin, self).terminate(*args, **kwargs)
 
-	def testCodeFinder(self):
+	@staticmethod
+	def testCodeFinder():
+		""" A test function for the `getCodeFileAndLine` function.
+		To execute it, open NVDA's Python console and run the following command:
+		globalPlugins.ndtt.GlobalPlugin.testCodeFinder()
+		"""
+		
 		nvdaCodePath = getNvdaCodePath()
 		if not nvdaCodePath:
 			return
 		import config
 		import api
+		from gui import logViewer
 		import appModules
 		from appModules import excel as appModules_excel
 		import globalCommands
@@ -124,6 +137,8 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			(api, nvdaCodePath + r'\api.py', 1),
 			# Module-level function
 			(api.getFocusObject, nvdaCodePath + r'\api.py', 69),
+			# Module-level function with wrapper
+			(logViewer.activate, nvdaCodePath + r'\gui\logViewer.py', 108),
 			# Class definition
 			(globalCommands.GlobalCommands, nvdaCodePath + r'\globalCommands.py', 99),
 			# Definition of the class of an object
@@ -145,17 +160,11 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			else:
 				log.error('FileRef: {} - {}\nFileGCP: {} - {}'.format(file, line, file1, line1))
 				hasErrorOccurred = True
-		if not hasErrorOccurred:
-			import ui
-			ui.message('test OK')		
+		import ui
+		import core
+		if hasErrorOccurred:
+			msg = 'Test failed; see the log for details'
+		else:
+			msg = 'Test successful'
+		core.callLater(0, lambda: ui.message(msg))
 	
-	@script()
-	def script_testCodeFinder(self, gesture):
-		"""A maintenance script used to test more easily the code finder feature.
-		
-		To assign a gesture to this script, the file gestures.ini has to be edited directly.
-		E.g. to assign the gesture NVDA+control+alt+F1, add the following lines:
-		[globalPlugins.ndtt.pythonConsoleEx.GlobalPlugin]
-		testCodeFinder = kb:alt+control+f1+nvda
-		"""
-		self.testCodeFinder()
