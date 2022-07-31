@@ -54,9 +54,16 @@ import winUser
 import config
 from inputCore import normalizeGestureIdentifier
 import gui.logViewer
+import core
 
 from .compa import controlTypesCompatWrapper as controlTypes
-from .fileOpener import openSourceFile, getNvdaCodePath
+from .fileOpener import (
+	openSourceFile,
+	openObject,
+	reportFileOpenError,
+	getNvdaCodePath,
+	ValueNotFoundError,
+)
 
 import re
 import os
@@ -70,7 +77,7 @@ ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
 # Regexp strings for log message headers:
 RES_ANY_LEVEL_NAME = r'[A-Z]+'
 RES_CODE_PATH = r'[^\r\n]+'
-RES_TIME = r'[^\r\n]+'
+RES_TIME = r'\d+:\d+:\d+.\d+'
 RES_THREAD_NAME = r'[^\r\n]+'
 RES_THREAD = r'\d+'
 RES_MESSAGE_HEADER = (
@@ -103,8 +110,7 @@ RE_CANCELLABLE_SPEECH = re.compile(
 RE_CALLBACK_COMMAND = re.compile(r'CallbackCommand\(name=say-all:[A-Za-z]+\)((?=\])|, )')
 
 # Regexps of log line containing a file path and a line number.
-RE_NVDA_FILEPATH = re.compile(r'^File "(?P<path>[^:"]+\.py)[co]?", line (?P<line>\d+)(?:, in .+)?$')
-RE_EXTERNAL_FILEPATH = re.compile(r'^File "(?P<path>[A-Z]:\\[^"]+\.py)", line (?P<line>\d+)(?:, in .+)?$')
+RE_STACK_TRACE_LINE = re.compile(r'^File "(?P<drive>(?:[A-Z]:\\)|)(?P<path>[^:"]+\.py)[co]?", line (?P<line>\d+)(?:, in .+)?$')
 
 #zzz # Regexps of console output line containing an object definition
 #zzz RE_NVDA_HELP = re.compile(r'^File "(?P<path>[^:"]+\.py)c?", line (?P<line>\d+)(?:, in .+)?$')
@@ -120,6 +126,7 @@ def matchDict(m):
 	if not m:
 		return m
 	return m.groupdict()
+
 
 class LogMessageHeader(object):
 	def __init__(self, level, codePath, time, threadName=None, thread=None):
@@ -342,7 +349,7 @@ class LogContainer(ScriptableObject):
 	
 	def getWindowHandle(self):
 		""" Returns the handle of the window containing this LogContainer.
-		For treeInterceptors, the handle of the root documente is returned.
+		For treeInterceptors, the handle of the root document is returned.
 		"""
 		
 		try:
@@ -376,23 +383,45 @@ class LogContainer(ScriptableObject):
 		ti.collapse()
 		ti.expand(textInfos.UNIT_LINE)
 		line = ti.text.strip()
-		path = None
-		match = matchDict(RE_NVDA_FILEPATH.match(line))
-		if match:
+		if self.openStackTraceLine(line):
+			return
+		if self.openMessageHeaderLine(line):
+			return
+		# Translators: A message reported when trying to open the source code from the current line.
+		ui.message(_('No file reference found on this line.'))
+	
+	@staticmethod
+	def openStackTraceLine(line):
+		match = matchDict(RE_STACK_TRACE_LINE.match(line))
+		if not match:
+			return False
+		if match['drive'] == '':
 			nvdaSourcePath = getNvdaCodePath()
 			if not nvdaSourcePath:
-				return
+				# Return True even if no file open since a stack trace line has been identified.
+				return True
 			path = os.path.join(nvdaSourcePath, match['path'])
-		if not path:
-			match = matchDict(RE_EXTERNAL_FILEPATH.match(line))
-			if match:
-				path = match['path']
-		if not path:
-			# Translators: A message reported when trying to open the source code from the current line.
-			ui.message(_('No file path found on this line.'))
-			return
+		else:
+			path = match['drive'] + match['path']
 		line = match['line']
-		openSourceFile(path, line)
+		try:
+			openSourceFile(path, line)
+		except ValueNotFoundError as e:
+			reportFileOpenError(e)
+		return True
+	
+	@staticmethod
+	def openMessageHeaderLine(line):
+		match = matchDict(RE_MESSAGE_HEADER.match(line))
+		if not match:
+			return False
+		objPath = match['codePath']
+		externalPrefix = 'external:'
+		if objPath.startswith(externalPrefix):
+			objPath = objPath[len(externalPrefix):]
+		openObject(objPath, reportError=True)
+		return True
+
 
 class EditableTextLogContainer(LogContainer):
 	def initOverlayClass(self):

@@ -8,6 +8,7 @@ from __future__ import unicode_literals
 from logHandler import log
 import config
 import ui
+import core
 import shellapi
 from winUser import SW_SHOWNORMAL
 
@@ -19,9 +20,30 @@ import shlex
 import threading
 import subprocess
 import ctypes
+import inspect
+import re
+try:
+	import importlib
+except ImportError:
+	# NVDA2019.2: although importlib seems documented for Python2, it is not present in Python's version of NVDA.
+	# We will use __import__ instead as done in NVDA source code.
+	pass
+# For Python 2.7, open the open of Python 3, allowing to specify encoding.
+from io import open
 
+if sys.version_info.major >= 3:
+# Python 3+
+	stringTypes = (str,)
+else:
+# Python 2
+	stringTypes = (str, unicode)
 
 class ConfigError(Exception): pass
+
+class ValueNotFoundError(LookupError): pass
+class PathNotFoundError(ValueNotFoundError): pass
+class ObjectNotFoundError(ValueNotFoundError): pass
+	
 
 class SourceFileOpener(threading.Thread):
 
@@ -59,9 +81,7 @@ class SourceFileOpener(threading.Thread):
 
 def openSourceFile(path, line):
 	if not os.path.isfile(path):
-		# Translators: A message reported when trying to open a source file.
-		ui.message(_('File not found: {file}'.format(file=path)))
-		return
+		raise PathNotFoundError(path)
 	try:
 		SourceFileOpener(path, line).start()
 	except ConfigError as e:
@@ -69,6 +89,166 @@ def openSourceFile(path, line):
 		ui.message(_('Configuration error: {err}. Please see the documentation to configure this feature.').format(err=e.args[0]))
 		raise e
 
+
+class CodeLocator(object):
+	def __init__(self, obj):
+		self.obj = obj
+	
+	def getCodeLocation(self):
+		"""Returns the file path and the line of the source code that has been used to construct the object of this locator.
+		If no information can be found on the object, returns None.
+		"""
+		
+		if inspect.isfunction(self.obj) or inspect.ismethod(self.obj):
+			loc = self.getCodeLocationForFunctionOrMethod()
+		elif inspect.isclass(self.obj):
+			loc = self.getCodeLocationForClass()
+		elif inspect.ismodule(self.obj):
+			loc = self.getCodeLocationForModule()
+		else:
+			loc = self.getObjectCodePath()
+		path, line = loc
+		return path, line
+		
+	def getCodeLocationForFunctionOrMethod(self):
+		try:
+			# When using @functools.wraps target the original function decorated by the wrapper
+			# rather than the function defined in the wrapper's code.
+			self.obj = self.obj.__wrapped__
+		except AttributeError:
+			pass
+		path = inspect.getsourcefile(self.obj)
+		path = self.convertToSourcePath(path)
+		line = self.obj.__code__.co_firstlineno
+		return path, line
+		
+	def getCodeLocationForClass(self):
+		path = self.getModuleOrClassCodePath()
+		if not path:
+			return None
+		path = self.convertToSourcePath(path)
+		try:
+			className = self.obj.__qualname__
+		except AttributeError:# Python 2: __name__ instead of __qualname__
+			className = self.obj.__name__
+		className = className.split('.')[-1]
+		line = self.findClassDefinitionLine(className, path)
+		return path, line
+	
+	def getCodeLocationForModule(self):
+		path = self.getModuleOrClassCodePath()
+		if not path:
+			return None
+		path = self.convertToSourcePath(path)
+		line = 1
+		return path, line
+		
+	@staticmethod
+	def convertToSourcePath(path):
+		path = re.sub(r'^.+\\library.zip\\(.+.py)[co]?$', r'\1', path)
+		if ':' not in path:
+			nvdaPath = getNvdaCodePath()
+			return os.path.join(nvdaPath, path)
+		else:
+			return path
+				
+	
+	@staticmethod
+	def findClassDefinitionLine(className, path):
+		reClassLine = r'\s*class\s+{}'.format(className)
+		reComp = re.compile(reClassLine)
+		with open(path, 'r', encoding='utf8') as f:
+			for (n, l) in enumerate(f):
+				if reComp.match(l):
+					return n + 1
+			log.warning('Class definition line not found:\n{}'.format(reClassLine))
+			return 1
+	
+	def getModuleOrClassCodePath(self):
+		if inspect.ismodule(self.obj):
+			modName = self.obj.__name__
+		elif inspect.isclass(self.obj):
+			modName = self.obj.__module__
+		else:
+			raise RuntimeError('Unexpected object type: {}'.format(type(self.obj)))
+		if modName == '__main__':
+			return 'nvda.pyw'
+		try:
+			src = inspect.getsourcefile(self.obj)
+			if src:
+				return src
+		except TypeError as e:
+			pass
+		raise ObjectNotFoundError(modName)
+	
+	def getObjectCodePath(self):
+		return CodeLocator(self.obj.__class__).getCodeLocationForClass()
+
+
+def reportFileOpenError(e):
+	"""Reports an error caught when trying to open a file whose path is not found.
+	"""
+	
+	if isinstance(e, PathNotFoundError):
+		# Translators: A message reported when trying to open a source file.
+		msg = _('File not found: {}').format(e)
+	elif isinstance(e, ObjectNotFoundError):
+		# Translators: A message reported when trying to open a source file.
+		msg = _('Object not found: {}').format(e)
+	else:
+		raise RuntimeError('Wrong error type: {}'.format(type(e)))
+	core.callLater(0, lambda: ui.message(msg))
+
+
+def openObject(objPath, reportError=True):
+	tokens = objPath.split('.')
+	mod = tokens[0]
+	try:
+		importFunction = importlib.import_module
+	except NameError:
+		# NVDA 2019.2.1: Although importlib is documented for Python 2, it is not present in NVDA's Python
+		# for this version. Thus use __import__ instead, as done in core code.
+		importFunction =  __import__
+	try:
+		obj = importFunction(mod)
+	# Python 2 raise ImportError for non-existing modules; Python 3 raises ModuleNotFoundError instead.
+	# Since ModuleNotFoundError inherits from ImportError we filter on ImportError
+	except ImportError:
+		if reportError:
+			reportFileOpenError(ObjectNotFoundError(objPath))
+			return
+		raise
+	try:
+		for attr in tokens[1:]:
+			obj = getattr(obj, attr)
+	except AttributeError:
+		if reportError:
+			reportFileOpenError(ObjectNotFoundError(objPath))
+			return
+		raise
+	try:
+		openCodeFile(obj)
+	except PathNotFoundError as e:
+		if reportError:
+			reportFileOpenError(e)
+			return
+		raise
+	return True
+
+def openCodeFile(obj):
+	"""Opens the source code defining the object passed as parameter.
+	The parameter may be:
+	    - a Python object
+	      `openCodeFile(gui.settingsDialogs.SettingsPanel)`
+	    - a string containing the name of a Python object
+	      `openCodeFile("gui.settingsDialogs.SettingsPanel")`
+	"""
+	
+	if isinstance(obj, stringTypes):
+		openObject(obj, reportError=False)
+		return
+	path, line = CodeLocator(obj).getCodeLocation()
+	openSourceFile(path, line)
 
 def getNvdaCodePath():
 	if getattr(sys,'frozen',None):
@@ -92,3 +272,60 @@ def win_CommandLineToArgvW(cmd):
 	if ctypes.windll.kernel32.LocalFree(lpargs):
 		raise AssertionError
 	return args
+
+def testCodeFinder():
+	""" A test function for the `CodeLocator` class.
+	To execute it, open NVDA's Python console and run the following command:
+	globalPlugins.ndtt.GlobalPlugin.testCodeFinder()
+	"""
+	
+	nvdaCodePath = getNvdaCodePath()
+	if not nvdaCodePath:
+		return
+	import config
+	import api
+	from gui import logViewer
+	import appModules
+	from appModules import excel as appModules_excel
+	import globalCommands
+	import __main__
+	
+	objList = [
+		# Module
+		(api, nvdaCodePath + r'\api.py', 1),
+		# Main module
+		(__main__, nvdaCodePath + r'\nvda.pyw', 1),
+		# Module-level function
+		(api.getFocusObject, nvdaCodePath + r'\api.py', 69),
+		# Module-level function with wrapper
+		(logViewer.activate, nvdaCodePath + r'\gui\logViewer.py', 108),
+		# Class definition
+		(globalCommands.GlobalCommands, nvdaCodePath + r'\globalCommands.py', 99),
+		# Class definition in main module
+		(__main__.NoConsoleOptionParser, nvdaCodePath + r'\nvda.pyw', 93),
+		# Definition of the class of an object
+		(globalCommands.commands, nvdaCodePath + r'\globalCommands.py', 99),
+		# Method definition in a class
+		(globalCommands.GlobalCommands.script_cycleAudioDuckingMode, nvdaCodePath + r'\globalCommands.py', 103),
+		# Method definition of an object
+		(globalCommands.commands.script_cycleAudioDuckingMode, nvdaCodePath + r'\globalCommands.py', 103),
+		# Package
+		(appModules, nvdaCodePath + r'\appModules\__init__.py', 1),
+		# Module in subfolder
+		(appModules_excel, nvdaCodePath + r'\appModules\excel.py', 1),
+	]
+	hasErrorOccurred = False
+	for obj, file, line in objList:
+		file1, line1 = CodeLocator(obj).getCodeLocation()
+		if file.lower() == file1.lower() and (line != 1) == (line1 != 1):
+			log.debug('Checked {} successfully.'.format(obj))
+		else:
+			log.error('FileRef: {} - {}\nFileGCP: {} - {}'.format(file, line, file1, line1))
+			hasErrorOccurred = True
+	import ui
+	import core
+	if hasErrorOccurred:
+		msg = 'Test failed; see the log for details'
+	else:
+		msg = 'Test successful'
+	core.callLater(0, lambda: ui.message(msg))

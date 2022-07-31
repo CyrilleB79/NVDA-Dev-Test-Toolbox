@@ -96,6 +96,7 @@ The commands available in log reader mode are described hereafter.
 ### Quick navigation commands
 
 Single letter command similar to browse mode quick navigation keys allow to move to various type of log messages:
+
 * m: any message
 * e: ERROR
 * i: IO
@@ -108,8 +109,15 @@ Pressing the single letter moves to the next occurrence of this message. Combini
 
 ### Opening a file in your editor
 
-When looking at a traceback, you may want to open one of the source files to understand the cause and the context of the issue.
-Press C to open the source code file corresponding to the current line of the traceback.
+In the log some line may refer to the source code:
+
+* A line belonging to a traceback contains the path and the line in a file, e.g.:  
+  `  File "virtualBuffers\__init__.pyc", line 226, in _getStoryLength`
+* The header line of a logged message contains the function which has logged this message, e.g.:  
+  `INFO - config.ConfigManager._loadConfig (22:45:26.145) - MainThread (16580):`
+
+You may want to open the file containing this code to understand the context of the traceback or the logged message.
+Just press C to open this file.
 
 For this feature to work, you need to have configured your favorite editor's command.
 If you are not running NVDA from source, the location of NVDA source code also should have been configured.
@@ -129,10 +137,14 @@ For more details regarding the configuration, please see the paragraph NVDA Debu
 The `openCodeFile` functions can be called on objects defined in NVDA's code or on objects defined by add-ons.
 It cannot be called on objects whose source code is not available such as python builtins.
 
+If you have not yet imported the object in the console, you can also pass its name as parameter to the `openCodeFile` function.
+
 Below are examples of call in NVDA's code:
 
 * View the definition of the function `speech.speech.speak`:  
-  `openCodeFile(speech.speech.speak)`
+  `openCodeFile(speech.speech.speak)`  
+  or with the name passed as parameter:  
+  `openCodeFile("speech.speech.speak")`
 * View the definition of the class `TextInfo`:  
   `openCodeFile(textInfos.TextInfo)`
 * View the definition of the method `copyToClipboard` of the class `TextInfo`:  
