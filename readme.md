@@ -14,6 +14,7 @@ This add-on gathers various features for NVDA debugging and testing.
 * An extended script description mode: when enabled input help mode report information on scripts that have no description.
 * Commands to help log reading and analyzing.
 * In the Python console workspace, a function to open the source code of an object.
+* A custom startup script for the Python console
 * A command to log the stack trace of the speech.speak function.
 
 ## Enhanced restart dialog
@@ -116,6 +117,8 @@ For more details regarding the configuration, please see the paragraph NVDA Debu
 
 ## Python console extension
 
+### `openCodeFile` function
+
 In the console, you can call the following function to view the source code that defines the variable `myVar`:  
 `openCodeFile(myVar)`
 
@@ -138,6 +141,22 @@ Below are examples of call in NVDA's code:
   `openCodeFile(focus)`
 * Open the file `api.py` defining the module `api`:  
   `openCodeFile(api)`
+
+### Python console startup script
+
+You can define a custom script which will be executed in the Python console's namespace when it is first opened, or if the add-on is reloaded (NVDA+F3) after the console has already been opened.
+
+For example, the script allows you to execute new imports and define aliases that you will be able to use directly in the console, as shown below:  
+
+    # Various import that I want in the console.
+    import globalVars as gv
+    import core
+    import ui
+    # Aliases
+    ocf = openCodeFile
+
+The Python console script should be placed in the following location: `pathToNVDAConfig\ndtt\consoleStartup.py`  
+For example: `C:\Users\myUserName\AppData\Roaming\nvda\ndtt\consoleStartup.py`
 
 ## Log the stack trace of the speech function
 

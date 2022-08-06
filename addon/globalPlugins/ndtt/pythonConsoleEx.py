@@ -7,17 +7,20 @@
 """Provides an extension of NVDA's Python console.
 """
 
-from .fileOpener import openSourceFile, getNvdaCodePath
+import os
+import sys
+import re
+import inspect
 
 import globalPluginHandler
 import pythonConsole
 from logHandler import log
 from scriptHandler import script
 import addonHandler
+import globalVars
+from logHandler import log
 
-import os
-import re
-import inspect
+from .fileOpener import openSourceFile, getNvdaCodePath
 
 ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
 
@@ -100,12 +103,12 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def __init__(self, *args, **kwargs):
 		super(GlobalPlugin, self).__init__(*args, **kwargs)
 		if pythonConsole.consoleUI:
-			pythonConsole.consoleUI.console.namespace.update({'openCodeFile': openCodeFile})
+			self.pythonConsolePostInitialize()
 		else:
 			oldInitialize = pythonConsole.initialize
 			def newInitialize():
 				oldInitialize()
-				pythonConsole.consoleUI.console.namespace.update({'openCodeFile': openCodeFile})
+				self.pythonConsolePostInitialize()
 				pythonConsole.initialize = oldInitialize
 			pythonConsole.initialize = newInitialize
 
@@ -168,3 +171,19 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			msg = 'Test successful'
 		core.callLater(0, lambda: ui.message(msg))
 	
+	def pythonConsolePostInitialize(self):
+		pythonConsole.consoleUI.console.namespace.update({'openCodeFile': openCodeFile})
+		ndttPath = os.path.join(globalVars.appArgs.configPath, 'ndtt')
+		startupFileName = 'consoleStartup.py'
+		startupFilePath = os.path.join(ndttPath, startupFileName)
+		if os.path.isfile(startupFilePath):
+			log.debug('Loading console startupFile {}'.format(startupFilePath))
+			stdout, stderr = sys.stdout, sys.stderr
+			sys.stdout = sys.stderr = pythonConsole.consoleUI.console
+			print('### Executing console startup script: {}'.format(startupFilePath))
+			with open(startupFilePath, 'r') as sf:
+				pythonConsole.consoleUI.console.runsource(source=sf.read(), filename=startupFileName, symbol='exec')
+			print('### Console startup script executed.')
+			sys.stdout, sys.stderr = stdout, stderr
+		else:
+			log.debug('No console startup file found for path {}'.format(startupFilePath))
