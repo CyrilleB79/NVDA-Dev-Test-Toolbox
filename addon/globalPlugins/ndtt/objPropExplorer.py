@@ -8,7 +8,7 @@ from __future__ import unicode_literals
 import globalPluginHandler
 import ui
 import api
-from .compa import controlTypesCompatWrapper as controlTypes
+import controlTypes  # Import normal controlTypes and not the wrapper since it is only used for older versions of NVDA.
 from logHandler import log
 import addonHandler
 import scriptHandler
@@ -23,7 +23,7 @@ def _createDicControlTypesConstantes(prefix):
 		if name.startswith(prefix):
 			dic[getattr(controlTypes, name)] = name[len(prefix):]
 	return dic
-_DIC_ROLES = _createDicControlTypesConstantes('ROLE_')
+_DIC_ROLES	 = _createDicControlTypesConstantes('ROLE_')
 _DIC_STATES = _createDicControlTypesConstantes('STATE_')
 
 def getRoleInfo(o):
@@ -112,7 +112,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			fun = lambda o: getattr(o, infoType)
 		try:
 			info = fun(nav)
-		except Exception as e:
+		except IndexError as e:
 			info = 'Unavailable information.'
 			log.debugWarning(e, exc_info=True)
 		self.lastInfo = '{}:\r\n{}'.format(infoType, info)
