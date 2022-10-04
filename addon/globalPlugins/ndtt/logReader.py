@@ -60,9 +60,8 @@ from .compa import controlTypesCompatWrapper as controlTypes
 from .fileOpener import (
 	openSourceFile,
 	openObject,
-	reportFileOpenError,
 	getNvdaCodePath,
-	ValueNotFoundError,
+	FileOpenerError,
 )
 
 import re
@@ -110,7 +109,7 @@ RE_CANCELLABLE_SPEECH = re.compile(
 RE_CALLBACK_COMMAND = re.compile(r'CallbackCommand\(name=say-all:[A-Za-z]+\)((?=\])|, )')
 
 # Regexps of log line containing a file path and a line number.
-RE_STACK_TRACE_LINE = re.compile(r'^File "(?P<drive>(?:[A-Z]:\\)|)(?P<path>[^:"]+\.py)[co]?", line (?P<line>\d+)(?:, in .+)?$')
+RE_STACK_TRACE_LINE = re.compile(r'^File "(?P<drive>(?:[A-Z]:\\)|)(?P<path>[^:"]+\.pyw?)[co]?", line (?P<line>\d+)(?:, in .+)?$')
 
 #zzz # Regexps of console output line containing an object definition
 #zzz RE_NVDA_HELP = re.compile(r'^File "(?P<path>[^:"]+\.py)c?", line (?P<line>\d+)(?:, in .+)?$')
@@ -383,12 +382,17 @@ class LogContainer(ScriptableObject):
 		ti.collapse()
 		ti.expand(textInfos.UNIT_LINE)
 		line = ti.text.strip()
-		if self.openStackTraceLine(line):
-			return
-		if self.openMessageHeaderLine(line):
+		try:
+			if self.openStackTraceLine(line):
+				return
+			if self.openMessageHeaderLine(line):
+				return
+		except FileOpenerError as e:
+			log.debugWarning(str(e))
+			ui.message(e.getUserFriendlyMessage())
 			return
 		# Translators: A message reported when trying to open the source code from the current line.
-		ui.message(_('No file reference found on this line.'))
+		ui.message(_('No file path or object found on this line.'))
 	
 	@staticmethod
 	def openStackTraceLine(line):
@@ -404,10 +408,7 @@ class LogContainer(ScriptableObject):
 		else:
 			path = match['drive'] + match['path']
 		line = match['line']
-		try:
-			openSourceFile(path, line)
-		except ValueNotFoundError as e:
-			reportFileOpenError(e)
+		openSourceFile(path, line)
 		return True
 	
 	@staticmethod

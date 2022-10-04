@@ -38,12 +38,70 @@ else:
 # Python 2
 	stringTypes = (str, unicode)
 
-class ConfigError(Exception): pass
-
-class ValueNotFoundError(LookupError): pass
-class PathNotFoundError(ValueNotFoundError): pass
-class ObjectNotFoundError(ValueNotFoundError): pass
+class FileOpenerError(Exception):
+	"""An error that can be raised in the Python console and caught to report a message in the log reader.
+	"""
 	
+	# Possible error types
+	ET_CONFIG_NO_NVDA_SOURCE_PATH_DEFINED = 1
+	ET_CONFIG_NO_OPENER_DEFINED = 2
+	ET_CONFIG_OPENER_DEFINITION_WRONG_FORMAT = 3
+	ET_CONFIG_EDITOR_NOT_FOUND = 4
+	ET_OBJECT_NOT_FOUND = 10
+	ET_FILE_NOT_FOUND = 11
+	
+	MESSAGE_DIC = {
+		ET_CONFIG_NO_NVDA_SOURCE_PATH_DEFINED: (
+			'No NVDA source path defined in configuration',
+			# Translators: A message reported when trying to open a source file.
+			_('No path configured for NVDA sources; please see documentation to configure it.'),
+		),
+		ET_CONFIG_NO_OPENER_DEFINED: (
+			'No opener command defined in configuration',
+			# Translators: A message reported when trying to open a source file.
+			_('No opener command configured; please see documentation to configure it.'),
+		),
+		ET_CONFIG_OPENER_DEFINITION_WRONG_FORMAT: (
+			'Wrong format for the opener command defined in configuration',
+			# Translators: A message reported when trying to open a source file.
+			_('Wrong format of the opener command in the configuration; please see documentation to configure it.'),
+		),
+		ET_CONFIG_EDITOR_NOT_FOUND: (
+			'Editor not found {}',
+			# Translators: A message reported when trying to open a source file.
+			_('Editor not found at {}; please check your configuration.'),
+		),
+		ET_OBJECT_NOT_FOUND: (
+			'Object not found: {}',
+			# Translators: A message reported when trying to open a source file.
+			_('Object not found: {}'),
+		),
+		ET_FILE_NOT_FOUND: (
+			'File not found {}',
+			# Translators: A message reported when trying to open a source file.
+			_('File not found: {}'),
+		)
+	}
+	
+	def __init__(self, errorType, value=None):
+		self.errorType = errorType
+		self.value = value
+	
+	def __str__(self):
+		msg = self.MESSAGE_DIC[self.errorType][0]
+		if self.value is not None:
+			msg = msg.format(self.value)
+		return '{msg} [ErrorType: {et}]'.format(
+			msg=msg,
+			et=self.errorType,
+		)
+	
+	def getUserFriendlyMessage(self):
+		msg = self.MESSAGE_DIC[self.errorType][1]
+		if self.value is not None:
+			msg = msg.format(self.value)
+		return msg
+
 
 class SourceFileOpener(threading.Thread):
 
@@ -53,16 +111,16 @@ class SourceFileOpener(threading.Thread):
 		self.line = line
 		self.opener = config.conf['ndtt']['sourceFileOpener']
 		if not self.opener.strip():
-			raise ConfigError('NoOpenerDefined')
+			raise FileOpenerError(FileOpenerError.ET_CONFIG_NO_OPENER_DEFINED)
 		try:
 			self.cmd = self.opener.format(path=self.path, line=self.line)
 		except KeyError:
-			raise ConfigError('BadOpenerDefinition')		
+			raise FileOpenerError(FileOpenerError.ET_CONFIG_OPENER_DEFINITION_WRONG_FORMAT, self.opener)
 		cmdLineItems  = win_CommandLineToArgvW(self.cmd)
 		self.editor = cmdLineItems[0]
 		self.parameters = subprocess.list2cmdline(cmdLineItems[1:])
 		if not os.path.isfile(self.editor):
-			raise ConfigError('NoEditorFileFound at {}'.format(self.editor))
+			raise FileOpenerError(FileOpenerError.ET_CONFIG_EDITOR_NOT_FOUND, self.editor)
 
 	def run(self):
 		try:
@@ -81,13 +139,8 @@ class SourceFileOpener(threading.Thread):
 
 def openSourceFile(path, line):
 	if not os.path.isfile(path):
-		raise PathNotFoundError(path)
-	try:
-		SourceFileOpener(path, line).start()
-	except ConfigError as e:
-		# Translators: A message reported when trying to open a source file.
-		ui.message(_('Configuration error: {err}. Please see the documentation to configure this feature.').format(err=e.args[0]))
-		raise e
+		raise FileOpenerError(FileOpenerError.ET_FILE_NOT_FOUND, path)
+	SourceFileOpener(path, line).start()
 
 
 class CodeLocator(object):
@@ -178,26 +231,12 @@ class CodeLocator(object):
 			if src:
 				return src
 		except TypeError as e:
+		# inspect.getsourcefile raises TypeError for builtin classes.
 			pass
-		raise ObjectNotFoundError(modName)
+		raise FileOpenerError(FileOpenerError.ET_OBJECT_NOT_FOUND, modName)
 	
 	def getObjectCodePath(self):
 		return CodeLocator(self.obj.__class__).getCodeLocationForClass()
-
-
-def reportFileOpenError(e):
-	"""Reports an error caught when trying to open a file whose path is not found.
-	"""
-	
-	if isinstance(e, PathNotFoundError):
-		# Translators: A message reported when trying to open a source file.
-		msg = _('File not found: {}').format(e)
-	elif isinstance(e, ObjectNotFoundError):
-		# Translators: A message reported when trying to open a source file.
-		msg = _('Object not found: {}').format(e)
-	else:
-		raise RuntimeError('Wrong error type: {}'.format(type(e)))
-	core.callLater(0, lambda: ui.message(msg))
 
 
 def openObject(objPath, reportError=True):
@@ -214,26 +253,13 @@ def openObject(objPath, reportError=True):
 	# Python 2 raise ImportError for non-existing modules; Python 3 raises ModuleNotFoundError instead.
 	# Since ModuleNotFoundError inherits from ImportError we filter on ImportError
 	except ImportError:
-		if reportError:
-			reportFileOpenError(ObjectNotFoundError(objPath))
-			return
-		raise
+		raise FileOpenerError(FileOpenerError.ET_OBJECT_NOT_FOUND, objPath)
 	try:
 		for attr in tokens[1:]:
 			obj = getattr(obj, attr)
 	except AttributeError:
-		if reportError:
-			reportFileOpenError(ObjectNotFoundError(objPath))
-			return
-		raise
-	try:
-		openCodeFile(obj)
-	except PathNotFoundError as e:
-		if reportError:
-			reportFileOpenError(e)
-			return
-		raise
-	return True
+		raise FileOpenerError(FileOpenerError.ET_OBJECT_NOT_FOUND, objPath)
+	openCodeFile(obj)
 
 def openCodeFile(obj):
 	"""Opens the source code defining the object passed as parameter.
@@ -257,9 +283,7 @@ def getNvdaCodePath():
 		if nvdaSourcePath:
 			return nvdaSourcePath
 		else:
-			# Translators: A message reported when trying to open a source file.
-			ui.message(_('No path configured for NVDA sources; please see documentation to configure it.'))
-			return None
+			raise FileOpenerError(FileOpenerError.ET_CONFIG_NO_NVDA_SOURCE_PATH_DEFINED)
 	else:
 		# NVDA running from source
 		return appDir
