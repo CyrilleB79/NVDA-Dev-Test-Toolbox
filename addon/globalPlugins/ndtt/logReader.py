@@ -434,7 +434,7 @@ class LogViewerLogContainer(EditableTextLogContainer):
 class DocumentWithLog(Window):
 
 	def _get_treeInterceptorClass(self):
-		cls = super(DocumentWithLog, self)._get_treeInterceptorClass()
+		cls = super(DocumentWithLog, self).treeInterceptorClass
 		bases = (DocumentWithLogTreeInterceptor, cls)
 		# Python 2/3: use str() to convert type since it is str in both version of Python
 		name = str('Mixed_[{classList}]').format(classList=str("+").join([x.__name__ for x in bases]))
@@ -475,6 +475,8 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 	# Note: chooseNVDAObjectOverlayClasses needs to be explicitely called in the mother class; else, NVDA will skip it.
+		if obj.role == controlTypes.Role.DOCUMENT:
+			clsList.insert(0, DocumentWithLog)
 		for cls in clsList:
 			if issubclass(cls, editableText.EditableText):
 				isEditable = True
@@ -493,5 +495,3 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				clsList.insert(0, LogViewerLogContainer)
 			else:
 				clsList.insert(0, EditableTextLogContainer)
-		if obj.role == controlTypes.Role.DOCUMENT:
-			clsList.insert(0, DocumentWithLog)
