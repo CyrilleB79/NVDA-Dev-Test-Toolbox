@@ -212,6 +212,15 @@ Be sure however that the version of your source file (e.g. GIT commit) is the sa
 
 ## Change log
 
+### Version 3.0
+
+* In a log, you can now press C on a message's header line to open the function/module which has emitted it.
+* In the console, `openCodeFile` function can now receive as parameter the object or a string containing its name.
+* New feature: NVDA console startup file: If it exists, the file YourNVDAConfigFolder\ndtt\consoleStartup.py will be executed when NVDA console is first opened or when add-ons are reloaded.
+* Various minor fixes for `openCodeFile` Python console's function and the command to open the source file corresponding to a line in the log.
+* Fixed an issue when trying to report roles/states for object explorer in older version of NVDA.
+* The add-on does not cause a problem anymore with the tree interceptor when using UIA in Edge.
+
 ### Version 2.1
 
 * Various bugfixes and code refactoring/cleaning to address all use cases: all supported versions, installed vs. run from source, etc. (contribution from Łukasz Golonka)
