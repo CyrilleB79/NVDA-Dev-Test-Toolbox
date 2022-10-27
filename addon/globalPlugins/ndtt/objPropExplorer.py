@@ -112,8 +112,8 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			fun = lambda o: getattr(o, infoType)
 		try:
 			info = fun(nav)
-		except IndexError as e:
+		except Exception as e:
 			info = 'Unavailable information.'
-			log.debugWarning(e, exc_info=True)
+			log.debugWarning('An exception occurred while retrieving the requested information.', exc_info=True)
 		self.lastInfo = '{}:\r\n{}'.format(infoType, info)
 		ui.message(self.lastInfo)
