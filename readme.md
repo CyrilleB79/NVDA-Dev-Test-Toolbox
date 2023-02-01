@@ -212,6 +212,10 @@ Be sure however that the version of your source file (e.g. GIT commit) is the sa
 
 ## Change log
 
+### Version 3.1
+
+* Fixed an error occurring when requesting unavailable information on an object.
+
 ### Version 3.0
 
 * In a log, you can now press C on a message's header line to open the function/module which has emitted it.
