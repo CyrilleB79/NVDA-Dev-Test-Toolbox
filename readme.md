@@ -212,6 +212,10 @@ Be sure however that the version of your source file (e.g. GIT commit) is the sa
 
 ## Change log
 
+### Version 3.2
+
+* Compatibility with NVDA 2023.1.
+
 ### Version 3.1
 
 * Fixed an error occurring when requesting unavailable information on an object.
