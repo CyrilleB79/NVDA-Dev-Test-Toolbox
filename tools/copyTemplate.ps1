@@ -24,7 +24,8 @@ $logEntry = git -C tmp log
 Write-Host "Remove .git folder from add-on template repo..."
 $tmpDir = Join-Path $root "tmp"
 $dotGitDir = Join-Path $tmpDir ".git"
-Remove-Item $dotGitDir -Recurse -Force
+$readme = Join-Path $tmpDir "readme.md"
+Remove-Item $dotGitDir,$readme -Recurse -Force
 
 Write-Host "Copy files and folders from tmp to root folder..."
 Get-ChildItem -Path $tmpDir | Move-Item -Destination $root
