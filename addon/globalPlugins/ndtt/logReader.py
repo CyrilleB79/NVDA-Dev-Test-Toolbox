@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2021-2023 Cyrille Bougot
+# Copyright (C) 2021-2022 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
@@ -238,7 +238,7 @@ class LogMessage(object):
 			infoLine = info.copy()
 			infoLine.expand(textInfos.UNIT_LINE)
 			if RE_MESSAGE_HEADER.search(infoLine.text.rstrip()):
-				# infoMsg.end = infoLine.start
+				#infoMsg.end = infoLine.start
 				infoMsg.setEndPoint(infoLine, 'endToStart')
 				break
 		else:

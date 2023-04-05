@@ -137,7 +137,7 @@ class SourceFileOpener(threading.Thread):
 			raise
 
 
-def openSourceFile(path, line):
+def openSourceFile(path, line=1):
 	if not os.path.isfile(path):
 		raise FileOpenerError(FileOpenerError.ET_FILE_NOT_FOUND, path)
 	SourceFileOpener(path, line).start()

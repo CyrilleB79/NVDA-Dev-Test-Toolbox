@@ -13,6 +13,7 @@ This add-on gathers various features for NVDA debugging and testing.
 * An object property explorer.
 * An extended script description mode: when enabled input help mode report information on scripts that have no description.
 * Commands to help log reading and analyzing.
+* Backups of old logs
 * In the Python console workspace, a function to open the source code of an object.
 * A custom startup script for the Python console
 * A command to log the stack trace of the speech.speak function.
@@ -107,7 +108,8 @@ Single letter command similar to browse mode quick navigation keys allow to move
 
 Pressing the single letter moves to the next occurrence of this message. Combining the letter with the shift key moves to the previous occurrence of this message.
 
-### Opening a file in your editor
+<a id="logReaderOpenSourceFile"></a>
+### Open the file of the source code in your editor
 
 In the log some line may refer to the source code:
 
@@ -119,20 +121,31 @@ In the log some line may refer to the source code:
 You may want to open the file containing this code to understand the context of the traceback or the logged message.
 Just press C to open this file.
 
-For this feature to work, you need to have configured your favorite editor's command.
-If you are not running NVDA from source, the location of NVDA source code also should have been configured.
-For more details regarding the configuration, please see the paragraph NVDA Debug & Test Tools configuration.
+For this feature to work, you need to have configured your [favorite editor's command](#settingsOpenCommand) in the add-on's settings.
+If you are not running NVDA from source, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
+
+<a id="oldLogsBackup"></a>
+## Backup of old logs
+
+NVDA already provides a backup of the log of the previous session of NVDA; the file is called `nvda-old.log`.
+Sometimes however you may want to access older logs, e.g. because you have had to restart NVDA again before looking at `nvda-old.log`.
+This add-on allows you to configure if you want to backup old logs and how many of them; this is done in the [add-on's settings](#settingsLogsBackup).
+
+A log manager dialog allows to view the backed up logs.
+It can be opened going to NVDA menu -> Tools -> Logs manager
+In this dialog, you can see the list of all the backup logs, open or delete them.
+To be able to open a log, you should first have configured the [Command to open a file in your favorite editor](#settingsOpenCommand).
 
 ## Python console extension
 
+<a id="pythonConsoleOpenCodeFile"></a>
 ### `openCodeFile` function
 
 In the console, you can call the following function to view the source code that defines the variable `myVar`:  
 `openCodeFile(myVar)`
 
-For this feature to work, you need to have configured your favorite editor's command.
-If you are not running NVDA from source, the location of NVDA source code also should have been configured.
-For more details regarding the configuration, please see the paragraph NVDA Debug & Test Tools configuration.
+For this feature to work, you need to have configured your [favorite editor's command](#settingsOpenCommand) in the add-on's settings.
+If you are not running NVDA from source, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
 
 The `openCodeFile` functions can be called on objects defined in NVDA's code or on objects defined by add-ons.
 It cannot be called on objects whose source code is not available such as python builtins.
@@ -179,38 +192,48 @@ Each time NVDA speaks, a corresponding stack trace will be logged in the log.
 Note: You may modify the script's file directly to patch another function.
 See all instructions in the file for details on usage.
 
-## NVDA Debug & Test Tools configuration
+<a id="settings"></a>
+## Settings
 
-The log reader commands and the python console extension feature may require a specific configuration.
-To use functions that allow to view source code in your editor, you should first configure your editor's command line.
-If NVDA's file need to be viewed and if you are not running from source, you also need to configure NVDA's source code path.
+Some features of the add-on may require a specific configuration.
+A settings panel allows to enable them or to control how they work.
+To view and modify these settings, go to NVDA menu -> Preferences and select the category NVDA Dev & Test Toolbox.
+This settings dialog can also be accessed directly from the Logs Manager dialog.
 
-### Editor's command line configuration
+These settings are global and are not affected by profile switching.
 
-To use the 'open source code' command or the `openCodeFile` console command, you need first to configure the command that will be called to open the file in your favorite editor.
-For this, open the NVDA console (NVDA+control+Z) and type the following line and then Enter:  
-`config.conf['ndtt']['sourceFileOpener'] = r'"C:\path\to\my\editor\editor.exe" "{path}":{line}'`
+<a id="settingsOpenCommand"></a>
+### Command to open a file in your favorite editor
 
+Some features allow to see content in your favorite editor.
+This includes the commands to view the source file [from a log](#logReaderOpenSourceFile) or [from an object in the console](#pythonConsoleOpenCodeFile) as well as the [log manager](#oldLogsBackup)'s Open button.
+
+To use them, you first need to configure the command that will be called to open the file in your favorite editor.
+The command should be of the form:  
+`"C:\path\to\my\editor\editor.exe" "{path}":{line}`  
 You should of course modify this line according to the real name and location of your editor and the syntax used by it to open files.
 `{path}` will be replaced by the full path of the file to open and `{line}` by the line number where you want the cursor to be set.
 For Notepad++ for example the command to type in the console would be:  
-`config.conf['ndtt']['sourceFileOpener'] = r'"C:\Program Files\Notepad++\notepad++.exe" "{path}" -n{line}'`
+`"C:\Program Files\Notepad++\notepad++.exe" "{path}" -n{line}`
 
-### NVDA source code path configuration
+<a id="settingsNvdaSourcePath"></a>
+### NVDA source code path
 
-When a file belonging to NVDA's core is listed in the traceback, the line is of the following form:  
-`File "config\profileUpgrader.pyc", line 30, in upgrade`
-
-If you are not running NVDA from source, you may specify an alternate location where the source file will be found, e.g. the place where you have cloned NVDA source files.
-In this case, you have to configure the path where you have NVDA source files located.
-
-For this, open the NVDA console (NVDA+control+Z) and type the following line and then Enter:  
-`config.conf['ndtt']['nvdaSourcePath'] = r'C:\pathExample\GIT\nvda\source'`
-
+When using a command to [view the source file from a log](#logReaderOpenSourceFile) or [from an object in the console](#pythonConsoleOpenCodeFile), the file may belong to NVDA itself.
+If you are not running NVDA from source, your NVDA only contains compiled files.
+Thus you may specify here an alternate location where the corresponding source file will be found, e.g. the place where you have cloned NVDA source files, so that a source file can be opened anyway.
+The path should be such as:  
+`C:\pathExample\GIT\nvda\source`  
 Of course, replace the path of NVDA source with the correct one.
 
 Be sure however that the version of your source file (e.g. GIT commit) is the same as the one of the running instance of NVDA.
 
+<a id="settingsLogsBackup"></a>
+### Backup of old logs
+
+The combobox Backup of old logs allows to enable or disable the [feature](#oldLogsBackup).
+If it is enabled, you can also specify below in "Limit the number of backups" the maximum number of backups you want to keep.
+These settings only take effect at next NVDA startup when the backup takes place.
 
 ## Change log
 

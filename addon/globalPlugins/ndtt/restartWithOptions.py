@@ -68,9 +68,9 @@ class FileSelectionHelper(object):
 			@param buttonText: The text for the button to launch a file selection dialog (wx.DirDialog). This is typically 'Browse'
 			@type buttonText: string
 			@param wildcard: The text for the title of the file dialog (wx.FileDialog)
-			@type browseForDirectoryTitle: string
+			@type wildcard: string
 			@param browseForFileTitle: The text for the title of the file dialog (wx.FileDialog)
-			@type browseForDirectoryTitle: string
+			@type browseForFileTitle: string
 		"""
 		object.__init__(self)
 		self._textCtrl = wx.TextCtrl(parent)

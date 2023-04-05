@@ -77,5 +77,48 @@ def getApDir():
 		return os.path.abspath(os.path.normpath(os.path.dirname(globalVars.__file__)))
 
 
+def matchDict(m):
+	"""A helper function to get the match dictionary (useful in Python 2)
+	"""
+	
+	if not m:
+		return m
+	return m.groupdict()
+
+
+# Copied from gui\dpiScalingHelper.py
+def scaleSize(scaleFactor, size):
+	"""Helper method to scale a size using the logical DPI
+	@param size: The size (x, y) as a tuple or a single numerical type to scale
+	@returns: The scaled size, as a float or tuple of floats.
+	"""
+	if isinstance(size, tuple):
+		return (scaleFactor * size[0], scaleFactor * size[1])
+	return scaleFactor * size
+
+
+# Copied from gui\dpiScalingHelper.py
+def getScaleFactor(windowHandle):
+	"""Helper method to get the window scale factor. The window needs to be constructed first, in
+	order to get the window handle, this likely means calling the wx.window __init__ method prior
+	to calling self.GetHandle()"""
+	import windowUtils
+	return windowUtils.getWindowScalingFactor(windowHandle)
+
+
+# Copied from gui\dpiScalingHelper.py
+class DpiScalingHelperMixinWithoutInit(object):
+	"""Same concept as DpiScalingHelperMixin, but ensures you do not have to explicitly call the init
+		of wx.Window or this mixin
+	"""
+	_scaleFactor = None
+
+	def scaleSize(self, size):
+		if self._scaleFactor is None:
+			windowHandle = self.GetHandle()
+			self._scaleFactor = getScaleFactor(windowHandle)
+		return scaleSize(self._scaleFactor, size)
+
+
 appDir = getApDir()
 controlTypesCompatWrapper = ControlTypesCompatWrapper()
