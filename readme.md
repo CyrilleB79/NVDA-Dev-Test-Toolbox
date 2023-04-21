@@ -188,23 +188,25 @@ If NVDA's file need to be viewed and if you are not running from source, you als
 ### Editor's command line configuration
 
 To use the 'open source code' command or the `openCodeFile` console command, you need first to configure the command that will be called to open the file in your favorite editor.
-For this, open the NVDA console (NVDA+control+Z) and type the following line and then Enter:
+For this, open the NVDA console (NVDA+control+Z) and type the following line and then Enter:  
 `config.conf['ndtt']['sourceFileOpener'] = r'"C:\path\to\my\editor\editor.exe" "{path}":{line}'`
+
 You should of course modify this line according to the real name and location of your editor and the syntax used by it to open files.
 `{path}` will be replaced by the full path of the file to open and `{line}` by the line number where you want the cursor to be set.
-For Notepad++ for example the command to type in the console would be:
+For Notepad++ for example the command to type in the console would be:  
 `config.conf['ndtt']['sourceFileOpener'] = r'"C:\Program Files\Notepad++\notepad++.exe" "{path}" -n{line}'`
 
 ### NVDA source code path configuration
 
-When a file belonging to NVDA's core is listed in the traceback, the line is of the following form:
+When a file belonging to NVDA's core is listed in the traceback, the line is of the following form:  
 `File "config\profileUpgrader.pyc", line 30, in upgrade`
 
 If you are not running NVDA from source, you may specify an alternate location where the source file will be found, e.g. the place where you have cloned NVDA source files.
 In this case, you have to configure the path where you have NVDA source files located.
 
-For this, open the NVDA console (NVDA+control+Z) and type the following line and then Enter:
+For this, open the NVDA console (NVDA+control+Z) and type the following line and then Enter:  
 `config.conf['ndtt']['nvdaSourcePath'] = r'C:\pathExample\GIT\nvda\source'`
+
 Of course, replace the path of NVDA source with the correct one.
 
 Be sure however that the version of your source file (e.g. GIT commit) is the same as the one of the running instance of NVDA.
@@ -252,7 +254,7 @@ Be sure however that the version of your source file (e.g. GIT commit) is the sa
 
 * Initial release.
 
-[1]: https://addons.nvda-project.org/files/get.php?file=ndtt
+[1]: https://www.nvaccess.org/addonStore/legacy?file=ndtt
 
 [2]: https://www.nvaccess.org/files/nvda/documentation/userGuide.html#CommandLineOptions
 
