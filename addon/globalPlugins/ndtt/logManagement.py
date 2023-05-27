@@ -428,8 +428,9 @@ class LogsManagerDialog(
 				if e.errorType == FileOpenerError.ET_FILE_NOT_FOUND:
 					missing.append(index)
 				else:
-					ui.message(e.getUserFriendlyMessage())
-					break
+					# Translators: A message displayed to the user when pressing the Open button in the logs manager dialog
+					messageBox(message=e.getUserFriendlyMessage(), style=wx.ICON_ERROR, parent=self)
+					return
 		for index in sorted(missing, reverse=True):
 			self.logsList.DeleteItem(index)
 		if len(missing) == len(selectedLogs):
