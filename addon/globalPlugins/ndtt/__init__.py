@@ -69,7 +69,7 @@ class GlobalPlugin(MixedGlobalPlugin):
 
 	@script(
 		# Translators: The description of a command of this add-on.
-		description=_("Opens Windows NVDA Dev & Test Toolbox add-on settings"),
+		description=_("Opens NVDA Dev & Test Toolbox add-on settings"),
 		category = ADDON_SUMMARY,
 	)
 	def script_openSettings(self, gesture):

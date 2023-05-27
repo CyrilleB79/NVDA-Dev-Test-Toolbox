@@ -57,14 +57,14 @@ class FileOpenerError(Exception):
 			_('No path configured for NVDA sources; please see documentation to configure it.'),
 		),
 		ET_CONFIG_NO_OPENER_DEFINED: (
-			'No opener command defined in configuration',
+			'No open file command defined in configuration',
 			# Translators: A message reported when trying to open a source file.
-			_('No opener command configured; please see documentation to configure it.'),
+			_('No open file command configured; please see documentation to configure it.'),
 		),
 		ET_CONFIG_OPENER_DEFINITION_WRONG_FORMAT: (
-			'Wrong format for the opener command defined in configuration',
+			'Wrong format for the open file command defined in configuration',
 			# Translators: A message reported when trying to open a source file.
-			_('Wrong format of the opener command in the configuration; please see documentation to configure it.'),
+			_('Wrong format for the open file command in the configuration; please see documentation to configure it.'),
 		),
 		ET_CONFIG_EDITOR_NOT_FOUND: (
 			'Editor not found {}',

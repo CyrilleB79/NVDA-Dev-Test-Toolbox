@@ -18,7 +18,7 @@ import traceback
 from logHandler import log
 from scriptHandler import script
 
-#ToBeCustomized: import here the module containing the function you want the stacktrace to be logged
+# ToBeCustomized: import here the module containing the function you want the stacktrace to be logged
 try:
 	# For NVDA 2021.1 and above
 	from speech import speech
@@ -26,8 +26,8 @@ except ImportError:
 	# For NVDA 2020.4 and below
 	import speech
 _originalFunction = speech.speak
-#import braille
-#_originalFunction = braille.BrailleHandler.update
+# import braille
+# _originalFunction = braille.BrailleHandler.update
 
 
 ADDON_SUMMARY = addonHandler.getCodeAddon ().manifest["summary"]
@@ -37,10 +37,10 @@ def functionWithStackTraceLog(*args, **kwargs):
 	res = _originalFunction(*args, **kwargs)
 	GlobalPlugin.logStackTrace()
 	return res
-		
-	
+
+
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
-	
+
 	def __init__(self):
 		super(GlobalPlugin, self).__init__()
 		self.logEnabled = False
@@ -50,25 +50,27 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		description = _("Toggles the stack trace log when the speech function is called."),
 		gesture = "kb:nvda+control+alt+S",
 		category = ADDON_SUMMARY,
-	)
+)
 	def script_toggleStackTraceLog(self, gesture):
 		self.logEnabled = not self.logEnabled
 		self.enableStackTraceLog(self.logEnabled)
 		if self.logEnabled:
-			msg = 'Stacktrace log enabled'
+			# Translators: Reported when toggling the stack trace log feature.
+			msg = _('Stacktrace log enabled')
 		else:
-			msg = 'Stacktrace log disabled'
+			# Translators: Reported when toggling the stack trace log feature.
+			msg = _('Stacktrace log disabled')
 		ui.message(msg)
-		
+
 	def enableStackTraceLog(self, enable=True):
 		if enable:
 			newFun = functionWithStackTraceLog
 		else:
 			newFun = _originalFunction
-		#ToBeCustomized: the function from which you want the stack trace
+		# ToBeCustomized: the function from which you want the stack trace
 		speech.speak = newFun
 		#braille.BrailleHandler.update = newFun
-		
+
 	@staticmethod
 	def logStackTrace():
 	    stack = [line.strip() for line in traceback.format_stack()]
@@ -77,8 +79,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	    	'\n'.join(stack[:-1]) + '\n'
 	    	'=== End stack trace log ===')
 	    log.debug(msgStackTrace)
-	
+
 	def terminate(self):
 		self.enableStackTraceLog(False)
 		super(GlobalPlugin, self).terminate()
-	

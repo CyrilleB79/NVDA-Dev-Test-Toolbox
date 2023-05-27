@@ -55,8 +55,6 @@ def getLocationInfo(o):
 	
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
-	
-	
 	_INFO_TYPES = ['name',
 		('role', getRoleInfo),
 		('states', getStateInfo),
@@ -67,31 +65,31 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		('location', getLocationInfo),
 		('pythonClass', lambda o: str(type(o))),
 		('pythonClassMRO', lambda o: str(type(o).mro()).replace('>, <', ',\r\n').replace('[<', '', 1).replace('>]',''))]
-	
+
 	def __init__(self):
 		super(GlobalPlugin, self).__init__()
 		self.index = 0
-		
+
 	@script(
 		# Translators: Input help mode message for a command of the object property explorer.
-		description=_("Reports the currently selected property for the navigator object; two presses displays this information in a browseable message."),
+		description=_("Reports the currently selected property of the object property explorer for the navigator object; two presses displays this information in a browseable message."),
 		category=ADDON_SUMMARY,
 	)
 	def script_announceObjectInfo(self, gesture):
 		self.announceCurrentInfo(scriptHandler.getLastScriptRepeatCount())
-		
+
 	@script(
 		# Translators: Input help mode message for a command of the object property explorer.
-		description=_("Selects the next property and reports it for the navigator object."),
+		description=_("Selects the next property of the object property explorer and reports it for the navigator object."),
 		category=ADDON_SUMMARY,
 	)
 	def script_nextObjectInfo(self, gesture):
 		self.index = (self.index + 1) % len(self._INFO_TYPES)
 		self.announceCurrentInfo()
-		
+
 	@script(
 		# Translators: Input help mode message for a command of the object property explorer.
-		description=_("Selects the previous property and reports it for the navigator object."),
+		description=_("Selects the previous property of the object property explorer and reports it for the navigator object."),
 		category=ADDON_SUMMARY,
 	)
 	def script_priorObjectInfo(self, gesture):

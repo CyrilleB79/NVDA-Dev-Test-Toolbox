@@ -269,20 +269,20 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 	OPTION_LIST = [
 		CommandLineFileOption(
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
-			description="The file where log messages should be written to",
+			description=_("The file where log messages should be written to"),
 			flagList=["-&f {LOGFILENAME}", "--log-file={LOGFILENAME}"],
 			allowInSecureMode=False,  # Logging in secure mode should be disabled
 		),
 		CommandLineChoiceOption(
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
-			description="The lowest level of message logged", #(debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default is warning",
+			description=_("The lowest level of message logged"), #(debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default is warning",
 			flagList=["-&l {LOGLEVEL}", "--log-level={LOGLEVEL}"],
 			allowInSecureMode=False,  # Logging in secure mode should be disabled
 			choices=[''] + ['{level} ({name})'.format(name=name, level=level) for level, name in gui.settingsDialogs.GeneralSettingsPanel.LOG_LEVELS],
 		),
 		CommandLineFolderOption(
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
-			description="The path where all settings for NVDA are stored",
+			description=_("The path where all settings for NVDA are stored"),
 			flagList=["-&c {CONFIGPATH}", "--config-path={CONFIGPATH}"],
 			allowInSecureMode=False,  # Targetting an unauthorized config folder should not be accepted.
 		),
@@ -295,19 +295,19 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 		),
 		CommandLineBooleanOption(
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
-			description="No sounds, no interface, no start message, etc.",
+			description=_("No sounds, no interface, no start message, etc."),
 			flagList=["-&m", "--minimal"],
 			allowInSecureMode=True,  # Always active on secure screens even if the -m parameter is missing.
 		),
 		CommandLineBooleanOption(
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
-			description="Secure mode",
+			description=_("Secure mode"),
 			flagList=["-&s", "--secure"],
 			allowInSecureMode=True,  # Always active on secure screens even if the -s parameter is missing.
 		),
 		CommandLineBooleanOption(
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
-			description="Add-ons will have no effect",
+			description=_("Add-ons will have no effect"),
 			flagList=["--disable-addons"],
 			allowInSecureMode=True,  # Restart with add-ons disabled allowed on secure screens by NVDA
 		),
@@ -315,7 +315,7 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 		# --no-logging (Disable logging altogether while using NVDA. This setting can be overridden if a log level ( --loglevel, -l) is specified from command line or if debug logging is turned on.)
 		CommandLineBooleanOption(
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
-			description="Don't change the global system screen reader flag",
+			description=_("Don't change the global system screen reader flag"),
 			flagList=["--no-sr-flag"],
 			allowInSecureMode=True,
 		),

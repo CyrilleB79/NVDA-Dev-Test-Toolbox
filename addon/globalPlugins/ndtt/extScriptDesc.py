@@ -14,6 +14,7 @@ import ui
 
 ADDON_SUMMARY = addonHandler.getCodeAddon ().manifest["summary"]
 
+# Translators: The name of a category in the Input gesture dialog
 SCRIPT_WITHOUT_DESC_CATEGORY = _("Scripts without description (modify at your own risk!)")
 
 _originalMethod = inputCore.manager._handleInputHelp
@@ -30,10 +31,15 @@ def newHandleInputHelp(self, gesture, onlyLog=False):
 		and not getattr(script, '__doc__', None)
 	)
 	if addDesc:
-		desc = scriptName
 		scriptLocation = scriptHandler.getScriptLocation(script)
 		if scriptLocation:
-			desc += " on %s" % scriptLocation
+			# Translators: A message reported in input help mode when extended script description is enabled.
+			desc = "{scriptName} on {scriptLocation}".format(
+				scriptName=scriptName,
+				scriptLocation=scriptLocation,
+			)
+		else:
+			desc = scriptName
 		script.__func__.__doc__ = desc
 		script.__func__.category = SCRIPT_WITHOUT_DESC_CATEGORY
 		GlobalPlugin.scriptsWithAddedDoc.add(script)
