@@ -237,6 +237,12 @@ These settings only take effect at next NVDA startup when the backup takes place
 
 ## Change log
 
+### Version 4.0
+
+* Possibility to back up old logs and introduction of a logs manager.
+* Added a script to report the last logged error.
+* Fixed a bug preventing last log message to be read in older NVDA versions.
+
 ### Version 3.2
 
 * Compatibility with NVDA 2023.1.
