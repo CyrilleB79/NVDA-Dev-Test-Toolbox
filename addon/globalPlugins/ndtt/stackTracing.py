@@ -29,6 +29,7 @@ _originalFunction = speech.speak
 # import braille
 # _originalFunction = braille.BrailleHandler.update
 
+addonHandler.initTranslation()
 
 ADDON_SUMMARY = addonHandler.getCodeAddon ().manifest["summary"]
 

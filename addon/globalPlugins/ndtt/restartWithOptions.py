@@ -19,6 +19,8 @@ import os
 import weakref
 from . import compa
 
+addonHandler.initTranslation()
+
 ADDON_SUMMARY = addonHandler.getCodeAddon ().manifest["summary"]
 
 

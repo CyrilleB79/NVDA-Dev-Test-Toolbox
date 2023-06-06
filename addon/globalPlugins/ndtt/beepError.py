@@ -17,6 +17,8 @@ import os
 
 from .compa import appDir
 
+addonHandler.initTranslation()
+
 ADDON_SUMMARY = addonHandler.getCodeAddon ().manifest["summary"]
 
 # Check if NVDA has "Play error sound" feature.

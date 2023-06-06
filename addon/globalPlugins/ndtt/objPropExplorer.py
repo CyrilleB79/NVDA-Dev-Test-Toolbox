@@ -14,6 +14,8 @@ import addonHandler
 import scriptHandler
 from scriptHandler import script
 
+addonHandler.initTranslation()
+
 ADDON_SUMMARY = addonHandler.getCodeAddon ().manifest["summary"]
 
 def _createDicControlTypesConstantes(prefix):

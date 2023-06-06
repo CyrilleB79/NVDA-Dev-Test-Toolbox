@@ -32,6 +32,8 @@ if not globalVars.appArgs.secure:
 	from .logReader import GlobalPlugin as LogReaderGP  # No log nor log viewer in secure mode.
 	from .pythonConsoleEx import GlobalPlugin as PythonConsoleExGP  # No Python console in secure mode
 
+addonHandler.initTranslation()
+
 ADDON_SUMMARY = addonHandler.getCodeAddon ().manifest["summary"]
 
 if globalVars.appArgs.secure:

@@ -12,6 +12,8 @@ from scriptHandler import script
 import inputCore
 import ui
 
+addonHandler.initTranslation()
+
 ADDON_SUMMARY = addonHandler.getCodeAddon ().manifest["summary"]
 
 # Translators: The name of a category in the Input gesture dialog

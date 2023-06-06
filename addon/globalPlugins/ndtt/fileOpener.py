@@ -6,6 +6,7 @@
 from __future__ import unicode_literals
 
 from logHandler import log
+import addonHandler
 import config
 import ui
 import core
@@ -37,6 +38,9 @@ if sys.version_info.major >= 3:
 else:
 # Python 2
 	stringTypes = (str, unicode)
+
+addonHandler.initTranslation()
+
 
 class FileOpenerError(Exception):
 	"""An error that can be raised in the Python console and caught to report a message in the log reader.
