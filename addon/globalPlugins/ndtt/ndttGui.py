@@ -10,7 +10,6 @@ import wx
 import gui
 from gui import guiHelper, nvdaControls
 import config
-from logHandler import log
 
 from .utils import getBaseProfileConfigValue
 
@@ -18,12 +17,12 @@ import addonHandler
 
 addonHandler.initTranslation()
 
-ADDON_SUMMARY = addonHandler.getCodeAddon ().manifest["summary"]
+ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
 
 
 class NDTTSettingsPanel(gui.SettingsPanel):
 	title = ADDON_SUMMARY
-	
+
 	BACKUP_TYPES = [
 		# Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
 		('off', _('Off')),
@@ -33,7 +32,7 @@ class NDTTSettingsPanel(gui.SettingsPanel):
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-		
+
 		openInEditorCmdLabel = _(
 			# Translators: This is a label for an edit field in the NDTT Settings panel.
 			'Command to open a file in your favorite editor\n'
@@ -68,7 +67,7 @@ class NDTTSettingsPanel(gui.SettingsPanel):
 		index = [v for v, l in self.BACKUP_TYPES].index(val)
 		self.makeBackupsList.Select(index)
 		backupType = self.BACKUP_TYPES[index][0]
-		self.makeBackupsList.Bind(wx.EVT_CHOICE, self.onMakeBackupsListItemChanged)		
+		self.makeBackupsList.Bind(wx.EVT_CHOICE, self.onMakeBackupsListItemChanged)
 
 		minNbBackups = int(self.getParameterBound("logBackupMaxNumber", "min"))
 		maxNbBackups = int(self.getParameterBound("logBackupMaxNumber", "max"))
@@ -96,13 +95,13 @@ class NDTTSettingsPanel(gui.SettingsPanel):
 		try:
 			return config.conf.getConfigValidation(("ndtt", name)).kwargs[boundType]
 		except TypeError:
-		# For older version of configObj (e.g. used in NVDA 2019.2.1)
+			# For older version of configObj (e.g. used in NVDA 2019.2.1)
 			return config.conf.getConfigValidationParameter(["ndtt", name], boundType)
 
 	def onMakeBackupsListItemChanged(self, evt):
 		index = evt.GetSelection()
 		self.updateNbBackupsEdit(self.BACKUP_TYPES[index][0])
-	
+
 	def updateNbBackupsEdit(self, backupType):
 		self.nbBackupsEdit.Enable(backupType == 'maxNumber')
 

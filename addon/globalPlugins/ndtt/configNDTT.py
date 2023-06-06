@@ -10,7 +10,5 @@ confspec = {
 	"nvdaSourcePath": 'string(default="")',
 	"logBackup": 'option("off", "maxNumber", default="off")',
 	"logBackupMaxNumber": 'integer(min=1, max=100, default=3)',
-	
 }
 config.conf.spec["ndtt"] = confspec
-

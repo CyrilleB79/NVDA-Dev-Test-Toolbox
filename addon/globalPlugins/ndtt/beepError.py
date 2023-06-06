@@ -19,7 +19,7 @@ from .compa import appDir
 
 addonHandler.initTranslation()
 
-ADDON_SUMMARY = addonHandler.getCodeAddon ().manifest["summary"]
+ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
 
 # Check if NVDA has "Play error sound" feature.
 try:
@@ -39,6 +39,7 @@ except KeyError:
 	hasPlayErrorSoundFeature = False
 
 builtinHandle = logHandler.FileHandler.handle
+
 
 def myHandle(fh, record, *args, **kwargs):
 	# Save the last error
@@ -90,9 +91,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@script(
 		# Translators: Input help mode message for a toggle command.
-		description = _("Toggles play a sound for logged error."),
-		gesture = "kb:nvda+control+alt+E",
-		category = ADDON_SUMMARY,
+		description=_("Toggles play a sound for logged error."),
+		gesture="kb:nvda+control+alt+E",
+		category=ADDON_SUMMARY,
 	)
 	def script_togglePlayErrorSound(self, gesture):
 		if config.conf['featureFlag']['playErrorSound'] == 0:
@@ -107,9 +108,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@script(
 		# Translators: Input help mode message for a command.
-		description = _("Report the last error logged. A second press clears the memorized last error."),
-		gesture = "kb:nvda+shift+alt+E",
-		category = ADDON_SUMMARY,
+		description=_("Report the last error logged. A second press clears the memorized last error."),
+		gesture="kb:nvda+shift+alt+E",
+		category=ADDON_SUMMARY,
 	)
 	def script_reportLastError(self, gesture):
 		nRepeat = scriptHandler.getLastScriptRepeatCount()
@@ -125,5 +126,3 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			ui.message(_('Last error cleared'))
 		else:
 			pass
-		
-		

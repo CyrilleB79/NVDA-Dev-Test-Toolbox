@@ -15,6 +15,7 @@ try:
 	tzUTC = timezone.utc
 except ImportError:
 	from datetime import tzinfo
+
 	class UTC(tzinfo):
 		"""UTC"""
 
@@ -37,19 +38,17 @@ import wx
 import globalVars
 import globalPluginHandler
 import addonHandler
-import config
 import queueHandler
 import logHandler
 from logHandler import log
 import gui
 from gui import guiHelper, nvdaControls
 from gui import messageBox
-from gui.dpiScalingHelper import DpiScalingHelperMixin
 try:
 	from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 except ImportError:
 	from .compa import DpiScalingHelperMixinWithoutInit
-from .compa import appDir, matchDict
+from .compa import matchDict
 from .fileOpener import openSourceFile, FileOpenerError
 from .ndttGui import NDTTSettingsPanel
 from .utils import getBaseProfileConfigValue
@@ -68,7 +67,10 @@ RES_LOG_BACKUP_FILENAME = (
 )
 RE_LOG_BACKUP_FILENAME = re.compile(RES_LOG_BACKUP_FILENAME)
 RE_BACKUP_LOG_PATH = re.compile(r'^.+\\{filename}$'.format(filename=RES_LOG_BACKUP_FILENAME))
-RE_FIRST_LINE = re.compile(r'^INFO - __main__ \((?P<hour>\d{2}):(?P<minute>\d{2}):(?P<second>\d{2}).(?P<millisecond>\d{3})\)(?: - MainThread \(\d+\))?:$')
+RE_FIRST_LINE = re.compile(
+	r'^INFO - __main__ \((?P<hour>\d{2}):(?P<minute>\d{2}):(?P<second>\d{2}).(?P<millisecond>\d{3})\)'
+	r'(?: - MainThread \(\d+\))?:$'
+)
 
 
 def getStartTimeLoggedByNDTT(path):
@@ -78,6 +80,7 @@ def getStartTimeLoggedByNDTT(path):
 				dtString = line[len(TOKEN_INITIALIZATION):].strip()
 				return dtString
 	return None
+
 
 def getFirstTimeLoggedByNVDA(path):
 	with open(path, 'r') as f:
@@ -121,7 +124,7 @@ def saveOldLog():
 			stat = os.stat(oldLogFilePath)
 			dtEnd = datetime.utcfromtimestamp(stat.st_mtime)
 			timeStart = getFirstTimeLoggedByNVDA(oldLogFilePath)
-			
+
 			# Create dtSTart with same D/M/Y values than dtEnd, assuming that the start time was logged the same day.
 			# Then if dtStart after dtEnd remove one day.
 			# This is not bullet proof but that's the best we can do without a logged time by NDTT.
@@ -150,7 +153,6 @@ def logsCleanup():
 		return
 	logDirPath = os.path.dirname(globalVars.appArgs.logFileName)
 	logList = listLogFiles(logDirPath)
-	oldLogFilePath = os.path.join(logDirPath, "nvda-old.log")
 	if getBaseProfileConfigValue('ndtt', 'logBackup') == 'maxNumber':
 		nMax = getBaseProfileConfigValue('ndtt', 'logBackupMaxNumber')
 		for file in logList[:-nMax]:
@@ -159,7 +161,7 @@ def logsCleanup():
 				os.remove(file)
 			except Exception:
 				log.warning('Unable to remove {file}', exc_info=True)
-			
+
 		return
 	raise NotImplementedError
 
@@ -167,15 +169,17 @@ def logsCleanup():
 def listLogFiles(folderPath):
 	pattern = os.path.join(folderPath, "nvda_*-*-*_*-*-*.log")
 	return sorted([p for p in glob(pattern) if RE_BACKUP_LOG_PATH.match(p)])
-	
+
+
 def getAvailableLogs(folderPath):
 	return [Log(os.path.split(name)[1], folderPath) for name in listLogFiles(folderPath)]
 
 
 def moduleInitialize():
 	"""Called at module initialization.
-	This functions handles the tasks that need to be performed as early as possible, i.e. when the module is imported.
-	- Saves the old log 
+	This functions handles the tasks that need to be performed as early as possible, i.e. when the module is
+	imported:
+	- Saves the old log
 	- Log start date and time
 	These tasks are performed only at the first import and not when the module is reloaded with NVDA+control+F3
 	(reload plugins command).
@@ -190,7 +194,7 @@ def moduleInitialize():
 	log.info('{token}{dt}'.format(token=TOKEN_INITIALIZATION, dt=datetime.utcnow().strftime(DT_FORMAT_STRING)))
 	# Call logCleanup only when NVDA has finished startup actions, no need to do it as soon as the current
 	# module is imported.
-	queueHandler.queueFunction(queueHandler.eventQueue, logsCleanup)	
+	queueHandler.queueFunction(queueHandler.eventQueue, logsCleanup)
 	if not saveOldLog():
 		return  # Initialization failed; we may retry it when reloading plugins.
 	logHandler.ndttLogManagementModuleInitialized = True
@@ -209,7 +213,7 @@ class Log(object):
 		if other.date is None:
 			return True
 		return self.date < other.date
-	
+
 	@property
 	def fullPath(self):
 		return os.path.join(self.folder, self.filename)
@@ -218,7 +222,7 @@ class Log(object):
 	def date(self):
 		"""Date (UTC)
 		"""
-		
+
 		if not self._date:
 			m = matchDict(RE_LOG_BACKUP_FILENAME.match(self.filename))
 			if m:
@@ -248,9 +252,10 @@ class Log(object):
 			dt = self.date
 			return dt.strftime('%X %x (UTC)')
 
+
 class LogsManagerDialog(
-		DpiScalingHelperMixinWithoutInit,
-		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
+	DpiScalingHelperMixinWithoutInit,
+	wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	@classmethod
 	def _instance(cls):
@@ -270,9 +275,9 @@ class LogsManagerDialog(
 		if LogsManagerDialog._instance() is not None:
 			return
 		LogsManagerDialog._instance = weakref.ref(self)
-		
+
 		self.folder = os.path.dirname(globalVars.appArgs.logFileName)
-		
+
 		# Translators: The title of the Logs Manager Dialog
 		title = _("Logs Manager")
 		super(LogsManagerDialog, self).__init__(
@@ -289,7 +294,7 @@ class LogsManagerDialog(
 		mainSizer.Add(
 			firstTextSizer,
 			border=guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.TOP|wx.LEFT|wx.RIGHT
+			flag=wx.TOP | wx.LEFT | wx.RIGHT,
 		)
 		self.logsList = listAndButtonsSizerHelper.addItem(
 			nvdaControls.AutoWidthColumnListCtrl(
@@ -367,8 +372,8 @@ class LogsManagerDialog(
 		self.SetSize(self.scaleSize((763, 509)))
 		self.CentreOnScreen()
 		self.logsList.SetFocus()
-	
-	def refreshLogsList(self,activeIndex=0):
+
+	def refreshLogsList(self, activeIndex=0):
 		self.logsList.DeleteAllItems()
 		self.curLogs = []
 		for oLog in sorted(getAvailableLogs(self.folder)):
@@ -386,7 +391,7 @@ class LogsManagerDialog(
 			elif activeIndex < 0 or activeIndex >= curLogsLen:
 				activeIndex = 0
 			self.logsList.Select(activeIndex, on=1)
-			self.logsList.SetItemState(activeIndex,wx.LIST_STATE_FOCUSED,wx.LIST_STATE_FOCUSED)
+			self.logsList.SetItemState(activeIndex, wx.LIST_STATE_FOCUSED, wx.LIST_STATE_FOCUSED)
 		else:
 			self.openButton.Disable()
 			self.deleteButton.Disable()
@@ -399,7 +404,7 @@ class LogsManagerDialog(
 			oLog = Log(name, self.folder)
 			selected.append((oLog, index))
 			index = self.logsList.GetNextSelected(index)
-		return selected   
+		return selected
 
 	def onListItemDeselected(self, evt):
 		self.listItemSelectionModified(evt.GetIndex(), False)
@@ -412,7 +417,7 @@ class LogsManagerDialog(
 		self.openButton.Enable(nSelected > 0)
 		self.deleteButton.Enable(nSelected > 0)
 
-	def onClose(self,evt):
+	def onClose(self, evt):
 		self.DestroyChildren()
 		self.Destroy()
 
@@ -445,7 +450,8 @@ class LogsManagerDialog(
 		msg = _("The following files will be removed:\n{logsList}\n\nWould you like to continue?").format(
 			logsList='\n'.join(lg.filename for lg, idx in selectedLogs)
 		)
-		# Translators: The title of a dialog displayed to the user when pressing the Delete button in the logs manager dialog
+		# Translators: The title of a dialog displayed to the user when pressing the Delete button in the
+		# logs manager dialog
 		caption = _('Confirm deletion')
 		if messageBox(
 			message=msg,
@@ -467,13 +473,16 @@ class LogsManagerDialog(
 			self.logsList.DeleteItem(index)
 		if notDeleted:
 			nNotDeleted = len(notDeleted)
-			if nNotDeleted >=5:
+			if nNotDeleted >= 5:
 				# Translators: Message issued when 5 or more logs could not be deleted.
-				msgNotDeleted = _("{nLogs} log files could not be deleted. See NVDA's log for details.").format(nLogs=nNotDeleted)
+				msgNotDeleted = _("{nLogs} log files could not be deleted. See NVDA's log for details.").format(
+					nLogs=nNotDeleted
+				)
 			else:
 				# Translators: Message issued when 1 to 4 logs could not be deleted.
 				msgNotDeleted = _("The following logs files could not be deleted.\n\n{file}").format(file=oLog.filename)
-			# Translators: The title of a dialog displayed to the user when pressing the Delete button in the logs manager dialog
+			# Translators: The title of a dialog displayed to the user when pressing the Delete button in
+			# the logs manager dialog
 			caption = _('Error')
 			messageBox(
 				message=msgNotDeleted,

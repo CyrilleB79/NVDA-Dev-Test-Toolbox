@@ -8,7 +8,8 @@
 # E.g. to trigger stack trace log on braille.BrailleHandler.update
 # - import braille instead of speech
 # - replace speech.speak function by braille.BrailleHandler.update function
-# Good candidate functions may be the ones found in NVDA's journal on lines beginning with 'IO - ', e.g. braille.update, braille.BrailleBuffer.update, tones.beep, etc.
+# Good candidate functions may be the ones found in NVDA's journal on lines beginning with 'IO - ',
+# e.g. braille.update, braille.BrailleBuffer.update, tones.beep, etc.
 
 
 import globalPluginHandler
@@ -31,7 +32,7 @@ _originalFunction = speech.speak
 
 addonHandler.initTranslation()
 
-ADDON_SUMMARY = addonHandler.getCodeAddon ().manifest["summary"]
+ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
 
 
 def functionWithStackTraceLog(*args, **kwargs):
@@ -45,13 +46,13 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def __init__(self):
 		super(GlobalPlugin, self).__init__()
 		self.logEnabled = False
-		
+
 	@script(
 		# Translators: Input help mode message for a toggle command.
-		description = _("Toggles the stack trace log when the speech function is called."),
-		gesture = "kb:nvda+control+alt+S",
-		category = ADDON_SUMMARY,
-)
+		description=_("Toggles the stack trace log when the speech function is called."),
+		gesture="kb:nvda+control+alt+S",
+		category=ADDON_SUMMARY,
+	)
 	def script_toggleStackTraceLog(self, gesture):
 		self.logEnabled = not self.logEnabled
 		self.enableStackTraceLog(self.logEnabled)
@@ -70,16 +71,17 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			newFun = _originalFunction
 		# ToBeCustomized: the function from which you want the stack trace
 		speech.speak = newFun
-		#braille.BrailleHandler.update = newFun
+		# or: braille.BrailleHandler.update = newFun
 
 	@staticmethod
 	def logStackTrace():
-	    stack = [line.strip() for line in traceback.format_stack()]
-	    msgStackTrace = (
-	    	'=== Stack trace log ===\n' +
-	    	'\n'.join(stack[:-1]) + '\n'
-	    	'=== End stack trace log ===')
-	    log.debug(msgStackTrace)
+		stack = [line.strip() for line in traceback.format_stack()]
+		msgStackTrace = (
+			'=== Stack trace log ===\n'
+			'\n'.join(stack[:-1]) + '\n'
+			'=== End stack trace log ==='
+		)
+		log.debug(msgStackTrace)
 
 	def terminate(self):
 		self.enableStackTraceLog(False)

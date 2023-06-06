@@ -33,6 +33,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			self.pythonConsolePostInitialize()
 		else:
 			oldInitialize = pythonConsole.initialize
+
 			def newInitialize():
 				oldInitialize()
 				self.pythonConsolePostInitialize()
@@ -45,7 +46,6 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		except (AttributeError, KeyError):
 			pass
 		super(GlobalPlugin, self).terminate(*args, **kwargs)
-
 
 	def pythonConsolePostInitialize(self):
 		pythonConsole.consoleUI.console.namespace.update({'openCodeFile': openCodeFile})

@@ -6,7 +6,6 @@
 from __future__ import unicode_literals
 
 import config
-from logHandler import log
 
 
 def getBaseProfileConfigValue(*args):

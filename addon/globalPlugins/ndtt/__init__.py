@@ -5,17 +5,14 @@
 
 from __future__ import unicode_literals
 
-import sys
 import wx
 
-import globalPluginHandler
 import globalVars
 from scriptHandler import script
 import addonHandler
 import gui
-from logHandler import log
 
-from . import configNDTT
+from . import configNDTT  # noqa: F401 - Required to initialize config spec
 from .ndttGui import NDTTSettingsPanel
 
 # Plugins that may be used in any context, including secure context.
@@ -34,7 +31,7 @@ if not globalVars.appArgs.secure:
 
 addonHandler.initTranslation()
 
-ADDON_SUMMARY = addonHandler.getCodeAddon ().manifest["summary"]
+ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
 
 if globalVars.appArgs.secure:
 
@@ -59,6 +56,16 @@ else:
 		pass
 
 
+def useAlternativeClassInSecureMode(safeClass):
+	def decorator(decoratedClass):
+		if globalVars.appArgs.secure:
+			return safeClass
+		else:
+			return decoratedClass
+	return decorator
+
+
+@useAlternativeClassInSecureMode(MixedGlobalPlugin)
 class GlobalPlugin(MixedGlobalPlugin):
 	def __init__(self):
 		super(MixedGlobalPlugin, self).__init__()
@@ -72,7 +79,7 @@ class GlobalPlugin(MixedGlobalPlugin):
 	@script(
 		# Translators: The description of a command of this add-on.
 		description=_("Opens NVDA Dev & Test Toolbox add-on settings"),
-		category = ADDON_SUMMARY,
+		category=ADDON_SUMMARY,
 	)
 	def script_openSettings(self, gesture):
 		wx.CallAfter(
@@ -85,7 +92,3 @@ class GlobalPlugin(MixedGlobalPlugin):
 		def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 			# We need to call explicitely chooseNVDAObjectOverlayClasses of the child class; else NVDA will skip them.
 			LogReaderGP.chooseNVDAObjectOverlayClasses(self, obj, clsList)
-
-
-if globalVars.appArgs.secure:
-	GlobalPlugin = MixedGlobalPlugin

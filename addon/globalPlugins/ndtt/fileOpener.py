@@ -17,7 +17,6 @@ from .compa import appDir
 
 import os
 import sys
-import shlex
 import threading
 import subprocess
 import ctypes
@@ -33,11 +32,11 @@ except ImportError:
 from io import open
 
 if sys.version_info.major >= 3:
-# Python 3+
+	# Python 3+
 	stringTypes = (str,)
 else:
-# Python 2
-	stringTypes = (str, unicode)
+	# Python 2
+	stringTypes = (str, unicode)  # noqa F821
 
 addonHandler.initTranslation()
 
@@ -45,7 +44,7 @@ addonHandler.initTranslation()
 class FileOpenerError(Exception):
 	"""An error that can be raised in the Python console and caught to report a message in the log reader.
 	"""
-	
+
 	# Possible error types
 	ET_CONFIG_NO_NVDA_SOURCE_PATH_DEFINED = 1
 	ET_CONFIG_NO_OPENER_DEFINED = 2
@@ -53,7 +52,7 @@ class FileOpenerError(Exception):
 	ET_CONFIG_EDITOR_NOT_FOUND = 4
 	ET_OBJECT_NOT_FOUND = 10
 	ET_FILE_NOT_FOUND = 11
-	
+
 	MESSAGE_DIC = {
 		ET_CONFIG_NO_NVDA_SOURCE_PATH_DEFINED: (
 			'No NVDA source path defined in configuration',
@@ -67,8 +66,11 @@ class FileOpenerError(Exception):
 		),
 		ET_CONFIG_OPENER_DEFINITION_WRONG_FORMAT: (
 			'Wrong format for the open file command defined in configuration',
-			# Translators: A message reported when trying to open a source file.
-			_('Wrong format for the open file command in the configuration; please see documentation to configure it.'),
+			_(
+				# Translators: A message reported when trying to open a source file.
+				'Wrong format for the open file command in the configuration; '
+				'please see documentation to configure it.'
+			),
 		),
 		ET_CONFIG_EDITOR_NOT_FOUND: (
 			'Editor not found {}',
@@ -86,11 +88,11 @@ class FileOpenerError(Exception):
 			_('File not found: {}'),
 		)
 	}
-	
+
 	def __init__(self, errorType, value=None):
 		self.errorType = errorType
 		self.value = value
-	
+
 	def __str__(self):
 		msg = self.MESSAGE_DIC[self.errorType][0]
 		if self.value is not None:
@@ -99,7 +101,7 @@ class FileOpenerError(Exception):
 			msg=msg,
 			et=self.errorType,
 		)
-	
+
 	def getUserFriendlyMessage(self):
 		msg = self.MESSAGE_DIC[self.errorType][1]
 		if self.value is not None:
@@ -120,7 +122,7 @@ class SourceFileOpener(threading.Thread):
 			self.cmd = self.opener.format(path=self.path, line=self.line)
 		except KeyError:
 			raise FileOpenerError(FileOpenerError.ET_CONFIG_OPENER_DEFINITION_WRONG_FORMAT, self.opener)
-		cmdLineItems  = win_CommandLineToArgvW(self.cmd)
+		cmdLineItems = win_CommandLineToArgvW(self.cmd)
 		self.editor = cmdLineItems[0]
 		self.parameters = subprocess.list2cmdline(cmdLineItems[1:])
 		if not os.path.isfile(self.editor):
@@ -150,12 +152,12 @@ def openSourceFile(path, line=1):
 class CodeLocator(object):
 	def __init__(self, obj):
 		self.obj = obj
-	
+
 	def getCodeLocation(self):
-		"""Returns the file path and the line of the source code that has been used to construct the object of this locator.
-		If no information can be found on the object, returns None.
+		"""Returns the file path and the line of the source code that has been used to construct the object of
+		this locator. If no information can be found on the object, returns None.
 		"""
-		
+
 		if inspect.isfunction(self.obj) or inspect.ismethod(self.obj):
 			loc = self.getCodeLocationForFunctionOrMethod()
 		elif inspect.isclass(self.obj):
@@ -166,7 +168,7 @@ class CodeLocator(object):
 			loc = self.getObjectCodePath()
 		path, line = loc
 		return path, line
-		
+
 	def getCodeLocationForFunctionOrMethod(self):
 		try:
 			# When using @functools.wraps target the original function decorated by the wrapper
@@ -178,7 +180,7 @@ class CodeLocator(object):
 		path = self.convertToSourcePath(path)
 		line = self.obj.__code__.co_firstlineno
 		return path, line
-		
+
 	def getCodeLocationForClass(self):
 		path = self.getModuleOrClassCodePath()
 		if not path:
@@ -186,12 +188,12 @@ class CodeLocator(object):
 		path = self.convertToSourcePath(path)
 		try:
 			className = self.obj.__qualname__
-		except AttributeError:# Python 2: __name__ instead of __qualname__
+		except AttributeError:  # Python 2: __name__ instead of __qualname__
 			className = self.obj.__name__
 		className = className.split('.')[-1]
 		line = self.findClassDefinitionLine(className, path)
 		return path, line
-	
+
 	def getCodeLocationForModule(self):
 		path = self.getModuleOrClassCodePath()
 		if not path:
@@ -199,7 +201,7 @@ class CodeLocator(object):
 		path = self.convertToSourcePath(path)
 		line = 1
 		return path, line
-		
+
 	@staticmethod
 	def convertToSourcePath(path):
 		path = re.sub(r'^.+\\library.zip\\(.+.py)[co]?$', r'\1', path)
@@ -208,8 +210,7 @@ class CodeLocator(object):
 			return os.path.join(nvdaPath, path)
 		else:
 			return path
-				
-	
+
 	@staticmethod
 	def findClassDefinitionLine(className, path):
 		reClassLine = r'\s*class\s+{}'.format(className)
@@ -220,7 +221,7 @@ class CodeLocator(object):
 					return n + 1
 			log.warning('Class definition line not found:\n{}'.format(reClassLine))
 			return 1
-	
+
 	def getModuleOrClassCodePath(self):
 		if inspect.ismodule(self.obj):
 			modName = self.obj.__name__
@@ -234,11 +235,11 @@ class CodeLocator(object):
 			src = inspect.getsourcefile(self.obj)
 			if src:
 				return src
-		except TypeError as e:
-		# inspect.getsourcefile raises TypeError for builtin classes.
+		except TypeError:
+			# inspect.getsourcefile raises TypeError for builtin classes.
 			pass
 		raise FileOpenerError(FileOpenerError.ET_OBJECT_NOT_FOUND, modName)
-	
+
 	def getObjectCodePath(self):
 		return CodeLocator(self.obj.__class__).getCodeLocationForClass()
 
@@ -251,7 +252,7 @@ def openObject(objPath, reportError=True):
 	except NameError:
 		# NVDA 2019.2.1: Although importlib is documented for Python 2, it is not present in NVDA's Python
 		# for this version. Thus use __import__ instead, as done in core code.
-		importFunction =  __import__
+		importFunction = __import__
 	try:
 		obj = importFunction(mod)
 	# Python 2 raise ImportError for non-existing modules; Python 3 raises ModuleNotFoundError instead.
@@ -265,23 +266,25 @@ def openObject(objPath, reportError=True):
 		raise FileOpenerError(FileOpenerError.ET_OBJECT_NOT_FOUND, objPath)
 	openCodeFile(obj)
 
+
 def openCodeFile(obj):
 	"""Opens the source code defining the object passed as parameter.
 	The parameter may be:
-	    - a Python object
-	      `openCodeFile(gui.settingsDialogs.SettingsPanel)`
-	    - a string containing the name of a Python object
-	      `openCodeFile("gui.settingsDialogs.SettingsPanel")`
+	- a Python object
+		`openCodeFile(gui.settingsDialogs.SettingsPanel)`
+	- a string containing the name of a Python object
+		`openCodeFile("gui.settingsDialogs.SettingsPanel")`
 	"""
-	
+
 	if isinstance(obj, stringTypes):
 		openObject(obj, reportError=False)
 		return
 	path, line = CodeLocator(obj).getCodeLocation()
 	openSourceFile(path, line)
 
+
 def getNvdaCodePath():
-	if getattr(sys,'frozen',None):
+	if getattr(sys, 'frozen', None):
 		# NVDA executable
 		nvdaSourcePath = config.conf['ndtt']['nvdaSourcePath'].strip()
 		if nvdaSourcePath:
@@ -292,6 +295,7 @@ def getNvdaCodePath():
 		# NVDA running from source
 		return appDir
 
+
 def win_CommandLineToArgvW(cmd):
 	nargs = ctypes.c_int()
 	ctypes.windll.shell32.CommandLineToArgvW.restype = ctypes.POINTER(ctypes.c_wchar_p)
@@ -301,23 +305,23 @@ def win_CommandLineToArgvW(cmd):
 		raise AssertionError
 	return args
 
+
 def testCodeFinder():
 	""" A test function for the `CodeLocator` class.
 	To execute it, open NVDA's Python console and run the following command:
 	globalPlugins.ndtt.GlobalPlugin.testCodeFinder()
 	"""
-	
+
 	nvdaCodePath = getNvdaCodePath()
 	if not nvdaCodePath:
 		return
-	import config
 	import api
 	from gui import logViewer
 	import appModules
 	from appModules import excel as appModules_excel
 	import globalCommands
 	import __main__
-	
+
 	objList = [
 		# Module
 		(api, nvdaCodePath + r'\api.py', 1),
@@ -350,8 +354,6 @@ def testCodeFinder():
 		else:
 			log.error('FileRef: {} - {}\nFileGCP: {} - {}'.format(file, line, file1, line1))
 			hasErrorOccurred = True
-	import ui
-	import core
 	if hasErrorOccurred:
 		msg = 'Test failed; see the log for details'
 	else:

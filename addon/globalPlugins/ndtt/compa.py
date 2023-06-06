@@ -58,7 +58,7 @@ class ControlTypesCompatWrapper(object):
 			"State",
 			self._ALIAS_FACTORIES
 		)
-	
+
 	def __getattr__(self, attr):
 		return getattr(controlTypes, attr)
 
@@ -80,7 +80,7 @@ def getApDir():
 def matchDict(m):
 	"""A helper function to get the match dictionary (useful in Python 2)
 	"""
-	
+
 	if not m:
 		return m
 	return m.groupdict()

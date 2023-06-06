@@ -8,18 +8,18 @@ from types import MethodType
 import globalPluginHandler
 import addonHandler
 import scriptHandler
-from scriptHandler import script
 import inputCore
 import ui
 
 addonHandler.initTranslation()
 
-ADDON_SUMMARY = addonHandler.getCodeAddon ().manifest["summary"]
+ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
 
 # Translators: The name of a category in the Input gesture dialog
 SCRIPT_WITHOUT_DESC_CATEGORY = _("Scripts without description (modify at your own risk!)")
 
 _originalMethod = inputCore.manager._handleInputHelp
+
 
 def newHandleInputHelp(self, gesture, onlyLog=False):
 	script = gesture.script
@@ -46,33 +46,30 @@ def newHandleInputHelp(self, gesture, onlyLog=False):
 		script.__func__.category = SCRIPT_WITHOUT_DESC_CATEGORY
 		GlobalPlugin.scriptsWithAddedDoc.add(script)
 	res = _originalMethod(gesture, onlyLog)
-	#if addDesc:
-	#	del script.__func__.__doc__
-	#	del script.__func__.category
 	return res
-		
-	
+
+
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	scriptsWithAddedDoc = set()
-	
+
 	def __init__(self):
 		super(GlobalPlugin, self).__init__()
 		self.configureESDMode(False, silent=True)
-		
+
 	def terminate(self):
 		self.configureESDMode(False, silent=True)
 		super(GlobalPlugin, self).terminate()
-		
-	@script(
+
+	@scriptHandler.script(
 		# Translators: Input help mode message for a toggle command.
-		description = _("Toggles the extended script description mode."),
-		gesture = "kb:nvda+control+alt+D",
-		category = ADDON_SUMMARY,
+		description=_("Toggles the extended script description mode."),
+		gesture="kb:nvda+control+alt+D",
+		category=ADDON_SUMMARY,
 	)
 	def script_tobbleESDMode(self, gesture):
 		self.configureESDMode(not self.esdMode)
-	
+
 	def configureESDMode(self, enable, silent=False):
 		self.esdMode = enable
 		if enable:
@@ -89,4 +86,3 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			self.__class__.scriptsWithAddedDoc.clear()
 		if not silent:
 			ui.message(msg)
-		
