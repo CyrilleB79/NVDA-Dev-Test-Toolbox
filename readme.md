@@ -206,7 +206,7 @@ A settings panel allows to enable them or to control how they work.
 To view and modify these settings, go to NVDA menu -> Preferences and select the category NVDA Dev & Test Toolbox.
 This settings dialog can also be accessed directly from the Logs Manager dialog.
 
-These settings are global and are not affected by profile switching.
+These settings are global and can only be configured when the default profile is active.
 
 <a id="settingsOpenCommand"></a>
 ### Command to open a file in your favorite editor

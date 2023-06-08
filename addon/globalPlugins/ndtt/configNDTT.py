@@ -12,3 +12,11 @@ confspec = {
 	"logBackupMaxNumber": 'integer(min=1, max=100, default=3)',
 }
 config.conf.spec["ndtt"] = confspec
+
+# Configuration initialization
+# Perform a dummy change and restore the original value.
+# This is needed to ensure that 'ndtt' key is present in config.conf.profiles[0] (default).
+# Since we directly save in the default profile, we cannot take advantage of automatic secion creation.
+val = config.conf['ndtt']['logBackupMaxNumber']
+config.conf['ndtt']['logBackupMaxNumber'] = val + 1
+config.conf['ndtt']['logBackupMaxNumber'] = val

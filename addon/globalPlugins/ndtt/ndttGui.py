@@ -9,7 +9,9 @@ import wx
 
 import gui
 from gui import guiHelper, nvdaControls
+from gui.settingsDialogs import PANEL_DESCRIPTION_WIDTH
 import config
+from logHandler import log
 
 from .utils import getBaseProfileConfigValue
 
@@ -20,7 +22,7 @@ addonHandler.initTranslation()
 ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
 
 
-class NDTTSettingsPanel(gui.SettingsPanel):
+class NDTTSettingsPanel(gui.settingsDialogs.SettingsPanel):
 	title = ADDON_SUMMARY
 
 	BACKUP_TYPES = [
@@ -30,7 +32,19 @@ class NDTTSettingsPanel(gui.SettingsPanel):
 		('maxNumber', _('On')),
 	]
 
+	NO_DEFAULT_PROFILE_MESSAGE = _(
+		# Translators: A message presented in the settings panel when opened while no-default profile is active.
+		f"{ADDON_SUMMARY} add-on can only be configured from the Normal Configuration profile.\n"
+		"Please close this dialog, set your config profile to default and try again."
+	)
+
 	def makeSettings(self, settingsSizer):
+		if config.conf.profiles[-1].name is not None or len(config.conf.profiles) != 1:
+			self.panelDescription = self.NO_DEFAULT_PROFILE_MESSAGE
+			helper = gui.guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+			textItem = helper.addItem(wx.StaticText(self, label=self.panelDescription.replace('&', '&&')))
+			textItem.Wrap(self.scaleSize(PANEL_DESCRIPTION_WIDTH))
+			return
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		openInEditorCmdLabel = _(
@@ -106,8 +120,11 @@ class NDTTSettingsPanel(gui.SettingsPanel):
 		self.nbBackupsEdit.Enable(backupType == 'maxNumber')
 
 	def onSave(self):
-		config.conf.profiles[0]['ndtt']['sourceFileOpener'] = self.openInEditorCmdEdit.GetValue()
-		config.conf.profiles[0]['ndtt']['nvdaSourcePath'] = self.nvdaSourceCodePathEdit.GetValue()
-		config.conf.profiles[0]['ndtt']['logBackup'] = self.BACKUP_TYPES[self.makeBackupsList.Selection][0]
-		nBackups = int(self.nbBackupsEdit.Value)
-		config.conf.profiles[0]['ndtt']['logBackupMaxNumber'] = nBackups
+		# Make sure we're operating in the "normal" profile
+		if config.conf.profiles[-1].name is None and len(config.conf.profiles) == 1:
+			config.conf['ndtt']['sourceFileOpener'] = self.openInEditorCmdEdit.GetValue()
+			config.conf['ndtt']['nvdaSourcePath'] = self.nvdaSourceCodePathEdit.GetValue()
+			config.conf['ndtt']['logBackup'] = self.BACKUP_TYPES[self.makeBackupsList.Selection][0]
+			config.conf['ndtt']['logBackupMaxNumber'] = int(self.nbBackupsEdit.Value)
+		else:
+			log.debugWarning('No configuration saved for NDTT since the current profile is not the default one.')

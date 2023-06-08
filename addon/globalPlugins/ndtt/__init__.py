@@ -12,7 +12,9 @@ from scriptHandler import script
 import addonHandler
 import gui
 
-from . import configNDTT  # noqa: F401 - Required to initialize config spec
+# Initialize config spec; should be done before GlobalPlugins import
+from . import configNDTT  # noqa: F401 - Required to initialize config spec; should be done before GlobalPlugins import
+
 from .ndttGui import NDTTSettingsPanel
 
 # Plugins that may be used in any context, including secure context.
