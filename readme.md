@@ -31,7 +31,7 @@ This add-on provides an additional command (NVDA+control+alt+E) to toggle this s
 You can choose:
 
 * "Only in test versions" (default) to make NVDA play error sounds only if the current NVDA version is a test version (alpha, beta or run from source).
-* "Yes" to enable error sounds whatever your current NVDA version is. 
+* "Yes" to enable error sounds no matter your current NVDA version. 
 
 For NVDA prior to 2021.3, this add-on provides the backport of this feature and the possibility to control it with the keyboard command.
 The checkbox in the Advanced settings panel is not backported however.
@@ -46,7 +46,7 @@ To list the properties of an object, move the navigator object to it and use the
 * Selects the next property and reports it for the navigator object.
 * Reports the currently selected property for the navigator object; two presses displays this information in a browseable message.
 
-These three commands are unassigned by default; you will have to assign them in the Input gesture dialog to use them.
+These three commands are unassigned by default; you will have to assign them a shortcut in the Input gesture dialog to use them.
 
 The list of the supported properties is the following:
 name, role, state, value, windowClassName, windowControlID, windowHandle, location, Python class, Python class mro.
@@ -114,9 +114,9 @@ Pressing the single letter moves to the next occurrence of this message. Combini
 In the log some line may refer to the source code:
 
 * A line belonging to a traceback contains the path and the line in a file, e.g.:  
-  `  File "virtualBuffers\__init__.pyc", line 226, in _getStoryLength`
+  `  File "virtualBuffers\__init__.pyc", line 226, in _getStoryLength`  
 * The header line of a logged message contains the function which has logged this message, e.g.:  
-  `INFO - config.ConfigManager._loadConfig (22:45:26.145) - MainThread (16580):`
+  `INFO - config.ConfigManager._loadConfig (22:45:26.145) - MainThread (16580):`  
 
 You may want to open the file containing this code to understand the context of the traceback or the logged message.
 Just press C to open this file.
@@ -142,7 +142,7 @@ To be able to open a log, you should first have configured the [Command to open 
 ### `openCodeFile` function
 
 In the console, you can call the following function to view the source code that defines the variable `myVar`:  
-`openCodeFile(myVar)`
+`openCodeFile(myVar)`  
 
 For this feature to work, you need to have configured your [favorite editor's command](#settingsOpenCommand) in the add-on's settings.
 If you are not running NVDA from source, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
@@ -157,15 +157,15 @@ Below are examples of call in NVDA's code:
 * View the definition of the function `speech.speech.speak`:  
   `openCodeFile(speech.speech.speak)`  
   or with the name passed as parameter:  
-  `openCodeFile("speech.speech.speak")`
+  `openCodeFile("speech.speech.speak")`  
 * View the definition of the class `TextInfo`:  
-  `openCodeFile(textInfos.TextInfo)`
+  `openCodeFile(textInfos.TextInfo)`  
 * View the definition of the method `copyToClipboard` of the class `TextInfo`:  
-  `openCodeFile(textInfos.TextInfo.copyToClipboard)`
-* View the class definition of the focused object:  
-  `openCodeFile(focus)`
+  `openCodeFile(textInfos.TextInfo.copyToClipboard)`  
+* View the definition of the class of the focused object:  
+  `openCodeFile(focus)`  
 * Open the file `api.py` defining the module `api`:  
-  `openCodeFile(api)`
+  `openCodeFile(api)`  
 
 ### Python console startup script
 
