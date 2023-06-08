@@ -9,7 +9,7 @@ This add-on gathers various features for NVDA debugging and testing.
 ## Features
 
 * An enhanced restart dialog to specify some extra options when restarting NVDA.
-* A toggle script and a backport of NVDA's "Play a sound for logged errors" feature.
+* Various features related to logged errors.
 * An object property explorer.
 * An extended script description mode: when enabled input help mode report information on scripts that have no description.
 * Commands to help log reading and analyzing.
@@ -23,7 +23,13 @@ This add-on gathers various features for NVDA debugging and testing.
 The NVDA+shift+Q command opens a dialog to specify some extra options before restarting NVDA.
 The options that can be specified correspond to the [command line options][2] that can be used with `nvda.exe`, e.g. `-c` for config path, `--disable-addons` to disable add-ons, etc.
 
-## Play a sound for logged errors
+## Features related to logged errors
+
+### Report last logged error
+
+Pressing NVDA+shift+alt+E allows to report the last error logged without needing to open the log. A second press clears the memorized last error.
+
+### Play a sound for logged errors
 
 The ["Play a sound for logged errors" setting][4] has been introduced in NVDA 2021.3 and allows to specify if NVDA will play an error sound in case an error is logged.
 
