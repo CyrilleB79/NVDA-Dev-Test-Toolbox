@@ -48,9 +48,11 @@ def myHandle(fh, record, *args, **kwargs):
 		errorInfo.append(record.levelname)
 		if record.msg is not None:
 			errorInfo.append(record.msg)
-		msg = repr(record.exc_info[1])
-		if msg is not None:
-			errorInfo.append(msg)
+		if record.exc_info:
+			excType = record.exc_info[1]
+			if excType is not None:
+				errorInfo.append(repr(excType))
+			# else it is probably not worth reporting that no exception is available but has been requested.
 		logHandler.ndttLastErrorInfo = ' - '.join(errorInfo)
 		logHandler.ndttLastRecord = record
 	# The add-on only controls error sound playing when all of the following conditions are met:
