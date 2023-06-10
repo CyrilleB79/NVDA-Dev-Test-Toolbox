@@ -289,7 +289,7 @@ These settings only take effect at next NVDA startup when the backup takes place
 
 * Initial release.
 
-[1]: https://www.nvaccess.org/addonStore/legacy?file=ndtt
+[1]: https://www.nvaccess.org/addonStore/legacy?file=nvdaDevTestToolbox
 
 [2]: https://www.nvaccess.org/files/nvda/documentation/userGuide.html#CommandLineOptions
 
