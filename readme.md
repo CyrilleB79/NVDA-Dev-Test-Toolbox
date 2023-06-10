@@ -243,6 +243,11 @@ These settings only take effect at next NVDA startup when the backup takes place
 
 ## Change log
 
+### Version 4.1
+
+* Fixed a bug occurring in some situations while logging an error.
+* The add-on's settings can now be modified only when the default profile is active to avoid config issues.
+
 ### Version 4.0
 
 * Possibility to back up old logs and introduction of a logs manager.
