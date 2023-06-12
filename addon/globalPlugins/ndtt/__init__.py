@@ -12,6 +12,8 @@ from scriptHandler import script
 import addonHandler
 import gui
 
+from .baseObjectEx import ScriptableObjectWithLayer
+
 # Initialize config spec; should be done before GlobalPlugins import
 from . import configNDTT  # noqa: F401 - Required to initialize config spec.
 
@@ -68,15 +70,26 @@ def useAlternativeClassInSecureMode(safeClass):
 
 
 @useAlternativeClassInSecureMode(MixedGlobalPlugin)
-class GlobalPlugin(MixedGlobalPlugin):
+class GlobalPlugin(ScriptableObjectWithLayer, MixedGlobalPlugin):
 	def __init__(self):
-		super(MixedGlobalPlugin, self).__init__()
+		super(GlobalPlugin, self).__init__()
+		
+		self.createLayeredCommandEntryPoint(
+			layerCommandList=[
+				(["shift+e"], "reportLastError", _("zzz reports last error")),
+			],
+			category = ADDON_SUMMARY,
+			# Translators: A command description
+			description=_("Entry point for {addonName}'s layered commands"),
+			gesture="kb:NVDA+control+x",
+		)
+
 		# Gui initialization
 		gui.settingsDialogs.NVDASettingsDialog.categoryClasses.append(NDTTSettingsPanel)
 
 	def terminate(self):
 		gui.settingsDialogs.NVDASettingsDialog.categoryClasses.remove(NDTTSettingsPanel)
-		super(MixedGlobalPlugin, self).terminate()
+		super(GlobalPlugin, self).terminate()
 
 	@script(
 		# Translators: The description of a command of this add-on.
