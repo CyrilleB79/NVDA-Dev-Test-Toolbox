@@ -69,20 +69,26 @@ def useAlternativeClassInSecureMode(safeClass):
 	return decorator
 
 
+NDTTScriptableObjectWithLayer = ScriptableObjectWithLayer(
+	layerCommandList=[
+		(["shift+e"], "reportLastError", _("zzz reports last error")),
+	],
+	category = ADDON_SUMMARY,
+	# Translators: A command description
+	description=_("Entry point for {addonName}'s layered commands"),
+	gesture="kb:NVDA+control+x",
+)
+from logHandler import log
+log.info(NDTTScriptableObjectWithLayer.__name__)
+
+
 @useAlternativeClassInSecureMode(MixedGlobalPlugin)
-class GlobalPlugin(ScriptableObjectWithLayer, MixedGlobalPlugin):
+class GlobalPlugin(
+	NDTTScriptableObjectWithLayer,
+	MixedGlobalPlugin,
+):
 	def __init__(self):
 		super(GlobalPlugin, self).__init__()
-		
-		self.createLayeredCommandEntryPoint(
-			layerCommandList=[
-				(["shift+e"], "reportLastError", _("zzz reports last error")),
-			],
-			category = ADDON_SUMMARY,
-			# Translators: A command description
-			description=_("Entry point for {addonName}'s layered commands"),
-			gesture="kb:NVDA+control+x",
-		)
 
 		# Gui initialization
 		gui.settingsDialogs.NVDASettingsDialog.categoryClasses.append(NDTTSettingsPanel)

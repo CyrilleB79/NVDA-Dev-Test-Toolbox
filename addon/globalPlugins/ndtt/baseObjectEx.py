@@ -5,8 +5,11 @@
 
 from __future__ import unicode_literals
 
+from functools import wraps
+
 from baseObject import ScriptableObject
 from scriptHandler import script
+from tones import beep
 import addonHandler
 
 addonHandler.initTranslation()
@@ -27,19 +30,19 @@ def finally_(func, final):
 	return wrap(final)
 
 
-class ScriptableObjectWithLayer(ScriptableObject):
+class BaseScriptableObjectWithLayer(ScriptableObject):
 	def __init__(self):
-		super(ScriptableObjectWithLayer, self).__init__()
+		super(BaseScriptableObjectWithLayer, self).__init__()
 		self.toggling = False
 
 	def getScript(self, gesture):
 		if not self.toggling:
 			#zzz return globalPluginHandler.GlobalPlugin.getScript(self, gesture)
 			#zzz return ScriptableObject.getScript(self, gesture)
-			return super(ScriptableObjectWithLayer, self).getScript(gesture)
+			return super(BaseScriptableObjectWithLayer, self).getScript(gesture)
 		#zzz script = ScriptableObject.getScript(self, gesture)
-		#zzz script = super(ScriptableObjectWithLayer, self).getScript(gesture)
-		script = super(ScriptableObjectWithLayer, self).getScript(gesture)
+		#zzz script = super(BaseScriptableObjectWithLayer, self).getScript(gesture)
+		script = super(BaseScriptableObjectWithLayer, self).getScript(gesture)
 		if not script:
 			script = finally_(self.script_error, self.finish)
 		if getattr(script, 'allowMultipleLayeredCommands', None):
@@ -55,33 +58,23 @@ class ScriptableObjectWithLayer(ScriptableObject):
 	def script_error(self, gesture):
 		beep(120, 100)
 
-	def createLayeredCommandEntryPoint(
-		self,
-		layerCommandList,
-		**kwargs,
-	):
-		@script(
-			**kwargs,
-		)
-		def script_enterLayer(self, gesture):
-			# A run-time binding will occur from which we can perform various layered commands.
-			# First, check if a second press of the script was done.
-			if self.toggling:
-				self.script_error(gesture)
-				return
-			layerGestures = {}
-			for (gestures, command, desc) in layerCommandList:
-				for g in gestures:
-					layerGestures["kb:" + g] = command
-			self.bindGestures(layerGestures)
-			self.toggling = True
-			beep(100, 10)
-		setattr(self, 'script_enterLayer', script_enterLayer)
-		try:
-			gesture = kwargs['gesture']
-			self.bindGesture(gesture, 'enterLayer')
-		except KeyError:
-			pass
 
-	def terminate(self):
-		super(ScriptableObjectWithLayer, self).terminate()	
+def ScriptableObjectWithLayer(layerCommandList, **kwargs):
+	class _ScriptableObjectWithLayer(BaseScriptableObjectWithLayer):
+			@script(
+				**kwargs,
+			)
+			def script_enterLayer(self, gesture):
+				# A run-time binding will occur from which we can perform various layered commands.
+				# First, check if a second press of the script was done.
+				if self.toggling:
+					self.script_error(gesture)
+					return
+				layerGestures = {}
+				for (gestures, command, desc) in layerCommandList:
+					for g in gestures:
+						layerGestures["kb:" + g] = command
+				self.bindGestures(layerGestures)
+				self.toggling = True
+				beep(100, 10)
+	return _ScriptableObjectWithLayer
