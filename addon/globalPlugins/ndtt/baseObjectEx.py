@@ -30,37 +30,36 @@ def finally_(func, final):
 	return wrap(final)
 
 
-class BaseScriptableObjectWithLayer(ScriptableObject):
-	def __init__(self):
-		super(BaseScriptableObjectWithLayer, self).__init__()
-		self.toggling = False
-
-	def getScript(self, gesture):
-		if not self.toggling:
-			#zzz return globalPluginHandler.GlobalPlugin.getScript(self, gesture)
-			#zzz return ScriptableObject.getScript(self, gesture)
-			return super(BaseScriptableObjectWithLayer, self).getScript(gesture)
-		#zzz script = ScriptableObject.getScript(self, gesture)
-		#zzz script = super(BaseScriptableObjectWithLayer, self).getScript(gesture)
-		script = super(BaseScriptableObjectWithLayer, self).getScript(gesture)
-		if not script:
-			script = finally_(self.script_error, self.finish)
-		if getattr(script, 'allowMultipleLayeredCommands', None):
-			return script
-		else:
-			return finally_(script, self.finish)
-
-	def finish(self):
-		self.toggling = False
-		self.clearGestureBindings()
-		self.bindGestures(self.__gestures)
-
-	def script_error(self, gesture):
-		beep(120, 100)
-
 
 def ScriptableObjectWithLayer(layerCommandList, **kwargs):
-	class _ScriptableObjectWithLayer(BaseScriptableObjectWithLayer):
+	class _ScriptableObjectWithLayer(ScriptableObject):
+		def __init__(self):
+			super(_ScriptableObjectWithLayer, self).__init__()
+			self.toggling = False
+
+		def getScript(self, gesture):
+			if not self.toggling:
+				#zzz return globalPluginHandler.GlobalPlugin.getScript(self, gesture)
+				#zzz return ScriptableObject.getScript(self, gesture)
+				return super(_ScriptableObjectWithLayer, self).getScript(gesture)
+			#zzz script = ScriptableObject.getScript(self, gesture)
+			#zzz script = super(_ScriptableObjectWithLayer, self).getScript(gesture)
+			script = super(_ScriptableObjectWithLayer, self).getScript(gesture)
+			if not script:
+				script = finally_(self.script_error, self.finish)
+			if getattr(script, 'allowMultipleLayeredCommands', None):
+				return script
+			else:
+				return finally_(script, self.finish)
+
+		def finish(self):
+			self.toggling = False
+			self.clearGestureBindings()
+			self.bindGestures(self.__gestures)
+
+		def script_error(self, gesture):
+			beep(120, 100)
+
 			@script(
 				**kwargs,
 			)

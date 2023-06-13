@@ -1,0 +1,22 @@
+name: Check POT on push
+
+on:
+  push:
+    branches:
+      - testCheckPot
+
+jobs:
+  download-and-test-checkPot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout only the files in tests directory
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: './tests'
+          fetch-depth: 0
+          # Only fetch the files in the tests directory to save time
+
+      - name: Copy checkPot.py to workflow environment
+        run: cp ./tests/checkPot.py ${{ github.workspace }}
+        # Copy the checkPot.py file to the workspace directory
