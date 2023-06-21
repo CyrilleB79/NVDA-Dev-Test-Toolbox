@@ -78,8 +78,8 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		stack = [line.strip() for line in traceback.format_stack()]
 		msgStackTrace = (
 			'=== Stack trace log ===\n'
-			'\n'.join(stack[:-1]) + '\n'
-			'=== End stack trace log ==='
+			+ '\n'.join(stack[:-1]) + '\n'
+			+ '=== End stack trace log ==='
 		)
 		log.debug(msgStackTrace)
 
