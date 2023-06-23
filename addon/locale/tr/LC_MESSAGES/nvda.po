@@ -1,0 +1,366 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the nvdaDevTestToolbox package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: nvdaDevTestToolbox\n"
+"Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
+"POT-Creation-Date: 2023-06-16 14:09+0000\n"
+"PO-Revision-Date: 2023-06-22 18:45+0300\n"
+"Last-Translator: Umut KORKMAZ <umutkork@gmail.com>\n"
+"Language-Team: Umut KORKMAZ <umutkork@gmail.com>\n"
+"Language: tr_TR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.3.1\n"
+
+#. Translators: The description of a command of this add-on.
+msgid "Opens NVDA Dev & Test Toolbox add-on settings"
+msgstr "NVDA Geliştirici ve Test Araç Kutusu eklenti ayarlarını açar"
+
+#. Translators: Input help mode message for a toggle command.
+msgid "Toggles play a sound for logged error."
+msgstr "Günlüğe kaydedilen hata için ses çalma özelliğini değiştirir."
+
+#. Translators: Message reported when calling the command to toggle play a sound for logged errors
+msgid "Yes"
+msgstr "Evet"
+
+#. Translators: Message reported when calling the command to toggle play a sound for logged errors
+msgid "Only in NVDA test versions"
+msgstr "Yalnızca NVDA test sürümlerinde"
+
+#. Translators: Input help mode message for a command.
+msgid ""
+"Report the last error logged. A second press clears the memorized last error."
+msgstr ""
+"Günlüğe kaydedilen son hatayı duyurur. İkidefa basma, hafızaya alınan son "
+"hatayı siler."
+
+#. Translators: Message reported when calling the "report last error" command
+msgid "No error"
+msgstr "Hata yok"
+
+#. Translators: Message reported when calling the "report last error" command
+msgid "Last error cleared"
+msgstr "Son hata temizlendi"
+
+#. Translators: The name of a category in the Input gesture dialog
+msgid "Scripts without description (modify at your own risk!)"
+msgstr ""
+"Açıklama içermeyen komut dosyaları (kendi sorumluluğunuzda değişiklik yapın!)"
+
+#. Translators: Input help mode message for a toggle command.
+msgid "Toggles the extended script description mode."
+msgstr "Genişletilmiş komut dosyası açıklama modunu değiştirir."
+
+#. Translators: A message reported when toggling Extended script description mode.
+msgid "Extended script description mode enabled"
+msgstr "Genişletilmiş komut dosyası açıklama modu etkinleştirildi"
+
+#. Translators: A message reported when toggling Extended script description mode.
+msgid "Extended script description mode disabled"
+msgstr "Genişletilmiş komut dosyası açıklama modu devre dışı bırakıldı"
+
+#. Translators: A message reported when trying to open a source file.
+msgid ""
+"No path configured for NVDA sources; please see documentation to configure "
+"it."
+msgstr ""
+"NVDA kaynakları için yapılandırılmış konum yok; yapılandırmak için lütfen "
+"belgelere bakın."
+
+#. Translators: A message reported when trying to open a source file.
+msgid ""
+"No open file command configured; please see documentation to configure it."
+msgstr ""
+"Açık dosya komutu yapılandırılmadı; yapılandırmak için lütfen belgelere "
+"bakın."
+
+#. Translators: A message reported when trying to open a source file.
+msgid ""
+"Wrong format for the open file command in the configuration; please see "
+"documentation to configure it."
+msgstr ""
+"Yapılandırmada dosya aç komutu için yanlış biçim; yapılandırmak için lütfen "
+"belgelere bakın."
+
+#. Translators: A message reported when trying to open a source file.
+msgid "Editor not found at {}; please check your configuration."
+msgstr ""
+"Düzenleyici {} konumunda bulunamadı; lütfen yapılandırmanızı kontrol edin."
+
+#. Translators: A message reported when trying to open a source file.
+msgid "Object not found: {}"
+msgstr "Nesne bulunamadı: {}"
+
+#. Translators: A message reported when trying to open a source file.
+msgid "File not found: {}"
+msgstr "Dosya bulunamadı: {}"
+
+#. Translators: Text appearing in the date column of the log manager when the date cnanot be determined.
+msgid "Unknown"
+msgstr "Bilinmiyor"
+
+#. Translators: The title of the Logs Manager Dialog
+msgid "Logs Manager"
+msgstr "Günlük Yöneticisi"
+
+#. Translators: the label for the text on top of the logs manager window.
+#, python-brace-format
+msgid "Logs in {folder}"
+msgstr "{folder} içindeki günlükler"
+
+#. Translators: The label for a column in logs list
+msgid "Date"
+msgstr "Tarih"
+
+#. Translators: The label for a column in logs list
+msgid "Type"
+msgstr "Tür"
+
+#. Translators: The label for a column in logs list
+msgid "File name"
+msgstr "Dosya adı"
+
+#. Translators: The label for a button in Logs Manager dialog to open the selected logs.
+msgid "&Open"
+msgstr "&Aç"
+
+#. Translators: The label for a button to delete the selected log(s) in Log Manager dialog.
+msgid "&Delete"
+msgstr "&Sil"
+
+#. Translators: The label of a button in Logs Manager to open the settings panel.
+msgid "Settings..."
+msgstr "Ayarlar..."
+
+#. Translators: The label of a button to close the logs manager dialog.
+msgid "&Close"
+msgstr "&Kapat"
+
+#. We open the message box only if no log can be opened
+#. Translators: A message displayed to the user when pressing the Open button in the logs manager dialog
+msgid "The selected log(s) is (are) not available anymore"
+msgstr "Seçilen günlükler artık mevcut değil"
+
+#. Translators: A message displayed to the user when pressing the Delete button in the logs manager dialog
+#, python-brace-format
+msgid ""
+"The following files will be removed:\n"
+"{logsList}\n"
+"\n"
+"Would you like to continue?"
+msgstr ""
+"Aşağıdaki dosyalar kaldırılacak:\n"
+"{logsList}\n"
+"\n"
+"Devam etmek istiyor musunuz?"
+
+#. Translators: The title of a dialog displayed to the user when pressing the Delete button in the logs manager dialog
+msgid "Confirm deletion"
+msgstr "Silmeyi onayla"
+
+#. Translators: Message issued when 5 or more logs could not be deleted.
+#, python-brace-format
+msgid "{nLogs} log files could not be deleted. See NVDA's log for details."
+msgstr ""
+"{nLogs} günlük dosyaları silinemedi. Ayrıntılar için NVDA günlüğüne bakın."
+
+#. Translators: Message issued when 1 to 4 logs could not be deleted.
+#, python-brace-format
+msgid ""
+"The following logs files could not be deleted.\n"
+"\n"
+"{file}"
+msgstr ""
+"Aşağıdaki günlük dosyaları silinemedi.\n"
+"\n"
+"{file}"
+
+#. Translators: The title of a dialog displayed to the user when pressing the Delete button in the logs manager dialog
+msgid "Error"
+msgstr "Hata"
+
+#. Translators: menu item label to open the logs manager dialog.
+msgid "&Logs manager..."
+msgstr "Gün&lük yöneticisi..."
+
+#. Translators: Reported when pressing a quick navigation command in the log.
+msgid "No more item"
+msgstr "Başka öğe yok"
+
+#. Translators: Input help mode message for log navigation commands. {st} will be replaced by the search type (Io, Debug, Message, etc.
+#, python-brace-format
+msgid "Moves to the next logged message of type {st}."
+msgstr "{st} türünde günlüğe kaydedilen sonraki mesaja gider."
+
+#. Translators: Input help mode message for log navigation commands. {st} will be replaced by the search type (Io, Debug, Message, etc.
+#, python-brace-format
+msgid "Moves to the previous logged message of type {st}."
+msgstr "{st} türünde günlüğe kaydedilen önceki mesaja gider."
+
+#. Translators: Input help mode message for Toggle log Reader script.
+msgid "Activates or deactivates the log Reader commands."
+msgstr "Günlük Okuyucu komutlarını etkinleştirir veya devre dışı bırakır."
+
+#. Translators: A message reported when toggling log reader commands.
+msgid "Log Reader commands enabled."
+msgstr "Günlük Okuyucu komutları etkinleştirildi."
+
+#. Translators: A message reported when toggling log reader commands.
+msgid "Log Reader commands disabled."
+msgstr "Günlük Okuyucu komutları devre dışı bırakıldı."
+
+#. Translators: Input help mode message for Open source file script.
+msgid ""
+"Opens the source code file whose path is located at the caret's position."
+msgstr "Yolu imlecin konumunda bulunan kaynak kod dosyasını açar."
+
+#. Translators: A message reported when trying to open the source code from the current line.
+msgid "No file path or object found on this line."
+msgstr "Bu satırda dosya konumu veya nesne bulunamadı."
+
+#. Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
+msgid "Off"
+msgstr "Kapalı"
+
+#. Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
+msgid "On"
+msgstr "Aktif"
+
+#. Translators: This is a label for an edit field in the NDTT Settings panel.
+#, python-brace-format
+msgid ""
+"Command to open a file in your favorite editor\n"
+"(use \"{path}\" and \"{line}\" placeholders in this command)"
+msgstr ""
+"Bir dosyayı favori düzenleyicinizde açma komutu\n"
+"(bu komutta \"{path}\" ve \"{line}\" yer tutucularını kullanın)"
+
+#. Translators: This is a label for an edit field in the NDTT Settings panel.
+msgid "NVDA source code path"
+msgstr "NVDA kaynak kodu konumu"
+
+#. Translators: The label of a button to browse for a directory or a file.
+msgid "Browse..."
+msgstr "Gözat..."
+
+#. Translators: The title of the dialog presented when browsing for the directory.
+msgid "Select a directory"
+msgstr "Bir konum seçin"
+
+#. Translators: This is a label for the combo box in the NDTT Settings panel.
+msgid "Backup of old logs:"
+msgstr "Eski günlükleri yedekleme:"
+
+#. Translators: This is a label for a setting in the settings panel
+msgid "Limit the number of backups to:"
+msgstr "Yedekleme sayısını aşağıdakilerle sınırlandırın:"
+
+#. Translators: Input help mode message for a command of the object property explorer.
+msgid ""
+"Reports the currently selected property of the object property explorer for "
+"the navigator object; two presses displays this information in a browseable "
+"message."
+msgstr ""
+"Gezgin nesnesi için nesne özellik gezgininde o anda seçili olan özelliği "
+"bildirir; iki kez basıldığında bu bilgi göz atılabilir bir mesajda "
+"görüntülenir."
+
+#. Translators: Input help mode message for a command of the object property explorer.
+msgid ""
+"Selects the next property of the object property explorer and reports it for "
+"the navigator object."
+msgstr ""
+"Nesne özellik gezgininin sonraki özelliğini seçer ve gezgin nesnesi için "
+"raporlar."
+
+#. Translators: Input help mode message for a command of the object property explorer.
+msgid ""
+"Selects the previous property of the object property explorer and reports it "
+"for the navigator object."
+msgstr ""
+"Nesne özellik gezgininin önceki özelliğini seçer ve gezgin nesnesi için "
+"raporlar."
+
+#. Translators: The title of a file selector window
+msgid "Save As"
+msgstr "Farklı kaydet"
+
+#. Translators: the label for the NVDA log extension (log) file type
+#, python-brace-format
+msgid "NVDA log file (*.{ext})"
+msgstr "NVDA günlük dosyası (*.{ext})"
+
+#. Translators: The title of the dialog presented when browsing for the file.
+msgid "Select a file"
+msgstr "Bir dosya seçin"
+
+#. class RestartWithOptionsDialog(wx.):
+#. Translators: This is the title for the Restart with options dialog
+msgid "Specify some options and restart"
+msgstr "Bazı seçenekleri belirtin ve yeniden başlatın"
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+msgid "The file where log messages should be written to"
+msgstr "Günlük mesajlarının yazılması gereken dosya"
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+msgid "The lowest level of message logged"
+msgstr "Günlüğe kaydedilen en düşük ileti düzeyi"
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+msgid "The path where all settings for NVDA are stored"
+msgstr "NVDA için tüm ayarların saklandığı konum"
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+msgid "Override the configured NVDA language"
+msgstr "Yapılandırılan NVDA dilini geçersiz kıl"
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+msgid "No sounds, no interface, no start message, etc."
+msgstr "Ses yok, arayüz yok, başlangıç ​​mesajı yok, vs."
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+msgid "Secure mode"
+msgstr "Güvenli mod"
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+msgid "Add-ons will have no effect"
+msgstr "Eklentilerin hiçbir etkisi olmayacak"
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+msgid "Don't change the global system screen reader flag"
+msgstr "Global sistem ekran okuyucu bayrağını değiştirmeyin"
+
+#. Translators: Input help mode message for Restart with options command.
+msgid "Restarts NVDA with specific options."
+msgstr "Belirli seçeneklerle NVDA'yı yeniden başlatır."
+
+#. Translators: Input help mode message for a toggle command.
+msgid "Toggles the stack trace log when the speech function is called."
+msgstr "Konuşma işlevi çağrıldığında yığın izleme günlüğünü değiştirir."
+
+#. Translators: Reported when toggling the stack trace log feature.
+msgid "Stacktrace log enabled"
+msgstr "Yığın izleme günlüğü etkin"
+
+#. Translators: Reported when toggling the stack trace log feature.
+msgid "Stacktrace log disabled"
+msgstr "Yığın izleme günlüğü devre dışı"
+
+#. Add-on summary, usually the user visible name of the addon.
+#. Translators: Summary for this add-on
+#. to be shown on installation and add-on information found in Add-ons Manager.
+msgid "NVDA Dev & Test Toolbox"
+msgstr "NVDA Geliştirici ve Test Araç Kutusu"
+
+#. Add-on description
+#. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+msgid "A set of tools for NVDA developers and testers."
+msgstr "NVDA geliştiricileri ve testçileri için bir dizi araç."
