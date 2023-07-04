@@ -243,6 +243,12 @@ These settings only take effect at next NVDA startup when the backup takes place
 
 ## Change log
 
+### Version 4.2
+
+* Fixed an error with NVDA version below 2021.3.
+* Fixed the stack trace log formatting.
+* First localizations.
+
 ### Version 4.1
 
 * Fixed a bug occurring in some situations while logging an error.

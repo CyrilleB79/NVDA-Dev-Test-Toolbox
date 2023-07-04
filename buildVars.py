@@ -25,7 +25,7 @@ addon_info = {
 	# Translators: Long description to be shown for this add-on on add-on information from add-ons manager
 	"addon_description": _("""A set of tools for NVDA developers and testers."""),
 	# version
-	"addon_version": "4.1",
+	"addon_version": "4.2",
 	# Author(s)
 	"addon_author": "Cyrille Bougot <cyrille.bougot2@laposte.net>",
 	# URL for the add-on documentation support
