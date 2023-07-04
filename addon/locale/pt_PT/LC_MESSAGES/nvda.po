@@ -1,0 +1,370 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the nvdaDevTestToolbox package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: nvdaDevTestToolbox 4.0\n"
+"Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
+"POT-Creation-Date: 2023-06-16 14:09+0000\n"
+"PO-Revision-Date: 2023-06-16 15:32+0100\n"
+"Last-Translator: Ângelo Abrantes <ampa4374@gmail.com>\n"
+"Language-Team: Equipa portuguesa do NVDA: Ângelo Abrantes e Rui Fontes "
+"(16-06-2023)\n"
+"Language: pt_PT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.3.1\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#. Translators: The description of a command of this add-on.
+msgid "Opens NVDA Dev & Test Toolbox add-on settings"
+msgstr "Abrir as configurações do extra NVDA Dev & Test Toolbox"
+
+#. Translators: Input help mode message for a toggle command.
+msgid "Toggles play a sound for logged error."
+msgstr "Alterna a reprodução de um som para o erro registado."
+
+#. Translators: Message reported when calling the command to toggle play a sound for logged errors
+msgid "Yes"
+msgstr "Sim"
+
+#. Translators: Message reported when calling the command to toggle play a sound for logged errors
+msgid "Only in NVDA test versions"
+msgstr "Apenas nas versões de teste do NVDA"
+
+#. Translators: Input help mode message for a command.
+msgid ""
+"Report the last error logged. A second press clears the memorized last error."
+msgstr ""
+"Indica o último erro registado. Uma segunda pressão apaga o último erro "
+"memorizado."
+
+#. Translators: Message reported when calling the "report last error" command
+msgid "No error"
+msgstr "Nenhum erro"
+
+#. Translators: Message reported when calling the "report last error" command
+msgid "Last error cleared"
+msgstr "Último erro apagado"
+
+#. Translators: The name of a category in the Input gesture dialog
+msgid "Scripts without description (modify at your own risk!)"
+msgstr "Scripts sem descrição (modificar por sua conta e risco!)"
+
+#. Translators: Input help mode message for a toggle command.
+msgid "Toggles the extended script description mode."
+msgstr "Alterna o modo de descrição alargada do script."
+
+#. Translators: A message reported when toggling Extended script description mode.
+msgid "Extended script description mode enabled"
+msgstr "Modo de descrição de script alargado ativado"
+
+#. Translators: A message reported when toggling Extended script description mode.
+msgid "Extended script description mode disabled"
+msgstr "Modo de descrição de script alargado desativado"
+
+#. Translators: A message reported when trying to open a source file.
+msgid ""
+"No path configured for NVDA sources; please see documentation to configure "
+"it."
+msgstr ""
+"Nenhum caminho configurado para fontes do NVDA; consulte a documentação para "
+"configurá-lo."
+
+#. Translators: A message reported when trying to open a source file.
+msgid ""
+"No open file command configured; please see documentation to configure it."
+msgstr ""
+"Nenhum comando para abrir ficheiro configurado; consulte a documentação para "
+"o configurar."
+
+#. Translators: A message reported when trying to open a source file.
+msgid ""
+"Wrong format for the open file command in the configuration; please see "
+"documentation to configure it."
+msgstr ""
+"Formato errado para o comando open file na configuração; consulte a "
+"documentação para o configurar."
+
+#. Translators: A message reported when trying to open a source file.
+msgid "Editor not found at {}; please check your configuration."
+msgstr "Editor não encontrado em {}; verifique a sua configuração."
+
+#. Translators: A message reported when trying to open a source file.
+msgid "Object not found: {}"
+msgstr "Objeto não encontrado: {}"
+
+#. Translators: A message reported when trying to open a source file.
+msgid "File not found: {}"
+msgstr "Ficheiro não encontrado: {}"
+
+#. Translators: Text appearing in the date column of the log manager when the date cnanot be determined.
+msgid "Unknown"
+msgstr "Desconhecido"
+
+#. Translators: The title of the Logs Manager Dialog
+msgid "Logs Manager"
+msgstr "Gestor de registos"
+
+#. Translators: the label for the text on top of the logs manager window.
+#, python-brace-format
+msgid "Logs in {folder}"
+msgstr "Registos em {folder}"
+
+#. Translators: The label for a column in logs list
+msgid "Date"
+msgstr "Data"
+
+#. Translators: The label for a column in logs list
+msgid "Type"
+msgstr "Tipo"
+
+#. Translators: The label for a column in logs list
+msgid "File name"
+msgstr "Nome do ficheiro"
+
+#. Translators: The label for a button in Logs Manager dialog to open the selected logs.
+msgid "&Open"
+msgstr "&Abrir"
+
+#. Translators: The label for a button to delete the selected log(s) in Log Manager dialog.
+msgid "&Delete"
+msgstr "&Apagar"
+
+#. Translators: The label of a button in Logs Manager to open the settings panel.
+msgid "Settings..."
+msgstr "Configurações..."
+
+#. Translators: The label of a button to close the logs manager dialog.
+msgid "&Close"
+msgstr "&Fechar"
+
+#. We open the message box only if no log can be opened
+#. Translators: A message displayed to the user when pressing the Open button in the logs manager dialog
+msgid "The selected log(s) is (are) not available anymore"
+msgstr "O(s) registo(s) selecionado(s) já não está(ão) disponível(eis)"
+
+#. Translators: A message displayed to the user when pressing the Delete button in the logs manager dialog
+#, python-brace-format
+msgid ""
+"The following files will be removed:\n"
+"{logsList}\n"
+"\n"
+"Would you like to continue?"
+msgstr ""
+"Serão removidos os seguintes ficheiros:\n"
+"{logsList}\n"
+"\n"
+"Deseja continuar?"
+
+#. Translators: The title of a dialog displayed to the user when pressing the Delete button in the logs manager dialog
+msgid "Confirm deletion"
+msgstr "Confirmar Eliminação"
+
+#. Translators: Message issued when 5 or more logs could not be deleted.
+#, python-brace-format
+msgid "{nLogs} log files could not be deleted. See NVDA's log for details."
+msgstr ""
+"não foi possível eliminar os ficheiros de registo {nLogs}. Ver o registo do "
+"NVDA para mais detalhes."
+
+#. Translators: Message issued when 1 to 4 logs could not be deleted.
+#, python-brace-format
+msgid ""
+"The following logs files could not be deleted.\n"
+"\n"
+"{file}"
+msgstr ""
+"Os seguintes ficheiros de registo não puderam ser eliminados.\n"
+"\n"
+"{file}"
+
+#. Translators: The title of a dialog displayed to the user when pressing the Delete button in the logs manager dialog
+msgid "Error"
+msgstr "Erro"
+
+#. Translators: menu item label to open the logs manager dialog.
+msgid "&Logs manager..."
+msgstr "&Gestor de registos..."
+
+#. Translators: Reported when pressing a quick navigation command in the log.
+msgid "No more item"
+msgstr "Não há mais itens"
+
+#. Translators: Input help mode message for log navigation commands. {st} will be replaced by the search type (Io, Debug, Message, etc.
+#, python-brace-format
+msgid "Moves to the next logged message of type {st}."
+msgstr "Passa para a mensagem registada seguinte do tipo {st}."
+
+#. Translators: Input help mode message for log navigation commands. {st} will be replaced by the search type (Io, Debug, Message, etc.
+#, python-brace-format
+msgid "Moves to the previous logged message of type {st}."
+msgstr "Passa para a mensagem registada anterior do tipo {st}."
+
+#. Translators: Input help mode message for Toggle log Reader script.
+msgid "Activates or deactivates the log Reader commands."
+msgstr "Ativa ou desactiva os comandos do Log Reader."
+
+#. Translators: A message reported when toggling log reader commands.
+msgid "Log Reader commands enabled."
+msgstr "Comandos do leitor de registos activados."
+
+#. Translators: A message reported when toggling log reader commands.
+msgid "Log Reader commands disabled."
+msgstr "Comandos do leitor de registos desactivados."
+
+#. Translators: Input help mode message for Open source file script.
+msgid ""
+"Opens the source code file whose path is located at the caret's position."
+msgstr ""
+"Abre o ficheiro de código fonte cujo caminho está localizado na posição do "
+"cursor."
+
+#. Translators: A message reported when trying to open the source code from the current line.
+msgid "No file path or object found on this line."
+msgstr "Não foi encontrado nenhum caminho de ficheiro ou objeto nesta linha."
+
+#. Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
+msgid "Off"
+msgstr "Desligado"
+
+#. Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
+msgid "On"
+msgstr "Ligado"
+
+#. Translators: This is a label for an edit field in the NDTT Settings panel.
+#, python-brace-format
+msgid ""
+"Command to open a file in your favorite editor\n"
+"(use \"{path}\" and \"{line}\" placeholders in this command)"
+msgstr ""
+"Comando para abrir um ficheiro no seu editor favorito\n"
+"(use os marcadores de posição \"{path}\" e \"{line}\" neste comando)"
+
+#. Translators: This is a label for an edit field in the NDTT Settings panel.
+msgid "NVDA source code path"
+msgstr "Caminho do código-fonte do NVDA"
+
+#. Translators: The label of a button to browse for a directory or a file.
+msgid "Browse..."
+msgstr "Localizar..."
+
+#. Translators: The title of the dialog presented when browsing for the directory.
+msgid "Select a directory"
+msgstr "Selecione um diretório"
+
+#. Translators: This is a label for the combo box in the NDTT Settings panel.
+msgid "Backup of old logs:"
+msgstr "Cópia de segurança de registos antigos:"
+
+#. Translators: This is a label for a setting in the settings panel
+msgid "Limit the number of backups to:"
+msgstr "Limitar o número de cópias de segurança a:"
+
+#. Translators: Input help mode message for a command of the object property explorer.
+msgid ""
+"Reports the currently selected property of the object property explorer for "
+"the navigator object; two presses displays this information in a browseable "
+"message."
+msgstr ""
+"Comunica a propriedade atualmente selecionada do explorador de propriedades "
+"do objeto navegador; se premir duas vezes, apresenta esta informação numa "
+"mensagem navegável."
+
+#. Translators: Input help mode message for a command of the object property explorer.
+msgid ""
+"Selects the next property of the object property explorer and reports it for "
+"the navigator object."
+msgstr ""
+"Selecciona a propriedade seguinte do explorador de propriedades do objeto e "
+"reporta-a para o objeto do navegador."
+
+#. Translators: Input help mode message for a command of the object property explorer.
+msgid ""
+"Selects the previous property of the object property explorer and reports it "
+"for the navigator object."
+msgstr ""
+"Selecciona a propriedade anterior do explorador de propriedades do objeto e "
+"reporta-a para o objeto do navegador."
+
+#. Translators: The title of a file selector window
+msgid "Save As"
+msgstr "Guardar como"
+
+#. Translators: the label for the NVDA log extension (log) file type
+#, python-brace-format
+msgid "NVDA log file (*.{ext})"
+msgstr "Ficheiro de registo NVDA (*.{ext})"
+
+#. Translators: The title of the dialog presented when browsing for the file.
+msgid "Select a file"
+msgstr "Selecione um ficheiro"
+
+#. class RestartWithOptionsDialog(wx.):
+#. Translators: This is the title for the Restart with options dialog
+msgid "Specify some options and restart"
+msgstr "Especificar algumas opções e reiniciar"
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+msgid "The file where log messages should be written to"
+msgstr "O ficheiro onde as mensagens de registo devem ser escritas"
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+msgid "The lowest level of message logged"
+msgstr "O nível mais baixo de mensagem registada"
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+msgid "The path where all settings for NVDA are stored"
+msgstr "O caminho onde são guardadas todas as configurações do NVDA"
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+msgid "Override the configured NVDA language"
+msgstr "Substituir o idioma do NVDA configurado"
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+msgid "No sounds, no interface, no start message, etc."
+msgstr "Sem sons, sem interface, sem mensagem de início, etc."
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+msgid "Secure mode"
+msgstr "Modo seguro"
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+msgid "Add-ons will have no effect"
+msgstr "Os extras não terão qualquer efeito"
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+msgid "Don't change the global system screen reader flag"
+msgstr "Não alterar o sinalizador do leitor de ecrã do sistema global"
+
+#. Translators: Input help mode message for Restart with options command.
+msgid "Restarts NVDA with specific options."
+msgstr "Reinicia o NVDA com opções específicas."
+
+#. Translators: Input help mode message for a toggle command.
+msgid "Toggles the stack trace log when the speech function is called."
+msgstr ""
+"Alterna o registo do rastreio de pilha quando a função de voz é chamada."
+
+#. Translators: Reported when toggling the stack trace log feature.
+msgid "Stacktrace log enabled"
+msgstr "Registo do Stacktrace ativado"
+
+#. Translators: Reported when toggling the stack trace log feature.
+msgid "Stacktrace log disabled"
+msgstr "Registo do Stacktrace desativado"
+
+#. Add-on summary, usually the user visible name of the addon.
+#. Translators: Summary for this add-on
+#. to be shown on installation and add-on information found in Add-ons Manager.
+msgid "NVDA Dev & Test Toolbox"
+msgstr "NVDA Dev &Test Toolbox"
+
+#. Add-on description
+#. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+msgid "A set of tools for NVDA developers and testers."
+msgstr "Um conjunto de ferramentas para programadores e testadores do NVDA."
