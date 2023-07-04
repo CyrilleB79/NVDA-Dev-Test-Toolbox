@@ -61,7 +61,7 @@ def ScriptableObjectWithLayer(layerCommandList, **kwargs):
 			beep(120, 100)
 
 			@script(
-				**kwargs,
+				**kwargs
 			)
 			def script_enterLayer(self, gesture):
 				# A run-time binding will occur from which we can perform various layered commands.
