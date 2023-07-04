@@ -9,7 +9,7 @@ import wx
 
 import gui
 from gui import guiHelper, nvdaControls
-from gui.settingsDialogs import PANEL_DESCRIPTION_WIDTH
+from .compa import PANEL_DESCRIPTION_WIDTH
 import config
 from logHandler import log
 

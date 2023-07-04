@@ -120,5 +120,15 @@ class DpiScalingHelperMixinWithoutInit(object):
 		return scaleSize(self._scaleFactor, size)
 
 
+def getPanelDescriptionWidth():
+	try:
+		from gui.settingsDialogs import PANEL_DESCRIPTION_WIDTH
+		return PANEL_DESCRIPTION_WIDTH
+	except ImportError:
+		# Not available before NVDA 2021.3:
+		return 544
+
+
 appDir = getApDir()
 controlTypesCompatWrapper = ControlTypesCompatWrapper()
+PANEL_DESCRIPTION_WIDTH = getPanelDescriptionWidth()
