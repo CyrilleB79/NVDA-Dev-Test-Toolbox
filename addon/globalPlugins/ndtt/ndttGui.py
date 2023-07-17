@@ -34,9 +34,9 @@ class NDTTSettingsPanel(gui.settingsDialogs.SettingsPanel):
 
 	NO_DEFAULT_PROFILE_MESSAGE = _(
 		# Translators: A message presented in the settings panel when opened while no-default profile is active.
-		f"{ADDON_SUMMARY} add-on can only be configured from the Normal Configuration profile.\n"
+		"{name} add-on can only be configured from the Normal Configuration profile.\n"
 		"Please close this dialog, set your config profile to default and try again."
-	)
+	).format(name=ADDON_SUMMARY)
 
 	def makeSettings(self, settingsSizer):
 		if config.conf.profiles[-1].name is not None or len(config.conf.profiles) != 1:
