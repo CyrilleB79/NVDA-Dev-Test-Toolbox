@@ -1,0 +1,133 @@
+name: Build and test NVDA add-on
+
+on:
+  push:
+    branches: [ testAddon ]
+
+  workflow_call:
+  
+  workflow_dispatch:
+
+jobs:
+
+  addon:
+
+    name: addon
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        pip install scons markdown
+        sudo apt update
+        sudo apt install gettext
+    - name: Build add-on
+      run: scons version=${{ github.sha }}
+    - name: Upload add-on
+      uses: actions/upload-artifact@v3
+      with:
+        name: nvda-addon
+        path: "*.nvda-addon"
+
+        
+  nvda:
+  
+    name: NVDA
+  
+    needs: addon
+  
+    runs-on: windows-2019
+
+    steps:
+
+    - name: Get last release
+      id: get-last-release
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const result = await github.request('GET /repos/{owner}/{repo}/releases/latest', {
+            owner: 'nvaccess',
+            repo: 'nvda'
+          })
+          return result.data.tag_name
+        result-encoding: string
+
+
+    - name: Cache NVDA
+      id: cache-nvda
+      uses: actions/cache@v3
+      with:
+        path: nvda
+        key: ${{ runner.os }}-nvda-${{ steps.get-last-release.outputs.result }}
+    - name: Set up Python 3.7 x86
+      if: steps.cache-nvda.outputs.cache-hit != 'true'
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.7
+        architecture: x86
+    - name: Checkout NVDA
+      if: steps.cache-nvda.outputs.cache-hit != 'true'
+      uses: actions/checkout@v3
+      with:
+        repository: nvaccess/nvda
+        submodules: true
+        path: nvda
+        ref: ${{ steps.get-last-release.outputs.result }}
+    - name: Prepare NVDA's source tree
+      if: steps.cache-nvda.outputs.cache-hit != 'true'
+      run: |
+        cd nvda
+        scons source
+      shell: cmd
+    - name: Download add-on
+      uses: actions/download-artifact@v3
+      with:
+        name: nvda-addon
+    - name: Copy add-on
+      run: |
+        move *.nvda-addon addon.zip
+        Expand-Archive addon.zip nvda\source\userConfig\addons\addon
+    - name: Create a configuration file
+      uses: DamianReeves/write-file-action@v1.2
+      with:
+        path: nvda\source\userConfig\nvda.ini
+        contents: |
+          [update]
+          allowUsageStats = False
+          askedAllowUsageStats = True
+          autoCheck = True
+          [general]
+          showWelcomeDialogAtStartup = False
+          [speech]
+          synth = silence
+        write-mode: overwrite
+    - name: Check config
+      run: |
+        type nvda\source\userConfig\nvda.ini
+      shell: cmd
+    - name: Start NVDA
+      run: |
+        cd nvda
+        runnvda -m --debug-logging
+        ping 127.0.0.1 /n 40
+      shell: cmd
+    - name: Quit NVDA
+      run: |
+        cd nvda
+        runnvda -q
+        ping 127.0.0.1 /n 40
+      shell: cmd
+    - name: Upload log
+      uses: actions/upload-artifact@v3
+      with:
+        name: nvda-log
+        path: nvda\source\nvda.log
+    - name: Remove add-on
+      run: Remove-Item nvda\source\userConfig\addons\addon -Recurse
