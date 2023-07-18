@@ -1,0 +1,119 @@
+name: Build and test addon
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    
+    env:
+      nvda-release: 2023.1
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.7
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install scons
+        pip install Markdown
+        pip install flake8
+        pip install flake8-tabs
+    - name: Lint with flake8
+      run:
+        flake8 --config .github/extra_resources/setup.cfg --exit-zero addon
+        # stop the build if there are Python syntax errors or undefined names
+        # flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        # flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Build add-on
+      run: scons
+    - name: Copy addon
+      run: |
+        move *.nvda-addon addon.zip
+        expand-archive addon.zip $env:appdata\nvda\addons\addon
+    - name: Get last release
+      id: get-last-release
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const result = await github.request('GET /repos/{owner}/{repo}/releases/latest', {
+            owner: 'nvaccess',
+            repo: 'nvda'
+          })
+          return result.data.tag_name
+        result-encoding: string
+    - name: Cache NVDA
+      id: cache-nvda
+      uses: actions/cache@v3
+      with:
+        path: launcher
+        key: ${{ runner.os }}-nvda_launcher-${{env.nvda-release}}
+    - name: Download NVDA
+      if: steps.cache-nvda.outputs.cache-hit != 'true'
+      run: |
+        MD launcher
+        curl --location --output launcher\nvda_launcher.exe https://www.nvaccess.org/download/nvda/releases/${{env.nvda-release}}/nvda_${{env.nvda-release}}.exe
+        Copy launcher nvda_launcher.exe
+    - name: Install NVDA
+      run: launcher\nvda_launcher.exe --install-silent
+      shell: cmd
+    - name: Create a configuration file
+      run: |
+        $config = @'
+        [update]
+        allowUsageStats = False
+        askedAllowUsageStats = True
+        autoCheck = False
+        [general]
+        showWelcomeDialogAtStartup = False
+        [speech]
+        synth = silence
+        '@
+        echo $config > $env:APPDATA\nvda\nvda.ini
+    - name: Check config
+      run: |
+        type %appdata%\nvda\nvda.ini
+      shell: cmd
+    - name: start nvda
+      run: start nvda -m -f %TEMP%\nvda-with-addon.log --debug-logging
+      shell: cmd
+    - name: Ensure NVDA fully started
+      run: ping 127.0.0.1 /n 20
+      shell: cmd
+    - name: Quit NVDA
+      run: start nvda -q
+      shell: cmd
+    - name: Ensure NVDA fully exited
+      run: ping 127.0.0.1 /n 20
+      shell: cmd  
+    - name: get the log file from temp directory
+      shell: cmd
+      run: |
+        copy %TEMP%\nvda-with-addon.log nvda.log
+    - name: Upload NVDA's log
+      uses: actions/upload-artifact@v3
+      with:
+        name: nvda.log
+        path: nvda.log
+    - name: Check NVDA's log
+      run: |
+        nErr = 0
+        noExit = 0
+        with open('nvda.log') as f:
+          for line in f:
+            if line.startswith('ERROR - '):
+              nErr += 1
+        if nErr > 0:
+          print(f'{nErr} errors logged in the log')
+        if line.strip() != 'NVDA exit':
+          print(f'NVDA did not exit successfully')
+          noExit = 1
+        nExpectedErr = 2  # 2 audio ducking related errors expected in installed version
+        exit(abs(nErr + noExit - nExpectedErr))
+      shell: python
