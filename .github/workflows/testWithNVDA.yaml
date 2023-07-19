@@ -66,25 +66,19 @@ jobs:
       with:
         path: nvda
         key: ${{ runner.os }}-nvda_exe-${{ steps.get-last-release.outputs.result }}
-    - name: zzz Set up Python 3.7 x86
-      if: steps.cache-nvda.outputs.cache-hit != 'true'
-      uses: actions/setup-python@v3
-      with:
-        python-version: 3.7
-        architecture: x86
     - name: Download NVDA
       if: steps.cache-nvda.outputs.cache-hit != 'true'
       uses: suisei-cn/actions-download-file@v1.4.0
       id: downloadfile
       with:
         url: "https://www.nvaccess.org/download/nvda/releases/${{ steps.get-last-release.outputs.result }}/nvda_${{ steps.get-last-release.outputs.result }}.exe"
-        target: public
+        target: nvda
         filename: nvda_launcher.exe
-    - name: Install NVDA
-      if: steps.cache-nvda.outputs.cache-hit != 'true'
-      run: |
-        .\public\nvda_launcher.exe --create-portable-silent --portable-path nvda -m
-      shell: cmd
+    # - name: Install NVDA
+    #   if: steps.cache-nvda.outputs.cache-hit != 'true'
+    #   run: |
+    #     .\public\nvda_launcher.exe --create-portable-silent --portable-path nvda -m
+    #   shell: cmd
     - name: Download add-on
       uses: actions/download-artifact@v3
       with:
@@ -114,13 +108,14 @@ jobs:
     - name: Start NVDA
       run: |
         cd nvda
-        nvda -m --debug-logging -f nvda\nvda.log -c nvda\userConfig
+        dir
+        nvda_launcher.exe -m --debug-logging -f nvda.log -c userConfig
         ping 127.0.0.1 /n 20
       shell: cmd
     - name: Quit NVDA
       run: |
         cd nvda
-        nvda -q
+        nvda_launcher.exe -q
         ping 127.0.0.1 /n 20
       shell: cmd
     - name: Upload log
