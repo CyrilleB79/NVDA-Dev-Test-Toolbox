@@ -44,7 +44,7 @@ jobs:
     needs: addon
   
     runs-on: windows-2019
-
+    
     steps:
 
     - name: Get last release
@@ -65,26 +65,25 @@ jobs:
       uses: actions/cache@v3
       with:
         path: nvda
-        key: ${{ runner.os }}-nvda-${{ steps.get-last-release.outputs.result }}
-    - name: Set up Python 3.7 x86
+        key: ${{ runner.os }}-nvda_exe-${{ steps.get-last-release.outputs.result }}
+    - name: zzz Set up Python 3.7 x86
       if: steps.cache-nvda.outputs.cache-hit != 'true'
       uses: actions/setup-python@v3
       with:
         python-version: 3.7
         architecture: x86
-    - name: Checkout NVDA
+    - name: Download NVDA
       if: steps.cache-nvda.outputs.cache-hit != 'true'
-      uses: actions/checkout@v3
+      uses: suisei-cn/actions-download-file@v1.4.0
+      id: downloadfile
       with:
-        repository: nvaccess/nvda
-        submodules: true
-        path: nvda
-        ref: ${{ steps.get-last-release.outputs.result }}
-    - name: Prepare NVDA's source tree
+        url: "https://www.nvaccess.org/download/nvda/releases/${{ steps.get-last-release.outputs.result }}/nvda_${{ steps.get-last-release.outputs.result }}.exe"
+        target: public
+        filename: nvda_launcher.exe
+    - name: Install NVDA
       if: steps.cache-nvda.outputs.cache-hit != 'true'
       run: |
-        cd nvda
-        scons source
+        .\public\nvda_launcher.exe --create-portable-silent --portable-path nvda -m
       shell: cmd
     - name: Download add-on
       uses: actions/download-artifact@v3
@@ -93,11 +92,11 @@ jobs:
     - name: Copy add-on
       run: |
         move *.nvda-addon addon.zip
-        Expand-Archive addon.zip nvda\source\userConfig\addons\addon
+        Expand-Archive addon.zip nvda\userConfig\addons\addon
     - name: Create a configuration file
       uses: DamianReeves/write-file-action@v1.2
       with:
-        path: nvda\source\userConfig\nvda.ini
+        path: nvda\userConfig\nvda.ini
         contents: |
           [update]
           allowUsageStats = False
@@ -110,24 +109,24 @@ jobs:
         write-mode: overwrite
     - name: Check config
       run: |
-        type nvda\source\userConfig\nvda.ini
+        type nvda\userConfig\nvda.ini
       shell: cmd
     - name: Start NVDA
       run: |
         cd nvda
-        runnvda -m --debug-logging
-        ping 127.0.0.1 /n 40
+        nvda -m --debug-logging -f nvda\nvda.log -c nvda\userConfig
+        ping 127.0.0.1 /n 20
       shell: cmd
     - name: Quit NVDA
       run: |
         cd nvda
-        runnvda -q
-        ping 127.0.0.1 /n 40
+        nvda -q
+        ping 127.0.0.1 /n 20
       shell: cmd
     - name: Upload log
       uses: actions/upload-artifact@v3
       with:
         name: nvda-log
-        path: nvda\source\nvda.log
+        path: nvda\nvda.log
     - name: Remove add-on
-      run: Remove-Item nvda\source\userConfig\addons\addon -Recurse
+      run: Remove-Item nvda\userConfig\addons\addon -Recurse
