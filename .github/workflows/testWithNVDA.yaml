@@ -37,13 +37,13 @@ jobs:
         path: "*.nvda-addon"
 
         
-  nvda:
+  test-with-nvda-launcher:
   
-    name: NVDA
+    name: Download NVDA launcher and test add-on
   
     needs: addon
   
-    runs-on: windows-2019
+    runs-on: windows-latest
     
     steps:
 
@@ -68,12 +68,7 @@ jobs:
         key: ${{ runner.os }}-nvda_exe-${{ steps.get-last-release.outputs.result }}
     - name: Download NVDA
       if: steps.cache-nvda.outputs.cache-hit != 'true'
-      uses: suisei-cn/actions-download-file@v1.4.0
-      id: downloadfile
-      with:
-        url: "https://www.nvaccess.org/download/nvda/releases/${{ steps.get-last-release.outputs.result }}/nvda_${{ steps.get-last-release.outputs.result }}.exe"
-        target: nvda
-        filename: nvda_launcher.exe
+      run: curl --location --output nvda\nvda_launcher.exe https://www.nvaccess.org/download/nvda/releases/${{ steps.get-last-release.outputs.result }}/nvda_${{ steps.get-last-release.outputs.result }}.exe
     # - name: Install NVDA
     #   if: steps.cache-nvda.outputs.cache-hit != 'true'
     #   run: |
@@ -88,19 +83,18 @@ jobs:
         move *.nvda-addon addon.zip
         Expand-Archive addon.zip nvda\userConfig\addons\addon
     - name: Create a configuration file
-      uses: DamianReeves/write-file-action@v1.2
-      with:
-        path: nvda\userConfig\nvda.ini
-        contents: |
-          [update]
-          allowUsageStats = False
-          askedAllowUsageStats = True
-          autoCheck = True
-          [general]
-          showWelcomeDialogAtStartup = False
-          [speech]
-          synth = silence
-        write-mode: overwrite
+      run: |
+        $config = @'
+        [update]
+        allowUsageStats = False
+        askedAllowUsageStats = True
+        autoCheck = False
+        [general]
+        showWelcomeDialogAtStartup = False
+        [speech]
+        synth = silence
+        '@
+        echo $config > nvda\userConfig\nvda.ini
     - name: Check config
       run: |
         type nvda\userConfig\nvda.ini
@@ -109,7 +103,7 @@ jobs:
       run: |
         cd nvda
         dir
-        nvda_launcher.exe -m --debug-logging -f nvda.log -c userConfig
+        nvda_launcher.exe -m --debug-logging -f %TEMP%\nvda-with-addon.log -c userConfig
         ping 127.0.0.1 /n 20
       shell: cmd
     - name: Quit NVDA
@@ -118,10 +112,15 @@ jobs:
         nvda_launcher.exe -q
         ping 127.0.0.1 /n 20
       shell: cmd
+    - name: get the log file from temp directory
+      shell: cmd
+      run: |
+        ping 192.0.2.0 -n 1 -w 10000 > nul
+        copy %TEMP%\nvda-with-addon.log nvda.log
     - name: Upload log
       uses: actions/upload-artifact@v3
       with:
         name: nvda-log
-        path: nvda\nvda.log
+        path: nvda.log
     - name: Remove add-on
       run: Remove-Item nvda\userConfig\addons\addon -Recurse
