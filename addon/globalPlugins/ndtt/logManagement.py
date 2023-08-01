@@ -83,7 +83,7 @@ def getStartTimeLoggedByNDTT(path):
 
 
 def getFirstTimeLoggedByNVDA(path):
-	with open(path, 'r') as f:
+	with open(path, 'r', encoding='utf8') as f:
 		line = f.readline()
 		m = matchDict(RE_FIRST_LINE.match(line.strip()))
 		localTimezone = datetime.now(tz=tzUTC).astimezone().tzinfo
