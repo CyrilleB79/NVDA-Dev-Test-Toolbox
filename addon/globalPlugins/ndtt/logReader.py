@@ -89,6 +89,7 @@ RES_MESSAGE_HEADER = (
 )
 
 RE_MESSAGE_HEADER = re.compile(RES_MESSAGE_HEADER.format(levelName=RES_ANY_LEVEL_NAME))
+RE_ERROR_HEADER = re.compile(RES_MESSAGE_HEADER.format(levelName='ERROR|CRITICAL'))
 
 # Regexps for Io messages:
 RE_MSG_SPEAKING = re.compile(r'^Speaking (?P<seq>\[.+\])')
@@ -214,7 +215,10 @@ class LogMessage(object):
 		seq = self.getSpeakMessage(mode)
 		if isinstance(seq, TYPE_STR):
 			seq = [seq]
-		if mode == 'Message':
+		if (
+			mode == 'Message'
+			or (mode == 'Error' and self.header.level == 'CRITICAL')
+		):
 			seq = [self.header.level, ', '] + seq
 		speech.speak(seq)
 
@@ -251,7 +255,7 @@ class LogReader(object):
 
 	SEARCHERS = {k: re.compile(RES_MESSAGE_HEADER.format(levelName=k.upper())) for k in (
 		'Debug',
-		'Error',
+		# 'Error', # Error added separately since needs to take into account ERROR and CRITICAL
 		'Info',
 		'DebugWarning',
 		'Io',
@@ -259,6 +263,7 @@ class LogReader(object):
 	)}
 	SEARCHERS.update({
 		'Message': RE_MESSAGE_HEADER,
+		'Error': RE_ERROR_HEADER,
 		'Output': re.compile(RES_MESSAGE_HEADER.format(levelName='IO')),
 	})
 

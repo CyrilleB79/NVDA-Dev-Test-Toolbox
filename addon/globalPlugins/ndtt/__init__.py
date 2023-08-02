@@ -13,7 +13,7 @@ import addonHandler
 import gui
 
 # Initialize config spec; should be done before GlobalPlugins import
-from . import configNDTT  # noqa: F401 - Required to initialize config spec; should be done before GlobalPlugins import
+from . import configNDTT  # noqa: F401 - Required to initialize config spec.
 
 from .ndttGui import NDTTSettingsPanel
 
