@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2021-2022 Cyrille Bougot
+# Copyright (C) 2021-2023 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
@@ -173,7 +173,15 @@ class LogMessage(object):
 			# Check for input gesture:
 			match = matchDict(RE_MSG_INPUT.match(self.msg))
 			if match:
-				return "Input: {key}, {device}".format(key=match['key'], device=match['device'])
+				if mode == 'Input':
+					prefix = ""
+				else:
+					prefix = "Input: "
+				return "{prefix}{key}, {device}".format(
+					prefix=prefix,
+					key=match['key'],
+					device=match['device'],
+				)
 
 			match = matchDict(RE_MSG_TYPED_WORD.match(self.msg))
 			if match:
@@ -264,7 +272,8 @@ class LogReader(object):
 	SEARCHERS.update({
 		'Message': RE_MESSAGE_HEADER,
 		'Error': RE_ERROR_HEADER,
-		'Output': re.compile(RES_MESSAGE_HEADER.format(levelName='IO')),
+		'Input': re.compile(RES_MESSAGE_HEADER.format(levelName='IO')),
+		'Speech': re.compile(RES_MESSAGE_HEADER.format(levelName='IO')),
 	})
 
 	def __init__(self, obj):
@@ -272,22 +281,26 @@ class LogReader(object):
 		self.ti = obj.makeTextInfo(textInfos.POSITION_CARET)
 		self.ti.collapse()
 
-	def moveToHeader(self, direction, searchType):
+	def moveToHeader(self, direction, searchType, filter=None):
+		if filter is None:
+			filter = lambda msg: True
 		while self.ti.move(textInfos.UNIT_LINE, direction):
 			tiLine = self.ti.copy()
 			tiLine.expand(textInfos.UNIT_LINE)
 			regexp = self.__class__.SEARCHERS[searchType]
 			if regexp.search(tiLine.text.rstrip()):
-				break
+				msg = LogMessage.makeFromTextInfo(
+					self.ti,
+					atStart=True
+				)
+				if filter(msg):
+					break
 		else:
 			# Translators: Reported when pressing a quick navigation command in the log.
 			ui.message(_('No more item'))
 			return
 		self.ti.updateSelection()
-		LogMessage.makeFromTextInfo(
-			self.ti,
-			atStart=True
-		).speak(reason=controlTypes.OutputReason.CARET, mode=searchType)
+		msg.speak(reason=controlTypes.OutputReason.CARET, mode=searchType)
 
 
 class LogContainer(ScriptableObject):
@@ -295,7 +308,7 @@ class LogContainer(ScriptableObject):
 
 	enableTable = {}
 
-	def moveToHeaderFactory(dir, searchType):
+	def moveToHeaderFactory(dir, searchType, filter=None):
 		if dir == 1:
 			# Translators: Input help mode message for log navigation commands. {st} will be replaced by
 			# the search type (Io, Debug, Message, etc.
@@ -313,27 +326,29 @@ class LogContainer(ScriptableObject):
 		)
 		def script_moveToHeader(self, gesture):
 			reader = LogReader(self)
-			reader.moveToHeader(direction=dir, searchType=searchType)
+			reader.moveToHeader(direction=dir, searchType=searchType, filter=filter)
 		return script_moveToHeader
 
 	QUICK_NAV_SCRIPT_INFO = {
-		'd': ('Debug', moveToHeaderFactory),
-		'e': ('Error', moveToHeaderFactory),
-		'f': ('Info', moveToHeaderFactory),
-		'g': ('DebugWarning', moveToHeaderFactory),
-		'i': ('Io', moveToHeaderFactory),
-		'm': ('Message', moveToHeaderFactory),
-		'w': ('Warning', moveToHeaderFactory),
+		'd': ('Debug', None),
+		'e': ('Error', None),
+		'f': ('Info', None),
+		'g': ('DebugWarning', None),
+		'i': ('Io', None),
+		'm': ('Message', None),
+		'n': ('Input', lambda msg: RE_MSG_INPUT.match(msg.msg)),
+		's': ('Speech', lambda msg: RE_MSG_SPEAKING.match(msg.msg)),
+		'w': ('Warning', None),
 	}
 
-	for qn, (searchType, scriptMaker) in QUICK_NAV_SCRIPT_INFO.items():
-		locals()['script_moveToNext{st}'.format(st=searchType)] = scriptMaker(1, searchType)
-		locals()['script_moveToPrevious{st}'.format(st=searchType)] = scriptMaker(-1, searchType)
+	for qn, (searchType, filter) in QUICK_NAV_SCRIPT_INFO.items():
+		locals()['script_moveToNext{st}'.format(st=searchType)] = moveToHeaderFactory(1, searchType, filter)
+		locals()['script_moveToPrevious{st}'.format(st=searchType)] = moveToHeaderFactory(-1, searchType, filter)
 
 	def initialize(self):
 		if not hasattr(self, 'scriptTable'):
 			self.scriptTable = {}
-			for qn, (searchType, scriptMaker) in self.QUICK_NAV_SCRIPT_INFO.items():
+			for qn, (searchType, filter) in self.QUICK_NAV_SCRIPT_INFO.items():
 				gestureId = normalizeGestureIdentifier('kb:' + qn)
 				self.scriptTable[gestureId] = 'script_moveToNext{st}'.format(st=searchType)
 				gestureId = normalizeGestureIdentifier('kb:shift+' + qn)

@@ -107,6 +107,8 @@ Single letter command similar to browse mode quick navigation keys allow to move
 * m: any message
 * e: ERROR
 * i: IO
+* n: IO, only inputs.
+* s: IO, only speech.
 * d: DEBUG
 * f: INFO
 * g: DEBUGWARNING
