@@ -91,7 +91,19 @@ To have the control+shift+I result reported by NVDA as control+I, you should per
 
 Known bug: A script added for a specific class is visible even if gesture manager is opened in another context.
 
-## Log reading and analyzing commands
+## Log reading and analyzing features
+
+<a id="logPlaceMarkers"></a>
+### Place markers in the log
+
+While testing or working, you may want to mark a specific moment in the log, so that you can turn to it easily later when reading the log.
+To add a marker message in the log, press NVDA+control+K.
+A message as follows will be logged at INFO level:  
+`-- NDTT marker 0 --`  
+You can add as many markers as you want in the log.
+The marker's number will be incremented each time you place a marker in the log; it will only be reset when NVDA is restarted.
+
+### Log reader mode
 
 A log reader mode provides commands to ease log reading and analyzing.
 In the log viewer window the log reader is enabled by default, thus log reading commands are available immediately.
@@ -100,24 +112,25 @@ When you are done with log reading and analyzing tasks, you can disable again NV
 
 The commands available in log reader mode are described hereafter.
 
-### Quick navigation commands
+#### Quick navigation commands
 
 Single letter command similar to browse mode quick navigation keys allow to move to various type of log messages:
 
 * m: any message
-* e: ERROR
-* i: IO
-* n: IO, only inputs.
-* s: IO, only speech.
-* d: DEBUG
-* f: INFO
-* g: DEBUGWARNING
-* w: WARNING
+* e: error messages (`ERROR` and `CRITICAL`)
+* w: warning messages (`WARNING`)
+* f: info messages (`INFO`)
+* k: markers previously [placed in the log](#logPlaceMarkers)
+* g: debug warning messages (`DEBUGWARNING`)
+* i: input/output messages (`IO`)
+* n: input messages
+* s: speech messages
+* d: debug messages (`DEBUG`)
 
 Pressing the single letter moves to the next occurrence of this message. Combining the letter with the shift key moves to the previous occurrence of this message.
 
 <a id="logReaderOpenSourceFile"></a>
-### Open the file of the source code in your editor
+#### Open the file of the source code in your editor
 
 In the log some line may refer to the source code:
 

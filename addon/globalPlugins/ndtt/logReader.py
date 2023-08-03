@@ -50,6 +50,7 @@ except ImportError:
 	)
 	preSpeechRefactor = True
 from logHandler import log
+import logHandler
 from treeInterceptorHandler import TreeInterceptor
 import editableText
 import winUser
@@ -119,6 +120,9 @@ RE_STACK_TRACE_LINE = re.compile(
 )
 
 TYPE_STR = type('')
+
+NDTT_MARKER_STRING = '-- NDTT marker {} --'
+RE_MSG_MARKER = re.compile(NDTT_MARKER_STRING.format(r'\d+'))
 
 
 class LogMessageHeader(object):
@@ -274,6 +278,7 @@ class LogReader(object):
 		'Error': RE_ERROR_HEADER,
 		'Input': re.compile(RES_MESSAGE_HEADER.format(levelName='IO')),
 		'Speech': re.compile(RES_MESSAGE_HEADER.format(levelName='IO')),
+		'Marker': re.compile(RES_MESSAGE_HEADER.format(levelName='INFO')),
 	})
 
 	def __init__(self, obj):
@@ -335,6 +340,7 @@ class LogContainer(ScriptableObject):
 		'f': ('Info', None),
 		'g': ('DebugWarning', None),
 		'i': ('Io', None),
+		'k': ('Marker', lambda msg: RE_MSG_MARKER.match(msg.msg)),
 		'm': ('Message', None),
 		'n': ('Input', lambda msg: RE_MSG_INPUT.match(msg.msg)),
 		's': ('Speech', lambda msg: RE_MSG_SPEAKING.match(msg.msg)),
@@ -500,6 +506,19 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		super(GlobalPlugin, self).__init__(*args, **kwargs)
 		scriptHandler._getObjScript = _getObjScript_patched
 		LogContainer.enableTable = {}
+
+	@script(
+		# Translators: Input help mode message for Add marker in log script.
+		description=_("Adds a marker in the log."),
+		category=ADDON_SUMMARY,
+		gesture="kb:nvda+control+alt+K",
+	)
+	def script_addMarkerInLog(self, gesture):
+		markerCount = getattr(logHandler, 'ndttLogMarkerCount', 0)
+		log.info(NDTT_MARKER_STRING.format(markerCount))
+		# Translators: a message telling the user that a marker has been inserted in the log.
+		ui.message(_("Marker {} added in the log").format(markerCount))
+		logHandler.ndttLogMarkerCount = markerCount + 1
 
 	def terminate(self, *args, **kwargs):
 		scriptHandler._getObjScript = _getObjScript_original
