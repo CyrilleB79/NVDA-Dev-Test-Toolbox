@@ -11,6 +11,8 @@ from baseObject import ScriptableObject
 from NVDAObjects.window import Window
 import scriptHandler
 from scriptHandler import script
+import config
+import globalPlugins
 import ui
 import textInfos
 import speech
@@ -163,6 +165,14 @@ class LogMessage(object):
 				# side effects.
 				if not preSpeechRefactor:
 					seq = [c for c in seq if not isinstance(c, (CallbackCommand, ConfigProfileTriggerCommand))]
+				if LogContainer.translateLog:
+					seq2 = []
+					for s in seq:
+						if isinstance(s, str):
+							seq2.append(self._translate(s))
+						else:
+							seq2.append(s)
+					seq = seq2
 				return seq
 
 			match = matchDict(RE_MSG_BEEP.match(self.msg))
@@ -222,6 +232,11 @@ class LogMessage(object):
 				return '\n'.join([errorDesc, errorMsg])
 		else:
 			return self.msg
+
+	@staticmethod
+	def _translate(text):
+		it = [p for p in globalPluginHandler.runningPlugins if p.__module__ == 'globalPlugins.instantTranslate'][0]
+		return it.translateAndCache(text, it.lang_from, it.lang_to).translation
 
 	def speak(self, reason, mode):
 		seq = self.getSpeakMessage(mode)
@@ -312,6 +327,7 @@ class LogContainer(ScriptableObject):
 	isLogViewer = False
 
 	enableTable = {}
+	translateLog = False
 
 	def moveToHeaderFactory(dir, searchType, filter=None):
 		if dir == 1:
@@ -359,6 +375,7 @@ class LogContainer(ScriptableObject):
 				self.scriptTable[gestureId] = 'script_moveToNext{st}'.format(st=searchType)
 				gestureId = normalizeGestureIdentifier('kb:shift+' + qn)
 				self.scriptTable[gestureId] = 'script_moveToPrevious{st}'.format(st=searchType)
+			self.scriptTable['kb:t'] = 'script_toggleLogTranslation'
 			self.scriptTable['kb:c'] = 'script_openSourceFile'
 
 	def getLogReaderCommandScript(self, gesture):
@@ -403,6 +420,25 @@ class LogContainer(ScriptableObject):
 			# Translators: A message reported when toggling log reader commands.
 			msg = _("Log Reader commands disabled.")
 		ui.message(msg)
+
+	@script(
+		# Translators: Input help mode message for Toggle log translation script.
+		description=_("Toggle speech translation in the log"),
+		category=ADDON_SUMMARY,
+	)
+	def script_toggleLogTranslation(self, gesture):
+		if LogContainer.translateLog:
+			LogContainer.translateLog = False
+			# Translators: A message reported when disabling log translation.
+			ui.message('Log translation disabled')
+		else:
+			if getattr(globalPlugins, 'instantTranslate', None):
+				LogContainer.translateLog = True
+				# Translators: A message reported when enabling log translation.
+				ui.message('Log translation enabled')
+			else:
+				# Translators: A message reported when trying to enable log translation.
+				ui.message('Cannot enable log translation. Please install or enable Instant Translate add-on.')
 
 	@script(
 		# Translators: Input help mode message for Open source file script.

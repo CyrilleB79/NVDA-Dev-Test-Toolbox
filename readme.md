@@ -112,6 +112,7 @@ When you are done with log reading and analyzing tasks, you can disable again NV
 
 The commands available in log reader mode are described hereafter.
 
+<a id="logReaderQuickNavigationCommands"></a>
 #### Quick navigation commands
 
 Single letter command similar to browse mode quick navigation keys allow to move to various type of log messages:
@@ -128,6 +129,20 @@ Single letter command similar to browse mode quick navigation keys allow to move
 * d: debug messages (`DEBUG`)
 
 Pressing the single letter moves to the next occurrence of this message. Combining the letter with the shift key moves to the previous occurrence of this message.
+
+#### Translation of speech message
+
+Sometimes, you may have to look at a log taken on a system in a foreignh language that you do not understand. E.g. the log was taken on a Chinese system / NVDA, whereas you only understand French.
+If you have [Instant Translate][3] add-on installed, you may use it in conjonction with [quick log navigation commands](#logReaderQuickNavigationCommands) to have speech messages translated.
+
+* First configure Instant Translate's languages. The source language should be the language of the system where the log has been taken (e.g. Chinese). The target language should be your language (e.g. French).
+* Open the log
+* Press T to enable automatic speech translation in the log
+* Use Quick navigation commands in the log, e.g. S, I, etc. Whenever a speech message is encountered, it will be spoken in your language (French in our previous example)
+
+If you want to disable speech translation, press T again.
+
+
 
 <a id="logReaderOpenSourceFile"></a>
 #### Open the file of the source code in your editor
@@ -318,6 +333,8 @@ These settings only take effect at next NVDA startup when the backup takes place
 [1]: https://www.nvaccess.org/addonStore/legacy?file=nvdaDevTestToolbox
 
 [2]: https://www.nvaccess.org/files/nvda/documentation/userGuide.html#CommandLineOptions
+
+[3]: https://addons.nvda-project.org/addons/instantTranslate.en.html
 
 [4]: https://www.nvaccess.org/files/nvda/documentation/userGuide.html#PlayErrorSound
 
