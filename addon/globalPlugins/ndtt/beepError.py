@@ -47,7 +47,7 @@ def myHandle(fh, record, *args, **kwargs):
 		errorInfo = []
 		errorInfo.append(record.levelname)
 		if record.msg is not None:
-			errorInfo.append(record.msg)
+			errorInfo.append(str(record.msg))
 		if record.exc_info:
 			excType = record.exc_info[1]
 			if excType is not None:
