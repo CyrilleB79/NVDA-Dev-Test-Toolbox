@@ -11,7 +11,6 @@ from baseObject import ScriptableObject
 from NVDAObjects.window import Window
 import scriptHandler
 from scriptHandler import script
-import config
 import globalPlugins
 import ui
 import textInfos
@@ -127,6 +126,12 @@ NDTT_MARKER_STRING = '-- NDTT marker {} --'
 RE_MSG_MARKER = re.compile(NDTT_MARKER_STRING.format(r'\d+'))
 
 
+def noFilter(msg):
+	"""A pass all filter function"""
+	
+	return True
+
+
 class LogMessageHeader(object):
 	def __init__(self, level, codePath, time, threadName=None, thread=None):
 		self.level = level
@@ -151,87 +156,92 @@ class LogMessage(object):
 
 	def getSpeakMessage(self, mode):
 		if self.header.level == 'IO':
-			match = matchDict(RE_MSG_SPEAKING.match(self.msg))
-			if match:
-				try:
-					txtSeq = match['seq']
-				except Exception:
-					log.error("Sequence cannot be spoken: {seq}".format(seq=match['seq']))
-					return self.msg
-				txtSeq = RE_CANCELLABLE_SPEECH.sub('', txtSeq)
-				txtSeq = RE_CALLBACK_COMMAND.sub('', txtSeq)
-				seq = eval(txtSeq)
-				# Ignore CallbackCommand and ConfigProfileTriggerCommand to avoid producing errors or unexpected
-				# side effects.
-				if not preSpeechRefactor:
-					seq = [c for c in seq if not isinstance(c, (CallbackCommand, ConfigProfileTriggerCommand))]
-				if LogContainer.translateLog:
-					seq2 = []
-					for s in seq:
-						if isinstance(s, str):
-							seq2.append(self._translate(s))
-						else:
-							seq2.append(s)
-					seq = seq2
-				return seq
-
-			match = matchDict(RE_MSG_BEEP.match(self.msg))
-			if match:
-				return [BeepCommand(
-					float(match['freq']),
-					int(match['duration']),
-					int(match['leftVol']),
-					int(match['rightVol']),
-				)]
-
-			# Check for input gesture:
-			match = matchDict(RE_MSG_INPUT.match(self.msg))
-			if match:
-				if mode == 'Input':
-					prefix = ""
-				else:
-					prefix = "Input: "
-				return "{prefix}{key}, {device}".format(
-					prefix=prefix,
-					key=match['key'],
-					device=match['device'],
-				)
-
-			match = matchDict(RE_MSG_TYPED_WORD.match(self.msg))
-			if match:
-				return self.msg
-
-			match = matchDict(RE_MSG_BRAILLE_REGION.match(self.msg))
-			if match:
-				return self.msg
-			else:
-				import globalVars as gv
-				gv.dbg = self.msg
-
-			match = matchDict(RE_MSG_BRAILLE_DOTS.match(self.msg))
-			if match:
-				return self.msg
-
-			match = matchDict(RE_MSG_TIME_SINCE_INPUT.match(self.msg))
-			if match:
-				return self.msg
-
-			# Unknown message format; to be implemented.
-			log.debugWarning('Message not implemented: {msg}'.format(msg=self.msg))
-			return self.msg
-
+			return self.getSpeakIoMessage(mode)
 		elif self.header.level == 'ERROR':
-			msgList = self.msg.split('\r')
-			try:
-				idxTraceback = msgList.index('Traceback (most recent call last):')
-			except ValueError:
-				return self.msg
-			else:
-				errorMsg = '\r'.join(msgList[:idxTraceback])
-				errorDesc = msgList[-1]
-				return '\n'.join([errorDesc, errorMsg])
+			return self.getSpeakErrorMessage()
 		else:
 			return self.msg
+
+	def getSpeakIoMessage(self, mode):
+		match = matchDict(RE_MSG_SPEAKING.match(self.msg))
+		if match:
+			try:
+				txtSeq = match['seq']
+			except Exception:
+				log.error("Sequence cannot be spoken: {seq}".format(seq=match['seq']))
+				return self.msg
+			txtSeq = RE_CANCELLABLE_SPEECH.sub('', txtSeq)
+			txtSeq = RE_CALLBACK_COMMAND.sub('', txtSeq)
+			seq = eval(txtSeq)
+			# Ignore CallbackCommand and ConfigProfileTriggerCommand to avoid producing errors or unexpected
+			# side effects.
+			if not preSpeechRefactor:
+				seq = [c for c in seq if not isinstance(c, (CallbackCommand, ConfigProfileTriggerCommand))]
+			if LogContainer.translateLog:
+				seq2 = []
+				for s in seq:
+					if isinstance(s, str):
+						seq2.append(self._translate(s))
+					else:
+						seq2.append(s)
+				seq = seq2
+			return seq
+
+		match = matchDict(RE_MSG_BEEP.match(self.msg))
+		if match:
+			return [BeepCommand(
+				float(match['freq']),
+				int(match['duration']),
+				int(match['leftVol']),
+				int(match['rightVol']),
+			)]
+
+		# Check for input gesture:
+		match = matchDict(RE_MSG_INPUT.match(self.msg))
+		if match:
+			if mode == 'Input':
+				prefix = ""
+			else:
+				prefix = "Input: "
+			return "{prefix}{key}, {device}".format(
+				prefix=prefix,
+				key=match['key'],
+				device=match['device'],
+			)
+
+		match = matchDict(RE_MSG_TYPED_WORD.match(self.msg))
+		if match:
+			return self.msg
+
+		match = matchDict(RE_MSG_BRAILLE_REGION.match(self.msg))
+		if match:
+			return self.msg
+		else:
+			import globalVars as gv
+			gv.dbg = self.msg
+
+		match = matchDict(RE_MSG_BRAILLE_DOTS.match(self.msg))
+		if match:
+			return self.msg
+
+		match = matchDict(RE_MSG_TIME_SINCE_INPUT.match(self.msg))
+		if match:
+			return self.msg
+
+		# Unknown message format; to be implemented.
+		log.debugWarning('Message not implemented: {msg}'.format(msg=self.msg))
+		return self.msg
+
+	def getSpeakErrorMessage(self):
+		msgList = self.msg.split('\r')
+		try:
+			idxTraceback = msgList.index('Traceback (most recent call last):')
+		except ValueError:
+			return self.msg
+		else:
+			errorMsg = '\r'.join(msgList[:idxTraceback])
+			errorDesc = msgList[-1]
+			return '\n'.join([errorDesc, errorMsg])
 
 	@staticmethod
 	def _translate(text):
@@ -301,9 +311,12 @@ class LogReader(object):
 		self.ti = obj.makeTextInfo(textInfos.POSITION_CARET)
 		self.ti.collapse()
 
-	def moveToHeader(self, direction, searchType, filter=None):
-		if filter is None:
-			filter = lambda msg: True
+	def moveToHeader(
+			self,
+			direction,
+			searchType,
+			filterFun,
+	):
 		while self.ti.move(textInfos.UNIT_LINE, direction):
 			tiLine = self.ti.copy()
 			tiLine.expand(textInfos.UNIT_LINE)
@@ -313,7 +326,7 @@ class LogReader(object):
 					self.ti,
 					atStart=True
 				)
-				if filter(msg):
+				if filterFun(msg):
 					break
 		else:
 			# Translators: Reported when pressing a quick navigation command in the log.
@@ -329,7 +342,11 @@ class LogContainer(ScriptableObject):
 	enableTable = {}
 	translateLog = False
 
-	def moveToHeaderFactory(dir, searchType, filter=None):
+	def moveToHeaderFactory(
+			dir,
+			searchType,
+			filterFun,
+	):
 		if dir == 1:
 			# Translators: Input help mode message for log navigation commands. {st} will be replaced by
 			# the search type (Io, Debug, Message, etc.
@@ -347,30 +364,30 @@ class LogContainer(ScriptableObject):
 		)
 		def script_moveToHeader(self, gesture):
 			reader = LogReader(self)
-			reader.moveToHeader(direction=dir, searchType=searchType, filter=filter)
+			reader.moveToHeader(direction=dir, searchType=searchType, filterFun=filterFun)
 		return script_moveToHeader
 
 	QUICK_NAV_SCRIPT_INFO = {
-		'd': ('Debug', None),
-		'e': ('Error', None),
-		'f': ('Info', None),
-		'g': ('DebugWarning', None),
-		'i': ('Io', None),
+		'd': ('Debug', noFilter),
+		'e': ('Error', noFilter),
+		'f': ('Info', noFilter),
+		'g': ('DebugWarning', noFilter),
+		'i': ('Io', noFilter),
 		'k': ('Marker', lambda msg: RE_MSG_MARKER.match(msg.msg)),
-		'm': ('Message', None),
+		'm': ('Message', noFilter),
 		'n': ('Input', lambda msg: RE_MSG_INPUT.match(msg.msg)),
 		's': ('Speech', lambda msg: RE_MSG_SPEAKING.match(msg.msg)),
-		'w': ('Warning', None),
+		'w': ('Warning', noFilter),
 	}
 
-	for qn, (searchType, filter) in QUICK_NAV_SCRIPT_INFO.items():
-		locals()['script_moveToNext{st}'.format(st=searchType)] = moveToHeaderFactory(1, searchType, filter)
-		locals()['script_moveToPrevious{st}'.format(st=searchType)] = moveToHeaderFactory(-1, searchType, filter)
+	for qn, (searchType, filterFun) in QUICK_NAV_SCRIPT_INFO.items():
+		locals()['script_moveToNext{st}'.format(st=searchType)] = moveToHeaderFactory(1, searchType, filterFun)
+		locals()['script_moveToPrevious{st}'.format(st=searchType)] = moveToHeaderFactory(-1, searchType, filterFun)
 
 	def initialize(self):
 		if not hasattr(self, 'scriptTable'):
 			self.scriptTable = {}
-			for qn, (searchType, filter) in self.QUICK_NAV_SCRIPT_INFO.items():
+			for qn, (searchType, filterFun) in self.QUICK_NAV_SCRIPT_INFO.items():
 				gestureId = normalizeGestureIdentifier('kb:' + qn)
 				self.scriptTable[gestureId] = 'script_moveToNext{st}'.format(st=searchType)
 				gestureId = normalizeGestureIdentifier('kb:shift+' + qn)

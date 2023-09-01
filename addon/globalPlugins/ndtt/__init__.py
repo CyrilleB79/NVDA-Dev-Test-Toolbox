@@ -38,22 +38,22 @@ ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
 if globalVars.appArgs.secure:
 
 	class MixedGlobalPlugin(
-		ExtScriptDescGP,
-		RestartWithOptionsGP,
-		ObjPropExplorerGP,
+			ExtScriptDescGP,
+			RestartWithOptionsGP,
+			ObjPropExplorerGP,
 	):
 		pass
 
 else:
 	class MixedGlobalPlugin(
-		ExtScriptDescGP,
-		RestartWithOptionsGP,
-		ObjPropExplorerGP,
-		BeepErrorGP,
-		StackTracingGP,
-		logManagement.GlobalPlugin,
-		LogReaderGP,
-		PythonConsoleExGP
+			ExtScriptDescGP,
+			RestartWithOptionsGP,
+			ObjPropExplorerGP,
+			BeepErrorGP,
+			StackTracingGP,
+			logManagement.GlobalPlugin,
+			LogReaderGP,
+			PythonConsoleExGP
 	):
 		pass
 
