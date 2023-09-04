@@ -273,6 +273,17 @@ These settings only take effect at next NVDA startup when the backup takes place
 
 ## Change log
 
+### Version 5.0
+
+* If Instant Translate add-on is installed, it is now possible to have speech messages translated on the fly when using log reading commands.
+* While in log reading mode, pressing E or shift+E now jumps to CRITICAL erorr messages as well as normal ERROR messages.
+* New log quick navigation commands have been added to jump to input and to speech messages.
+* A new command allow to place a marker in the log; and specific quick navigation commands in log reading mode allow to jump to them.  
+  Credit: the initial idea for this feature comes from Debug Helper add-on by Luke Davis.
+* Bubfix: The memorization of the last error do not fail anymore in some cases.
+* Bugfix: The add-on can initialize again with NVDA 2019.2.1.
+* Bugfix: Log saving feature will not fail anymore with non-ASCII logs.
+
 ### Version 4.2
 
 * Fixed an error with NVDA version below 2021.3.
