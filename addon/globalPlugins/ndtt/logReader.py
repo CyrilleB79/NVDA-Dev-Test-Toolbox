@@ -128,7 +128,7 @@ RE_MSG_MARKER = re.compile(NDTT_MARKER_STRING.format(r'\d+'))
 
 def noFilter(msg):
 	"""A pass all filter function"""
-	
+
 	return True
 
 

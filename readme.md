@@ -52,13 +52,16 @@ To list the properties of an object, move the navigator object to it and use the
 * Selects the next property and reports it for the navigator object.
 * Reports the currently selected property for the navigator object; two presses displays this information in a browseable message.
 
-These three commands are unassigned by default; you will have to assign them a shortcut in the Input gesture dialog to use them.
-
 The list of the supported properties is the following:
 name, role, state, value, windowClassName, windowControlID, windowHandle, location, Python class, Python class mro.
 
-This feature is an improvement of an example in [NVDA developer guide][5].
+When using object navigation commands, you can also choose to have the currently selected property reported instead of NVDA usual object reporting.
+A toggle command allows to switch between this custom reporting of objects and NVDA usual reporting.
 
+For exemple, you may select "windowClassName" property and enable custom object reporting.
+Then when moving the navigator object to next or previous object, you will hear the object's windowClassName instead of usual reporting.
+
+All the commands of the Object property explorer are unassigned by default; you will have to assign them a shortcut in the Input gesture dialog to use them.
 
 ## Extended script description mode
 
@@ -348,5 +351,3 @@ These settings only take effect at next NVDA startup when the backup takes place
 [3]: https://addons.nvda-project.org/addons/instantTranslate.en.html
 
 [4]: https://www.nvaccess.org/files/nvda/documentation/userGuide.html#PlayErrorSound
-
-[5]: https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#toc22
