@@ -156,6 +156,8 @@ In the log some line may refer to the source code:
   `  File "virtualBuffers\__init__.pyc", line 226, in _getStoryLength`  
 * The header line of a logged message contains the function which has logged this message, e.g.:  
   `INFO - config.ConfigManager._loadConfig (22:45:26.145) - MainThread (16580):`  
+* The content of a message logged in input help mode (logged at info level):  
+  Input help: gesture kb(desktop):NVDA+t, bound to script title on globalCommands.GlobalCommands`  
 
 You may want to open the file containing this code to understand the context of the traceback or the logged message.
 Just press C to open this file.

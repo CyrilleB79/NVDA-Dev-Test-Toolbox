@@ -120,6 +120,13 @@ RE_STACK_TRACE_LINE = re.compile(
 	r'^File "(?P<drive>(?:[A-Z]:\\)|)(?P<path>[^:"]+\.pyw?)[co]?", line (?P<line>\d+)(?:, in .+)?$'
 )
 
+# Regexps of input help log line
+RE_INPUT_HELP = re.compile(
+	r'Input help: gesture (?P<identifier>.+)'
+	r', bound to script (?P<scriptName>.+)'
+	r' on (?P<scriptLocation>.+)'
+)
+
 TYPE_STR = type('')
 
 NDTT_MARKER_STRING = '-- NDTT marker {} --'
@@ -472,6 +479,8 @@ class LogContainer(ScriptableObject):
 				return
 			if self.openMessageHeaderLine(line):
 				return
+			if self.openInputHelpLine(line):
+				return
 		except FileOpenerError as e:
 			log.debugWarning(str(e))
 			ui.message(e.getUserFriendlyMessage())
@@ -505,6 +514,15 @@ class LogContainer(ScriptableObject):
 		externalPrefix = 'external:'
 		if objPath.startswith(externalPrefix):
 			objPath = objPath[len(externalPrefix):]
+		openObject(objPath, reportError=True)
+		return True
+
+	@staticmethod
+	def openInputHelpLine(line):
+		match = matchDict(RE_INPUT_HELP.match(line))
+		if not match:
+			return False
+		objPath = '{loc}.script_{name}'.format(loc=match['scriptLocation'], name=match['scriptName'])
 		openObject(objPath, reportError=True)
 		return True
 
