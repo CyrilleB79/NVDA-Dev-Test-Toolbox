@@ -169,15 +169,23 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def customSpeakObjectFactory(self):
 
 		def new_speakObject(
-				obj,
-				reason=controlTypes.OutputReason.QUERY,
-				_prefixSpeechCommand=None,
-				priority=None
+			obj,
+			reason=controlTypes.OutputReason.QUERY,
+			_prefixSpeechCommand=None,
+			**kwargs
 		):
 			if not self.customObjectReporting:
-				return self.orig_speakObject(obj, reason, _prefixSpeechCommand, priority)
+				return self.orig_speakObject(obj, reason, _prefixSpeechCommand, **kwargs)
 			s1 = inspect.stack()[1]
-			if os.path.splitext(s1.filename)[0] != 'globalCommands' or s1.function not in [
+			try:
+				# Python 3
+				filename = s1.filename
+				function = s1.function
+			except AttributeError:
+				# Python 2
+				filename = s1[1]
+				function = s1[3]
+			if os.path.splitext(filename)[0] != 'globalCommands' or function not in [
 				'script_navigatorObject_current',
 				'script_navigatorObject_next',
 				'script_navigatorObject_previous',
@@ -186,7 +194,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				'script_navigatorObject_nextInFlow',
 				'script_navigatorObject_previousInFlow',
 			]:
-				return self.orig_speakObject(obj, reason, _prefixSpeechCommand, priority)
+				return self.orig_speakObject(obj, reason, _prefixSpeechCommand, **kwargs)
 			infoType, fun = self._INFO_TYPES[self.index]
 			try:
 				info = fun(obj)
@@ -194,6 +202,12 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				info = 'Unavailable information.'
 				log.debugWarning('An exception occurred while retrieving the requested information.', exc_info=True)
 			sequence = [str(info)]
-			speech.speak(sequence, priority=priority)
+			kwargs2 = {}
+			try:
+				# Parameter supported by NVDA 2019.3 onwards
+				kwargs2['priority'] = kwargs['priority']
+			except KeyError:
+				pass
+			speech.speak(sequence, **kwargs2)
 
 		return new_speakObject
