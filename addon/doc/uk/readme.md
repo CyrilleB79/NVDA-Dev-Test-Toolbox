@@ -122,7 +122,20 @@ Control+shift+I також перемикає курсив у Word, навіть
 Відома помилка: сценарій, доданий для певного класу, видимий, навіть якщо
 менеджер жестів відкрито в іншому контексті.
 
-## Команди читання та аналізу журналу
+## Log reading and analyzing features
+
+<a id="logPlaceMarkers"></a>
+### Place markers in the log
+
+While testing or working, you may want to mark a specific moment in the log, so that you can turn to it easily later when reading the log.
+To add a marker message in the log, press NVDA+control+K.
+A message as follows will be logged at INFO level:  
+`-- NDTT marker 0 --`  
+You can add as many markers as you want in the log.  The marker's number
+will be incremented each time you place a marker in the log; it will only be
+reset when NVDA is restarted.
+
+### Log reader mode
 
 Режим читання журналу надає команди для полегшення читання та аналізу
 журналу. У вікні перегляду журналу читання журналу початково ввімкнено, тому
@@ -135,25 +148,51 @@ Control+shift+I також перемикає курсив у Word, навіть
 
 Команди, доступні в режимі читання журналу, описані нижче.
 
-### Команди швидкої навігації
+<a id="logReaderQuickNavigationCommands"></a>
+#### Команди швидкої навігації
 
 Команда з однієї літери, подібна до клавіш швидкої навігації в режимі
 огляду, дозволяє переходити до різних типів повідомлень журналу:
 
 * m: будь-яке повідомлення
-* e: ПОМИЛКА
-* i: IO
-* d: НАЛАГОДЖЕННЯ
-* f: ІНФОРМАЦІЯ
-* g: ПОПЕРЕДЖЕННЯ ПРО НАЛАГОДЖЕННЯ
-* w: ПОПЕРЕДЖЕННЯ
+* e: error messages (`ERROR` and `CRITICAL`)
+* w: warning messages (`WARNING`)
+* f: info messages (`INFO`)
+* k: markers previously [placed in the log](#logPlaceMarkers)
+* g: debug warning messages (`DEBUGWARNING`)
+* i: input/output messages (`IO`)
+* n: input messages
+* s: speech messages
+* d: debug messages (`DEBUG`)
 
 Натискання однієї літери переходить до наступної події цього
 повідомлення. Комбінування літери з клавішею shift дозволяє перейти до
 попередньої події повідомлення.
 
+#### Translation of speech message
+
+Sometimes, you may have to look at a log taken on a system in a foreignh
+language that you do not understand. E.g. the log was taken on a Chinese
+system / NVDA, whereas you only understand French.  If you have [Instant
+Translate][3] add-on installed, you may use it in conjonction with [quick
+log navigation commands](#logReaderQuickNavigationCommands) to have speech
+messages translated.
+
+* First configure Instant Translate's languages. The source language should
+  be the language of the system where the log has been taken
+  (e.g. Chinese). The target language should be your language (e.g. French).
+* Open the log
+* Press T to enable automatic speech translation in the log
+* Use Quick navigation commands in the log, e.g. S, I, etc. Whenever a
+  speech message is encountered, it will be spoken in your language (French
+  in our previous example)
+
+If you want to disable speech translation, press T again.
+
+
+
 <a id="logReaderOpenSourceFile"></a>
-### Відкрийте файл вихідного коду у вашому редакторі
+#### Відкрийте файл вихідного коду у вашому редакторі
 
 У журналі деякі рядки можуть посилатися на вихідний код:
 
@@ -306,6 +345,36 @@ NVDA вже надає резервну копію журналу поперед
 
 ## Журнал змін
 
+### Version 5.0
+
+* If Instant Translate add-on is installed, it is now possible to have
+  speech messages translated on the fly when using log reading commands.
+* While in log reading mode, pressing E or shift+E now jumps to CRITICAL
+  erorr messages as well as normal ERROR messages.
+* New log quick navigation commands have been added to jump to input and to
+  speech messages.
+* A new command allow to place a marker in the log; and specific quick
+  navigation commands allow to jump to markers in the log.  Credit: the
+  initial idea for this feature comes from Debug Helper add-on by Luke
+  Davis.
+
+
+Bugfix: memorization of last error do not fail anymore when the parameter of
+log.error is not a string Fixed add-on initialization with NVDA 2019.2.1.
+Fix log saving (82d73cf59844f96d56877becb3ead40cf858e62c)
+
+### Version 4.2
+
+* Fixed an error with NVDA version below 2021.3.
+* Fixed the stack trace log formatting.
+* First localizations.
+
+### Version 4.1
+
+* Fixed a bug occurring in some situations while logging an error.
+* The add-on's settings can now be modified only when the default profile is
+  active to avoid config issues.
+
 ### Версія 4.0
 
 * Можливість резервного копіювання старих журналів і впровадження менеджера
@@ -341,10 +410,10 @@ NVDA вже надає резервну копію журналу поперед
 
 ### Версія 2.1
 
-* Різні виправлення помилок і рефакторинг/очищення коду для вирішення всіх
-  випадків використання: усі підтримувані версії, встановлені чи запущені з
-  джерела тощо (внесок Łukasz Golonka)
-* Переписування модуля compa (внесок Łukasz Golonka)
+* Various bugfixes and code refactoring/cleaning to address all use cases:
+  all supported versions, installed vs. run from source, etc. (contribution
+  from Åukasz Golonka)
+* Rewriting of the compa module (contribution from Åukasz Golonka)
 * Діалог перезапуску  можна відкрити лише один раз.
 * Комбінації дослідника об’єктів тепер початково не призначені й повинні
   бути призначені користувачем.
@@ -377,6 +446,8 @@ NVDA вже надає резервну копію журналу поперед
 
 [2]:
 https://www.nvaccess.org/files/nvda/documentation/uk/userGuide.html#CommandLineOptions
+
+[3]: https://addons.nvda-project.org/addons/instantTranslate.en.html
 
 [4]:
 https://www.nvaccess.org/files/nvda/documentation/uk/userGuide.html#PlayErrorSound

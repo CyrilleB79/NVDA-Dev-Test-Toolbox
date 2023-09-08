@@ -161,7 +161,8 @@ msgstr ""
 "\n"
 "Devam etmek istiyor musunuz?"
 
-#. Translators: The title of a dialog displayed to the user when pressing the Delete button in the logs manager dialog
+#. Translators: The title of a dialog displayed to the user when pressing the Delete button in the
+#. logs manager dialog
 msgid "Confirm deletion"
 msgstr "Silmeyi onayla"
 
@@ -182,7 +183,8 @@ msgstr ""
 "\n"
 "{file}"
 
-#. Translators: The title of a dialog displayed to the user when pressing the Delete button in the logs manager dialog
+#. Translators: The title of a dialog displayed to the user when pressing the Delete button in
+#. the logs manager dialog
 msgid "Error"
 msgstr "Hata"
 
@@ -194,12 +196,14 @@ msgstr "Gün&lük yöneticisi..."
 msgid "No more item"
 msgstr "Başka öğe yok"
 
-#. Translators: Input help mode message for log navigation commands. {st} will be replaced by the search type (Io, Debug, Message, etc.
+#. Translators: Input help mode message for log navigation commands. {st} will be replaced by
+#. the search type (Io, Debug, Message, etc.
 #, python-brace-format
 msgid "Moves to the next logged message of type {st}."
 msgstr "{st} türünde günlüğe kaydedilen sonraki mesaja gider."
 
-#. Translators: Input help mode message for log navigation commands. {st} will be replaced by the search type (Io, Debug, Message, etc.
+#. Translators: Input help mode message for log navigation commands. {st} will be replaced by the
+#. search type (Io, Debug, Message, etc.
 #, python-brace-format
 msgid "Moves to the previous logged message of type {st}."
 msgstr "{st} türünde günlüğe kaydedilen önceki mesaja gider."
@@ -216,6 +220,10 @@ msgstr "Günlük Okuyucu komutları etkinleştirildi."
 msgid "Log Reader commands disabled."
 msgstr "Günlük Okuyucu komutları devre dışı bırakıldı."
 
+#. Translators: Input help mode message for Toggle log translation script.
+msgid "Toggle speech translation in the log"
+msgstr ""
+
 #. Translators: Input help mode message for Open source file script.
 msgid ""
 "Opens the source code file whose path is located at the caret's position."
@@ -225,6 +233,14 @@ msgstr "Yolu imlecin konumunda bulunan kaynak kod dosyasını açar."
 msgid "No file path or object found on this line."
 msgstr "Bu satırda dosya konumu veya nesne bulunamadı."
 
+#. Translators: Input help mode message for Add marker in log script.
+msgid "Adds a marker in the log."
+msgstr ""
+
+#. Translators: a message telling the user that a marker has been inserted in the log.
+msgid "Marker {} added in the log"
+msgstr ""
+
 #. Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
 msgid "Off"
 msgstr "Kapalı"
@@ -232,6 +248,13 @@ msgstr "Kapalı"
 #. Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
 msgid "On"
 msgstr "Aktif"
+
+#. Translators: A message presented in the settings panel when opened while no-default profile is active.
+#, python-brace-format
+msgid ""
+"{name} add-on can only be configured from the Normal Configuration profile.\n"
+"Please close this dialog, set your config profile to default and try again."
+msgstr ""
 
 #. Translators: This is a label for an edit field in the NDTT Settings panel.
 #, python-brace-format
@@ -301,40 +324,47 @@ msgstr "NVDA günlük dosyası (*.{ext})"
 msgid "Select a file"
 msgstr "Bir dosya seçin"
 
-#. class RestartWithOptionsDialog(wx.):
 #. Translators: This is the title for the Restart with options dialog
 msgid "Specify some options and restart"
 msgstr "Bazı seçenekleri belirtin ve yeniden başlatın"
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "The file where log messages should be written to"
 msgstr "Günlük mesajlarının yazılması gereken dosya"
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "The lowest level of message logged"
 msgstr "Günlüğe kaydedilen en düşük ileti düzeyi"
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "The path where all settings for NVDA are stored"
 msgstr "NVDA için tüm ayarların saklandığı konum"
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "Override the configured NVDA language"
 msgstr "Yapılandırılan NVDA dilini geçersiz kıl"
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "No sounds, no interface, no start message, etc."
 msgstr "Ses yok, arayüz yok, başlangıç ​​mesajı yok, vs."
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "Secure mode"
 msgstr "Güvenli mod"
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "Add-ons will have no effect"
 msgstr "Eklentilerin hiçbir etkisi olmayacak"
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "Don't change the global system screen reader flag"
 msgstr "Global sistem ekran okuyucu bayrağını değiştirmeyin"
 

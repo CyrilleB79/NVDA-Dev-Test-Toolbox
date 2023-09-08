@@ -160,7 +160,8 @@ msgstr ""
 "\n"
 "Möchten Sie fortfahren?"
 
-#. Translators: The title of a dialog displayed to the user when pressing the Delete button in the logs manager dialog
+#. Translators: The title of a dialog displayed to the user when pressing the Delete button in the
+#. logs manager dialog
 msgid "Confirm deletion"
 msgstr "Löschen bestätigen"
 
@@ -182,7 +183,8 @@ msgstr ""
 "\n"
 "{file}"
 
-#. Translators: The title of a dialog displayed to the user when pressing the Delete button in the logs manager dialog
+#. Translators: The title of a dialog displayed to the user when pressing the Delete button in
+#. the logs manager dialog
 msgid "Error"
 msgstr "Fehler"
 
@@ -194,12 +196,14 @@ msgstr "Protokoll&verwaltung..."
 msgid "No more item"
 msgstr "Keine weiteren Einträge"
 
-#. Translators: Input help mode message for log navigation commands. {st} will be replaced by the search type (Io, Debug, Message, etc.
+#. Translators: Input help mode message for log navigation commands. {st} will be replaced by
+#. the search type (Io, Debug, Message, etc.
 #, python-brace-format
 msgid "Moves to the next logged message of type {st}."
 msgstr "Springt zur nächsten protokollierten Meldung des Typs {st}."
 
-#. Translators: Input help mode message for log navigation commands. {st} will be replaced by the search type (Io, Debug, Message, etc.
+#. Translators: Input help mode message for log navigation commands. {st} will be replaced by the
+#. search type (Io, Debug, Message, etc.
 #, python-brace-format
 msgid "Moves to the previous logged message of type {st}."
 msgstr "Springt zur vorherigen protokollierten Meldung des Typs {st}."
@@ -216,6 +220,10 @@ msgstr "Befehle für den Protokoll-Reader eingeschaltet."
 msgid "Log Reader commands disabled."
 msgstr "Befehle für den Protokoll-Reader ausgeschaltet."
 
+#. Translators: Input help mode message for Toggle log translation script.
+msgid "Toggle speech translation in the log"
+msgstr ""
+
 #. Translators: Input help mode message for Open source file script.
 msgid ""
 "Opens the source code file whose path is located at the caret's position."
@@ -227,6 +235,14 @@ msgstr ""
 msgid "No file path or object found on this line."
 msgstr "Kein Dateipfad oder Objekt in dieser Zeile gefunden."
 
+#. Translators: Input help mode message for Add marker in log script.
+msgid "Adds a marker in the log."
+msgstr ""
+
+#. Translators: a message telling the user that a marker has been inserted in the log.
+msgid "Marker {} added in the log"
+msgstr ""
+
 #. Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
 msgid "Off"
 msgstr "Ausgeschaltet"
@@ -234,6 +250,13 @@ msgstr "Ausgeschaltet"
 #. Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
 msgid "On"
 msgstr "Eingeschaltet"
+
+#. Translators: A message presented in the settings panel when opened while no-default profile is active.
+#, python-brace-format
+msgid ""
+"{name} add-on can only be configured from the Normal Configuration profile.\n"
+"Please close this dialog, set your config profile to default and try again."
+msgstr ""
 
 #. Translators: This is a label for an edit field in the NDTT Settings panel.
 #, python-brace-format
@@ -303,40 +326,47 @@ msgstr "NVDA-Protokolldatei (*.{ext})"
 msgid "Select a file"
 msgstr "Datei auswählen"
 
-#. class RestartWithOptionsDialog(wx.):
 #. Translators: This is the title for the Restart with options dialog
 msgid "Specify some options and restart"
 msgstr "Optionen festlegen und neustarten"
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "The file where log messages should be written to"
 msgstr "Die Datei, in die Protokollmeldungen geschrieben werden sollen"
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "The lowest level of message logged"
 msgstr "Die niedrigste Stufe der protokollierten Nachricht"
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "The path where all settings for NVDA are stored"
 msgstr "Der Pfad, in dem alle NVDA-Einstellungen gespeichert werden"
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "Override the configured NVDA language"
 msgstr "Eingestellte NVDA-Sprache überschreiben"
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "No sounds, no interface, no start message, etc."
 msgstr "Keine Sounds, keine Oberfläche, keine Startmeldungen, etc."
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "Secure mode"
 msgstr "Geschützter Modus"
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "Add-ons will have no effect"
 msgstr "Die NVDA-Erweiterungen haben keine Auswirkungen"
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "Don't change the global system screen reader flag"
 msgstr "Das globale System-Flag für den Screenreader nicht ändern"
 

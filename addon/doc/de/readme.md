@@ -140,41 +140,85 @@ Bekannter Fehler: Ein für eine bestimmte Klasse hinzugefügtes Skript ist
 auch dann sichtbar, wenn das Dialogfeld für die Tastenbefehle in einem
 anderen Kontext geöffnet wird.
 
-## Befehle zum Lesen und Analysieren von Protokollen
+## Features zum Lesen und Analysieren von Protokollen
 
-Der Protokolllese-Modus erleichtert mittels Befehle das Lesen und
+<a id="logPlaceMarkers"></a>
+### Lesezeichen im Protokoll setzen
+
+Beim Testen oder während des Arbeitens möchten Sie vielleicht einen bestimmten Bereich im Protokoll markieren, so dass Sie ihn später beim Lesen leicht wiederfinden.
+Drücken Sie die Tastenkombination NVDA+Strg+K, um ein Lesezeichen im Protokoll einzufügen.
+Eine Meldung wie die Folgende wird im Level INFO protokolliert:
+`-- NDTT-Lesezeichen 0 --`
+Sie können beliebig viele Lesezeichen im Protokoll verwenden. Die Nummer des
+Lesezeichens wird jedes Mal hochgezählt, sobald ein Lesezeichen gesetzt
+wird; die Nummerierung wird nur beim Neustart von NVDA zurückgesetzt.
+
+### Der Protokoll-Lesemodus
+
+Der Protokoll-Lesemodus erleichtert mittels Befehle das Lesen und
 Analysieren von Protokollen. Im Fenster des Protokoll-Betrachters ist der
 Modus standardmäßig aktiviert, sodass die Befehle zum Lesen des Protokolls
 sofort verfügbar sind. In einem anderen Textlesebereich wie einem Editor
 (z. B. Notepad++) oder einer Webseite (z. B. Meldung eines Problems über
-GitHub) müssen Sie NVDA+Strg+Alt+L drücken, um den Protokolllese-Modus zu
+GitHub) müssen Sie NVDA+Strg+Alt+L drücken, um den Protokoll-Lesemodus zu
 aktivieren, um die Befehle verwenden zu können. Wenn Sie mit dem Lesen und
-Analysieren von Protokollen fertig sind, können Sie mit NVDA+Strg+Alt+L
-diesen wieder deaktivieren, um den Protokolllese-Modus auszuschalten.
+Analysieren von Protokollen fertig sind, können Sie mit NVDA+Strg+Alt+L ihn
+wieder deaktivieren, um den Protokoll-Lesemodus auszuschalten.
 
-Nachfolgend werden die im Protokolllese-Modus verfügbaren Befehle
+Nachfolgend werden die im Protokoll-Lesemodus verfügbaren Befehle
 beschrieben.
 
-### Schnellnavigationsbefehle
+<a id="logReaderQuickNavigationCommands"></a>
+#### Befehle für die Schnellnavigation
 
 Einzelne Buchstabenbefehle, die den Schnellnavigationstasten im Lesemodus
 ähneln, ermöglichen den Wechsel zu verschiedenen Arten von
 Protokollmeldungen:
 
 * m: jede Meldung
-* e: Fehler
-* i: Ein-/Ausgabe
-* d: Debug
-* f: Informationen
-* g: Debug-Warnungen
-* w: Warnungen
+* e: Fehlermeldungen (`ERROR` und `CRITICAL`)
+* w: Warnmeldungen (`WARNING`)
+* f: Informationen (`INFO`)
+* k: Zuvor [im Protokoll platzierte](#logPlaceMarkers) Lesezeichen
+* g: Debug-Warnungen (`DEBUGWARNING`)
+* i: Ein-/Ausgabe-Meldungen (`IO`)
+* n: Eingabe-Meldungen
+* s: Meldungen über die Sprachausgabe
+* d: Debug-Meldungen (`DEBUG`)
 
 Durch Drücken des einzelnen Buchstabens gelangen Sie zum nächsten Vorkommen
 dieser Nachricht. Wenn Sie den Buchstaben mit der Umschalttaste kombinieren,
 gelangen Sie zum vorherigen Vorkommen dieser Nachricht.
 
+#### Übersetzung der Sprachausgaben-Meldungen
+
+Es kann vielleicht vorkommen, dass Sie sich ein Protokoll, welches in einer
+Fremdsprache erstellt wurde, einsehen müssen, die Sie jedoch nicht
+verstehen. So wurde das Protokoll z. B. auf einem chinesischen System mit
+NVDA erstellt, während Sie nur Deutsch verstehen. Wenn Sie die
+NVDA-Erweiterung [Sofort-Übersetzer][3] installiert haben, können Sie es in
+Verbindung mit den [Befehlen für die
+Schnellnavigation](#logReaderQuickNavigationCommands) verwenden, um die
+Sprachmeldungen sich übersetzen zu lassen.
+
+* Konfigurieren Sie zunächst die Sprache in dem Sofort-Übersetzer. Die
+  Ausgangssprache sollte die Sprache des Systems sein, in dem das Protokoll
+  erstellt wurde (z. B. Chinesisch). Die Zielsprache sollte Ihre Sprache
+  sein (z. B. Deutsch).
+* Das Protokoll öffnen
+* Drücken Sie den Buchstaben T, um die automatische Sprach-Übersetzung im
+  Protokoll zu aktivieren.
+* Verwenden Sie die Befehle für die Schnellnavigation im Protokoll, z. B. S,
+  I, etc. Wenn eine Sprachausgaben-Meldung auftaucht, wird sie in Ihre
+  Sprache übersetzt (in unserem Beispiel Deutsch)
+
+Drücken Sie ganz einfach erneut den Buchstaben T, falls Sie die Übersetzung
+der Sprachausgaben-Meldungen deaktivieren möchten.
+
+
+
 <a id="logReaderOpenSourceFile"></a>
-### Öffnen Sie die Datei mit dem Quellcode im Editor
+#### Öffnen Sie die Datei mit dem Quellcode im Editor
 
 Im Protokoll können sich einige Zeilen auf den Quellcode beziehen:
 
@@ -236,21 +280,18 @@ dessen Namen auch als Parameter an die Funktion `openCodeFile` übergeben.
 Nachfolgend finden Sie Beispiele für Aufrufe im Code von NVDA:
 
 * Zeigt die Definition der Funktion `speech.speech.speak` an:
-  `openCodeFile(speech.speech.speak)`
+  `openCodeFile(speech.speech.speak)`  
   oder mit dem als Parameter übergebenen Namen:
-  `openCodeFile("speech.speech.speak")`
-* Zeigt die Definition der Klasse `TextInfo` an:
+  `openCodeFile("speech.speech.speak")`  
 * Sehen Sie sich die Definition der Klasse `TextInfo` an:
   `openCodeFile(textInfos.TextInfo)`  
 * Sehen Sie sich die Definition der Methode `copyToClipboard` der Klasse
   `TextInfo` an:
-  `openCodeFile(textInfos.TextInfo.copyToClipboard)`
-* Zeigt die Definition der Klasse des fokussierten Objekts an:
+  `openCodeFile(textInfos.TextInfo.copyToClipboard)`  
 * Sehen Sie sich die Definition der Klasse des fokussierten Objekts an:
-  `openCodeFile(focus)`
-* Öffnet die Datei `api.py`, die das Modul `api` definiert:
+  `openCodeFile(focus)`  
 * Öffnen Sie die Datei `api.py`, die das Modul `api` definiert:
-  `openCodeFile(api)`
+  `openCodeFile(api)`  
 
 ### Skript zum Starten der Python-Konsole
 
@@ -308,8 +349,8 @@ Um sie zu verwenden, müssen Sie zunächst den Befehl konfigurieren, der aufgeru
 Der Befehl sollte die folgende Form haben:
 `"C:\<Pfad>\Editor.exe" "{path}":{line}`  
 Sie sollten diese Zeile natürlich entsprechend dem tatsächlichen Namen und Ort des Editors und der von ihm zum Öffnen von Dateien verwendeten Syntax ändern.
-Der "Pfad" wird durch den vollständigen Pfad der zu öffnenden Datei und die "Zeile" durch die Zeilennummer ersetzt, auf die der Cursor gesetzt werden soll.
-Bei Notepad++ wäre der Befehl, der in die Konsole eingegeben werden muss, beispielsweise folgender:
+Der Pfad `{path}` wird durch den vollständigen Pfad der zu öffnenden Datei und die Zeile `{line}` durch die zu fokussierende Zeilennummer ersetzt.
+Bei Notepad++ wäre der Befehl, der in die Konsole eingegeben werden muss, beispielsweise Folgender:
 `"C:\Program Files\Notepad++\notepad++.exe" "{path}" -n{line}`
 
 <a id="settingsNvdaSourcePath"></a>
@@ -319,7 +360,7 @@ Wenn Sie einen Befehl zum [Anzeigen der Quelldatei aus einem Protokoll](#logRead
 Wenn Sie NVDA nicht aus dem Quellcode ausführen, enthält NVDA nur die kompilierte Dateien.
 Daher können Sie hier einen alternativen Ort angeben, an dem die entsprechende Quelldatei zu finden ist, z. B. den Ort, an dem Sie NVDA-Quelldateien geklont haben, so dass eine Quelldatei trotzdem geöffnet werden kann.
 Der Pfad sollte wie folgt lauten:
-`C:\<Pfad>\GIT\nvda\source`
+`C:\<Pfad>\GIT\NVDA\source`
 Ersetzen Sie natürlich den Pfad der NVDA-Quelle durch den richtigen Pfad.
 
 Vergewissern Sie sich jedoch, dass die Version Ihrer Quelldatei
@@ -336,6 +377,40 @@ beim nächsten Start von NVDA wirksam, sobald die Sicherung durchgeführt
 wird.
 
 ## Änderungsprotokoll
+
+### Version 5.0
+
+* Wenn die NVDA-Erweiterung Sofort-Übersetzer installiert ist, können Sie
+  die Sprachausgaben-Meldungen unter Verwendung der Befehle des
+  Protokoll-Lesemodus sich übersetzen lassen.
+* Im Protokoll-Lesemodus kann durch Drücken von E oder Umschalt+E nun nicht
+  nur zu normalen FEHLER-Meldungen, sondern auch zu KRITISCHEN
+  FEHLER-Meldungen navigiert werden.
+* Es wurden neue Befehle für die Schnellnavigation im Protokoll hinzugefügt,
+  um zur Eingabe und zu den Sprachausgaben-Meldungen zu gelangen.
+* Ein neuer Befehl hinzugefügt, um Lesezeichen im Protokoll zu setzen; und
+  spezielle Befehle für die Schnellnavigation hinzugefügt, um zu Lesezeichen
+  im Protokoll zu gelangen.  Die ursprüngliche Idee für diese Funktion
+  stammt aus der NVDA-Erweiterung Debug-Helfer, Dank an Luke Davis.
+
+
+Bugfix: Die Speicherung des letzten Fehlers schlägt nicht mehr fehl, wenn
+der Parameter von log.error kein String ist sowie behobene Initialisierung
+der NVDA-Erweiterung mit NVDA 2019.2.1. Speicherung des Protokolls
+korrigiert (82d73cf59844f96d56877becb3ead40cf858e62c)
+
+### Version 4.2
+
+* Ein Fehler bei älteren NVDA-Versionen vor 2021.3 wurde behoben.
+* Die Formatierung des Stack-Trace-Protokolls wurde korrigiert.
+* Erste Lokalisierungen.
+
+### Version 4.1
+
+* Es wurde ein Fehler behoben, der in einigen Situationen bei der
+  Protokollierung eines Fehlers auftrat.
+* Die Einstellungen der NVDA-Erweiterung können jetzt nur geändert werden,
+  wenn das Standard-Profil aktiv ist, um Konfigurationsprobleme vorzubeugen.
 
 ### Version 4.0
 
@@ -376,11 +451,11 @@ wird.
 
 ### Version 2.1
 
-* Verschiedene Fehlerkorrekturen und Code-Refactoring / Bereinigung, um alle
-  Anwendungsfälle zu berücksichtigen: alle unterstützten Versionen,
-  installiert vs. aus dem Quellcode ausgeführt, etc. (Beitrag von Łukasz
+* Verschiedene Fehlerkorrekturen und Code-Refactoring sowie Bereinigung, um
+  alle Anwendungsfälle zu berücksichtigen: alle unterstützten Versionen,
+  installiert vs. aus dem Quellcode ausgeführt, etc. (Dank an Lukasz
   Golonka)
-* Das Compa-Modul wurde neu geschrieben (Beitrag von Łukasz Golonka)
+* Neu geschriebenes Compa-Modul (Dank an Lukasz Golonka)
 * Das Dialogfeld zum Neustarten von NVDA kann jetzt nur noch einmal geöffnet
   werden.
 * Die Verknüpfungen für den Objekt-Explorer sind nicht mehr standardmäßig
@@ -416,6 +491,8 @@ wird.
 
 [2]:
 https://www.nvaccess.org/files/nvda/documentation/userGuide.html#CommandLineOptions
+
+[3]: https://addons.nvda-project.org/addons/instantTranslate.en.html
 
 [4]:
 https://www.nvaccess.org/files/nvda/documentation/userGuide.html#PlayErrorSound
