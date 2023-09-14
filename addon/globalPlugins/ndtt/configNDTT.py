@@ -18,5 +18,8 @@ config.conf.spec["ndtt"] = confspec
 # This is needed to ensure that 'ndtt' key is present in config.conf.profiles[0] (default).
 # Since we directly save in the default profile, we cannot take advantage of automatic secion creation.
 val = config.conf['ndtt']['logBackupMaxNumber']
-config.conf['ndtt']['logBackupMaxNumber'] = val + 1
+if val == 1:
+	config.conf['ndtt']['logBackupMaxNumber'] = 2
+else:
+	config.conf['ndtt']['logBackupMaxNumber'] = 1
 config.conf['ndtt']['logBackupMaxNumber'] = val
