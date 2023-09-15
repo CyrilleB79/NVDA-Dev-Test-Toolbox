@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 'nvdaDevTestToolbox' '3.2'\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
 "POT-Creation-Date: 2023-06-16 14:09+0000\n"
-"PO-Revision-Date: 2023-06-16 17:05+0200\n"
+"PO-Revision-Date: 2023-09-09 23:00+0200\n"
 "Last-Translator: Cyrille Bougot <cyrille.bougot2@laposte.net>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.0\n"
 
 #. Translators: The description of a command of this add-on.
 msgid "Opens NVDA Dev & Test Toolbox add-on settings"
@@ -221,7 +221,7 @@ msgstr "Commandes de lecture de journal désactivées."
 
 #. Translators: Input help mode message for Toggle log translation script.
 msgid "Toggle speech translation in the log"
-msgstr ""
+msgstr "Active ou désactive la traduction de la parole dans le journal"
 
 #. Translators: Input help mode message for Open source file script.
 msgid ""
@@ -235,11 +235,11 @@ msgstr "Aucun chemin de fichier ni objet trouvé sur cette ligne."
 
 #. Translators: Input help mode message for Add marker in log script.
 msgid "Adds a marker in the log."
-msgstr ""
+msgstr "Ajoute un marqueur dans le journal."
 
 #. Translators: a message telling the user that a marker has been inserted in the log.
 msgid "Marker {} added in the log"
-msgstr ""
+msgstr "Marqueur {} ajouté dans le journal"
 
 #. Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
 msgid "Off"
@@ -255,6 +255,10 @@ msgid ""
 "{name} add-on can only be configured from the Normal Configuration profile.\n"
 "Please close this dialog, set your config profile to default and try again."
 msgstr ""
+"L'extension {name} ne peut être configurée que à partir du profil de "
+"configuration normal.\n"
+"Veuillez fermer cette boîte de dialogue, activer le profil de configuration "
+"par défaut et réessayer."
 
 #. Translators: This is a label for an edit field in the NDTT Settings panel.
 #, python-brace-format

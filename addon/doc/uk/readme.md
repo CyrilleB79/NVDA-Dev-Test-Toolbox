@@ -354,14 +354,13 @@ NVDA вже надає резервну копію журналу поперед
 * New log quick navigation commands have been added to jump to input and to
   speech messages.
 * A new command allow to place a marker in the log; and specific quick
-  navigation commands allow to jump to markers in the log.  Credit: the
-  initial idea for this feature comes from Debug Helper add-on by Luke
-  Davis.
+  navigation commands in log reading mode allow to jump to them.
+  Credit: the initial idea for this feature comes from Debug Helper add-on by Luke Davis.
 
-
-Bugfix: memorization of last error do not fail anymore when the parameter of
-log.error is not a string Fixed add-on initialization with NVDA 2019.2.1.
-Fix log saving (82d73cf59844f96d56877becb3ead40cf858e62c)
+* Bubfix: The memorization of the last error do not fail anymore in some
+  cases.
+* Bugfix: The add-on can initialize again with NVDA 2019.2.1.
+* Bugfix: Log saving feature will not fail anymore with non-ASCII logs.
 
 ### Version 4.2
 
@@ -412,8 +411,8 @@ Fix log saving (82d73cf59844f96d56877becb3ead40cf858e62c)
 
 * Various bugfixes and code refactoring/cleaning to address all use cases:
   all supported versions, installed vs. run from source, etc. (contribution
-  from Åukasz Golonka)
-* Rewriting of the compa module (contribution from Åukasz Golonka)
+  from Łukasz Golonka)
+* Rewriting of the compa module (contribution from Łukasz Golonka)
 * Діалог перезапуску  можна відкрити лише один раз.
 * Комбінації дослідника об’єктів тепер початково не призначені й повинні
   бути призначені користувачем.

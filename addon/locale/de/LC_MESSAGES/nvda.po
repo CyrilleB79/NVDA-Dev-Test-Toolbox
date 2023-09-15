@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: nvdaDevTestToolbox 4.0\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
 "POT-Creation-Date: 2023-06-16 14:09+0000\n"
-"PO-Revision-Date: 2023-07-31 00:18+0200\n"
+"PO-Revision-Date: 2023-09-09 00:18+0200\n"
 "Last-Translator: René Linke <rene.linke@hamburg.de>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -222,7 +222,7 @@ msgstr "Befehle für den Protokoll-Reader ausgeschaltet."
 
 #. Translators: Input help mode message for Toggle log translation script.
 msgid "Toggle speech translation in the log"
-msgstr ""
+msgstr "Sprach-Übersetzung im Protokoll umschalten"
 
 #. Translators: Input help mode message for Open source file script.
 msgid ""
@@ -237,11 +237,11 @@ msgstr "Kein Dateipfad oder Objekt in dieser Zeile gefunden."
 
 #. Translators: Input help mode message for Add marker in log script.
 msgid "Adds a marker in the log."
-msgstr ""
+msgstr "Fügt ein Lesezeichen im Protokoll ein."
 
 #. Translators: a message telling the user that a marker has been inserted in the log.
 msgid "Marker {} added in the log"
-msgstr ""
+msgstr "Lesezeichen {} im Protokoll hinzugefügt"
 
 #. Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
 msgid "Off"
@@ -257,6 +257,10 @@ msgid ""
 "{name} add-on can only be configured from the Normal Configuration profile.\n"
 "Please close this dialog, set your config profile to default and try again."
 msgstr ""
+"Die NVDA-Erweiterung {name} kann nur über das Profil Normale Konfiguration "
+"konfiguriert werden.\n"
+"Bitte schließen Sie das Dialogfeld, setzen Sie das Konfigurationsprofil auf "
+"Standard und versuchen Sie es erneut."
 
 #. Translators: This is a label for an edit field in the NDTT Settings panel.
 #, python-brace-format

@@ -16,7 +16,7 @@ tests dans NVDA.
 * Un mode de description étendu pour les scripts : lorsqu'il est activé, le
   mode d'aide à la saisie annonce des informations pour les scripts qui
   n'ont aucune description.
-* Commendes d'aide pour la lecture et l'analyse du journal.
+* Commendes pour aider à la lecture et l'analyse du journal.
 * Sauvegardes des anciens journaux
 * Dans l'espace de travail de la console Python, une fonction pour ouvrir le
   code source d'un objet.
@@ -36,7 +36,7 @@ configuration, `--disable-addons` pour désactiver les extensions, etc.
 
 ### Annoncer la dernière erreur enregistrée
 
-Appuyer sur NVDA+shift+alt+E permet de signaler la dernière erreur
+Appuyer sur NVDA+shift+alt+E permet d'annoncer la dernière erreur
 enregistrée sans avoir besoin d'ouvrir le journal. Un deuxième appui efface
 la dernière erreur mémorisée.
 
@@ -65,8 +65,8 @@ pas disponible.
 Cette fonction permet d'annoncer certaines propriétés de l'objet actuel dans
 le navigateur d'objet sans ouvrir la visionneuse du journal.
 
-Pour répertorier les propriétés d'un objet, déplacez le navigateur d'objets
-vers lui et utilisez les commandes suivantes :
+Pour lister les propriétés d'un objet, déplacez-y le navigateur d'objets et
+utilisez les commandes suivantes :
 
 * Sélectionne la propriété précédente et l'annonce pour l'objet navigateur.
 * Sélectionne la propriété suivante et l'annonce pour l'objet navigateur.
@@ -132,20 +132,21 @@ suivantes :
 Bogue connue : un script ajouté pour une classe spécifique est visible même
 si le dialogue Geste de Saisie est ouvert dans un autre contexte.
 
-## Log reading and analyzing features
+## Fonctionnalités de lecture et analyse du journal
 
 <a id="logPlaceMarkers"></a>
-### Place markers in the log
+### Placer des marqueurs dans le journal
 
-While testing or working, you may want to mark a specific moment in the log, so that you can turn to it easily later when reading the log.
-To add a marker message in the log, press NVDA+control+K.
-A message as follows will be logged at INFO level:  
+Lorsque vous faites des tests ou travaillez, vous voudrez peut-être marquer un moment spécifique dans le journal, afin que vous puissiez y retourner facilement plus tard lorsque vous lisez le journal.
+Pour ajouter un message de marqueur dans le journal, appuyez sur NVDA+contrôle+K.
+Un message comme suit sera enregistré au niveau information :  
 `-- NDTT marker 0 --`  
-You can add as many markers as you want in the log.  The marker's number
-will be incremented each time you place a marker in the log; it will only be
-reset when NVDA is restarted.
+Vous pouvez ajouter autant de marqueurs que vous le souhaitez dans le
+journal. Le numéro du marqueur sera incrémenté chaque fois que vous placez
+un marqueur dans le journal; Il ne sera réinitialisé que lorsque NVDA sera
+redémarré.
 
-### Log reader mode
+### Mode lecture du journal
 
 Un mode lecture du journal fournit des commandes pour faciliter la lecture
 et l'analyse du journal. Dans la fenêtre de la visionneuse du journal, le
@@ -168,39 +169,42 @@ mode navigation, permettent de se déplacer à différents types de messages
 dans le journal :
 
 * m : n'importe quel message
-* e: error messages (`ERROR` and `CRITICAL`)
-* w: warning messages (`WARNING`)
-* f: info messages (`INFO`)
-* k: markers previously [placed in the log](#logPlaceMarkers)
-* g: debug warning messages (`DEBUGWARNING`)
-* i: input/output messages (`IO`)
-* n: input messages
-* s: speech messages
-* d: debug messages (`DEBUG`)
+* e : messages d'erreur (`ERROR` and `CRITICAL`)
+* w : messages d'avertissement (`WARNING`)
+* f : messages d'info (`INFO`)
+* k : marqueurs précédemment [placés dans le journal](#logPlaceMarkers)
+* g : messages d'avertissement de débogage (`DEBUGWARNING`)
+* i : messages d'entrée/sortie (`IO`)
+* n : messages d'entrée
+* s : messages de parole
+* d : messages de débogage (`DEBUG`)
 
 Un simple appui sur la lettre permet de se déplacer à la prochaine
 occurrence de ce message. Un appui combiné de la lettre avec la touche
 majuscule, permet de se déplacer à l'occurrence précédente.
 
-#### Translation of speech message
+#### Traduction des messages de parole
 
-Sometimes, you may have to look at a log taken on a system in a foreignh
-language that you do not understand. E.g. the log was taken on a Chinese
-system / NVDA, whereas you only understand French.  If you have [Instant
-Translate][3] add-on installed, you may use it in conjonction with [quick
-log navigation commands](#logReaderQuickNavigationCommands) to have speech
-messages translated.
+Parfois, vous devrez peut-être regarder un journal pris sur un système dans
+une langue étrangère que vous ne comprenez pas. Par exemple. Le journal a
+été pris sur un système / NVDA chinois, alors que vous ne comprenez que le
+français. Si vous avez installé l'extension [Instant Translate][3], vous
+pouvez l'utiliser en conjonction avec les [commandes de navigation rapide
+dans le journal](#logReaderQuickNavigationCommands) pour traduire les
+messages vocaux.
 
-* First configure Instant Translate's languages. The source language should
-  be the language of the system where the log has been taken
-  (e.g. Chinese). The target language should be your language (e.g. French).
-* Open the log
-* Press T to enable automatic speech translation in the log
-* Use Quick navigation commands in the log, e.g. S, I, etc. Whenever a
-  speech message is encountered, it will be spoken in your language (French
-  in our previous example)
+* Configurez d'abord les langues d'Instant Translate. La langue source doit
+  être la langue du système où le journal a été pris (par exemple
+  chinois). La langue cible doit être votre langue (par exemple français).
+* Ouvrez le journal
+* Appuyez sur T pour activer la traduction automatique de la parole dans le
+  journal
+* Utilisez les commandes de navigation rapide dans le journal, par exemple,
+  S, I, etc. Chaque fois qu'un message de parole est rencontré, il sera
+  annoncé dans votre langue (français dans notre exemple précédent)
 
-If you want to disable speech translation, press T again.
+Si vous souhaitez désactiver la traduction de la parole, appuyez à nouveau
+sur T.
 
 
 
@@ -221,9 +225,9 @@ contexte du traceback ou du message journalisé. Appuyez sur C pour ouvrir le
 fichier.
 
 Pour utiliser cette fonctionnalité, vous devez avoir configuré [la ligne de
-commande de votre éditeur préféré] (#settingsOpenCommand) dans les
-paramètres de l'extension. Si vous n'exécutez pas NVDA à partir des sources,
-[l'emplacement du code source NVDA] (#settingsNvdaSourcePath) doit également
+commande de votre éditeur préféré](#settingsOpenCommand) dans les paramètres
+de l'extension. Si vous n'exécutez pas NVDA à partir des sources,
+[l'emplacement du code source NVDA](#settingsNvdaSourcePath) doit également
 avoir été configuré.
 
 <a id="oldLogsBackup"></a>
@@ -234,8 +238,8 @@ NVDA fournit déjà une sauvegarde du journal de la session précédente de NVDA
 peut-être accéder à des journaux plus anciens, par ex. parce que vous avez
 dû redémarrer NVDA avant de regarder `nvda-old.log`. Cette extension vous
 permet de configurer si vous souhaitez sauvegarder les anciens journaux et
-combien d'entre eux ; cela se fait dans les [paramètres de l'extension]
-(#settingsLogsBackup).
+combien d'entre eux ; cela se fait dans les [paramètres de
+l'extension](#settingsLogsBackup).
 
 Une boîte de dialogue Gestionnaire de journaux permet d'afficher les journaux sauvegardés.
 Elle peut être ouverte en allant dans le menu NVDA -> Outils -> Gestionnaire de journaux
@@ -251,9 +255,9 @@ Dans la console, vous pouvez appeler la fonction suivante pour voir le code sour
 `openCodeFile(myVar)`  
 
 Pour utiliser cette fonctionnalité, vous devez avoir configuré [la ligne de
-commande de votre éditeur préféré] (#settingsOpenCommand) dans les
-paramètres de l'extension. Si vous n'exécutez pas NVDA à partir des sources,
-[l'emplacement du code source NVDA] (#settingsNvdaSourcePath) doit également
+commande de votre éditeur préféré](#settingsOpenCommand) dans les paramètres
+de l'extension. Si vous n'exécutez pas NVDA à partir des sources,
+[l'emplacement du code source NVDA](#settingsNvdaSourcePath) doit également
 avoir été configuré.
 
 Vous pouvez appeler la fonction `openCodeFile` dans des objets définis dans
@@ -369,33 +373,35 @@ lorsque la sauvegarde a lieu.
 
 ### Version 5.0
 
-* If Instant Translate add-on is installed, it is now possible to have
-  speech messages translated on the fly when using log reading commands.
-* While in log reading mode, pressing E or shift+E now jumps to CRITICAL
-  erorr messages as well as normal ERROR messages.
-* New log quick navigation commands have been added to jump to input and to
-  speech messages.
-* A new command allow to place a marker in the log; and specific quick
-  navigation commands allow to jump to markers in the log.  Credit: the
-  initial idea for this feature comes from Debug Helper add-on by Luke
-  Davis.
+* Si l'extension Instant Translate est installée, il est désormais possible
+  de traduire des messages de parole à la volée lors de l'utilisation des
+  commandes de lecture du journal.
+* Pendant que vous êtes dans le Mode lecture du journal, appuyer sur E ou
+  Maj+E passe maintenant aux messages d'erreur CRITICAL ainsi qu'aux
+  messages ERROR normaux.
+* De nouvelles commandes de navigation rapide dans le journal ont été
+  ajoutées pour passer aux messages d'entrée et de parole.
+* Une nouvelle commande permet de placer un marqueur dans le journal; et des
+  commandes de navigation rapide spécifiques permettent de s'y rendre.
+  Credit: the initial idea for this feature comes from Debug Helper add-on by Luke Davis.
 
-
-Bugfix: memorization of last error do not fail anymore when the parameter of
-log.error is not a string Fixed add-on initialization with NVDA 2019.2.1.
-Fix log saving (82d73cf59844f96d56877becb3ead40cf858e62c)
+* Bubfix: The memorization of the last error do not fail anymore in some
+  cases.
+* Bugfix: The add-on can initialize again with NVDA 2019.2.1.
+* Bugfix: Log saving feature will not fail anymore with non-ASCII logs.
 
 ### Version 4.2
 
-* Fixed an error with NVDA version below 2021.3.
-* Fixed the stack trace log formatting.
-* First localizations.
+* Correction d'une erreur avec les versions de NVDA avant la 2021.3.
+* Correction du formatage de la journalisation de la trace de pile.
+* Premières traductions.
 
 ### Version 4.1
 
-* Fixed a bug occurring in some situations while logging an error.
-* The add-on's settings can now be modified only when the default profile is
-  active to avoid config issues.
+* Correction d'un bogue se produisant dans certaines situations lors de la
+  journalisation d'une erreur.
+* Ces paramètres sont globaux et ne peuvent être configurés que lorsque le
+  profil par défaut est actif.
 
 ### Version 4.0
 
@@ -434,10 +440,11 @@ Fix log saving (82d73cf59844f96d56877becb3ead40cf858e62c)
 
 ### Version 2.1
 
-* Various bugfixes and code refactoring/cleaning to address all use cases:
-  all supported versions, installed vs. run from source, etc. (contribution
-  from Åukasz Golonka)
-* Rewriting of the compa module (contribution from Åukasz Golonka)
+* Divers corrections de bogues et refactorisation et nettoyage du code pour
+  prendre en compte tous les cas d'utilisation : toutes les versions prises
+  en charge, installées vs. exécutées à partir du code source,
+  etc. (contribution de Łukasz Golonka)
+* Réécriture du module compa (contribution de Łukasz Golonka)
 * Le dialogue pour redémarrer peut désormais être ouvert qu'une seule fois.
 * Les raccourcis de l'Explorateur d'objets ne sont désormais pas assignées
   par défaut et doivent être mappés par l'utilisateur.

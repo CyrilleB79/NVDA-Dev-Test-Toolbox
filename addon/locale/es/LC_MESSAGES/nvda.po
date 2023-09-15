@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: nvdaDevTestToolbox 4.0\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
 "POT-Creation-Date: 2023-06-16 14:09+0000\n"
-"PO-Revision-Date: 2023-06-16 17:04+0200\n"
+"PO-Revision-Date: 2023-09-08 21:21+0200\n"
 "Last-Translator: José Manuel Delicado <jm.delicado@nvda.es>\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #. Translators: The description of a command of this add-on.
 msgid "Opens NVDA Dev & Test Toolbox add-on settings"
@@ -222,7 +222,7 @@ msgstr "Órdenes del lector del registro desactivadas."
 
 #. Translators: Input help mode message for Toggle log translation script.
 msgid "Toggle speech translation in the log"
-msgstr ""
+msgstr "Conmutar traducción del habla en el registro"
 
 #. Translators: Input help mode message for Open source file script.
 msgid ""
@@ -237,11 +237,11 @@ msgstr "No se ha encontrado un objeto o ruta de archivo en esta línea."
 
 #. Translators: Input help mode message for Add marker in log script.
 msgid "Adds a marker in the log."
-msgstr ""
+msgstr "Añade un marcador en el registro."
 
 #. Translators: a message telling the user that a marker has been inserted in the log.
 msgid "Marker {} added in the log"
-msgstr ""
+msgstr "Marcador {} añadido al registro"
 
 #. Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
 msgid "Off"
@@ -257,6 +257,9 @@ msgid ""
 "{name} add-on can only be configured from the Normal Configuration profile.\n"
 "Please close this dialog, set your config profile to default and try again."
 msgstr ""
+"El complemento {name} sólo se puede configurar desde el perfil de "
+"configuración normal.\n"
+"Cierra este diálogo, activa el perfil predeterminado y vuelve a intentarlo."
 
 #. Translators: This is a label for an edit field in the NDTT Settings panel.
 #, python-brace-format

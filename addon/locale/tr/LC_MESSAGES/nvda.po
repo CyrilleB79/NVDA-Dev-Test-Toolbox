@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: nvdaDevTestToolbox\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
 "POT-Creation-Date: 2023-06-16 14:09+0000\n"
-"PO-Revision-Date: 2023-06-22 18:45+0300\n"
+"PO-Revision-Date: 2023-09-08 17:25+0300\n"
 "Last-Translator: Umut KORKMAZ <umutkork@gmail.com>\n"
 "Language-Team: Umut KORKMAZ <umutkork@gmail.com>\n"
 "Language: tr_TR\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #. Translators: The description of a command of this add-on.
 msgid "Opens NVDA Dev & Test Toolbox add-on settings"
@@ -222,7 +222,7 @@ msgstr "Günlük Okuyucu komutları devre dışı bırakıldı."
 
 #. Translators: Input help mode message for Toggle log translation script.
 msgid "Toggle speech translation in the log"
-msgstr ""
+msgstr "Günlükte konuşma çevirisini değiştirir"
 
 #. Translators: Input help mode message for Open source file script.
 msgid ""
@@ -235,11 +235,11 @@ msgstr "Bu satırda dosya konumu veya nesne bulunamadı."
 
 #. Translators: Input help mode message for Add marker in log script.
 msgid "Adds a marker in the log."
-msgstr ""
+msgstr "Günlüğe bir işaretleyici ekler."
 
 #. Translators: a message telling the user that a marker has been inserted in the log.
 msgid "Marker {} added in the log"
-msgstr ""
+msgstr "{} işaretçisi günlüğe eklendi."
 
 #. Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
 msgid "Off"
@@ -255,6 +255,10 @@ msgid ""
 "{name} add-on can only be configured from the Normal Configuration profile.\n"
 "Please close this dialog, set your config profile to default and try again."
 msgstr ""
+"{name} eklentisi yalnızca Normal Yapılandırma profilinden "
+"yapılandırılabilir.\n"
+"Lütfen bu iletişim kutusunu kapatın, yapılandırma profilinizi varsayılana "
+"ayarlayın ve tekrar deneyin."
 
 #. Translators: This is a label for an edit field in the NDTT Settings panel.
 #, python-brace-format

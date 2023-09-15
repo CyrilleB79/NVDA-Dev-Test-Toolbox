@@ -373,14 +373,15 @@ seguridad.
   saltar a los mensajes de entrada y hablados.
 * Una nueva orden permite situar un marcador en el registro; y otras órdenes
   concretas de navegación rápida permiten saltar a marcadores en el
-  registro. Créditos: la idea inicial de esta función viene del complemento
-  Debug Helper de Luke Davis.
+  registro.
+  Créditos: la idea inicial de esta función viene del complemento Debug Helper de Luke Davis.
 
-
-Corrección de fallo: la memorización del último error ya no falla cuando el
-parámetro de log.error no es una cadena. Corregida la inicialización del
-complemento en NVDA 2019.2.1. Corregido el guardado del registro
-(82d73cf59844f96d56877becb3ead40cf858e62c)
+* Corrección de fallo: la memorización del último error ya no falla en
+  algunos casos.
+* Corrección de fallo: el complemento se inicializa de nuevo en NVDA
+  2019.2.1.
+* Corrección de fallo: la función de guardar el registro ya no fallará en
+  registros no ASCII.
 
 ### Versión 4.2
 
