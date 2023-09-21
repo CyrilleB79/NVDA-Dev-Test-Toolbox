@@ -278,6 +278,15 @@ These settings only take effect at next NVDA startup when the backup takes place
 
 ## Change log
 
+
+### Version 6.0
+
+* While using object navigation commands, a specific object property can be reported instead of NVDA usual object reporting.
+* In log reading mode, the "C" key to open a code file from the log now also works on an input help message.
+* Bugfix: The add-on can now start successfully when the number of logs to save is set to its maximum value.
+* Bugfix: Python console startup script's output does not prevent anymore to jump to the first result in the console when using result navigation commands.
+* Note: From now on, localization updates will not appear anymore in the change log.
+
 ### Version 5.0
 
 * If Instant Translate add-on is installed, it is now possible to have speech messages translated on the fly when using log reading commands.
