@@ -129,7 +129,20 @@ anuncie como control+k, deberías seguir los siguientes pasos:
 Fallo conocido: Un script añadido para una clase concreta es visible incluso
 si el administrador de gestos se abre en otro contexto.
 
-## Órdenes de lectura y análisis del registro
+## Funciones de lectura y análisis del registro
+
+<a id="logPlaceMarkers"></a>
+### Marcadores de posición en el registro
+
+Al trabajar o hacer pruebas, puedes querer marcar un momento concreto en el registro, de tal manera que puedas regresar a él después al leer el registro.
+Para añadir un mensaje de marcador al registro, pulsa NVDA+control+k.
+Se registrará un mensaje como el siguiente en el nivel info:
+`-- NDTT marker 0 --`  
+Puedes añadir tantos marcadores como quieras en el registro. El número del
+marcador se incrementará cada vez que sitúes un marcador en el registro;
+sólo se restablecerá al reiniciar NVDA.
+
+### Modo lector del registro
 
 El modo lector del registro proporciona órdenes facilitar la lectura y el
 análisis del registro. En la ventana del visualizador del registro, el
@@ -145,26 +158,53 @@ NVDA+control+alt+l.
 Las órdenes disponibles en el modo de lectura del registro se describen a
 continuación.
 
-### Órdenes de navegación rápida
+<a id="logReaderQuickNavigationCommands"></a>
+#### Órdenes de navegación rápida
 
 Existen órdenes de navegación de una sola letra, similares a las usadas en
 modo exploración, que permiten moverse por distintos tipos de mensajes en el
 registro:
 
 * m: cualquier mensaje
-* e: ERROR
-* i: IO
-* d: DEBUG
-* f: INFO
-* g: DEBUGWARNING
-* w: WARNING
+* e: mensajes de error (`ERROR` y `CRITICAL`)
+* w: mensajes de advertencia (`WARNING`)
+* f: mensajes informativos (`INFO`)
+* k: marcadores previamente [situados en el registro](#logPlaceMarkers)
+* g: mensajes de aviso de depuración (`DEBUGWARNING`)
+* i: mensajes de entrada/salida (`IO`)
+* n: mensajes entrantes
+* s: mensajes hablados
+* d: mensajes de depuración (`DEBUG`)
 
 Pulsando la letra te moverás a la siguiente coincidencia de ese mensaje. Al
 combinar la letra con la tecla shift, te desplazarás a la coincidencia
 anterior.
 
+#### Traducción de mensajes hablados
+
+A veces, puedes tener que mirar un registro tomado en un sistema con un
+idioma extranjero que no entiendes. Por ejemplo, el registro se tomó en un
+sistema / NVDA en chino, pero sólo entiendes francés. Si tienes instalado el
+complemento [Instant Translate][3], puedes usarlo junto con las [órdenes de
+navegación rápida por el registro](#logReaderQuickNavigationCommands) para
+traducir los mensajes hablados.
+
+* Primero, configura los idiomas de Instant Translate. El idioma de origen
+  debería ser el idioma del sistema del que se tomó el registro (por
+  ejemplo, chino). El idioma de destino debería ser tu idioma (por ejemplo,
+  francés).
+* Abre el registro
+* Pulsa la T para activar la traducción automática del habla en el registro
+* Usa las órdenes de navegación rápida en el registro, por ejemplo S, I,
+  etc. Cada vez que se encuentre un mensaje hablado, se verbalizará en
+  nuestro idioma (francés en el ejemplo anterior)
+
+Si quieres desactivar la traducción del habla, pulsa la T de nuevo.
+
+
+
 <a id="logReaderOpenSourceFile"></a>
-### Abrir el archivo del código fuente en tu editor
+#### Abrir el archivo del código fuente en tu editor
 
 En el registro, alguna línea puede hacer referencia al código fuente:
 
@@ -321,6 +361,41 @@ seguridad.
 
 ## Registro de cambios
 
+### Versión 5.0
+
+* Si el complemento Instant Translate está instalado, ahora es posible tener
+  los mensajes hablados traducidos al vuelo al utilizar las órdenes de
+  lectura del registro.
+* Mientras estás en el modo de lectura del registro, pulsar E y shift+E
+  ahora salta a mensajes de error críticos, tal y como hacía con los
+  mensajes de error normales.
+* Se han añadido nuevas órdenes de navegación rápida por el registro para
+  saltar a los mensajes de entrada y hablados.
+* Una nueva orden permite situar un marcador en el registro; y otras órdenes
+  concretas de navegación rápida permiten saltar a marcadores en el
+  registro.
+  Créditos: la idea inicial de esta función viene del complemento Debug Helper de Luke Davis.
+
+* Corrección de fallo: la memorización del último error ya no falla en
+  algunos casos.
+* Corrección de fallo: el complemento se inicializa de nuevo en NVDA
+  2019.2.1.
+* Corrección de fallo: la función de guardar el registro ya no fallará en
+  registros no ASCII.
+
+### Versión 4.2
+
+* Corregido un error con versiones de NVDA anteriores a la 2021.3.
+* Corregido el formateado del registro de pila de trazas.
+* Primeras traducciones.
+
+### Versión 4.1
+
+* Corregido un fallo que ocurría en algunas situaciones al registrar un
+  error.
+* Ahora sólo pueden modificarse las opciones del complemento sólo cuando el
+  perfil normal está activo para evitar problemas de configuración.
+
 ### Versión 4.0
 
 * Posibilidad de hacer copia de seguridad de registros antiguos e
@@ -399,6 +474,8 @@ seguridad.
 
 [2]:
 https://www.nvaccess.org/files/nvda/documentation/userGuide.html#CommandLineOptions
+
+[3]: https://addons.nvda-project.org/addons/instantTranslate.en.html
 
 [4]:
 https://www.nvaccess.org/files/nvda/documentation/userGuide.html#PlayErrorSound

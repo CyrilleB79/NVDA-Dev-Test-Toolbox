@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: 'nvdaDevTestToolbox' '3.2'\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
 "POT-Creation-Date: 2023-06-06 09:14+0300\n"
-"PO-Revision-Date: 2023-06-19 12:22+0300\n"
+"PO-Revision-Date: 2023-09-11 20:55+0300\n"
 "Last-Translator: Heorhii <nvda.translation.uk@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk_UA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #. Translators: The description of a command of this add-on.
 msgid "Opens NVDA Dev & Test Toolbox add-on settings"
@@ -159,7 +159,8 @@ msgstr ""
 "\n"
 "Бажаєте продовжити?"
 
-#. Translators: The title of a dialog displayed to the user when pressing the Delete button in the logs manager dialog
+#. Translators: The title of a dialog displayed to the user when pressing the Delete button in the
+#. logs manager dialog
 msgid "Confirm deletion"
 msgstr "Підтвердіть видалення"
 
@@ -181,7 +182,8 @@ msgstr ""
 "\n"
 "{file}"
 
-#. Translators: The title of a dialog displayed to the user when pressing the Delete button in the logs manager dialog
+#. Translators: The title of a dialog displayed to the user when pressing the Delete button in
+#. the logs manager dialog
 msgid "Error"
 msgstr "Помилка"
 
@@ -193,12 +195,14 @@ msgstr "&Менеджер журналів..."
 msgid "No more item"
 msgstr "Більше немає елемента"
 
-#. Translators: Input help mode message for log navigation commands. {st} will be replaced by the search type (Io, Debug, Message, etc.
+#. Translators: Input help mode message for log navigation commands. {st} will be replaced by
+#. the search type (Io, Debug, Message, etc.
 #, python-brace-format
 msgid "Moves to the next logged message of type {st}."
 msgstr "Переходить до наступного зареєстрованого повідомлення типу {st}."
 
-#. Translators: Input help mode message for log navigation commands. {st} will be replaced by the search type (Io, Debug, Message, etc.
+#. Translators: Input help mode message for log navigation commands. {st} will be replaced by the
+#. search type (Io, Debug, Message, etc.
 #, python-brace-format
 msgid "Moves to the previous logged message of type {st}."
 msgstr "Переходить до попереднього зареєстрованого повідомлення типу {st}."
@@ -215,6 +219,10 @@ msgstr "Команди читання журналу увімкнено."
 msgid "Log Reader commands disabled."
 msgstr "Команди читання журналу вимкнено."
 
+#. Translators: Input help mode message for Toggle log translation script.
+msgid "Toggle speech translation in the log"
+msgstr "Перемкнути переклад мовлення в журналі"
+
 #. Translators: Input help mode message for Open source file script.
 msgid ""
 "Opens the source code file whose path is located at the caret's position."
@@ -225,6 +233,14 @@ msgstr ""
 msgid "No file path or object found on this line."
 msgstr "У цьому рядку не знайдено шлях до файлу або об'єкта."
 
+#. Translators: Input help mode message for Add marker in log script.
+msgid "Adds a marker in the log."
+msgstr "Додає маркер у журналі."
+
+#. Translators: a message telling the user that a marker has been inserted in the log.
+msgid "Marker {} added in the log"
+msgstr "Маркер {} додано до журналу"
+
 #. Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
 msgid "Off"
 msgstr "Вимкнено"
@@ -232,6 +248,16 @@ msgstr "Вимкнено"
 #. Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
 msgid "On"
 msgstr "Увімкнено"
+
+#. Translators: A message presented in the settings panel when opened while no-default profile is active.
+#, python-brace-format
+msgid ""
+"{name} add-on can only be configured from the Normal Configuration profile.\n"
+"Please close this dialog, set your config profile to default and try again."
+msgstr ""
+"Додаток {name} можна налаштувати лише з профілю нормальної конфігурації.\n"
+"Будь ласка, закрийте цей діалог, установіть початковий профіль конфігурації "
+"і повторіть спробу."
 
 #. Translators: This is a label for an edit field in the NDTT Settings panel.
 #, python-brace-format
@@ -301,40 +327,47 @@ msgstr "Файл журналу NVDA (*.{ext})"
 msgid "Select a file"
 msgstr "Виберіть файл"
 
-#. class RestartWithOptionsDialog(wx.):
 #. Translators: This is the title for the Restart with options dialog
 msgid "Specify some options and restart"
 msgstr "Вкажіть деякі параметри та перезапустіть"
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "The file where log messages should be written to"
 msgstr "Файл, куди слід записувати повідомлення журналу"
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "The lowest level of message logged"
 msgstr "Найнижчий рівень зареєстрованих повідомлень"
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "The path where all settings for NVDA are stored"
 msgstr "Шлях, де зберігаються всі налаштування для NVDA"
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "Override the configured NVDA language"
 msgstr "Перевизначити налаштовану мову NVDA"
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "No sounds, no interface, no start message, etc."
 msgstr "Ні звуків, ні інтерфейсу, ні початкового повідомлення тощо."
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "Secure mode"
 msgstr "Безпечний режим"
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "Add-ons will have no effect"
 msgstr "Додатки не матимуть жодного впливу"
 
-#. Translators: The description of an NVDA start option, copied from the user guide (paragraph Command Line Options)
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
 msgid "Don't change the global system screen reader flag"
 msgstr "Не змінювати прапор читача екрана глобальної системи"
 
