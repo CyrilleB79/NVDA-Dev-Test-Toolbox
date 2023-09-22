@@ -73,17 +73,24 @@ hacia él y usa las siguientes órdenes:
   objetos; al pulsar dos veces rápidamente, muestra esta información en un
   mensaje explorable.
 
-Estas tres órdenes vienen sin asignar por defecto; tendrás que asignarlas
-desde el diálogo Gestos de entrada para poder usarlas.
-
 La lista de propiedades soportadas es la siguiente: nombre, rol, estado,
 valor, nombre de clase de la ventana, id de control de la ventana, manejador
 de la ventana, ubicación, clase Python, orden de resolución de métodos de la
 clase Python.
 
-Esta función es una mejora de un ejemplo de la [guía de desarrollo de
-NVDA][5].
+Al usar órdenes de navegación por objetos, también puedes elegir que se
+anuncie la propiedad seleccionada actualmente en lugar del anuncio habitual
+de objetos de NVDA. Una orden de conmutación permite alternar entre esta
+forma personalizada de anunciar los objetos y el anuncio habitual de NVDA.
 
+Por ejemplo, puedes seleccionar la propiedad "Nombre de clase de la ventana"
+y habilitar el anuncio de objetos personalizado. Al moverte al siguiente
+objeto o al anterior con el navegador de objetos, escucharás el nombre de
+clase de ventana del objeto en lugar del anuncio habitual.
+
+Todas las órdenes del explorador de propiedades de objeto vienen sin asignar
+por defecto; tendrás que asignarlas desde el diálogo Gestos de entrada para
+poder usarlas.
 
 ## Modo de descripción extendida de scripts
 
@@ -214,6 +221,9 @@ En el registro, alguna línea puede hacer referencia al código fuente:
 * La línea de cabecera de un mensaje registrado contiene la función que ha
   registrado el mensaje, p.ej.:
   `INFO - config.ConfigManager._loadConfig (22:45:26.145) - MainThread (16580):`
+* El contenido de un mensaje registrado en el modo ayuda de entrada
+  (registrado a nivel de información):
+  Input help: gesture kb(desktop):NVDA+t, bound to script title on globalCommands.GlobalCommands`  
 
 Puedes querer que se abra el archivo que contiene el código para comprender
 el contexto de la traza o el mensaje registrado. Pulsa la C para abrir el
@@ -361,6 +371,23 @@ seguridad.
 
 ## Registro de cambios
 
+
+### Versión 6.0
+
+* Mientras se usan órdenes de navegación por objetos, se puede anunciar una
+  propiedad concreta de un objeto en lugar del anuncio habitual de objetos
+  de NVDA.
+* En el modo de lectura del registro, la tecla "c" para abrir un archivo de
+  código desde el registro también funciona en un mensaje de ayuda de
+  entrada.
+* Fallo corregido: el complemento puede arrancar con éxito cuando la
+  cantidad de registros a guardar está configurada en su máximo valor.
+* Fallo corregido: la salida del script de inicio de la consola Python ya no
+  evita saltar al primer resultado en la consola al usar órdenes de
+  navegación por resultados.
+* Nota: a partir de ahora, las actualizaciones de traducciones ya no
+  aparecerán en el registro de cambios.
+
 ### Versión 5.0
 
 * Si el complemento Instant Translate está instalado, ahora es posible tener
@@ -373,9 +400,8 @@ seguridad.
   saltar a los mensajes de entrada y hablados.
 * Una nueva orden permite situar un marcador en el registro; y otras órdenes
   concretas de navegación rápida permiten saltar a marcadores en el
-  registro.
-  Créditos: la idea inicial de esta función viene del complemento Debug Helper de Luke Davis.
-
+  registro. Créditos: la idea inicial de esta característica viene del
+  complemento Ayudante de depuración de Luke Davis.
 * Corrección de fallo: la memorización del último error ya no falla en
   algunos casos.
 * Corrección de fallo: el complemento se inicializa de nuevo en NVDA
@@ -479,6 +505,3 @@ https://www.nvaccess.org/files/nvda/documentation/userGuide.html#CommandLineOpti
 
 [4]:
 https://www.nvaccess.org/files/nvda/documentation/userGuide.html#PlayErrorSound
-
-[5]:
-https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#toc22

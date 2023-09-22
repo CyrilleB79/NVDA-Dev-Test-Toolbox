@@ -77,16 +77,23 @@ Objekt und verwenden Sie die folgenden Befehle:
   zweimaliges Drücken zeigt diese Information in einem lesbaren
   Meldungs-Fenster an.
 
-Diese drei Befehle sind standardmäßig nicht zugewiesen; Sie müssten ihnen im
-Dialogfeld für die Tastenbefehle zuweisen, um sie verwenden zu können.
-
 Folgende Liste der unterstützten Eigenschaften: name, role, state, value,
 windowClassName, windowControlID, windowHandle, location, Python class,
 Python class mro.
 
-Diese Funktion ist eine Verbesserung eines Beispiels im
-[NVDA-Entwicklerhandbuch][5].
+When using object navigation commands, you can also choose to have the
+currently selected property reported instead of NVDA usual object
+reporting.  A toggle command allows to switch between this custom reporting
+of objects and NVDA usual reporting.
 
+For exemple, you may select "windowClassName" property and enable custom
+object reporting.  Then when moving the navigator object to next or previous
+object, you will hear the object's windowClassName instead of usual
+reporting.
+
+All the commands of the Object property explorer are unassigned by default;
+you will have to assign them a shortcut in the Input gesture dialog to use
+them.
 
 ## Erweiterter Skript-Beschreibungsmodus
 
@@ -228,6 +235,8 @@ Im Protokoll können sich einige Zeilen auf den Quellcode beziehen:
 * Die Kopfzeile einer protokollierten Meldung enthält die Funktion, die
   diese Nachricht protokolliert hat, z. B.:
   `INFO - config.ConfigManager._loadConfig (22:45:26.145) - MainThread (16580):`
+* The content of a message logged in input help mode (logged at info level):
+  Input help: gesture kb(desktop):NVDA+t, bound to script title on globalCommands.GlobalCommands`  
 
 Sicherlich möchten Sie die Datei mit diesem Code öffnen, um den Kontext des
 Tracebacks oder der protokollierten Meldung einzusehen. Drücken Sie einfach
@@ -378,6 +387,21 @@ wird.
 
 ## Änderungsprotokoll
 
+
+### Version 6.0
+
+* While using object navigation commands, a specific object property can be
+  reported instead of NVDA usual object reporting.
+* In log reading mode, the "C" key to open a code file from the log now also
+  works on an input help message.
+* Bugfix: The add-on can now start successfully when the number of logs to
+  save is set to its maximum value.
+* Bugfix: Python console startup script's output does not prevent anymore to
+  jump to the first result in the console when using result navigation
+  commands.
+* Note: From now on, localization updates will not appear anymore in the
+  change log.
+
 ### Version 5.0
 
 * Wenn die NVDA-Erweiterung Sofort-Übersetzer installiert ist, können Sie
@@ -389,9 +413,9 @@ wird.
 * Es wurden neue Befehle für die Schnellnavigation im Protokoll hinzugefügt,
   um zur Eingabe und zu den Sprachausgaben-Meldungen zu gelangen.
 * A new command allow to place a marker in the log; and specific quick
-  navigation commands in log reading mode allow to jump to them.
-  Credit: the initial idea for this feature comes from Debug Helper add-on by Luke Davis.
-
+  navigation commands in log reading mode allow to jump to them. Credit: the
+  initial idea for this feature comes from Debug Helper add-on by Luke
+  Davis.
 * Bubfix: The memorization of the last error do not fail anymore in some
   cases.
 * Bugfix: The add-on can initialize again with NVDA 2019.2.1.
@@ -493,6 +517,3 @@ https://www.nvaccess.org/files/nvda/documentation/userGuide.html#CommandLineOpti
 
 [4]:
 https://www.nvaccess.org/files/nvda/documentation/userGuide.html#PlayErrorSound
-
-[5]:
-https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#toc22
