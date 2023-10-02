@@ -2,7 +2,7 @@
 # NVDA Dev & Test Toolbox add-on for NVDA
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2022 Cyrille Bougot
+# Copyright (C) 2022-2023 Cyrille Bougot
 
 """Provides an extension of NVDA's Python console.
 """
@@ -60,6 +60,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			with open(startupFilePath, 'r') as sf:
 				pythonConsole.consoleUI.console.runsource(source=sf.read(), filename=startupFileName, symbol='exec')
 			print('### Console startup script executed.')
+			pythonConsole.consoleUI.outputPositions.append(pythonConsole.consoleUI.outputCtrl.GetInsertionPoint())
 			sys.stdout, sys.stderr = stdout, stderr
 		else:
-			log.debug('No console startup file found for path {}'.format(startupFilePath))
+			log.debugWarning('No console startup file found for path {}'.format(startupFilePath))

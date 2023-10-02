@@ -1,19 +1,24 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2019 Cyrille Bougot
+# Copyright (C) 2019-2023 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
 
+import inspect
+import os
+
 import globalPluginHandler
 import ui
 import api
-# Import normal controlTypes and not the wrapper since it is only used for older versions of NVDA.
-import controlTypes
+from .compa import controlTypesCompatWrapper as controlTypes
+# Import normal controlTypes and not the wrapper only to be used for older versions of NVDA.
+import controlTypes as oldControlTypes
 from logHandler import log
 import addonHandler
 import scriptHandler
 from scriptHandler import script
+import speech
 
 addonHandler.initTranslation()
 
@@ -22,10 +27,10 @@ ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
 
 def _createDicControlTypesConstantes(prefix):
 	dic = {}
-	attributes = dir(controlTypes)
+	attributes = dir(oldControlTypes)
 	for name in attributes:
 		if name.startswith(prefix):
-			dic[getattr(controlTypes, name)] = name[len(prefix):]
+			dic[getattr(oldControlTypes, name)] = name[len(prefix):]
 	return dic
 
 
@@ -86,6 +91,13 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def __init__(self):
 		super(GlobalPlugin, self).__init__()
 		self.index = 0
+		self.customObjectReporting = False
+		self.orig_speakObject = speech.speakObject
+		speech.speakObject = self.customSpeakObjectFactory()
+
+	def terminate(self, *args, **kwargs):
+		speech.speakObject = self.orig_speakObject
+		super(GlobalPlugin, self).terminate(*args, **kwargs)
 
 	@script(
 		description=_(
@@ -135,3 +147,67 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			log.debugWarning('An exception occurred while retrieving the requested information.', exc_info=True)
 		self.lastInfo = '{}:\r\n{}'.format(infoType, info)
 		ui.message(self.lastInfo)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for a command of the object property explorer.
+			"Toggle custom reporting of objects using the Object explorer's selected property when you use object"
+			" navigation commands."
+		),
+		category=ADDON_SUMMARY,
+	)
+	def script_toggleCustomObjectReporting(self, gesture):
+		if not self.customObjectReporting:
+			self.customObjectReporting = True
+			# Translators: Message reported by a command of the object property explorer.
+			ui.message(_('Custom object reporting enabled'))
+		else:
+			self.customObjectReporting = False
+			# Translators: Message reported by a command of the object property explorer.
+			ui.message(_('Custom object reporting disabled'))
+
+	def customSpeakObjectFactory(self):
+
+		def new_speakObject(
+			obj,
+			reason=controlTypes.OutputReason.QUERY,
+			_prefixSpeechCommand=None,
+			**kwargs
+		):
+			if not self.customObjectReporting:
+				return self.orig_speakObject(obj, reason, _prefixSpeechCommand, **kwargs)
+			s1 = inspect.stack()[1]
+			try:
+				# Python 3
+				filename = s1.filename
+				function = s1.function
+			except AttributeError:
+				# Python 2
+				filename = s1[1]
+				function = s1[3]
+			if os.path.splitext(filename)[0] != 'globalCommands' or function not in [
+				'script_navigatorObject_current',
+				'script_navigatorObject_next',
+				'script_navigatorObject_previous',
+				'script_navigatorObject_firstChild',
+				'script_navigatorObject_parent',
+				'script_navigatorObject_nextInFlow',
+				'script_navigatorObject_previousInFlow',
+			]:
+				return self.orig_speakObject(obj, reason, _prefixSpeechCommand, **kwargs)
+			infoType, fun = self._INFO_TYPES[self.index]
+			try:
+				info = fun(obj)
+			except Exception:
+				info = 'Unavailable information.'
+				log.debugWarning('An exception occurred while retrieving the requested information.', exc_info=True)
+			sequence = [str(info)]
+			kwargs2 = {}
+			try:
+				# Parameter supported by NVDA 2019.3 onwards
+				kwargs2['priority'] = kwargs['priority']
+			except KeyError:
+				pass
+			speech.speak(sequence, **kwargs2)
+
+		return new_speakObject
