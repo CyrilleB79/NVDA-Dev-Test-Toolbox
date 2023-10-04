@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2021-2022 Cyrille Bougot
+# Copyright (C) 2021-2023 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
@@ -244,26 +244,40 @@ class CodeLocator(object):
 		return CodeLocator(self.obj.__class__).getCodeLocationForClass()
 
 
-def openObject(objPath, reportError=True):
-	tokens = objPath.split('.')
-	mod = tokens[0]
+def openObject(objPath):
 	try:
 		importFunction = importlib.import_module
 	except NameError:
 		# NVDA 2019.2.1: Although importlib is documented for Python 2, it is not present in NVDA's Python
 		# for this version. Thus use __import__ instead, as done in core code.
 		importFunction = __import__
-	try:
-		obj = importFunction(mod)
-	# Python 2 raise ImportError for non-existing modules; Python 3 raises ModuleNotFoundError instead.
-	# Since ModuleNotFoundError inherits from ImportError we filter on ImportError
-	except ImportError:
+	tokens = objPath.split('.')
+	for iToken in range(len(tokens)):
+		modName = '.'.join(tokens[0:iToken + 1])
+		objName = '.'.join(tokens[iToken + 1:])
+		try:
+			mod = importFunction(modName)
+		# Python 2 raise ImportError for non-existing modules; Python 3 raises ModuleNotFoundError instead.
+		# Since ModuleNotFoundError inherits from ImportError we filter on ImportError
+		except ImportError:
+			continue
+		try:
+			openObjectInModule(objName, mod)
+			return
+		except FileOpenerError:
+			continue
+	else:
 		raise FileOpenerError(FileOpenerError.ET_OBJECT_NOT_FOUND, objPath)
+
+
+def openObjectInModule(objName, mod):
+	tokens = objName.split('.')
+	obj = mod
 	try:
-		for attr in tokens[1:]:
+		for attr in tokens:
 			obj = getattr(obj, attr)
 	except AttributeError:
-		raise FileOpenerError(FileOpenerError.ET_OBJECT_NOT_FOUND, objPath)
+		raise FileOpenerError(FileOpenerError.ET_OBJECT_NOT_FOUND, mod.__name__ + '.' + objName)
 	openCodeFile(obj)
 
 
@@ -277,7 +291,7 @@ def openCodeFile(obj):
 	"""
 
 	if isinstance(obj, stringTypes):
-		openObject(obj, reportError=False)
+		openObject(obj)
 		return
 	path, line = CodeLocator(obj).getCodeLocation()
 	openSourceFile(path, line)

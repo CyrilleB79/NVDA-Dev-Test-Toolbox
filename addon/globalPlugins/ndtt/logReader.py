@@ -514,7 +514,7 @@ class LogContainer(ScriptableObject):
 		externalPrefix = 'external:'
 		if objPath.startswith(externalPrefix):
 			objPath = objPath[len(externalPrefix):]
-		openObject(objPath, reportError=True)
+		openObject(objPath)
 		return True
 
 	@staticmethod
@@ -523,7 +523,7 @@ class LogContainer(ScriptableObject):
 		if not match:
 			return False
 		objPath = '{loc}.script_{name}'.format(loc=match['scriptLocation'], name=match['scriptName'])
-		openObject(objPath, reportError=True)
+		openObject(objPath)
 		return True
 
 
