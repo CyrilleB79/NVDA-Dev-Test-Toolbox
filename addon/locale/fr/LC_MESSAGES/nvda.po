@@ -316,6 +316,20 @@ msgstr ""
 "Sélectionne la propriété précédente de l'explorateur de propriétés d'objets "
 "et l'annonce pour l'objet navigateur."
 
+#. Translators: Input help mode message for a command of the object property explorer.
+msgid ""
+"Toggle custom reporting of objects using the Object explorer's selected "
+"property when you use object navigation commands."
+msgstr ""
+
+#. Translators: Message reported by a command of the object property explorer.
+msgid "Custom object reporting enabled"
+msgstr ""
+
+#. Translators: Message reported by a command of the object property explorer.
+msgid "Custom object reporting disabled"
+msgstr ""
+
 #. Translators: The title of a file selector window
 msgid "Save As"
 msgstr "Enregistrer sous"
