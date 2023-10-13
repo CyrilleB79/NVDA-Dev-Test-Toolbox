@@ -81,7 +81,7 @@ Python class, Python class mro.
 Lorsque vous utilisez les commandes de navigation par objet, vous pouvez
 également choisir que la propriété actuellement sélectionnée soit annoncée
 au lieu de l'annonce habituelle des objets de NVDA. Une commande bascule
-permet de alterner entre cette annonce personnalisée des objets et l'annonce
+permet d'alterner entre cette annonce personnalisée des objets et l'annonce
 habituel de NVDA.
 
 Par exemple, vous pouvez sélectionner la propriété « windowClassName » et

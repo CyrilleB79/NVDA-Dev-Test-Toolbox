@@ -81,19 +81,20 @@ Folgende Liste der unterstützten Eigenschaften: name, role, state, value,
 windowClassName, windowControlID, windowHandle, location, Python class,
 Python class mro.
 
-When using object navigation commands, you can also choose to have the
-currently selected property reported instead of NVDA usual object
-reporting.  A toggle command allows to switch between this custom reporting
-of objects and NVDA usual reporting.
+Bei der Verwendung von Befehlen der Objekt-Navigation können Sie auch
+festlegen, dass die aktuell ausgewählte Eigenschaft anstelle der üblichen
+mitgeteilten Objekte in NVDA angezeigt werden. Mit einem Befehl können Sie
+zwischen dieser benutzerdefinierten Meldung von Objekten und der üblichen
+NVDA-Meldung sie umschalten.
 
-For exemple, you may select "windowClassName" property and enable custom
-object reporting.  Then when moving the navigator object to next or previous
-object, you will hear the object's windowClassName instead of usual
-reporting.
+Zum Beispiel, können Sie die Eigenschaft "windowClassName" auswählen und die
+benutzerdefinierte Objekt-Meldung aktivieren. Wenn Sie dann das
+Navigationsobjekt zum nächsten oder vorherigen Objekt verschieben, erhalten
+Sie den windowClassName des Objekts anstelle der üblichen Meldung.
 
-All the commands of the Object property explorer are unassigned by default;
-you will have to assign them a shortcut in the Input gesture dialog to use
-them.
+Alle Befehle des Explorers für Objekt-Eigenschaften sind standardmäßig nicht
+zugewiesen; Sie müssen diese im Dialogfeld für die Tastenbefehle zuweisen,
+um sie zu verwenden.
 
 ## Erweiterter Skript-Beschreibungsmodus
 
@@ -213,8 +214,8 @@ Sprachmeldungen sich übersetzen zu lassen.
   erstellt wurde (z. B. Chinesisch). Die Zielsprache sollte Ihre Sprache
   sein (z. B. Deutsch).
 * Das Protokoll öffnen
-* Drücken Sie den Buchstaben T, um die automatische Sprach-Übersetzung im
-  Protokoll zu aktivieren.
+* Drücken Sie T, um die automatische Übersetzung im Protokoll über die
+  Sprachausgabe zu aktivieren
 * Verwenden Sie die Befehle für die Schnellnavigation im Protokoll, z. B. S,
   I, etc. Wenn eine Sprachausgaben-Meldung auftaucht, wird sie in Ihre
   Sprache übersetzt (in unserem Beispiel Deutsch)
@@ -235,8 +236,9 @@ Im Protokoll können sich einige Zeilen auf den Quellcode beziehen:
 * Die Kopfzeile einer protokollierten Meldung enthält die Funktion, die
   diese Nachricht protokolliert hat, z. B.:
   `INFO - config.ConfigManager._loadConfig (22:45:26.145) - MainThread (16580):`
-* The content of a message logged in input help mode (logged at info level):
-  Input help: gesture kb(desktop):NVDA+t, bound to script title on globalCommands.GlobalCommands`  
+* Der Inhalt einer im Eingabehilfe-Modus protokollierten Meldung (auf
+  Info-Ebene protokolliert):
+  Eingabehilfe: Tastenkombination kb(desktop):NVDA+T, zugewiesen für den Skript-Titel für globalCommands.GlobalCommands`
 
 Sicherlich möchten Sie die Datei mit diesem Code öffnen, um den Kontext des
 Tracebacks oder der protokollierten Meldung einzusehen. Drücken Sie einfach
@@ -390,17 +392,19 @@ wird.
 
 ### Version 6.0
 
-* While using object navigation commands, a specific object property can be
-  reported instead of NVDA usual object reporting.
-* In log reading mode, the "C" key to open a code file from the log now also
-  works on an input help message.
-* Bugfix: The add-on can now start successfully when the number of logs to
-  save is set to its maximum value.
-* Bugfix: Python console startup script's output does not prevent anymore to
-  jump to the first result in the console when using result navigation
-  commands.
-* Note: From now on, localization updates will not appear anymore in the
-  change log.
+* Bei der Verwendung von Befehlen der Objekt-Navigation kann eine bestimmte
+  Objekt-Eigenschaft anstelle der üblichen Objjekte in NVDA mitgeteilt
+  werden.
+* Im Lesemodus des Protokolls funktioniert die Taste "C" zum Öffnen einer
+  Code-Datei aus dem Log nun auch bei einer Eingabehilfe-Meldung.
+* Bugfix: Die NVDA-Erweiterung kann nun erfolgreich gestartet werden, wenn
+  die Anzahl der zu speichernden Protokolle auf den Maximalwert gesetzt
+  wird.
+* Bugfix: Die Ausgabe des Startskripts der Python-Konsole verhindert nicht
+  mehr den Sprung zum ersten Ergebnis in der Konsole, sobald die Befehle zur
+  Ergebnisnavigation verwendet werden.
+* Hinweis: Von nun an werden Updates von Lokalisierung nicht mehr im
+  Änderungsprotokoll angezeigt.
 
 ### Version 5.0
 
@@ -412,14 +416,16 @@ wird.
   FEHLER-Meldungen navigiert werden.
 * Es wurden neue Befehle für die Schnellnavigation im Protokoll hinzugefügt,
   um zur Eingabe und zu den Sprachausgaben-Meldungen zu gelangen.
-* A new command allow to place a marker in the log; and specific quick
-  navigation commands in log reading mode allow to jump to them. Credit: the
-  initial idea for this feature comes from Debug Helper add-on by Luke
-  Davis.
-* Bubfix: The memorization of the last error do not fail anymore in some
-  cases.
-* Bugfix: The add-on can initialize again with NVDA 2019.2.1.
-* Bugfix: Log saving feature will not fail anymore with non-ASCII logs.
+* Ein neuer Befehl hinzugefügt, um Lesezeichen im Protokoll zu setzen; und
+  spezielle Befehle für die Schnellnavigation hinzugefügt, um zu Lesezeichen
+  im Protokoll zu gelangen. Die ursprüngliche Idee für diese Funktion stammt
+  aus der NVDA-Erweiterung Debug-Helfer, Dank an Luke Davis.
+* Bubfix: Die Speicherung des letzten Fehlers schlägt in einigen Fällen
+  nicht mehr fehl.
+* Bugfix: Die NVDA-Erweiterung kann mit NVDA 2019.2.1 wieder gestartet
+  werden.
+* Bugfix: Das Speichern von Protokollen schlägt bei Nicht-ASCII-Protokollen
+  nicht mehr fehl.
 
 ### Version 4.2
 
@@ -473,10 +479,11 @@ wird.
 
 ### Version 2.1
 
-* Various bugfixes and code refactoring/cleaning to address all use cases:
-  all supported versions, installed vs. run from source, etc. (contribution
-  from Łukasz Golonka)
-* Rewriting of the compa module (contribution from Łukasz Golonka)
+* Verschiedene Fehlerkorrekturen und Code-Refactoring sowie Bereinigung, um
+  alle Anwendungsfälle zu berücksichtigen: alle unterstützten Versionen,
+  installiert vs. aus dem Quellcode ausgeführt, etc. (Dank an Łukasz
+  Golonka)
+* Neu geschriebenes Compa-Modul (Dank an Łukasz Golonka)
 * Das Dialogfeld zum Neustarten von NVDA kann jetzt nur noch einmal geöffnet
   werden.
 * Die Verknüpfungen für den Objekt-Explorer sind nicht mehr standardmäßig
