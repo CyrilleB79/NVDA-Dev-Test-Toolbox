@@ -459,11 +459,11 @@ lorsque la sauvegarde a lieu.
   existe, le fichier YourNVDAConfigFolder\ndtt\consoleStartup.py sera
   exécuté lorsque la console NVDA est ouverte pour la première fois ou
   lorsque les extensions sont rechargées.
-* Divers corrections mineures pour la fonction de la console Python
+* Divers correctifs mineurs pour la fonction de la console Python
   `openCodeFile` et la commande pour ouvrir le fichier source correspondant
   à une ligne du journal.
-* Correction d'un problème lorsque vous essayez de annoncer les rôles /
-  états de l'Explorateur d'objets dans une version ancienne de NVDA.
+* Correction d'un problème lorsque vous essayez d'annoncer les rôles / états
+  de l'Explorateur d'objets dans une version ancienne de NVDA.
 * L'extension ne cause plus de problème avec le tree interceptor lors de
   l'utilisation d'UIA dans Edge.
 
