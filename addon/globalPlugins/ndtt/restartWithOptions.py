@@ -115,7 +115,6 @@ class CommandLineOption(object):
 		self.description = description
 		self.flagList = flagList
 		self.allowInSecureMode = allowInSecureMode
-		self.controls = []
 
 	def shouldBeDisabled(self):
 		return globalVars.appArgs.secure and not self.allowInSecureMode
@@ -159,7 +158,7 @@ class CommandLineBooleanOption(CommandLineOption):
 		)
 		checkBox.SetValue(False)
 		sHelper.addItem(checkBox)
-		self.controls.append(checkBox)
+		self.controls = (checkBox,)
 
 	def makeFlagValueString(self):
 		if self.value:
@@ -172,9 +171,6 @@ class CommandLineStringOption(CommandLineOption):
 	"""A command line option with an associated parameter, i.e. a flag with a value.
 	E.g. --lang=en
 	"""
-
-	def __init__(self, *args, **kw):
-		super(CommandLineStringOption, self).__init__(*args, **kw)
 
 	def makeFlagValueString(self):
 		val = self.value
@@ -200,7 +196,7 @@ class CommandLineChoiceOption(CommandLineStringOption):
 			choices=self.choices,
 		)
 		choice.SetSelection(0)
-		self.controls.append(choice)
+		self.controls = (choice,)
 
 	@property
 	def value(self):
@@ -245,8 +241,7 @@ class CommandLineFileOption(CommandLineStringOption):
 
 		fileEdit = fileEntryControl.pathControl
 		fileEdit.Value = ""
-		self.controls.append(fileEdit)
-		self.controls.append(fileEntryControl._browseButton)
+		self.controls = (fileEdit, fileEntryControl._browseButton)
 
 
 class CommandLineFolderOption(CommandLineStringOption):
@@ -267,8 +262,7 @@ class CommandLineFolderOption(CommandLineStringOption):
 		directoryEntryControl = groupHelper.addItem(directoryPathHelper)
 		directoryEdit = directoryEntryControl.pathControl
 		directoryEdit.Value = ""
-		self.controls.append(directoryEdit)
-		self.controls.append(directoryEntryControl._browseButton)
+		self.controls = (directoryEdit, directoryEntryControl._browseButton)
 
 
 class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
