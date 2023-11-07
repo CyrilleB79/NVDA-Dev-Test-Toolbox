@@ -319,10 +319,10 @@ class LogReader(object):
 		self.ti.collapse()
 
 	def moveToHeader(
-		self,
-		direction,
-		searchType,
-		filterFun,
+			self,
+			direction,
+			searchType,
+			filterFun,
 	):
 		while self.ti.move(textInfos.UNIT_LINE, direction):
 			tiLine = self.ti.copy()
@@ -350,9 +350,9 @@ class LogContainer(ScriptableObject):
 	translateLog = False
 
 	def moveToHeaderFactory(
-		dir,
-		searchType,
-		filterFun,
+			dir,
+			searchType,
+			filterFun,
 	):
 		if dir == 1:
 			# Translators: Input help mode message for log navigation commands. {st} will be replaced by

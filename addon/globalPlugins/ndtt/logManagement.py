@@ -254,8 +254,8 @@ class Log(object):
 
 
 class LogsManagerDialog(
-	DpiScalingHelperMixinWithoutInit,
-	wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
+		DpiScalingHelperMixinWithoutInit,
+		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	@classmethod
 	def _instance(cls):

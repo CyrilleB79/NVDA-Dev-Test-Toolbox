@@ -169,10 +169,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def customSpeakObjectFactory(self):
 
 		def new_speakObject(
-			obj,
-			reason=controlTypes.OutputReason.QUERY,
-			_prefixSpeechCommand=None,
-			**kwargs
+				obj,
+				reason=controlTypes.OutputReason.QUERY,
+				_prefixSpeechCommand=None,
+				**kwargs
 		):
 			if not self.customObjectReporting:
 				return self.orig_speakObject(obj, reason, _prefixSpeechCommand, **kwargs)
