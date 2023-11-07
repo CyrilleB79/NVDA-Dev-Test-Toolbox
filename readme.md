@@ -278,6 +278,10 @@ These settings only take effect at next NVDA startup when the backup takes place
 
 ## Change log
 
+### Version 6.1
+
+* Opening the source file of an object located in the submodule of a package is now working.
+* Bugfix: The enhanced exit dialog can now be reopened and used as expected after having been closed. (contribution from Łukasz Golonka)
 
 ### Version 6.0
 
