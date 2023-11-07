@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 'nvdaDevTestToolbox' '3.2'\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
 "POT-Creation-Date: 2023-06-16 14:09+0000\n"
-"PO-Revision-Date: 2023-09-09 23:00+0200\n"
+"PO-Revision-Date: 2023-10-06 16:18+0200\n"
 "Last-Translator: Cyrille Bougot <cyrille.bougot2@laposte.net>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.4\n"
 
 #. Translators: The description of a command of this add-on.
 msgid "Opens NVDA Dev & Test Toolbox add-on settings"
@@ -315,6 +315,23 @@ msgid ""
 msgstr ""
 "Sélectionne la propriété précédente de l'explorateur de propriétés d'objets "
 "et l'annonce pour l'objet navigateur."
+
+#. Translators: Input help mode message for a command of the object property explorer.
+msgid ""
+"Toggle custom reporting of objects using the Object explorer's selected "
+"property when you use object navigation commands."
+msgstr ""
+"Activez/désactivez l'annonce personnalisée des objets en utilisant la "
+"propriété sélectionnée de l'Explorateur d'objets lorsque vous utilisez les "
+"commandes de navigation par objet."
+
+#. Translators: Message reported by a command of the object property explorer.
+msgid "Custom object reporting enabled"
+msgstr "Annonce personnalisée des objets activée"
+
+#. Translators: Message reported by a command of the object property explorer.
+msgid "Custom object reporting disabled"
+msgstr "Annonce personnalisée des objets désactivée"
 
 #. Translators: The title of a file selector window
 msgid "Save As"

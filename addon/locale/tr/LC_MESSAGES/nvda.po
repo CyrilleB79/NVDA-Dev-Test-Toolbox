@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: nvdaDevTestToolbox\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
 "POT-Creation-Date: 2023-06-16 14:09+0000\n"
-"PO-Revision-Date: 2023-09-08 17:25+0300\n"
+"PO-Revision-Date: 2023-10-06 17:47+0300\n"
 "Last-Translator: Umut KORKMAZ <umutkork@gmail.com>\n"
 "Language-Team: Umut KORKMAZ <umutkork@gmail.com>\n"
 "Language: tr_TR\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4\n"
 
 #. Translators: The description of a command of this add-on.
 msgid "Opens NVDA Dev & Test Toolbox add-on settings"
@@ -239,7 +239,7 @@ msgstr "Günlüğe bir işaretleyici ekler."
 
 #. Translators: a message telling the user that a marker has been inserted in the log.
 msgid "Marker {} added in the log"
-msgstr "{} işaretçisi günlüğe eklendi."
+msgstr "{} işaretçisi günlüğe eklendi"
 
 #. Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
 msgid "Off"
@@ -314,6 +314,22 @@ msgid ""
 msgstr ""
 "Nesne özellik gezgininin önceki özelliğini seçer ve gezgin nesnesi için "
 "raporlar."
+
+#. Translators: Input help mode message for a command of the object property explorer.
+msgid ""
+"Toggle custom reporting of objects using the Object explorer's selected "
+"property when you use object navigation commands."
+msgstr ""
+"Nesne gezinti komutları kullanıldığında Nesne gezgininin seçili özelliğini "
+"kullanarak nesnelerin özel bildirimini açar."
+
+#. Translators: Message reported by a command of the object property explorer.
+msgid "Custom object reporting enabled"
+msgstr "Özel nesne bildirimi etkin"
+
+#. Translators: Message reported by a command of the object property explorer.
+msgid "Custom object reporting disabled"
+msgstr "Özel nesne bildirimi devre dışı"
 
 #. Translators: The title of a file selector window
 msgid "Save As"

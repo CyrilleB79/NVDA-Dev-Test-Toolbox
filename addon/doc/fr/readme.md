@@ -74,17 +74,24 @@ utilisez les commandes suivantes :
   un double appui affiche ces informations dans un message en mode
   navigation.
 
-Ces trois commandes n'ont pas de raccourci assigné par défaut ; vous devrez
-leur en assigner un à partir du dialogue Gestes de commandes pour les
-utiliser.
-
 La liste des propriétés prises en charge est la suivante : name, role,
 state, value, windowClassName, windowControlID, windowHandle, location,
 Python class, Python class mro.
 
-Cette fonction est une amélioration d'un exemple du [Guide de développement
-de NVDA][5].
+Lorsque vous utilisez les commandes de navigation par objet, vous pouvez
+également choisir que la propriété actuellement sélectionnée soit annoncée
+au lieu de l'annonce habituelle des objets de NVDA. Une commande bascule
+permet d'alterner entre cette annonce personnalisée des objets et l'annonce
+habituel de NVDA.
 
+Par exemple, vous pouvez sélectionner la propriété « windowClassName » et
+activer l'annonce des objets personnalisée. Ensuite, lorsque vous déplacez
+l'objet navigateur vers l'objet suivant ou précédent, vous entendrez la
+propriété windowClassName de l'objet au lieu de l'annonce habituel.
+
+Les commandes de l'explorateur de propriétés d'objets n'ont pas de raccourci
+assigné par défaut ; vous devrez leur en assigner un à partir du dialogue
+Gestes de commandes pour les utiliser.
 
 ## Mode de description étendu des scripts
 
@@ -213,16 +220,20 @@ sur T.
 
 Dans le journal, une ligne peut faire référence au code source :
 
-* Une ligne issue d'un traceback contient le chemin et la ligne dans le
+* Une ligne issue d'une pile d'appel contient le chemin et la ligne dans un
   fichier, par exemple :
   `  File "virtualBuffers\__init__.pyc", line 226, in _getStoryLength`  
 * La ligne d'en-tête d'un message journalisée contient la fonction qui a
   journalisée le message, par exemple :
   `INFO - config.ConfigManager._loadConfig (22:45:26.145) - MainThread (16580):`  
+* Le contenu d'un message enregistré en mode aide à la saisie (enregistré au
+  niveau info) :
+  Input help: gesture kb(desktop):NVDA+t, bound to script title on globalCommands.GlobalCommands`  
+
 
 Vous pouvez ouvrir le fichier qui contient le code pour comprendre le
-contexte du traceback ou du message journalisé. Appuyez sur C pour ouvrir le
-fichier.
+contexte de la pile d'appel ou du message journalisé. Appuyez sur C pour
+ouvrir le fichier.
 
 Pour utiliser cette fonctionnalité, vous devez avoir configuré [la ligne de
 commande de votre éditeur préféré](#settingsOpenCommand) dans les paramètres
@@ -371,6 +382,23 @@ lorsque la sauvegarde a lieu.
 
 ## Journal des changements
 
+
+### Version 6.0
+
+* Lors de l'utilisation des commandes de navigation par objet, une propriété
+  specifique des objets peut être annoncée au lieu de l'annonce des objets
+  habituel de NVDA.
+* En mode lecture du journal, la touche "C" pour ouvrir un fichier de code à
+  partir du journal fonctionne désormais également sur un message d'aide à
+  la saisie.
+* Correctif : l'extension peut désormais démarrer avec succès lorsque le
+  nombre de journaux à sauvegarder est défini sur sa valeur maximale.
+* Correctif : la sortie du script de démarrage de la console Python
+  n'empêche plus de passer au premier résultat dans la console lors de
+  l'utilisation des commandes de navigation dans les résultats.
+* Remarque : À partir de maintenant, les mises à jour de localisation
+  n'apparaîtront plus dans le journal des modifications.
+
 ### Version 5.0
 
 * Si l'extension Instant Translate est installée, il est désormais possible
@@ -382,13 +410,14 @@ lorsque la sauvegarde a lieu.
 * De nouvelles commandes de navigation rapide dans le journal ont été
   ajoutées pour passer aux messages d'entrée et de parole.
 * Une nouvelle commande permet de placer un marqueur dans le journal; et des
-  commandes de navigation rapide spécifiques permettent de s'y rendre.
-  Credit: the initial idea for this feature comes from Debug Helper add-on by Luke Davis.
-
-* Bubfix: The memorization of the last error do not fail anymore in some
-  cases.
-* Bugfix: The add-on can initialize again with NVDA 2019.2.1.
-* Bugfix: Log saving feature will not fail anymore with non-ASCII logs.
+  commandes de navigation rapide spécifiques permettent de s'y
+  rendre. Crédit : l'idée initiale de cette fonctionnalité vient de
+  l'extension Debug Helper de Luke Davis.
+* Correctif : La mémorisation de la dernière erreur n'échoue plus dans
+  certains cas.
+* Correctif : l'extension peut s'initialiser à nouveau avec NVDA 2019.2.1.
+* Correctif : la fonctionnalité de sauvegarde des journaux n'échouera plus
+  avec les journaux non-ASCII.
 
 ### Version 4.2
 
@@ -430,11 +459,11 @@ lorsque la sauvegarde a lieu.
   existe, le fichier YourNVDAConfigFolder\ndtt\consoleStartup.py sera
   exécuté lorsque la console NVDA est ouverte pour la première fois ou
   lorsque les extensions sont rechargées.
-* Divers corrections mineures pour la fonction de la console Python
+* Divers correctifs mineurs pour la fonction de la console Python
   `openCodeFile` et la commande pour ouvrir le fichier source correspondant
   à une ligne du journal.
-* Correction d'un problème lorsque vous essayez de annoncer les rôles /
-  états de l'Explorateur d'objets dans une version ancienne de NVDA.
+* Correction d'un problème lorsque vous essayez d'annoncer les rôles / états
+  de l'Explorateur d'objets dans une version ancienne de NVDA.
 * L'extension ne cause plus de problème avec le tree interceptor lors de
   l'utilisation d'UIA dans Edge.
 
@@ -486,6 +515,3 @@ https://www.nvaccess.org/files/nvda/documentation/userGuide.html#CommandLineOpti
 
 [4]:
 https://www.nvaccess.org/files/nvda/documentation/userGuide.html#PlayErrorSound
-
-[5]:
-https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#toc22

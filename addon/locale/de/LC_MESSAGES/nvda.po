@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: nvdaDevTestToolbox 4.0\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
 "POT-Creation-Date: 2023-06-16 14:09+0000\n"
-"PO-Revision-Date: 2023-09-09 00:18+0200\n"
+"PO-Revision-Date: 2023-10-06 20:43+0200\n"
 "Last-Translator: René Linke <rene.linke@hamburg.de>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4\n"
 
 #. Translators: The description of a command of this add-on.
 msgid "Opens NVDA Dev & Test Toolbox add-on settings"
@@ -316,6 +316,23 @@ msgid ""
 msgstr ""
 "Wählt die vorherige Eigenschaft des Objekt-Explorers aus und teilt diese für "
 "das Navigator-Objekt mit."
+
+#. Translators: Input help mode message for a command of the object property explorer.
+msgid ""
+"Toggle custom reporting of objects using the Object explorer's selected "
+"property when you use object navigation commands."
+msgstr ""
+"Schaltet die benutzerdefinierte Mitteilungen über Objekte mit Hilfe der "
+"ausgewählten Eigenschaft des Objekt-Explorers um, sofern die Befehle zur "
+"Objekt-Navigation verwendet werden."
+
+#. Translators: Message reported by a command of the object property explorer.
+msgid "Custom object reporting enabled"
+msgstr "Benutzerdefinierte Objekte mitteilen eingeschaltet"
+
+#. Translators: Message reported by a command of the object property explorer.
+msgid "Custom object reporting disabled"
+msgstr "Benutzerdefinierte Objekte mitteilen ausgeschaltet"
 
 #. Translators: The title of a file selector window
 msgid "Save As"
