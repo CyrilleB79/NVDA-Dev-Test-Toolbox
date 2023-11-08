@@ -8,7 +8,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        nvda-release: [2019.2, 2019.2.1, 2019.3, 2019.3.1, 2020.1, 2020.2, 2020.3, 2020.4, 2021.1, 2021.2, 2021.3, 2021.3.1, 2021.3.2, 2021.3.3, 2021.3.4, 2021.3.5, 2022.1, 2022.2, 2022.2.1, 2022.2.2, 2022.2.3, 2022.2.4, 2022.3, 2022.3.1, 2022.3.2, 2022.3.3, 2022.4, 2023.1, 2023.2]
+        nvda-release: [2019.2, 2019.2.1, 2019.3, 2019.3.1, 2020.1, 2020.2, 2020.3, 2020.4, 2021.1, 2021.2, 2021.3, 2021.3.1, 2021.3.2, 2021.3.3, 2021.3.4, 2021.3.5, 2022.1, 2022.2, 2022.2.1, 2022.2.2, 2022.2.3, 2022.2.4, 2022.3, 2022.3.1, 2022.3.2, 2022.3.3, 2022.4, 2023.1, 2023.2, 2023.3]
 
     steps:
     - name: Checkout code
@@ -57,9 +57,9 @@ jobs:
     - name: Download NVDA
       if: steps.cache-nvda.outputs.cache-hit != 'true'
       run: |
-        MD download
-        curl --location --output download\nvda_launcher.exe https://www.nvaccess.org/download/nvda/releases/${{matrix.nvda-release}}/nvda_${{matrix.nvda-release}}.exe
+        curl --location --create-dirs --output download\nvda_launcher.exe https://www.nvaccess.org/download/nvda/releases/${{matrix.nvda-release}}/nvda_${{matrix.nvda-release}}.exe
         Copy download nvda_launcher.exe
+      shell: cmd
     - name: Install NVDA
       run: download\nvda_launcher.exe --install-silent
       shell: cmd
