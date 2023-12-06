@@ -15,6 +15,9 @@ import gui
 # Initialize config spec; should be done before GlobalPlugins import
 from . import configNDTT  # noqa: F401 - Required to initialize config spec.
 
+# Import debug tools module to have it at hand in this add-on's global plugin module
+from . import debugTools  # noqa: F401 - Required to initialize config spec.
+
 from .ndttGui import NDTTSettingsPanel
 
 # Plugins that may be used in any context, including secure context.
@@ -30,6 +33,7 @@ if not globalVars.appArgs.secure:
 	from . import logManagement  # No log in secure mode.
 	from .logReader import GlobalPlugin as LogReaderGP  # No log nor log viewer in secure mode.
 	from .pythonConsoleEx import GlobalPlugin as PythonConsoleExGP  # No Python console in secure mode
+	from .startup import GlobalPlugin as StartupGP  # No custom startup script in secure mode
 
 addonHandler.initTranslation()
 
@@ -53,7 +57,8 @@ else:
 			StackTracingGP,
 			logManagement.GlobalPlugin,
 			LogReaderGP,
-			PythonConsoleExGP
+			PythonConsoleExGP,
+			StartupGP
 	):
 		pass
 
