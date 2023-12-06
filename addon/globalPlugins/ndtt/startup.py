@@ -9,7 +9,6 @@
 
 import os
 import sys
-import importlib
 
 import globalPluginHandler
 import addonHandler
@@ -24,15 +23,14 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def __init__(self, *args, **kwargs):
 		super(GlobalPlugin, self).__init__(*args, **kwargs)
 		ndttPath = os.path.join(globalVars.appArgs.configPath, 'ndtt')
-		startupModuleName = 'ndttStartup'
-		startupFileName = startupModuleName + '.py'
+		startupFileName = 'ndttStartup.py'
 		startupFilePath = os.path.join(ndttPath, startupFileName)
 		if os.path.isfile(startupFilePath):
 			log.debug('Importing startup file {}'.format(startupFilePath))
 			savedSysPath = sys.path
 			sys.path.insert(0, ndttPath)
 			try:
-				importlib.import_module(startupModuleName)
+				import ndttStartup
 			except Exception:
 				log.error('Error while importing {}'.format(startupFilePath), exc_info=True)
 			sys.path = savedSysPath
