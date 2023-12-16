@@ -60,7 +60,11 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			with open(startupFilePath, 'r') as sf:
 				pythonConsole.consoleUI.console.runsource(source=sf.read(), filename=startupFileName, symbol='exec')
 			print('### Console startup script executed.')
-			pythonConsole.consoleUI.outputPositions.append(pythonConsole.consoleUI.outputCtrl.GetInsertionPoint())
+			try:
+				# NVDA >= 2021.1
+				pythonConsole.consoleUI.outputPositions.append(pythonConsole.consoleUI.outputCtrl.GetInsertionPoint())
+			except AttributeError:
+				pass
 			sys.stdout, sys.stderr = stdout, stderr
 		else:
 			log.debugWarning('No console startup file found for path {}'.format(startupFilePath))
