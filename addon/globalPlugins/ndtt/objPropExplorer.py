@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2019-2023 Cyrille Bougot
+# Copyright (C) 2019-2024 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
@@ -19,6 +19,8 @@ import addonHandler
 import scriptHandler
 from scriptHandler import script
 import speech
+
+from .securityUtils import secureBrowseableMessage
 
 addonHandler.initTranslation()
 
@@ -136,7 +138,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		if nPress > 1:
 			return
 		elif nPress == 1:
-			ui.browseableMessage(self.lastInfo)
+			secureBrowseableMessage(self.lastInfo)
 			return
 		infoType, fun = self._INFO_TYPES[self.index]
 		nav = api.getNavigatorObject()
