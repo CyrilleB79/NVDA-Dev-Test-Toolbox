@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: nvdaDevTestToolbox 4.0\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
 "POT-Creation-Date: 2023-06-16 14:09+0000\n"
-"PO-Revision-Date: 2023-07-28 14:42+0100\n"
+"PO-Revision-Date: 2023-12-01 23:15+0000\n"
 "Last-Translator: Ângelo Abrantes <ampa4374@gmail.com>\n"
 "Language-Team: Equipa portuguesa do NVDA: Ângelo Abrantes e Rui Fontes "
 "(16-06-2023)\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. Translators: The description of a command of this add-on.
@@ -223,7 +223,7 @@ msgstr "Comandos do leitor de registos desactivados."
 
 #. Translators: Input help mode message for Toggle log translation script.
 msgid "Toggle speech translation in the log"
-msgstr ""
+msgstr "Alternar a tradução de voz no registo"
 
 #. Translators: Input help mode message for Open source file script.
 msgid ""
@@ -238,11 +238,11 @@ msgstr "Não foi encontrado nenhum caminho de ficheiro ou objeto nesta linha."
 
 #. Translators: Input help mode message for Add marker in log script.
 msgid "Adds a marker in the log."
-msgstr ""
+msgstr "Adiciona um marcador no registo."
 
 #. Translators: a message telling the user that a marker has been inserted in the log.
 msgid "Marker {} added in the log"
-msgstr ""
+msgstr "Marcador {} adicionado no registo"
 
 #. Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
 msgid "Off"
@@ -258,6 +258,10 @@ msgid ""
 "{name} add-on can only be configured from the Normal Configuration profile.\n"
 "Please close this dialog, set your config profile to default and try again."
 msgstr ""
+"{name} O add-on só pode ser configurado a partir do perfil de Configuração "
+"Normal.\n"
+"Feche esta caixa de diálogo, defina o seu perfil de configuração como padrão "
+"e tente novamente."
 
 #. Translators: This is a label for an edit field in the NDTT Settings panel.
 #, python-brace-format
@@ -319,14 +323,17 @@ msgid ""
 "Toggle custom reporting of objects using the Object explorer's selected "
 "property when you use object navigation commands."
 msgstr ""
+"Alterna o relatório personalizado de objectos utilizando a propriedade "
+"selecionada do Explorador de objectos quando utiliza comandos de navegação "
+"de objectos."
 
 #. Translators: Message reported by a command of the object property explorer.
 msgid "Custom object reporting enabled"
-msgstr ""
+msgstr "Relatórios de objectos personalizados activados"
 
 #. Translators: Message reported by a command of the object property explorer.
 msgid "Custom object reporting disabled"
-msgstr ""
+msgstr "Relatório de objectos personalizados desativado"
 
 #. Translators: The title of a file selector window
 msgid "Save As"
