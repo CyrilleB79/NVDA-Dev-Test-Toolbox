@@ -278,6 +278,12 @@ These settings only take effect at next NVDA startup when the backup takes place
 
 ## Change log
 
+### Version 6.2
+
+* Restores console opening for NVDA < 2021.1.
+* Addresses potential security issues related to [GHSA-xg6w-23rw-39r8][ghsaLink] when using the add-on with older versions of NVDA.
+However, it is recommended to use NVDA 2023.3.3 or higher.
+
 ### Version 6.1
 
 * Opening the source file of an object located in the submodule of a package is now working.
@@ -366,3 +372,5 @@ These settings only take effect at next NVDA startup when the backup takes place
 [3]: https://addons.nvda-project.org/addons/instantTranslate.en.html
 
 [4]: https://www.nvaccess.org/files/nvda/documentation/userGuide.html#PlayErrorSound
+
+[ghsaLink]: https://github.com/nvaccess/nvda/security/advisories/GHSA-xg6w-23rw-39r8#event-132994
