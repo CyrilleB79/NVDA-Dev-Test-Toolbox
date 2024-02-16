@@ -1,5 +1,4 @@
 # NVDA Dev & Test Toolbox #
-
 * Auteur : Cyrille Bougot
 * Compatibilité NVDA : 2019.2 et au-delà
 * Télécharger [version stable][1]
@@ -382,6 +381,21 @@ lorsque la sauvegarde a lieu.
 
 ## Journal des changements
 
+### Version 6.2
+
+* Restaure l'ouverture de la console pour NVDA < 2021.1.
+* Résout des problèmes de sécurité potentiels liés à
+  [GHSA-xg6w-23rw-39r8][5] lors de l'utilisation du module complémentaire
+  avec des versions plus anciennes de NVDA. Cependant, il est recommandé
+  d'utiliser NVDA 2023.3.3 ou supérieur.
+
+### Version 6.1
+
+* L'ouverture du fichier source d'un objet situé dans le sous-module d'un
+  package fonctionne désormais.
+* Correctif : la boîte de dialogue de redémarrage améliorée peut désormais
+  être rouverte et utilisée comme prévu après avoir été
+  fermée. (contribution de Łukasz Golonka)
 
 ### Version 6.0
 
@@ -409,10 +423,10 @@ lorsque la sauvegarde a lieu.
   messages ERROR normaux.
 * De nouvelles commandes de navigation rapide dans le journal ont été
   ajoutées pour passer aux messages d'entrée et de parole.
-* Une nouvelle commande permet de placer un marqueur dans le journal; et des
-  commandes de navigation rapide spécifiques permettent de s'y
-  rendre. Crédit : l'idée initiale de cette fonctionnalité vient de
-  l'extension Debug Helper de Luke Davis.
+* A new command allow to place a marker in the log; and specific quick
+  navigation commands in log reading mode allow to jump to them. Credit: the
+  initial idea for this feature comes from Debug Helper add-on by Luke
+  Davis.
 * Correctif : La mémorisation de la dernière erreur n'échoue plus dans
   certains cas.
 * Correctif : l'extension peut s'initialiser à nouveau avec NVDA 2019.2.1.
@@ -469,10 +483,10 @@ lorsque la sauvegarde a lieu.
 
 ### Version 2.1
 
-* Divers corrections de bogues et refactorisation et nettoyage du code pour
-  prendre en compte tous les cas d'utilisation : toutes les versions prises
-  en charge, installées vs. exécutées à partir du code source,
-  etc. (contribution de Łukasz Golonka)
+* Divers correctifs et refactorisation et nettoyage du code pour prendre en
+  compte tous les cas d'utilisation : toutes les versions prises en charge,
+  installées vs. exécutées à partir du code source, etc. (contribution de
+  Łukasz Golonka)
 * Réécriture du module compa (contribution de Łukasz Golonka)
 * Le dialogue pour redémarrer peut désormais être ouvert qu'une seule fois.
 * Les raccourcis de l'Explorateur d'objets ne sont désormais pas assignées
@@ -515,3 +529,6 @@ https://www.nvaccess.org/files/nvda/documentation/userGuide.html#CommandLineOpti
 
 [4]:
 https://www.nvaccess.org/files/nvda/documentation/userGuide.html#PlayErrorSound
+
+[5]:
+https://github.com/nvaccess/nvda/security/advisories/GHSA-xg6w-23rw-39r8#event-132994

@@ -1,5 +1,4 @@
 # Caja de herramientas de desarrollo y pruebas para NVDA #
-
 * Autor: Cyrille Bougot
 * Compatibilidad con NVDA: de 2019.2 en adelante
 * Descargar [versión estable][1]
@@ -371,6 +370,20 @@ seguridad.
 
 ## Registro de cambios
 
+### Versión 6.2
+
+* Restaura la apertura de la consola en versiones de NVDA anteriores a la
+  2021.1.
+* Resuelve posibles problemas de seguridad relacionados con
+  [GHSA-xg6w-23rw-39r8][5] al usar el complemento con versiones antiguas de
+  NVDA. Sin embargo, se recomienda usar NVDA 2023.3.3 o posterior.
+
+### Versión 6.1
+
+* Ya funciona la apertura del archivo de código fuente de un objeto ubicado
+  en un submódulo de un paquete.
+* Fallo corregido: el diálogo de salir mejorado puede reabrirse y usarse
+  como se espera tras cerrarlo. (colaboración de Lukasz Golonka)
 
 ### Versión 6.0
 
@@ -399,9 +412,9 @@ seguridad.
 * Se han añadido nuevas órdenes de navegación rápida por el registro para
   saltar a los mensajes de entrada y hablados.
 * Una nueva orden permite situar un marcador en el registro; y otras órdenes
-  concretas de navegación rápida permiten saltar a marcadores en el
-  registro. Créditos: la idea inicial de esta característica viene del
-  complemento Ayudante de depuración de Luke Davis.
+  concretas de navegación rápida en modo lector del registro permiten saltar
+  a ellos. Créditos: la idea inicial de esta función viene del complemento
+  Ayudante de depuración, de Luke Davis.
 * Corrección de fallo: la memorización del último error ya no falla en
   algunos casos.
 * Corrección de fallo: el complemento se inicializa de nuevo en NVDA
@@ -505,3 +518,6 @@ https://www.nvaccess.org/files/nvda/documentation/userGuide.html#CommandLineOpti
 
 [4]:
 https://www.nvaccess.org/files/nvda/documentation/userGuide.html#PlayErrorSound
+
+[5]:
+https://github.com/nvaccess/nvda/security/advisories/GHSA-xg6w-23rw-39r8#event-132994
