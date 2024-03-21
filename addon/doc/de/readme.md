@@ -1,5 +1,4 @@
 # Dev & Test-Toolbox für NVDA #
-
 * Autor: Cyrille Bougot
 * NVDA-Kompatibilität: 2019.2 und neuer
 * [Stabile Version herunterladen][1]
@@ -389,6 +388,19 @@ wird.
 
 ## Änderungsprotokoll
 
+### Version 6.2
+
+* Restores console opening for NVDA < 2021.1.
+* Addresses potential security issues related to [GHSA-xg6w-23rw-39r8][5]
+  when using the add-on with older versions of NVDA. However, it is
+  recommended to use NVDA 2023.3.3 or higher.
+
+### Version 6.1
+
+* Opening the source file of an object located in the submodule of a package
+  is now working.
+* Bugfix: The enhanced exit dialog can now be reopened and used as expected
+  after having been closed. (contribution from Łukasz Golonka)
 
 ### Version 6.0
 
@@ -416,10 +428,10 @@ wird.
   FEHLER-Meldungen navigiert werden.
 * Es wurden neue Befehle für die Schnellnavigation im Protokoll hinzugefügt,
   um zur Eingabe und zu den Sprachausgaben-Meldungen zu gelangen.
-* Ein neuer Befehl hinzugefügt, um Lesezeichen im Protokoll zu setzen; und
-  spezielle Befehle für die Schnellnavigation hinzugefügt, um zu Lesezeichen
-  im Protokoll zu gelangen. Die ursprüngliche Idee für diese Funktion stammt
-  aus der NVDA-Erweiterung Debug-Helfer, Dank an Luke Davis.
+* A new command allow to place a marker in the log; and specific quick
+  navigation commands in log reading mode allow to jump to them. Credit: the
+  initial idea for this feature comes from Debug Helper add-on by Luke
+  Davis.
 * Bubfix: Die Speicherung des letzten Fehlers schlägt in einigen Fällen
   nicht mehr fehl.
 * Bugfix: Die NVDA-Erweiterung kann mit NVDA 2019.2.1 wieder gestartet
@@ -479,11 +491,10 @@ wird.
 
 ### Version 2.1
 
-* Verschiedene Fehlerkorrekturen und Code-Refactoring sowie Bereinigung, um
-  alle Anwendungsfälle zu berücksichtigen: alle unterstützten Versionen,
-  installiert vs. aus dem Quellcode ausgeführt, etc. (Dank an Łukasz
-  Golonka)
-* Neu geschriebenes Compa-Modul (Dank an Łukasz Golonka)
+* Various bugfixes and code refactoring/cleaning to address all use cases:
+  all supported versions, installed vs. run from source, etc. (contribution
+  from Łukasz Golonka)
+* Rewriting of the compa module (contribution from Łukasz Golonka)
 * Das Dialogfeld zum Neustarten von NVDA kann jetzt nur noch einmal geöffnet
   werden.
 * Die Verknüpfungen für den Objekt-Explorer sind nicht mehr standardmäßig
@@ -524,3 +535,6 @@ https://www.nvaccess.org/files/nvda/documentation/userGuide.html#CommandLineOpti
 
 [4]:
 https://www.nvaccess.org/files/nvda/documentation/userGuide.html#PlayErrorSound
+
+[5]:
+https://github.com/nvaccess/nvda/security/advisories/GHSA-xg6w-23rw-39r8#event-132994

@@ -1,5 +1,4 @@
 # NVDA Dev & Test Toolbox #
-
 * Autor: Cyrille Bougot
 * Compatibilitate NVDA: 2019.2 și versiunile ulterioare
 * Descărcați [versiunea stabilă][1]
@@ -364,6 +363,19 @@ pornire a NVDA, când are loc backup-ul.
 
 ## Noutăţi
 
+### Version 6.2
+
+* Restores console opening for NVDA < 2021.1.
+* Addresses potential security issues related to [GHSA-xg6w-23rw-39r8][5]
+  when using the add-on with older versions of NVDA. However, it is
+  recommended to use NVDA 2023.3.3 or higher.
+
+### Version 6.1
+
+* Opening the source file of an object located in the submodule of a package
+  is now working.
+* Bugfix: The enhanced exit dialog can now be reopened and used as expected
+  after having been closed. (contribution from Łukasz Golonka)
 
 ### Version 6.0
 
@@ -488,3 +500,6 @@ https://www.nvaccess.org/files/nvda/documentation/userGuide.html#CommandLineOpti
 
 [4]:
 https://www.nvaccess.org/files/nvda/documentation/userGuide.html#PlayErrorSound
+
+[5]:
+https://github.com/nvaccess/nvda/security/advisories/GHSA-xg6w-23rw-39r8#event-132994
