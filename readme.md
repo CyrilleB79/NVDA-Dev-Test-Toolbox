@@ -278,6 +278,10 @@ These settings only take effect at next NVDA startup when the backup takes place
 
 ## Change log
 
+### Version 6.3
+
+* Compatibility with NVDA 2024.1.
+
 ### Version 6.2
 
 * Restores console opening for NVDA < 2021.1.
