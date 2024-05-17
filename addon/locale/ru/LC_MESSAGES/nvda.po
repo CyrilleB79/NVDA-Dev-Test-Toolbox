@@ -1,0 +1,417 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the 'nvdaDevTestToolbox' package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 'nvdaDevTestToolbox' '6.2'\n"
+"Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
+"POT-Creation-Date: 2023-06-06 09:14+0300\n"
+"PO-Revision-Date: 2024-01-08 10:10+0300\n"
+"Last-Translator: Danil Kostenkov <danilkostenkov38@gmail.com>\n"
+"Language-Team: \n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#. Translators: The description of a command of this add-on.
+msgid "Opens NVDA Dev & Test Toolbox add-on settings"
+msgstr "Открывает настройки дополнения NVDA Dev & Test Toolbox"
+
+#. Translators: Input help mode message for a toggle command.
+msgid "Toggles play a sound for logged error."
+msgstr "Переключает воспроизведение звука для зарегистрированной ошибки."
+
+#. Translators: Message reported when calling the command to toggle play a sound for logged errors
+msgid "Yes"
+msgstr "Да"
+
+#. Translators: Message reported when calling the command to toggle play a sound for logged errors
+msgid "Only in NVDA test versions"
+msgstr "Только в тестовых версиях NVDA"
+
+#. Translators: Input help mode message for a command.
+msgid ""
+"Report the last error logged. A second press clears the memorized last error."
+msgstr ""
+"Сообщает о последней зарегистрированной ошибке. Повторное нажатие удаляет "
+"последнюю запомненную ошибку."
+
+#. Translators: Message reported when calling the "report last error" command
+msgid "No error"
+msgstr "Ошибки не обнаружены"
+
+#. Translators: Message reported when calling the "report last error" command
+msgid "Last error cleared"
+msgstr "Последняя ошибка удалена"
+
+#. Translators: The name of a category in the Input gesture dialog
+msgid "Scripts without description (modify at your own risk!)"
+msgstr "Скрипты без описания (меняйте на свой страх и риск!)"
+
+#. Translators: Input help mode message for a toggle command.
+msgid "Toggles the extended script description mode."
+msgstr "Переключает режим расширенного описания скриптов."
+
+#. Translators: A message reported when toggling Extended script description mode.
+msgid "Extended script description mode enabled"
+msgstr "Режим расширенного описания скриптов включён"
+
+#. Translators: A message reported when toggling Extended script description mode.
+msgid "Extended script description mode disabled"
+msgstr "Режим расширенного описания скриптов выключен"
+
+#. Translators: A message reported when trying to open a source file.
+msgid ""
+"No path configured for NVDA sources; please see documentation to configure "
+"it."
+msgstr ""
+"Для источников NVDA путь не настроен; пожалуйста, обратитесь к документации, "
+"чтобы настроить его."
+
+#. Translators: A message reported when trying to open a source file.
+msgid ""
+"No open file command configured; please see documentation to configure it."
+msgstr ""
+"Не настроена команда открытия файла; пожалуйста, обратитесь к документации, "
+"чтобы настроить её."
+
+#. Translators: A message reported when trying to open a source file.
+msgid ""
+"Wrong format for the open file command in the configuration; please see "
+"documentation to configure it."
+msgstr ""
+"Неправильный формат команды открытия файла в конфигурации; обратитесь к "
+"документации, чтобы настроить его."
+
+#. Translators: A message reported when trying to open a source file.
+msgid "Editor not found at {}; please check your configuration."
+msgstr ""
+"Редактор по адресу {} не найден, пожалуйста, проверьте вашу конфигурацию."
+
+#. Translators: A message reported when trying to open a source file.
+msgid "Object not found: {}"
+msgstr "Объект не найден: {}"
+
+#. Translators: A message reported when trying to open a source file.
+msgid "File not found: {}"
+msgstr "Файл не найден: {}"
+
+#. Translators: Text appearing in the date column of the log manager when the date cnanot be determined.
+msgid "Unknown"
+msgstr "Неизвестно"
+
+#. Translators: The title of the Logs Manager Dialog
+msgid "Logs Manager"
+msgstr "Менеджер журналов"
+
+#. Translators: the label for the text on top of the logs manager window.
+#, python-brace-format
+msgid "Logs in {folder}"
+msgstr "Журналы в {folder}"
+
+#. Translators: The label for a column in logs list
+msgid "Date"
+msgstr "Дата"
+
+#. Translators: The label for a column in logs list
+msgid "Type"
+msgstr "Тип"
+
+#. Translators: The label for a column in logs list
+msgid "File name"
+msgstr "Имя файла"
+
+#. Translators: The label for a button in Logs Manager dialog to open the selected logs.
+msgid "&Open"
+msgstr "&Открыть"
+
+#. Translators: The label for a button to delete the selected log(s) in Log Manager dialog.
+msgid "&Delete"
+msgstr "&Удалить"
+
+#. Translators: The label of a button in Logs Manager to open the settings panel.
+msgid "Settings..."
+msgstr "Настройки..."
+
+#. Translators: The label of a button to close the logs manager dialog.
+msgid "&Close"
+msgstr "&Закрыть"
+
+#. We open the message box only if no log can be opened
+#. Translators: A message displayed to the user when pressing the Open button in the logs manager dialog
+msgid "The selected log(s) is (are) not available anymore"
+msgstr "Выбранные журналы больше недоступны"
+
+#. Translators: A message displayed to the user when pressing the Delete button in the logs manager dialog
+#, python-brace-format
+msgid ""
+"The following files will be removed:\n"
+"{logsList}\n"
+"\n"
+"Would you like to continue?"
+msgstr ""
+"Следующие файлы будут удалены:\n"
+"{logsList}\n"
+"\n"
+"Хотите продолжить?"
+
+#. Translators: The title of a dialog displayed to the user when pressing the Delete button in the
+#. logs manager dialog
+msgid "Confirm deletion"
+msgstr "Подтвердите удаление"
+
+#. Translators: Message issued when 5 or more logs could not be deleted.
+#, python-brace-format
+msgid "{nLogs} log files could not be deleted. See NVDA's log for details."
+msgstr ""
+"Файлы журналов {nLogs} не удалось удалить. Подробные сведения приведены в "
+"журнале NVDA."
+
+#. Translators: Message issued when 1 to 4 logs could not be deleted.
+#, python-brace-format
+msgid ""
+"The following logs files could not be deleted.\n"
+"\n"
+"{file}"
+msgstr ""
+"Следующие файлы журналов не удалось удалить.\n"
+"\n"
+"{file}"
+
+#. Translators: The title of a dialog displayed to the user when pressing the Delete button in
+#. the logs manager dialog
+msgid "Error"
+msgstr "Ошибка"
+
+#. Translators: menu item label to open the logs manager dialog.
+msgid "&Logs manager..."
+msgstr "&Менеджер журналов..."
+
+#. Translators: Reported when pressing a quick navigation command in the log.
+msgid "No more item"
+msgstr "Больше нет элементов"
+
+#. Translators: Input help mode message for log navigation commands. {st} will be replaced by
+#. the search type (Io, Debug, Message, etc.
+#, python-brace-format
+msgid "Moves to the next logged message of type {st}."
+msgstr "Переходит к следующему зарегистрированному сообщению типа {st}."
+
+#. Translators: Input help mode message for log navigation commands. {st} will be replaced by the
+#. search type (Io, Debug, Message, etc.
+#, python-brace-format
+msgid "Moves to the previous logged message of type {st}."
+msgstr "Переходит к предыдущему зарегистрированному сообщению типа {st}."
+
+#. Translators: Input help mode message for Toggle log Reader script.
+msgid "Activates or deactivates the log Reader commands."
+msgstr "Включает или выключает команды чтения журнала."
+
+#. Translators: A message reported when toggling log reader commands.
+msgid "Log Reader commands enabled."
+msgstr "Команды чтения журнала включены."
+
+#. Translators: A message reported when toggling log reader commands.
+msgid "Log Reader commands disabled."
+msgstr "Команды чтения журнала выключены."
+
+#. Translators: Input help mode message for Toggle log translation script.
+msgid "Toggle speech translation in the log"
+msgstr "Переключить перевод речи в журнале"
+
+#. Translators: Input help mode message for Open source file script.
+msgid ""
+"Opens the source code file whose path is located at the caret's position."
+msgstr ""
+"Открывает файл исходного кода, путь к которому находится в позиции каретки."
+
+#. Translators: A message reported when trying to open the source code from the current line.
+msgid "No file path or object found on this line."
+msgstr "В этой строке не найден путь к файлу или объекту."
+
+#. Translators: Input help mode message for Add marker in log script.
+msgid "Adds a marker in the log."
+msgstr "Добавляет маркер в журнале."
+
+#. Translators: a message telling the user that a marker has been inserted in the log.
+msgid "Marker {} added in the log"
+msgstr "Маркер {} добавлен в журнал"
+
+#. Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
+msgid "Off"
+msgstr "Выключено"
+
+#. Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
+msgid "On"
+msgstr "Включено"
+
+#. Translators: A message presented in the settings panel when opened while no-default profile is active.
+#, python-brace-format
+msgid ""
+"{name} add-on can only be configured from the Normal Configuration profile.\n"
+"Please close this dialog, set your config profile to default and try again."
+msgstr ""
+"Дополнение {name} можно настроить только из профиля нормальной "
+"конфигурации.\n"
+"Пожалуйста, закройте этот диалог, установите начальный профиль конфигурации "
+"и повторите попытку."
+
+#. Translators: This is a label for an edit field in the NDTT Settings panel.
+#, python-brace-format
+msgid ""
+"Command to open a file in your favorite editor\n"
+"(use \"{path}\" and \"{line}\" placeholders in this command)"
+msgstr ""
+"Команда для открытия файла в вашем любимом редакторе\n"
+"(используйте заполнители \"{path}\" и \"{line}\" в этой команде)"
+
+#. Translators: This is a label for an edit field in the NDTT Settings panel.
+msgid "NVDA source code path"
+msgstr "Путь исходного кода NVDA"
+
+#. Translators: The label of a button to browse for a directory or a file.
+msgid "Browse..."
+msgstr "Обзор..."
+
+#. Translators: The title of the dialog presented when browsing for the directory.
+msgid "Select a directory"
+msgstr "Выберите каталог"
+
+#. Translators: This is a label for the combo box in the NDTT Settings panel.
+msgid "Backup of old logs:"
+msgstr "Резервное копирование старых журналов:"
+
+#. Translators: This is a label for a setting in the settings panel
+msgid "Limit the number of backups to:"
+msgstr "Ограничить количество резервных копий до:"
+
+#. Translators: Input help mode message for a command of the object property explorer.
+msgid ""
+"Reports the currently selected property of the object property explorer for "
+"the navigator object; two presses displays this information in a browseable "
+"message."
+msgstr ""
+"Сообщает текущее выбранное свойство проводника свойств объекта для объекта "
+"навигатора; двойное нажатие показывает эту информацию в виде уведомления с "
+"возможностью просмотра."
+
+#. Translators: Input help mode message for a command of the object property explorer.
+msgid ""
+"Selects the next property of the object property explorer and reports it for "
+"the navigator object."
+msgstr ""
+"Выбирает следующее свойство проводника свойств объекта и сообщает его "
+"объекту навигатора."
+
+#. Translators: Input help mode message for a command of the object property explorer.
+msgid ""
+"Selects the previous property of the object property explorer and reports it "
+"for the navigator object."
+msgstr ""
+"Выбирает предыдущее свойство проводника свойств объекта и сообщает его "
+"объекту навигатора."
+
+#. Translators: Input help mode message for a command of the object property explorer.
+msgid ""
+"Toggle custom reporting of objects using the Object explorer's selected "
+"property when you use object navigation commands."
+msgstr ""
+"Включение сообщений о пользовательских объектах с использованием выбранного "
+"свойства исследователя объектов при использовании команд объектной навигации."
+
+#. Translators: Message reported by a command of the object property explorer.
+msgid "Custom object reporting enabled"
+msgstr "Проговаривание собственных объектов включено"
+
+#. Translators: Message reported by a command of the object property explorer.
+msgid "Custom object reporting disabled"
+msgstr "Проговаривание собственных объектов выключено"
+
+#. Translators: The title of a file selector window
+msgid "Save As"
+msgstr "Сохранить как"
+
+#. Translators: the label for the NVDA log extension (log) file type
+#, python-brace-format
+msgid "NVDA log file (*.{ext})"
+msgstr "Файл журнала NVDA (*.{ext})"
+
+#. Translators: The title of the dialog presented when browsing for the file.
+msgid "Select a file"
+msgstr "Выберите файл"
+
+#. Translators: This is the title for the Restart with options dialog
+msgid "Specify some options and restart"
+msgstr "Укажите некоторые параметры и перезапустите"
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
+msgid "The file where log messages should be written to"
+msgstr "Файл, в который следует записывать сообщения журнала"
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
+msgid "The lowest level of message logged"
+msgstr "Самый низкий уровень зарегистрированных сообщений"
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
+msgid "The path where all settings for NVDA are stored"
+msgstr "Путь, по которому хранятся все настройки для NVDA"
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
+msgid "Override the configured NVDA language"
+msgstr "Переопределить настроенный язык NVDA"
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
+msgid "No sounds, no interface, no start message, etc."
+msgstr "Ни звуков, ни интерфейса, ни исходного сообщения и т. д."
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
+msgid "Secure mode"
+msgstr "Безопасный режим"
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
+msgid "Add-ons will have no effect"
+msgstr "Дополнения не окажут никакого влияния"
+
+#. Translators: The description of an NVDA start option, copied from the user guide (paragraph
+#. "Command Line Options")
+msgid "Don't change the global system screen reader flag"
+msgstr "Не изменять флаг читателя экрана глобальной системы"
+
+#. Translators: Input help mode message for Restart with options command.
+msgid "Restarts NVDA with specific options."
+msgstr "Перезапускает NVDA с определёнными параметрами."
+
+#. Translators: Input help mode message for a toggle command.
+msgid "Toggles the stack trace log when the speech function is called."
+msgstr "Переключает журнал отслеживания стека при вызове языковой функции."
+
+#. Translators: Reported when toggling the stack trace log feature.
+msgid "Stacktrace log enabled"
+msgstr "Журнал отслеживания стека включён"
+
+#. Translators: Reported when toggling the stack trace log feature.
+msgid "Stacktrace log disabled"
+msgstr "Журнал отслеживания стека выключен"
+
+#. Add-on summary, usually the user visible name of the addon.
+#. Translators: Summary for this add-on
+#. to be shown on installation and add-on information found in Add-ons Manager.
+msgid "NVDA Dev & Test Toolbox"
+msgstr "NVDA Dev & Test Toolbox"
+
+#. Add-on description
+#. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+msgid "A set of tools for NVDA developers and testers."
+msgstr "Набор инструментов для разработчиков и тестировщиков NVDA."
