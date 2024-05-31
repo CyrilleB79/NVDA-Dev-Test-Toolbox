@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA add-on: NVDA Dev & Test Toolbox
-# Copyright (C) 2023 Cyrille Bougot
+# Copyright (C) 2023-2024 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
@@ -12,6 +12,7 @@ from gui import guiHelper, nvdaControls
 from .compa import PANEL_DESCRIPTION_WIDTH
 import config
 from logHandler import log
+import globalVars
 
 from .utils import getBaseProfileConfigValue
 
@@ -97,6 +98,16 @@ class NDTTSettingsPanel(gui.settingsDialogs.SettingsPanel):
 		)
 		self.updateNbBackupsEdit(backupType)
 
+		# Translators: This is a label for a setting in the settings panel
+		self.copyReverseTranslation = wx.CheckBox(self, label=_("Copy reverse &translation to clipboard"))
+		self.copyReverseTranslation.SetValue(
+			config.conf['ndtt']['copyRevTranslation']
+			and not globalVars.appArgs.secure
+		)
+		if globalVars.appArgs.secure:
+			self.copyReverseTranslation.Disable()
+		sHelper.addItem(self.copyReverseTranslation)
+
 	@staticmethod
 	def getParameterBound(name, boundType):
 		"""Gets the bound of a parameter in the "ndtt" section of the config.
@@ -126,5 +137,7 @@ class NDTTSettingsPanel(gui.settingsDialogs.SettingsPanel):
 			config.conf['ndtt']['nvdaSourcePath'] = self.nvdaSourceCodePathEdit.GetValue()
 			config.conf['ndtt']['logBackup'] = self.BACKUP_TYPES[self.makeBackupsList.Selection][0]
 			config.conf['ndtt']['logBackupMaxNumber'] = int(self.nbBackupsEdit.Value)
+			if not globalVars.appArgs.secure:
+				config.conf['ndtt']['copyRevTranslation'] = self.copyReverseTranslation.IsChecked()
 		else:
 			log.debugWarning('No configuration saved for NDTT since the current profile is not the default one.')

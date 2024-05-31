@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2020-2023 Cyrille Bougot
+# Copyright (C) 2020-2024 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
@@ -21,6 +21,7 @@ from .ndttGui import NDTTSettingsPanel
 from .extScriptDesc import GlobalPlugin as ExtScriptDescGP
 from .restartWithOptions import GlobalPlugin as RestartWithOptionsGP
 from .objPropExplorer import GlobalPlugin as ObjPropExplorerGP
+from .reverseUITranslation import GlobalPlugin as ReverseUITranslationGP
 
 
 if not globalVars.appArgs.secure:
@@ -41,6 +42,7 @@ if globalVars.appArgs.secure:
 			ExtScriptDescGP,
 			RestartWithOptionsGP,
 			ObjPropExplorerGP,
+			ReverseUITranslationGP,
 	):
 		pass
 
@@ -49,6 +51,7 @@ else:
 			ExtScriptDescGP,
 			RestartWithOptionsGP,
 			ObjPropExplorerGP,
+			ReverseUITranslationGP,
 			BeepErrorGP,
 			StackTracingGP,
 			logManagement.GlobalPlugin,

@@ -17,6 +17,7 @@ This add-on gathers various features for NVDA debugging and testing.
 * In the Python console workspace, a function to open the source code of an object.
 * A custom startup script for the Python console
 * A command to log the stack trace of the speech.speak function.
+* A command to reverse translate the items of the interface.
 
 ## Enhanced restart dialog
 
@@ -233,6 +234,31 @@ Each time NVDA speaks, a corresponding stack trace will be logged in the log.
 Note: You may modify the script's file directly to patch another function.
 See all instructions in the file for details on usage.
 
+<a id="reverseTranslationCommand"></a>
+## Reverse translation command
+
+Many testers use NVDA in another language than English.
+But when reporting test results on GitHub, the description of the modified options or the messages reported by NVDA should be written in English.
+Its quite frustrating and time consuming to have to restart NVDA in English to check the exact wording of the options or messages.
+
+To avoid this, the add-on provides an unassigned reverse translation command for NVDA's interface such as messages, control labels in the GUI, etc.
+This command uses NVDA's gettext translation to try to reverse translate the last speech.
+More specifically, the first string of the last speech sequence is reverse translated.
+
+For example, in French NVDA, if I arrow down to the Tools menu named "Outils", NVDA will say "Outils  sous-Menu  o" which stands for "Tools  subMenu  o".
+If I press the reverse translation command just after that, NVDA will reverse translate "Outils" to "Tools".
+
+Looking at the log afterwards, we can find the following lines:
+```
+IO - speech.speech.speak (23:38:24.450) - MainThread (2044):
+Speaking ['Outils', 'sous-Menu', CharacterModeCommand(True), 'o', CharacterModeCommand(False), CancellableSpeech (still valid)]
+```
+This confirms that "Outils was the first string in the speech sequence.
+
+In case the reverse translation leads to two or more possible results, a context menu is opened listing all the possibilities.
+
+The result of the reverse translation is also copied to the clipboard if the corresponding [option](#settingsCopyReverseTranslation) is enabled, which is the default value.
+
 <a id="settings"></a>
 ## Settings
 
@@ -275,6 +301,11 @@ Be sure however that the version of your source file (e.g. GIT commit) is the sa
 The combobox Backup of old logs allows to enable or disable the [feature](#oldLogsBackup).
 If it is enabled, you can also specify below in "Limit the number of backups" the maximum number of backups you want to keep.
 These settings only take effect at next NVDA startup when the backup takes place.
+
+<a id="settingsCopyReverseTranslation"></a>
+### Copy reverse translation to clipboard
+
+This option allows to choose if the [reverse translation command](#reverseTranslationCommand) also copies its result to the clipboard.
 
 ## Change log
 
