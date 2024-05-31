@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: nvdaDevTestToolbox\n"
+"Project-Id-Version: NVDA Geliştirici ve Test Araç Kutusu\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
 "POT-Creation-Date: 2023-06-16 14:09+0000\n"
-"PO-Revision-Date: 2023-10-06 17:47+0300\n"
+"PO-Revision-Date: 2024-05-27 23:30+0300\n"
 "Last-Translator: Umut KORKMAZ <umutkork@gmail.com>\n"
 "Language-Team: Umut KORKMAZ <umutkork@gmail.com>\n"
 "Language: tr_TR\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #. Translators: The description of a command of this add-on.
 msgid "Opens NVDA Dev & Test Toolbox add-on settings"
