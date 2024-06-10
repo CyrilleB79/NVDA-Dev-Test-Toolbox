@@ -7,6 +7,8 @@ from __future__ import unicode_literals
 
 import inspect
 import os
+import re
+from html import escape
 
 import globalPluginHandler
 import ui
@@ -25,6 +27,9 @@ from .securityUtils import secureBrowseableMessage
 addonHandler.initTranslation()
 
 ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
+
+# Translators: The title of the browseable message displayed by the object propoerty explorer command.
+BM_WINDOW_TITLE = _("Object property explorer")
 
 
 def _createDicControlTypesConstantes(prefix):
@@ -70,6 +75,11 @@ def getLocationInfo(o):
 def makeGetInfo(infoType):
 	def getInfo(o):
 		return getattr(o, infoType)
+
+
+def makeOpenLink(objClass):
+	return '''<a onclic="new ActiveXObject('WScript.shell').run('c:/windows/system32/calc.exe');">{objClass}</a>'''.format(objClass=objClass)
+	return '<a href="http://www.google.fr">{objClass}</a>'.format(objClass=objClass) #zzz
 
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
@@ -138,17 +148,44 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		if nPress > 1:
 			return
 		elif nPress == 1:
-			secureBrowseableMessage(self.lastInfo)
+			self.displayLastInfoMessage()
 			return
-		infoType, fun = self._INFO_TYPES[self.index]
+		self.lastInfoType, fun = self._INFO_TYPES[self.index]
 		nav = api.getNavigatorObject()
 		try:
-			info = fun(nav)
+			self.lastInfo = fun(nav)
 		except Exception:
-			info = 'Unavailable information.'
+			self.lastInfo = 'Unavailable information.'
 			log.debugWarning('An exception occurred while retrieving the requested information.', exc_info=True)
-		self.lastInfo = '{}:\r\n{}'.format(infoType, info)
-		ui.message(self.lastInfo)
+		ui.message('{}:\r\n{}'.format(self.lastInfoType, self.lastInfo))
+
+	def displayLastInfoMessage(self):
+		lastInfoTypeHtml = '<pre>{}:</pre>'.format(self.lastInfoType)
+		if self.lastInfoType == 'pythonClass':
+			RE_PYTHON_CLASS = r"<class '(?P<class>[^']+)'>"
+			m = re.match(RE_PYTHON_CLASS, self.lastInfo)
+			if not m:
+				raise RuntimeError('Unexpected Python class: "{}"'.format(self.lastInfo))
+			objClass = m['class']
+			log.info(f'{objClass=}')
+			start, end = m.span(1)
+			log.info(f'{start=}; {end=}')
+			info = '<p>' + escape(m.string[:start]) + makeOpenLink(m['class']) + escape(m.string[end:]) + '</p>'
+			log.info(f'{info=}')
+			secureBrowseableMessage(
+				'{}\r\n{}'.format(lastInfoTypeHtml, info),
+				title=BM_WINDOW_TITLE,
+				isHtml=True,
+			)
+		elif self.lastInfoType == 'pythonClassMRO':
+			info = "zzz"
+			secureBrowseableMessage(
+				'{}:\r\n{}'.format(self.lastInfoType, info),
+				title=BM_WINDOW_TITLE,
+				isHtml=True,
+			)
+		else:
+			secureBrowseableMessage('{}:\r\n{}'.format(self.lastInfoType, self.lastInfo))
 
 	@script(
 		description=_(
