@@ -78,8 +78,23 @@ def makeGetInfo(infoType):
 
 
 def makeOpenLink(objClass):
-	return '''<a onclic="new ActiveXObject('WScript.shell').run('c:/windows/system32/calc.exe');">{objClass}</a>'''.format(objClass=objClass)
-	return '<a href="http://www.google.fr">{objClass}</a>'.format(objClass=objClass) #zzz
+	return '''<a href="#" onclick="new ActiveXObject('WScript.shell').run('c:/windows/system32/calc.exe');">{objClass}</a>'''.format(objClass=objClass)
+
+
+def mkhi(itemType, htmlContent, attribDic={}):
+	"""Creates an HTML item encapsulating other htmlContent with itemType tag with the attributes in attribDic.
+	If the content to encapsulate is single text, use mkhiText instead.
+	"""
+	sAttribs = ''.join(f' {n}={v}' for n, v in attribDic.items())
+	return f'<{itemType}{sAttribs}>{htmlContent}</{itemType}>'
+
+
+def mkhiText(itemType, textContent, attribDic={}):
+	"""Creates an HTML item encapsulating a single text with itemType tag with the attributes in attribDic.
+	"""
+
+	sAttribs = ''.join(f' {n}={v}' for n, v in attribDic.items())
+	return f'<{itemType}{sAttribs}>{escape(textContent)}</{itemType}>'
 
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
@@ -160,8 +175,12 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		ui.message('{}:\r\n{}'.format(self.lastInfoType, self.lastInfo))
 
 	def displayLastInfoMessage(self):
-		lastInfoTypeHtml = '<pre>{}:</pre>'.format(self.lastInfoType)
-		if self.lastInfoType == 'pythonClass':
+		lastInfoTypeHtml = mkhiText(
+			'pre',
+			'{}:'.format(self.lastInfoType),
+		)
+		canOpenSource = True  #zzz
+		if canOpenSource and self.lastInfoType == 'pythonClass':
 			RE_PYTHON_CLASS = r"<class '(?P<class>[^']+)'>"
 			m = re.match(RE_PYTHON_CLASS, self.lastInfo)
 			if not m:
@@ -170,14 +189,17 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			log.info(f'{objClass=}')
 			start, end = m.span(1)
 			log.info(f'{start=}; {end=}')
-			info = '<p>' + escape(m.string[:start]) + makeOpenLink(m['class']) + escape(m.string[end:]) + '</p>'
+			info = mkhi(
+				'p',
+				escape(m.string[:start]) + makeOpenLink(m['class']) + escape(m.string[end:]),
+			)
 			log.info(f'{info=}')
 			secureBrowseableMessage(
 				'{}\r\n{}'.format(lastInfoTypeHtml, info),
 				title=BM_WINDOW_TITLE,
 				isHtml=True,
 			)
-		elif self.lastInfoType == 'pythonClassMRO':
+		elif canOpenSource and self.lastInfoType == 'pythonClassMRO':
 			info = "zzz"
 			secureBrowseableMessage(
 				'{}:\r\n{}'.format(self.lastInfoType, info),
