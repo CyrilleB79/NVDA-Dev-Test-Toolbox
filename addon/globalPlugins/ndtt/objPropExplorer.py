@@ -8,6 +8,7 @@ from __future__ import unicode_literals
 import inspect
 import os
 import re
+import threading
 from html import escape
 
 import globalPluginHandler
@@ -77,7 +78,7 @@ def makeGetInfo(infoType):
 		return getattr(o, infoType)
 
 
-def makeOpenLink(objClass):
+def makeOpenClassLink(objClass):
 	return '''<a href="#" onclick="new ActiveXObject('WScript.shell').run('c:/windows/system32/calc.exe');">{objClass}</a>'''.format(objClass=objClass)
 
 
@@ -95,6 +96,41 @@ def mkhiText(itemType, textContent, attribDic={}):
 
 	sAttribs = ''.join(f' {n}={v}' for n, v in attribDic.items())
 	return f'<{itemType}{sAttribs}>{escape(textContent)}</{itemType}>'
+
+class ObjectOpenerThread(threading.Thread):
+	def __init__(self):
+		super(threading.Thread, self).__init__()
+		self.name="NDTT Object opener"
+		self.closePipe = threading.Event()
+
+	def run(self):
+		import struct
+		import win32pipe, win32file, pywintypes
+
+		# IPC parameters
+		PIPE_NAME = r'\\.\pipe\simple-ipc-pipe'
+		ENCODING = 'ascii'
+
+		pipe = win32pipe.CreateNamedPipe(PIPE_NAME,
+			win32pipe.PIPE_ACCESS_DUPLEX,
+			win32pipe.PIPE_TYPE_MESSAGE | win32pipe.PIPE_READMODE_MESSAGE | win32pipe.PIPE_WAIT,
+			1, 65536, 65536, 0, None)
+		win32pipe.ConnectNamedPipe(pipe, None)
+		while not self.closePipe.is_set():
+			try:
+				request_len = win32file.ReadFile(pipe, 4)
+				request_len = struct.unpack('I', request_len[1])[0]
+				request_data = win32file.ReadFile(pipe, request_len)
+				# convert to bytes
+				#response_data = "Response".encode(ENCODING)
+				#response_len = struct.pack('I', len(response_data))
+				#win32file.WriteFile(pipe, response_len)
+				#win32file.WriteFile(pipe, response_data)
+			except Exception as e:
+				log.exception("zzz")
+				break
+		win32file.CloseHandle(pipe)
+
 
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
@@ -121,11 +157,34 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		self.customObjectReporting = False
 		self.orig_speakObject = speech.speakObject
 		speech.speakObject = self.customSpeakObjectFactory()
+		self.objOpenerThread = ObjectOpenerThread()
+		self.objOpenerThread.start()
 
 	def terminate(self, *args, **kwargs):
+		self.objOpenerThread.closePipe.set()
 		speech.speakObject = self.orig_speakObject
 		super(GlobalPlugin, self).terminate(*args, **kwargs)
 
+	@script(
+		description="test",
+		gesture="kb:control+shift+<",
+	)
+	def script_test(self, gesture):
+		import struct
+		import time
+		# IPC parameters
+		PIPE_NAME = r'\\.\pipe\simple-ipc-pipe'
+		ENCODING = 'ascii'
+		with open(PIPE_NAME , 'rb+', buffering=0) as f:
+			data = 'Hello, world'.encode(ENCODING)
+			data_len = struct.pack('I', len(data))
+			f.write(data_len)
+			f.write(data)
+			f.seek(0)  # Necessary
+			time.sleep(1)
+			received_len = struct.unpack('I', f.read(4))[0]
+			received_data = f.read(received_len).decode(ENCODING)
+			f.seek(0)  # Also necessary
 	@script(
 		description=_(
 			# Translators: Input help mode message for a command of the object property explorer.
@@ -191,7 +250,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			log.info(f'{start=}; {end=}')
 			info = mkhi(
 				'p',
-				escape(m.string[:start]) + makeOpenLink(m['class']) + escape(m.string[end:]),
+				escape(m.string[:start]) + makeOpenClassLink(m['class']) + escape(m.string[end:]),
 			)
 			log.info(f'{info=}')
 			secureBrowseableMessage(
