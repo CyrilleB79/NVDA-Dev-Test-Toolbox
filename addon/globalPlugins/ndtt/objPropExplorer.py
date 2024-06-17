@@ -10,6 +10,7 @@ import os
 import re
 import threading
 from html import escape
+import time
 
 import globalPluginHandler
 import ui
@@ -78,9 +79,35 @@ def makeGetInfo(infoType):
 		return getattr(o, infoType)
 
 
-def makeOpenClassLink(objClass):
-	return '''<a href="#" onclick="new ActiveXObject('WScript.shell').run('c:/windows/system32/calc.exe');">{objClass}</a>'''.format(objClass=objClass)
-
+def makeOpenClassLink(objClass, file):
+	# JavaScript to be executed when a link is clicked
+	# It uses the FilesystemObject to write a file
+	js=r"""
+	var fh = new ActiveXObject('Scripting.FileSystemObject').CreateTextFile('{file}', 2, true);
+	fh.Write('{objClass}');
+	fh.close();
+	""".format(
+		file=file,
+		objClass=objClass,
+	)
+	js=r"""
+	function saveFile(strFullPath, strContent) {{
+	 var fso = new ActiveXObject('Scripting.FileSystemObject');
+	 var utf8Enc = new ActiveXObject('Utf8Lib.Utf8Enc');
+	 var flOutput = fso.CreateTextFile(strFullPath, true); //true for overwrite
+	 flOutput.BinaryWrite(utf8Enc.UnicodeToUtf8(strContent));
+	 flOutput.Close();
+	}};
+	saveFile('{file}', '{objClass}');
+	""".format(
+			file=file,
+			objClass=objClass,
+		)
+	
+	return '''<a href="#" onclick="{js}">{objClass}</a>'''.format(
+		js=js,
+		objClass=objClass,
+	)
 
 def mkhi(itemType, htmlContent, attribDic={}):
 	"""Creates an HTML item encapsulating other htmlContent with itemType tag with the attributes in attribDic.
@@ -98,9 +125,9 @@ def mkhiText(itemType, textContent, attribDic={}):
 	return f'<{itemType}{sAttribs}>{escape(textContent)}</{itemType}>'
 
 class ObjectOpenerThread(threading.Thread):
-	def __init__(self):
-		super(threading.Thread, self).__init__()
-		self.name="NDTT Object opener"
+	def __init__(self, file, *args, **kw):
+		super(ObjectOpenerThread, self).__init__(*args, **kw)
+		self.file = file
 		self.closePipe = threading.Event()
 
 	def run(self):
@@ -131,6 +158,67 @@ class ObjectOpenerThread(threading.Thread):
 				break
 		win32file.CloseHandle(pipe)
 
+	def run(self):
+		import ctypes
+		import sys
+		
+		PIPE_ACCESS_DUPLEX = 0x00000003
+		PIPE_TYPE_MESSAGE = 0x00000004
+		PIPE_READMODE_MESSAGE = 0x00000002
+		PIPE_WAIT = 0x00000000
+		INVALID_HANDLE_VALUE = -1
+		
+		CreateNamedPipe = ctypes.windll.kernel32.CreateNamedPipeW
+		ConnectNamedPipe = ctypes.windll.kernel32.ConnectNamedPipe
+		ReadFile = ctypes.windll.kernel32.ReadFile
+		WriteFile = ctypes.windll.kernel32.WriteFile
+		
+		pipe_name = r'\\.\pipe\mypipe'
+		
+		pipe_handle = CreateNamedPipe(
+		    pipe_name,
+		    PIPE_ACCESS_DUPLEX,
+		    PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE | PIPE_WAIT,
+		    1, 65536, 65536, 0, None
+		)
+		
+		if pipe_handle == INVALID_HANDLE_VALUE:
+		    log.error('Cannot create named pipe')
+		    return
+
+		ConnectNamedPipe(pipe_handle, None)
+		while True:
+		    buffer = ctypes.create_string_buffer(1024)
+		    bytes_read = ctypes.c_ulong(0)
+		
+		    success = ReadFile(pipe_handle, buffer, len(buffer), ctypes.byref(bytes_read), None)
+		    
+		    if success:
+		        data = buffer.value[:bytes_read.value].decode('utf-8')
+		        import core
+		        def f():
+		        	import time
+		        	time.sleep(1)
+		        	ui.message(data)
+		        core.callLater(0, f)
+		        if data == "exit":
+		            return
+		    else:
+		        log.error("Failed to read named pipe.")
+		        return
+	
+	def run(self):
+		while not self.closePipe.is_set():
+			try:
+				with open(self.file, 'r') as f:
+					obj = f.read()
+			except FileNotFoundError:  #zzz or OSError
+				time.sleep(0.5)
+				continue
+			log.info(f'Opener for {obj=}')
+			#zzz os.remove(self.file)
+			import core
+			core.callLater(1000, lambda: ui.message(obj))
 
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
@@ -147,7 +235,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		('pythonClass', lambda o: str(type(o))),
 		(
 			'pythonClassMRO',
-			lambda o: str(type(o).mro()).replace('>, <', ',\r\n').replace('[<', '', 1).replace('>]', '')
+			lambda o: str(type(o).mro()).replace('>, <', '>,\r\n<').replace('[<', '<', 1).replace('>]', '>')
 		)
 	]
 
@@ -157,7 +245,13 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		self.customObjectReporting = False
 		self.orig_speakObject = speech.speakObject
 		speech.speakObject = self.customSpeakObjectFactory()
-		self.objOpenerThread = ObjectOpenerThread()
+		self.file = os.path.join(
+			os.environ['tmp'],
+			'nvda_test_ipc.txt',
+		)
+		self.file = r'h:\out.txt'
+		log.info(f'{self.file=}')
+		self.objOpenerThread = ObjectOpenerThread(name="NDTT Object opener", file=self.file)
 		self.objOpenerThread.start()
 
 	def terminate(self, *args, **kwargs):
@@ -234,39 +328,40 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		ui.message('{}:\r\n{}'.format(self.lastInfoType, self.lastInfo))
 
 	def displayLastInfoMessage(self):
+		log.info('display last info')
 		lastInfoTypeHtml = mkhiText(
 			'pre',
 			'{}:'.format(self.lastInfoType),
 		)
 		canOpenSource = True  #zzz
-		if canOpenSource and self.lastInfoType == 'pythonClass':
-			RE_PYTHON_CLASS = r"<class '(?P<class>[^']+)'>"
-			m = re.match(RE_PYTHON_CLASS, self.lastInfo)
-			if not m:
-				raise RuntimeError('Unexpected Python class: "{}"'.format(self.lastInfo))
-			objClass = m['class']
-			log.info(f'{objClass=}')
-			start, end = m.span(1)
-			log.info(f'{start=}; {end=}')
-			info = mkhi(
-				'p',
-				escape(m.string[:start]) + makeOpenClassLink(m['class']) + escape(m.string[end:]),
-			)
-			log.info(f'{info=}')
-			secureBrowseableMessage(
-				'{}\r\n{}'.format(lastInfoTypeHtml, info),
-				title=BM_WINDOW_TITLE,
-				isHtml=True,
-			)
-		elif canOpenSource and self.lastInfoType == 'pythonClassMRO':
-			info = "zzz"
-			secureBrowseableMessage(
-				'{}:\r\n{}'.format(self.lastInfoType, info),
-				title=BM_WINDOW_TITLE,
-				isHtml=True,
-			)
+		RE_PYTHON_CLASS = r"<class '(?P<class>[^']+)'>"
+		if canOpenSource and self.lastInfoType in ['pythonClass', 'pythonClassMRO']:
+			log.info('class or mro')
+			infoList = []
+			log.info(f'{self.lastInfo=}')
+			for line in self.lastInfo.split('\r\n'):
+				m = re.match(RE_PYTHON_CLASS, line)
+				if not m:
+					raise RuntimeError('Unexpected Python class: "{}"'.format(line))
+				objClass = m['class']
+				log.info(f'{objClass=}')
+				start, end = m.span(1)
+				log.info(f'{start=}; {end=}')
+				info = mkhi(
+					'p',
+					escape(m.string[:start]) + makeOpenClassLink(m['class'], file=self.file) + escape(m.string[end:]),
+				)
+				log.info(f'{info=}')
+				infoList.append(info)
+			lastInfoHtml = '\r\n'.join(infoList)
 		else:
-			secureBrowseableMessage('{}:\r\n{}'.format(self.lastInfoType, self.lastInfo))
+			log.info('others')
+			lastInfoHtml = mkhi('pre', self.lastInfo)
+		secureBrowseableMessage(
+			'{infoType}{info}'.format(infoType=lastInfoTypeHtml, info=lastInfoHtml),
+			title=BM_WINDOW_TITLE,
+			isHtml=True,
+		)
 
 	@script(
 		description=_(
