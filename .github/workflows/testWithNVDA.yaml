@@ -31,7 +31,7 @@ jobs:
     - name: Build add-on
       run: scons version=${{ github.sha }}
     - name: Upload add-on
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: nvda-addon
         path: "*.nvda-addon"
@@ -75,7 +75,7 @@ jobs:
     #     .\public\nvda_launcher.exe --create-portable-silent --portable-path nvda -m
     #   shell: cmd
     - name: Download add-on
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: nvda-addon
     - name: Copy add-on
@@ -118,7 +118,7 @@ jobs:
         ping 192.0.2.0 -n 1 -w 10000 > nul
         copy %TEMP%\nvda-with-addon.log nvda.log
     - name: Upload log
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: nvda-log
         path: nvda.log
