@@ -15,6 +15,12 @@ from scriptHandler import script
 import languageHandler
 import api
 import ui
+try:
+	# For NVDa 2024.2+
+	from speech.extensions import pre_speech
+except ImportError:  # Also catches ModuleNotFoundError)
+	# For NVDA 2024.1 or below
+	pre_speech = None
 import speech
 import core
 import gui
@@ -54,16 +60,25 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def __init__(self, *args, **kwargs):
 		super(GlobalPlugin, self).__init__(*args, **kwargs)
 		self._reverseCatalog = None
-		self._speak = speechModule.speak
-		speechModule.speak = self._localSpeak
+		if pre_speech:
+			pre_speech.register(self.memorizeLastSpeechSequence)
+		else:
+			self._speak = speechModule.speak
+			speechModule.speak = self._localSpeak
 		self.lastSpokenSeq = []
 
 	def _localSpeak(self, sequence, *args, **kwargs):
 		self._speak(sequence, *args, **kwargs)
-		self.lastSpokenSeq = sequence
+		self.memorizeLastSpeechSequence(sequence)
+
+	def memorizeLastSpeechSequence(self, speechSequence):
+		self.lastSpokenSeq = speechSequence
 
 	def terminate(self, *args, **kwargs):
-		speechModule.speak = self._speak
+		if pre_speech:
+			pre_speech.unregister(self.memorizeLastSpeechSequence)
+		else:
+			speechModule.speak = self._speak
 		super(GlobalPlugin, self).terminate(*args, **kwargs)
 
 	@script(
@@ -108,8 +123,11 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			except AttributeError:
 				# For NVDA version < 2022.1
 				return None
-			if trans.CONTEXT != '%s\x04%s':
-				raise RuntimeError('Unexpected context splitting rule')
+			try:
+				if trans.CONTEXT != '%s\x04%s':
+					raise RuntimeError('Unexpected context splitting rule')
+			except AttributeError:
+				pass  # trans.CONTEXT not available before Python 3.11, i.e. NVDA < 2024.1
 			catalog = trans._catalog
 			self._reverseCatalog = {}
 			for (k, v) in catalog.items():
