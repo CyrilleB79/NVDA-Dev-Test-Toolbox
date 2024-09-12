@@ -9,13 +9,17 @@ import inspect
 import os
 import re
 import threading
-from html import escape
+try:
+	from html import escape
+except ImportError:  # NVDA 2019.2.1 and below
+	escape = lambda x: x
 import time
 
 import globalPluginHandler
 import ui
 import api
 from .compa import controlTypesCompatWrapper as controlTypes
+from .compa import matchDict
 # Import normal controlTypes and not the wrapper only to be used for older versions of NVDA.
 import controlTypes as oldControlTypes
 from logHandler import log
@@ -103,60 +107,51 @@ def makeOpenClassLink(objClass, file):
 			file=file,
 			objClass=objClass,
 		)
-	
-	return '''<a href="#" onclick="{js}">{objClass}</a>'''.format(
+	cmd = r"c:\windows\system32\calc.exe"
+	cmd = r'echo tototiti > h:\out.txt'
+	cmd = r'cmd /c echo zzzz > h:\out.txt'
+	cmd = r'cmd /c echo {className} > h:\out.txt'.format(className=objClass)
+	cmd = r'cmd /c /q echo {className} > h:\out.txt'.format(className=objClass)
+	js= r"new ActiveXObject('WScript.shell').run('{cPath}');".format(cPath=cmd.replace('\\', '\\\\'))
+	retString = '''<a href="#" onclick="{js}">{objClass}</a>'''.format(
 		js=js,
 		objClass=objClass,
 	)
+	log.info(retString)
+	return retString
 
 def mkhi(itemType, htmlContent, attribDic={}):
 	"""Creates an HTML item encapsulating other htmlContent with itemType tag with the attributes in attribDic.
 	If the content to encapsulate is single text, use mkhiText instead.
 	"""
-	sAttribs = ''.join(f' {n}={v}' for n, v in attribDic.items())
-	return f'<{itemType}{sAttribs}>{htmlContent}</{itemType}>'
+	sAttribs = ''.join(' {n}={v}'.format(n=n, v=v) for n, v in attribDic.items())
+	return '<{itemType}{sAttribs}>{htmlContent}</{itemType}>'.format(
+		itemType=itemType,
+		sAttribs=sAttribs,
+		htmlContent=htmlContent,
+		
+		
+	)
 
 
 def mkhiText(itemType, textContent, attribDic={}):
 	"""Creates an HTML item encapsulating a single text with itemType tag with the attributes in attribDic.
 	"""
 
-	sAttribs = ''.join(f' {n}={v}' for n, v in attribDic.items())
-	return f'<{itemType}{sAttribs}>{escape(textContent)}</{itemType}>'
+	sAttribs = ''.join(' {n}={v}'.format(n=n, v=v) for n, v in attribDic.items())
+	return '<{itemType}{sAttribs}>{text}</{itemType}>'.format(
+		itemType=itemType,
+		sAttribs=sAttribs,
+		text=escape(textContent),
+		
+	)
 
 class ObjectOpenerThread(threading.Thread):
 	def __init__(self, file, *args, **kw):
 		super(ObjectOpenerThread, self).__init__(*args, **kw)
+		self.daemon = True
 		self.file = file
 		self.closePipe = threading.Event()
-
-	def run(self):
-		import struct
-		import win32pipe, win32file, pywintypes
-
-		# IPC parameters
-		PIPE_NAME = r'\\.\pipe\simple-ipc-pipe'
-		ENCODING = 'ascii'
-
-		pipe = win32pipe.CreateNamedPipe(PIPE_NAME,
-			win32pipe.PIPE_ACCESS_DUPLEX,
-			win32pipe.PIPE_TYPE_MESSAGE | win32pipe.PIPE_READMODE_MESSAGE | win32pipe.PIPE_WAIT,
-			1, 65536, 65536, 0, None)
-		win32pipe.ConnectNamedPipe(pipe, None)
-		while not self.closePipe.is_set():
-			try:
-				request_len = win32file.ReadFile(pipe, 4)
-				request_len = struct.unpack('I', request_len[1])[0]
-				request_data = win32file.ReadFile(pipe, request_len)
-				# convert to bytes
-				#response_data = "Response".encode(ENCODING)
-				#response_len = struct.pack('I', len(response_data))
-				#win32file.WriteFile(pipe, response_len)
-				#win32file.WriteFile(pipe, response_data)
-			except Exception as e:
-				log.exception("zzz")
-				break
-		win32file.CloseHandle(pipe)
 
 	def run(self):
 		import ctypes
@@ -191,7 +186,8 @@ class ObjectOpenerThread(threading.Thread):
 		    buffer = ctypes.create_string_buffer(1024)
 		    bytes_read = ctypes.c_ulong(0)
 		
-		    success = ReadFile(pipe_handle, buffer, len(buffer), ctypes.byref(bytes_read), None)
+		    #zzz success = ReadFile(pipe_handle, buffer, len(buffer), ctypes.byref(bytes_read), None)
+		    success = ReadFile(pipe_handle, buffer, 10, ctypes.byref(bytes_read), None)
 		    
 		    if success:
 		        data = buffer.value[:bytes_read.value].decode('utf-8')
@@ -206,19 +202,6 @@ class ObjectOpenerThread(threading.Thread):
 		    else:
 		        log.error("Failed to read named pipe.")
 		        return
-	
-	def run(self):
-		while not self.closePipe.is_set():
-			try:
-				with open(self.file, 'r') as f:
-					obj = f.read()
-			except FileNotFoundError:  #zzz or OSError
-				time.sleep(0.5)
-				continue
-			log.info(f'Opener for {obj=}')
-			#zzz os.remove(self.file)
-			import core
-			core.callLater(1000, lambda: ui.message(obj))
 
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
@@ -250,7 +233,6 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			'nvda_test_ipc.txt',
 		)
 		self.file = r'h:\out.txt'
-		log.info(f'{self.file=}')
 		self.objOpenerThread = ObjectOpenerThread(name="NDTT Object opener", file=self.file)
 		self.objOpenerThread.start()
 
@@ -334,24 +316,20 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			'{}:'.format(self.lastInfoType),
 		)
 		canOpenSource = True  #zzz
-		RE_PYTHON_CLASS = r"<class '(?P<class>[^']+)'>"
+		RE_PYTHON_CLASS = r"<(?:(?:class)|(?:type)) '(?P<class>[^']+)'>"
 		if canOpenSource and self.lastInfoType in ['pythonClass', 'pythonClassMRO']:
 			log.info('class or mro')
 			infoList = []
-			log.info(f'{self.lastInfo=}')
 			for line in self.lastInfo.split('\r\n'):
 				m = re.match(RE_PYTHON_CLASS, line)
 				if not m:
 					raise RuntimeError('Unexpected Python class: "{}"'.format(line))
-				objClass = m['class']
-				log.info(f'{objClass=}')
+				objClass = matchDict(m)['class']
 				start, end = m.span(1)
-				log.info(f'{start=}; {end=}')
 				info = mkhi(
 					'p',
-					escape(m.string[:start]) + makeOpenClassLink(m['class'], file=self.file) + escape(m.string[end:]),
+					escape(m.string[:start]) + makeOpenClassLink(matchDict(m)['class'], file=self.file) + escape(m.string[end:]),
 				)
-				log.info(f'{info=}')
 				infoList.append(info)
 			lastInfoHtml = '\r\n'.join(infoList)
 		else:
