@@ -11,8 +11,8 @@
   параметров при перезапуске NVDA.
 * Различные функции, связанные с зарегистрированными ошибками.
 * Обозреватель свойств объекта.
-* An extended script description mode: when enabled input help mode report
-  information on scripts that have no description.
+* Расширенный режим описания скриптов: при включении режима справки по вводу
+  выводится информация о скриптах, не имеющих описания.
 * Команды, помогающие считывать и анализировать журнал.
 * Резервные копии старых журналов
 * В рабочей области консоли Python есть функция для открытия исходного кода
@@ -55,92 +55,92 @@
 возможность управлять ею с помощью команд с клавиатуры.  Однако флажок в
 панель дополнительных настроек не перенесён.
 
-## Object property explorer
+## Обозреватель свойств объекта
 
-This feature allows to report some properties of the current navigator
-object without opening the log viewer.
+Эта функция позволяет сообщать о некоторых свойствах текущего объекта
+навигатора, не открывая просмотрщик журнала.
 
-To list the properties of an object, move the navigator object to it and use
-the following commands:
+Чтобы просмотреть свойства объекта, переместите к нему объект навигатора и
+используйте следующие команды:
 
-* Selects the previous property and reports it for the navigator object.
-* Selects the next property and reports it for the navigator object.
-* Reports the currently selected property for the navigator object; two
-  presses displays this information in a browseable message.
+* Выбирает предыдущее свойство и сообщает его для объекта навигатора.
+* Выбирает следующее свойство и сообщает его для объекта навигатора.
+* Сообщает о выбранном в данный момент свойстве объекта навигатора; два
+  нажатия отображают эту информацию в просматриваемом сообщении.
 
-The list of the supported properties is the following: name, role, state,
-value, windowClassName, windowControlID, windowHandle, location, Python
-class, Python class mro.
+Список поддерживаемых свойств следующий: имя, роль, состояние, значение,
+windowClassName, windowControlID, windowHandle, location, класс Python,
+класс Python mro.
 
-When using object navigation commands, you can also choose to have the
-currently selected property reported instead of NVDA usual object
-reporting.  A toggle command allows to switch between this custom reporting
-of objects and NVDA usual reporting.
+При использовании команд навигации по объектам вы также можете выбрать
+объявление текущего выбранного свойства вместо обычного объявления об
+объекте NVDA.  Команда переключения позволяет переключаться между этим
+пользовательским объявлением об объектах и обычным объявлением NVDA.
 
-For exemple, you may select "windowClassName" property and enable custom
-object reporting.  Then when moving the navigator object to next or previous
-object, you will hear the object's windowClassName instead of usual
-reporting.
+Например, вы можете выбрать свойство "windowClassName" и включить создание
+объявлений по настраиваемым объектам.  Тогда при перемещении объекта
+навигатора к следующему или предыдущему объекту вместо обычного сообщения вы
+услышите имя класса окна объекта.
 
-All the commands of the Object property explorer are unassigned by default;
-you will have to assign them a shortcut in the Input gesture dialog to use
-them.
+Все команды проводника свойств объекта по умолчанию не назначены; для их
+использования вам придётся назначить им горячие клавиши в диалоге жестов
+ввода.
 
-## Extended script description mode
+## Расширенный режим описания скрипта
 
-When the Extended script description mode is active, the input help mode
-(NVDA+1) is modified as follows.  If a script has no description, the
-script's name and class are reported.  If a script has a description, its
-description is reported as usual.  The gesture to activate or deactivate
-this feature is NVDA+control+alt+D.
+Когда активен режим расширенного описания скрипта, режим справки по вводу
+(NVDA+1) модифицируется следующим образом.  Если скрипт не содержит
+описания, сообщается имя и класс скрипта.  Если у скрипта есть описание, оно
+отображается как обычно.  Жест для активации или деактивации этой функции —
+NVDA+control+alt+D.
 
-Executing a gesture bound to a script without description in input help mode
-also create an entry for this script in the gesture management dialog.  This
-entry is located in a dedicated category called "Scripts without description
-(modify at your own risk!)".  This allow to easily add, delete or change the
-native NVDA gestures for these script.  Be aware however that it is often
-intended that such script do not have any description to prevent the user to
-modify the associated gesture.  Indeed, the gesture may be defined to match
-an application shortcut key.  For example the script script_toggleItalic on
-NVDAObjects.window.winword.WordDocument is bound to control+I and this
-should not be modified since the gesture is passed to the application to
-actually execute the shortcut key.
+Выполнение жеста, привязанного к сценарию без описания в режиме справки по
+вводу, также создаёт запись для этого скрипта в диалоге управления жестами.
+Эта запись находится в специальной категории "Скрипты без описания
+(изменяйте на свой страх и риск!)".  Это позволяет легко добавлять, удалять
+или изменять собственные жесты NVDA для этих скриптов.  Однако имейте в
+виду, что часто предполагается, что такой скрипт не содержит никакого
+описания, чтобы пользователь не мог изменить связанный жест.  Действительно,
+жест может быть определён в соответствии с клавишей быстрого доступа
+приложения.  Например, скрипт script_toggleItalic в
+NVDAObjects.window.winword.WordDocument привязан к control+I, и его не
+следует изменять, поскольку жест передаётся приложению для фактического
+выполнения сочетания клавиш.
 
-### Usage example
+### Пример использования
 
-Control+shift+I also toggle italic in Word, even if it is not natively
-reported by NVDA.  To have the control+shift+I result reported by NVDA as
-control+I, you should perform the following steps:
+Control+shift+I также переключает курсив в Word, даже если NVDA не сообщает
+об этом изначально.  Чтобы NVDA сообщала о результате control+shift+I как
+control+I, вам необходимо выполнить следующие шаги:
 
-* Open a Word document.
-* Enable the extended script description mode with NVDA+control+alt+D.
-* Enter input help mode with NVDA+1.
-* Press control+I to report the italic script and have it added in the
-  gesture dialog.
-* Exit input help mode with NVDA+1.
-* Open the input gestures dialog.
-* In the category "Scripts without description (modify at your own risk!)",
-  select the command "toggleItalic on
-  NVDAObjects.window.winword.WordDocument".
-* Add the control+shift+I shortcut and validate.
-* If you want, exit the extended script description mode with
+* Откройте документ Word.
+* Включите расширенный режим описания скриптов с помощью NVDA+control+alt+D.
+* Войдите в режим справки по вводу с помощью NVDA+1.
+* Нажмите Control+I, чтобы сообщить о курсиве и добавить его в диалог жестов
+  ввода.
+* Выйдите из режима справки по вводу с помощью NVDA+1.
+* Откройте диалог жестов ввода.
+* В категории "Скрипты без описания (изменяйте на свой страх и риск!)"
+  выберите команду "toggleItalic в NVDAObjects.window.winword.WordDocument".
+* Добавьте сочетание клавиш control+shift+I и подтвердите.
+* Если хотите, выйдите из режима расширенного описания скриптов с помощью
   NVDA+control+alt+D.
 
-Known bug: A script added for a specific class is visible even if gesture
-manager is opened in another context.
+Известная ошибка: скрипт, добавленный для определённого класса, виден, даже
+если диалог жестов ввода открыт в другом контексте.
 
 ## Функции чтения и анализа журналов
 
 <a id="logPlaceMarkers"></a>
-### Place markers in the log
+### Размещайте маркеры в журнале
 
-While testing or working, you may want to mark a specific moment in the log, so that you can turn to it easily later when reading the log.
-To add a marker message in the log, press NVDA+control+K.
-A message as follows will be logged at INFO level:  
+Во время тестирования или работы вы можете отметить определённый момент в журнале, чтобы можно было легко обратиться к нему позже при чтении журнала.
+Чтобы добавить сообщение-маркер в журнал, нажмите NVDA+control+K.
+На уровне INFO будет зарегистрировано следующее сообщение:
 `-- NDTT marker 0 --`  
-You can add as many markers as you want in the log.  The marker's number
-will be incremented each time you place a marker in the log; it will only be
-reset when NVDA is restarted.
+Вы можете добавить в журнал столько маркеров, сколько захотите.  Номер
+маркера будет увеличиваться каждый раз, когда вы помещаете его в журнал; он
+будет сброшен только при перезапуске NVDA.
 
 ### Режим чтения журналов
 
@@ -233,10 +233,10 @@ NVDA уже предоставляет резервную копию журна�
 журналов и сколько их; это делается в [настройках
 дополнения](#settingsLogsBackup).
 
-A log manager dialog allows to view the backed up logs.
-It can be opened going to NVDA menu -> Tools -> Logs manager
-In this dialog, you can see the list of all the backup logs, open or delete them.
-To be able to open a log, you should first have configured the [Command to open a file in your favorite editor](#settingsOpenCommand).
+Диалог менеджера журналов позволяет просматривать резервные копии журналов.
+Его можно открыть в меню NVDA -> Сервис -> Менеджер журналов
+В этом диалоге вы можете просмотреть список всех журналов резервного копирования, открыть или удалить их.
+Чтобы была возможность открыть журнал, вы сначала должны настроить [Команду для открытия файла в вашем любимом редакторе](#settingsOpenCommand).
 
 ## Расширение консоли Python
 
@@ -274,13 +274,13 @@ NVDA, или для объектов, определённых дополнен�
 * Открыть файл "api.py`, определяющий модуль `api`:
   `openCodeFile(api)`  
 
-### Python console startup script
+### Скрипт при запуске консоли Python
 
-You can define a custom script which will be executed in the Python
-console's namespace when it is first opened, or if the add-on is reloaded
-(NVDA+F3) after the console has already been opened.
+Вы можете определить собственный скрипт, который будет выполняться в
+пространстве имен консоли Python при ее первом открытии или при перезагрузке
+дополнения (NVDA+F3) после того, как консоль уже была открыта.
 
-For example, the script allows you to execute new imports and define aliases that you will be able to use directly in the console, as shown below:  
+Например, скрипт позволяет вам выполнять новый импорт и определять псевдонимы, которые вы сможете использовать непосредственно в консоли, как показано ниже:  
 
     # Various import that I want in the console.
     import globalVars as gv
@@ -289,68 +289,70 @@ For example, the script allows you to execute new imports and define aliases tha
     # Aliases
     ocf = openCodeFile
 
-The Python console script should be placed in the following location: `pathToNVDAConfig\ndtt\consoleStartup.py`  
-For example:
-`C:\Users\myUserName\AppData\Roaming\nvda\ndtt\consoleStartup.py`
+Консольный скрипт Python следует разместить в следующем месте: `pathToNVDAConfig\ndtt\consoleStartup.py`  
+Например: `C:\Users\myUserName\AppData\Roaming\nvda\ndtt\consoleStartup.py`
 
-## Log the stack trace of the speech function
+## Зарегистрируйте трассировку стека речевой функции
 
-Sometimes, you may want to see which part of the code is responsible for
-speaking something.  For this, you can enable the stack trace logging of the
-speech function pressing NVDA+control+alt+S.  Each time NVDA speaks, a
-corresponding stack trace will be logged in the log.
+Иногда вам может потребоваться посмотреть, какая часть кода отвечает за
+произнесение чего-либо.  Для этого вы можете включить ведение журнала
+трассировки стека речевой функции, нажав NVDA+control+alt+S.  Каждый раз,
+когда NVDA говорит, в журнал записывается соответствующая трассировка стека.
 
-Note: You may modify the script's file directly to patch another function.
-See all instructions in the file for details on usage.
+Примечание: Вы можете изменить файл скрипта напрямую, чтобы исправить другую
+функцию.  Подробную информацию об использовании смотрите во всех инструкциях
+в файле.
 
 <a id="settings"></a>
-## Settings
+## Настройки
 
-Some features of the add-on may require a specific configuration.
-A settings panel allows to enable them or to control how they work.
-To view and modify these settings, go to NVDA menu -> Preferences and select the category NVDA Dev & Test Toolbox.
-This settings dialog can also be accessed directly from the Logs Manager dialog.
+Некоторые функции дополнения могут потребовать определённой настройки.
+Панель настроек позволяет включать их или контролировать их работу.
+Чтобы просмотреть и изменить эти настройки, перейдите в меню NVDA -> Настройки и выберите категорию NVDA Dev & Test Toolbox.
+Доступ к этому диалогу настроек также можно получить непосредственно из диалога диспетчера журналов.
 
-These settings are global and can only be configured when the default
-profile is active.
+Эти параметры являются глобальными и могут быть настроены только в том
+случае, если активен профиль по умолчанию.
 
 <a id="settingsOpenCommand"></a>
-### Command to open a file in your favorite editor
+### Команда для открытия файла в вашем любимом редакторе
 
-Some features allow to see content in your favorite editor.  This includes
-the commands to view the source file [from a log](#logReaderOpenSourceFile)
-or [from an object in the console](#pythonConsoleOpenCodeFile) as well as
-the [log manager](#oldLogsBackup)'s Open button.
+Некоторые функции позволяют просматривать содержимое в вашем любимом
+редакторе.  Сюда входят команды для просмотра исходного файла [из
+журнала](#logReaderOpenSourceFile) или [из объекта в
+консоли](#pythonConsoleOpenCodeFile), а также кнопка открытия [менеджера
+журналов](#oldLogsBackup).
 
-To use them, you first need to configure the command that will be called to open the file in your favorite editor.
-The command should be of the form:  
+Чтобы их использовать, сначала необходимо настроить команду, которая будет вызываться для открытия файла в вашем любимом редакторе.
+Команда должна иметь вид:  
 `"C:\path\to\my\editor\editor.exe" "{path}":{line}`  
-You should of course modify this line according to the real name and location of your editor and the syntax used by it to open files.
-`{path}` will be replaced by the full path of the file to open and `{line}` by the line number where you want the cursor to be set.
-For Notepad++ for example the command to type in the console would be:  
+Разумеется, вам следует изменить эту строку в соответствии с настоящим именем и местоположением вашего редактора, а также синтаксисом, используемым им для открытия файлов.
+`{path}` будет заменён полным путём к файлу, который нужно открыть и `{line}` номером строки, на которую вы хотите установить курсор.
+Например, для Notepad++ команда для ввода в консоли будет такой:  
 `"C:\Program Files\Notepad++\notepad++.exe" "{path}" -n{line}`
 
 <a id="settingsNvdaSourcePath"></a>
-### NVDA source code path
+### Путь к исходному коду NVDA
 
-When using a command to [view the source file from a log](#logReaderOpenSourceFile) or [from an object in the console](#pythonConsoleOpenCodeFile), the file may belong to NVDA itself.
-If you are not running NVDA from source, your NVDA only contains compiled files.
-Thus you may specify here an alternate location where the corresponding source file will be found, e.g. the place where you have cloned NVDA source files, so that a source file can be opened anyway.
-The path should be such as:  
+При использовании команды для [просмотра исходного файла из журнала](#logReaderOpenSourceFile) или [из объекта в консоли](#pythonConsoleOpenCodeFile) файл может принадлежать самой NVDA.
+Если вы не используете NVDA из исходного кода, ваша NVDA содержит только скомпилированные файлы.
+Таким образом, вы можете указать здесь альтернативное местоположение, где будет найден соответствующий исходный файл, например, место, где вы клонировали исходные файлы NVDA, чтобы исходный файл всё равно можно было открыть.
+Путь должен быть таким:  
 `C:\pathExample\GIT\nvda\source`  
-Of course, replace the path of NVDA source with the correct one.
+Конечно, замените путь к исходному коду NVDA на правильный.
 
-Be sure however that the version of your source file (e.g. GIT commit) is
-the same as the one of the running instance of NVDA.
+Однако убедитесь, что версия вашего исходного файла (например, коммита GIT)
+совпадает с версией работающего экземпляра NVDA.
 
 <a id="settingsLogsBackup"></a>
 ### Резервное копирование старых журналов
 
-The combobox Backup of old logs allows to enable or disable the
-[feature](#oldLogsBackup).  If it is enabled, you can also specify below in
-"Limit the number of backups" the maximum number of backups you want to
-keep.  These settings only take effect at next NVDA startup when the backup
-takes place.
+Комбинированный список резервного копирования старых журналов позволяет
+включить или отключить [функцию](#oldLogsBackup).  Если эта функция
+включена, вы также можете указать ниже в разделе ограничения количество
+резервных копий максимальное количество резервных копий, которые вы хотите
+сохранить.  Эти настройки вступят в силу только при следующем запуске NVDA,
+когда будет выполнено резервное копирование.
 
 ## Журнал изменений
 
