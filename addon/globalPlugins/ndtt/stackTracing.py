@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2019 Cyrille Bougot
+# Copyright (C) 2019-2024 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 # INSTRUCTIONS to modify the function whose stack trrace is logged:
@@ -50,7 +50,6 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	@script(
 		# Translators: Input help mode message for a toggle command.
 		description=_("Toggles the stack trace log when the speech function is called."),
-		gesture="kb:nvda+control+alt+S",
 		category=ADDON_SUMMARY,
 	)
 	def script_toggleStackTraceLog(self, gesture):

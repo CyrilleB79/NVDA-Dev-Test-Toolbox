@@ -19,22 +19,30 @@ This add-on gathers various features for NVDA debugging and testing.
 * A command to log the stack trace of the speech.speak function.
 * A command to reverse translate the items of the interface.
 
+## Commands
+
+This add-on uses layered commands for all of the new commands it adds.
+The entry point for these commands is `NVDA+X`; thus all the commands should be executed by `NVDA+X` followed by another single letter or gesture.
+You can list all the available layered commands pressing `NVDA+X, H`.
+
+For the commands that you use more frequently, you can also define a direct gesture in the input gesture dialog.
+
 ## Enhanced restart dialog
 
-The NVDA+shift+Q command opens a dialog to specify some extra options before restarting NVDA.
+The `NVDA+X, Q` command opens a dialog to specify some extra options before restarting NVDA.
 The options that can be specified correspond to the [command line options][2] that can be used with `nvda.exe`, e.g. `-c` for config path, `--disable-addons` to disable add-ons, etc.
 
 ## Features related to logged errors
 
 ### Report last logged error
 
-Pressing NVDA+shift+alt+E allows to report the last error logged without needing to open the log. A second press clears the memorized last error.
+Pressing `NVDA+X, E` allows to report the last error logged without needing to open the log. A second press clears the memorized last error.
 
 ### Play a sound for logged errors
 
 The ["Play a sound for logged errors" setting][4] has been introduced in NVDA 2021.3 and allows to specify if NVDA will play an error sound in case an error is logged.
 
-This add-on provides an additional command (NVDA+control+alt+E) to toggle this setting.
+This add-on provides an additional command (`NVDA+X, shift+E`) to toggle this setting.
 You can choose:
 
 * "Only in test versions" (default) to make NVDA play error sounds only if the current NVDA version is a test version (alpha, beta or run from source).
@@ -49,27 +57,26 @@ This feature allows to report some properties of the current navigator object wi
 
 To list the properties of an object, move the navigator object to it and use the following commands:
 
-* Selects the previous property and reports it for the navigator object.
-* Selects the next property and reports it for the navigator object.
-* Reports the currently selected property for the navigator object; two presses displays this information in a browseable message.
+* `NVDA+X, upArrow`: Selects the previous property and reports it for the navigator object.
+* `NVDA+X, downArrow`: Selects the next property and reports it for the navigator object.
+* `NVDA+X, N`: Reports the currently selected property for the navigator object
+* `NVDA+X, shift+N`: Displays the currently selected property for the navigator object in a browseable message
 
 The list of the supported properties is the following:
 name, role, state, value, windowClassName, windowControlID, windowHandle, location, Python class, Python class mro.
 
 When using object navigation commands, you can also choose to have the currently selected property reported instead of NVDA usual object reporting.
-A toggle command allows to switch between this custom reporting of objects and NVDA usual reporting.
+A toggle command, `NVDA+X, control+N`, allows to switch between this custom reporting of objects and NVDA usual reporting.
 
 For exemple, you may select "windowClassName" property and enable custom object reporting.
 Then when moving the navigator object to next or previous object, you will hear the object's windowClassName instead of usual reporting.
-
-All the commands of the Object property explorer are unassigned by default; you will have to assign them a shortcut in the Input gesture dialog to use them.
 
 ## Extended script description mode
 
 When the Extended script description mode is active, the input help mode (NVDA+1) is modified as follows.
 If a script has no description, the script's name and class are reported.
 If a script has a description, its description is reported as usual.
-The gesture to activate or deactivate this feature is NVDA+control+alt+D.
+The gesture to activate or deactivate this feature is `NVDA+X, D`.
 
 Executing a gesture bound to a script without description in input help mode also create an entry for this script in the gesture management dialog.
 This entry is located in a dedicated category called "Scripts without description (modify at your own risk!)".
@@ -84,14 +91,14 @@ Control+shift+I also toggle italic in Word, even if it is not natively reported 
 To have the control+shift+I result reported by NVDA as control+I, you should perform the following steps:
 
 * Open a Word document.
-* Enable the extended script description mode with NVDA+control+alt+D.
+* Enable the extended script description mode with `NVDA+X, D`.
 * Enter input help mode with NVDA+1.
 * Press control+I to report the italic script and have it added in the gesture dialog.
 * Exit input help mode with NVDA+1.
 * Open the input gestures dialog.
 * In the category "Scripts without description (modify at your own risk!)", select the command "toggleItalic on NVDAObjects.window.winword.WordDocument".
 * Add the control+shift+I shortcut and validate.
-* If you want, exit the extended script description mode with NVDA+control+alt+D.
+* If you want, exit the extended script description mode with `NVDA+X, D`.
 
 Known bug: A script added for a specific class is visible even if gesture manager is opened in another context.
 
@@ -101,7 +108,7 @@ Known bug: A script added for a specific class is visible even if gesture manage
 ### Place markers in the log
 
 While testing or working, you may want to mark a specific moment in the log, so that you can turn to it easily later when reading the log.
-To add a marker message in the log, press NVDA+control+K.
+To add a marker message in the log, press `NVDA+X, K`.
 A message as follows will be logged at INFO level:  
 `-- NDTT marker 0 --`  
 You can add as many markers as you want in the log.
@@ -111,8 +118,8 @@ The marker's number will be incremented each time you place a marker in the log;
 
 A log reader mode provides commands to ease log reading and analyzing.
 In the log viewer window the log reader is enabled by default, thus log reading commands are available immediately.
-In another text reading area such as an editor (e.g. Notepad++) or a webpage (e.g. GitHub issue), you need to press NVDA+control+alt+L to enable log reader mode and use its commands.
-When you are done with log reading and analyzing tasks, you can disable again NVDA+control+alt+L to disable the log reader mode.
+In another text reading area such as an editor (e.g. Notepad++) or a webpage (e.g. GitHub issue), you need to press `NVDA+X, L` to enable log reader mode and use its commands.
+When you are done with log reading and analyzing tasks, you can disable again `NVDA+X, L` to disable the log reader mode.
 
 The commands available in log reader mode are described hereafter.
 
@@ -228,7 +235,7 @@ For example: `C:\Users\myUserName\AppData\Roaming\nvda\ndtt\consoleStartup.py`
 ## Log the stack trace of the speech function
 
 Sometimes, you may want to see which part of the code is responsible for speaking something.
-For this, you can enable the stack trace logging of the speech function pressing NVDA+control+alt+S.
+For this, you can enable the stack trace logging of the speech function pressing `NVDA+X, S`.
 Each time NVDA speaks, a corresponding stack trace will be logged in the log.
 
 Note: You may modify the script's file directly to patch another function.
@@ -241,7 +248,7 @@ Many testers use NVDA in another language than English.
 But when reporting test results on GitHub, the description of the modified options or the messages reported by NVDA should be written in English.
 Its quite frustrating and time consuming to have to restart NVDA in English to check the exact wording of the options or messages.
 
-To avoid this, the add-on provides an unassigned reverse translation command for NVDA's interface such as messages, control labels in the GUI, etc.
+To avoid this, the add-on provides a reverse translation command, `NVDA+X, R` allowing to reverse translate NVDA's interface such as messages, control labels in the GUI, etc.
 This command uses NVDA's gettext translation to try to reverse translate the last speech.
 More specifically, the first string of the last speech sequence is reverse translated.
 

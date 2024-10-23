@@ -104,13 +104,23 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	@script(
 		description=_(
 			# Translators: Input help mode message for a command of the object property explorer.
-			"Reports the currently selected property of the object property explorer for the navigator object; "
-			"two presses displays this information in a browseable message."
+			"Reports the currently selected property of the object property explorer for the navigator object."
 		),
 		category=ADDON_SUMMARY,
 	)
 	def script_announceObjectInfo(self, gesture):
 		self.announceCurrentInfo(scriptHandler.getLastScriptRepeatCount())
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for a command of the object property explorer.
+			"Displays the currently selected property of the object property explorer for the navigator object "
+			"in a browseable message."
+		),
+		category=ADDON_SUMMARY,
+	)
+	def script_displayObjectInfo(self, gesture):
+		self.announceCurrentInfo(1)
 
 	@script(
 		description=_(
@@ -122,6 +132,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def script_nextObjectInfo(self, gesture):
 		self.index = (self.index + 1) % len(self._INFO_TYPES)
 		self.announceCurrentInfo()
+	script_nextObjectInfo.allowMultipleLayeredCommands = True
 
 	@script(
 		description=_(
@@ -133,12 +144,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def script_priorObjectInfo(self, gesture):
 		self.index = (self.index - 1) % len(self._INFO_TYPES)
 		self.announceCurrentInfo()
+	script_priorObjectInfo.allowMultipleLayeredCommands = True
 
 	def announceCurrentInfo(self, nPress=0):
 		if nPress > 1:
-			return
-		elif nPress == 1:
-			secureBrowseableMessage(self.lastInfo)
 			return
 		infoType, fun = self._INFO_TYPES[self.index]
 		nav = api.getNavigatorObject()
@@ -148,7 +157,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			info = 'Unavailable information.'
 			log.debugWarning('An exception occurred while retrieving the requested information.', exc_info=True)
 		self.lastInfo = '{}:\r\n{}'.format(infoType, info)
-		ui.message(self.lastInfo)
+		if nPress == 0:
+			ui.message(self.lastInfo)
+		elif nPress == 1:
+			secureBrowseableMessage(self.lastInfo)				
 
 	@script(
 		description=_(

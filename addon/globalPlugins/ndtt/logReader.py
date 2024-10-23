@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2021-2023 Cyrille Bougot
+# Copyright (C) 2021-2024 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
@@ -57,6 +57,8 @@ import editableText
 import winUser
 from inputCore import normalizeGestureIdentifier
 import gui.logViewer
+import api
+import treeInterceptorHandler
 
 from .compa import controlTypesCompatWrapper as controlTypes
 from .compa import matchDict
@@ -429,13 +431,8 @@ class LogContainer(ScriptableObject):
 		except AttributeError:
 			return self.rootNVDAObject.windowHandle
 
-	@script(
-		# Translators: Input help mode message for Toggle log Reader script.
-		description=_("Activates or deactivates the log Reader commands."),
-		category=ADDON_SUMMARY,
-		gesture="kb:nvda+control+alt+L",
-	)
-	def script_toggleReaderCommands(self, enabled):
+	def toggleLogReadingCommands(self):
+	
 		self.isLogReaderEnabled = not self.isLogReaderEnabled
 		if self.isLogReaderEnabled:
 			# Translators: A message reported when toggling log reader commands.
@@ -582,7 +579,6 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		# Translators: Input help mode message for Add marker in log script.
 		description=_("Adds a marker in the log."),
 		category=ADDON_SUMMARY,
-		gesture="kb:nvda+control+alt+K",
 	)
 	def script_addMarkerInLog(self, gesture):
 		markerCount = getattr(logHandler, 'ndttLogMarkerCount', 0)
@@ -590,6 +586,25 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		# Translators: a message telling the user that a marker has been inserted in the log.
 		ui.message(_("Marker {} added in the log").format(markerCount))
 		logHandler.ndttLogMarkerCount = markerCount + 1
+
+	@script(
+		# Translators: Input help mode message for Toggle log Reader script.
+		description=_("Activates or deactivates the log Reader commands."),
+		category=ADDON_SUMMARY,
+	)
+	def script_toggleLogReadingCommands(self, gesture):
+		obj = api.getFocusObject()
+		treeInterceptor = obj.treeInterceptor
+		if (
+			isinstance(treeInterceptor, treeInterceptorHandler.DocumentTreeInterceptor)
+			and not treeInterceptor.passThrough
+		):
+			obj = treeInterceptor
+		if isinstance(obj, LogContainer):
+			obj.toggleLogReadingCommands()
+		else:
+			# Translators: A message when using Toggle log Reader script.
+			ui.message(_("Not in a text area."))
 
 	def terminate(self, *args, **kwargs):
 		scriptHandler._getObjScript = _getObjScript_original

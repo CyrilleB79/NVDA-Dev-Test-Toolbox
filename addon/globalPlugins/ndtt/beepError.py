@@ -2,7 +2,7 @@
 # NVDA Dev & Test Toolbox add-on for NVDA
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2019-2023 Cyrille Bougot
+# Copyright (C) 2019-2024 Cyrille Bougot
 
 import globalPluginHandler
 import addonHandler
@@ -94,7 +94,6 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	@script(
 		# Translators: Input help mode message for a toggle command.
 		description=_("Toggles play a sound for logged error."),
-		gesture="kb:nvda+control+alt+E",
 		category=ADDON_SUMMARY,
 	)
 	def script_togglePlayErrorSound(self, gesture):
@@ -111,7 +110,6 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	@script(
 		# Translators: Input help mode message for a command.
 		description=_("Report the last error logged. A second press clears the memorized last error."),
-		gesture="kb:nvda+shift+alt+E",
 		category=ADDON_SUMMARY,
 	)
 	def script_reportLastError(self, gesture):
