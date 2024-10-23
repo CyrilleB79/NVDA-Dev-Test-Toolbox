@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2021-2022 Cyrille Bougot
+# Copyright (C) 2021-2024 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
@@ -405,7 +405,6 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	@script(
 		# Translators: Input help mode message for Restart with options command.
 		description=_("Restarts NVDA with specific options."),
-		gesture="kb:NVDA+shift+q",
 		category=ADDON_SUMMARY,
 	)
 	def script_restartWithOptions(self, gesture):

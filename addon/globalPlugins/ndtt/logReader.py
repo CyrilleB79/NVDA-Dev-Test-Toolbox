@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2021-2023 Cyrille Bougot
+# Copyright (C) 2021-2024 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
@@ -582,7 +582,6 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		# Translators: Input help mode message for Add marker in log script.
 		description=_("Adds a marker in the log."),
 		category=ADDON_SUMMARY,
-		gesture="kb:nvda+control+alt+K",
 	)
 	def script_addMarkerInLog(self, gesture):
 		markerCount = getattr(logHandler, 'ndttLogMarkerCount', 0)

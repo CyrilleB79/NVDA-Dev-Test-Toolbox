@@ -122,6 +122,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def script_nextObjectInfo(self, gesture):
 		self.index = (self.index + 1) % len(self._INFO_TYPES)
 		self.announceCurrentInfo()
+	script_nextObjectInfo.allowMultipleLayeredCommands = True
 
 	@script(
 		description=_(
@@ -133,6 +134,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def script_priorObjectInfo(self, gesture):
 		self.index = (self.index - 1) % len(self._INFO_TYPES)
 		self.announceCurrentInfo()
+	script_priorObjectInfo.allowMultipleLayeredCommands = True
 
 	def announceCurrentInfo(self, nPress=0):
 		if nPress > 1:

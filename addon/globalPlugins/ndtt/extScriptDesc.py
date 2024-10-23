@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2020-2021 Cyrille Bougot
+# Copyright (C) 2020-2024 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from types import MethodType
@@ -64,10 +64,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	@scriptHandler.script(
 		# Translators: Input help mode message for a toggle command.
 		description=_("Toggles the extended script description mode."),
-		gesture="kb:nvda+control+alt+D",
 		category=ADDON_SUMMARY,
 	)
-	def script_tobbleESDMode(self, gesture):
+	def script_toggleESDMode(self, gesture):
 		self.configureESDMode(not self.esdMode)
 
 	def configureESDMode(self, enable, silent=False):
