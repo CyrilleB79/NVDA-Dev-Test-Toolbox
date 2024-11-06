@@ -61,22 +61,27 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		super(GlobalPlugin, self).__init__(*args, **kwargs)
 		self._reverseCatalog = None
 		if pre_speech:
-			pre_speech.register(self.memorizeLastSpeechSequence)
+			pre_speech.register(self.memorizeLastSpeechString)
 		else:
 			self._speak = speechModule.speak
 			speechModule.speak = self._localSpeak
-		self.lastSpokenSeq = []
+		self.lastSpeechString = None
 
 	def _localSpeak(self, sequence, *args, **kwargs):
+		self.memorizeLastSpeechString(sequence)
 		self._speak(sequence, *args, **kwargs)
-		self.memorizeLastSpeechSequence(sequence)
 
-	def memorizeLastSpeechSequence(self, speechSequence):
-		self.lastSpokenSeq = speechSequence
+	def memorizeLastSpeechString(self, speechSequence):
+		seq = (i for i in speechSequence if isinstance(i, str))
+		try:
+			self.lastSpeechString = next(seq)
+		except StopIteration:
+			# No update for speech strings with no text
+			pass
 
 	def terminate(self, *args, **kwargs):
 		if pre_speech:
-			pre_speech.unregister(self.memorizeLastSpeechSequence)
+			pre_speech.unregister(self.memorizeLastSpeechString)
 		else:
 			speechModule.speak = self._speak
 		super(GlobalPlugin, self).terminate(*args, **kwargs)
@@ -91,15 +96,11 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			# Translators: An error message when calling the reverse UI translation command
 			ui.message(_("Reverse translation not available for this version of NVDA."))
 			return
-		seq = [i for i in self.lastSpokenSeq if isinstance(i, str)]
-		nItems = len(seq)
-		if nItems == 0:
+		if self.lastSpeechString is None:
 			# Translators: An error message when calling the reverse UI translation command
 			ui.message(_("No last spoken text"))
-			return
-		text = seq[0]
 		try:
-			valList = self.reverseCatalog[text]
+			valList = self.reverseCatalog[self.lastSpeechString]
 		except KeyError:
 			pass
 		else:
@@ -129,7 +130,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			except AttributeError:
 				pass  # trans.CONTEXT not available before Python 3.11, i.e. NVDA < 2024.1
 			catalog = trans._catalog
-			self._reverseCatalog = {}
+			reverseCatalog = {}
 			for (k, v) in catalog.items():
 				if k == '':
 					continue
@@ -149,10 +150,11 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 					RuntimeError('ctxSplitList = {}'.format(ctxSplitList))
 				localeString = removeAccel(v)
 				try:
-					self._reverseCatalog[localeString]
+					reverseCatalog[localeString]
 				except KeyError:
-					self._reverseCatalog[localeString] = []
-				self._reverseCatalog[localeString].append(ReverseCatalogValue(englishString, ctxString, n))
+					reverseCatalog[localeString] = []
+				reverseCatalog[localeString].append(ReverseCatalogValue(englishString, ctxString, n))
+			self._reverseCatalog = reverseCatalog
 		return self._reverseCatalog
 
 	def reportAndCopyReverseTranslation(self, text):
