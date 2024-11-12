@@ -42,6 +42,7 @@ import queueHandler
 import logHandler
 from logHandler import log
 import gui
+import ui
 from gui import guiHelper, nvdaControls
 from gui import messageBox
 try:
@@ -310,9 +311,9 @@ class LogsManagerDialog(
 		self.logsList.InsertColumn(1, _("Type"), width=self.scaleSize(100))
 		# Translators: The label for a column in logs list
 		self.logsList.InsertColumn(2, _("File name"), width=self.scaleSize(300))
-		# self.logsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemSelected)
 		self.logsList.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.onListItemDeselected)
 		self.logsList.Bind(wx.EVT_LIST_ITEM_SELECTED, self.onListItemSelected)
+		self.logsList.Bind(wx.EVT_KEY_DOWN, self.onListItemKeyDown)
 
 		# this is the group of buttons that affects the currently selected log(s)
 		entryButtonsHelper = guiHelper.ButtonHelper(wx.VERTICAL)
@@ -320,6 +321,11 @@ class LogsManagerDialog(
 		self.openButton = entryButtonsHelper.addButton(self, label=_("&Open"))
 		self.openButton.Disable()
 		self.openButton.Bind(wx.EVT_BUTTON, self.onOpenClick)
+		# Translators: The label for a button in Logs Manager dialog to copy the selected logs.
+		self.copyFilesButton = entryButtonsHelper.addButton(self, label=_("&Copy files"))
+		self.copyFilesButton.Disable()
+		self.copyFilesButton.Bind(wx.EVT_BUTTON, self.onCopyFilesClick)
+				
 		# Translators: The label for a button to delete the selected log(s) in Log Manager dialog.
 		self.deleteButton = entryButtonsHelper.addButton(self, label=_("&Delete"))
 		self.deleteButton.Disable()
@@ -376,7 +382,7 @@ class LogsManagerDialog(
 	def refreshLogsList(self, activeIndex=0):
 		self.logsList.DeleteAllItems()
 		self.curLogs = []
-		for oLog in sorted(getAvailableLogs(self.folder)):
+		for oLog in sorted(getAvailableLogs(self.folder), reverse=True):
 			self.logsList.Append((
 				oLog.displayedDate,
 				oLog.type,
@@ -394,6 +400,7 @@ class LogsManagerDialog(
 			self.logsList.SetItemState(activeIndex, wx.LIST_STATE_FOCUSED, wx.LIST_STATE_FOCUSED)
 		else:
 			self.openButton.Disable()
+			self.copyFilesButton.Disable()
 			self.deleteButton.Disable()
 
 	def getSelectedLogs(self):
@@ -415,13 +422,25 @@ class LogsManagerDialog(
 	def listItemSelectionModified(self, index, selected):
 		nSelected = self.logsList.SelectedItemCount
 		self.openButton.Enable(nSelected > 0)
+		self.copyFilesButton.Enable(nSelected > 0)
 		self.deleteButton.Enable(nSelected > 0)
+
+	def onListItemKeyDown(self, evt):
+		keycode = evt.GetKeyCode()
+		if keycode == wx.WXK_RETURN:
+			self.onOpenClick()
+		elif keycode == wx.WXK_DELETE:
+			self.onDeleteClick()
+		elif evt.ControlDown() and keycode == ord('C'):
+			self.onCopyFilesClick()
+		else:
+			evt.Skip()
 
 	def onClose(self, evt):
 		self.DestroyChildren()
 		self.Destroy()
 
-	def onOpenClick(self, evt):
+	def onOpenClick(self, evt=None):
 		self.logsList.SetFocus()
 		missing = []
 		selectedLogs = self.getSelectedLogs()
@@ -444,7 +463,7 @@ class LogsManagerDialog(
 			msg = _('The selected log(s) is (are) not available anymore')
 			messageBox(message=msg, style=wx.ICON_ERROR, parent=self)
 
-	def onDeleteClick(self, evt):
+	def onDeleteClick(self, evt=None):
 		selectedLogs = self.getSelectedLogs()
 		# Translators: A message displayed to the user when pressing the Delete button in the logs manager dialog
 		msg = _("The following files will be removed:\n{logsList}\n\nWould you like to continue?").format(
@@ -466,6 +485,9 @@ class LogsManagerDialog(
 			try:
 				os.remove(oLog.fullPath)
 				deleted.append(index)
+			except FileNotFoundError:
+				log.debugWarning('File already missing (no action taken): {file}'.format(file=oLog.fullPath))
+				deleted.append(index)
 			except Exception:
 				log.warning('Unable to remove {file}'.format(file=oLog.fullPath), exc_info=True)
 				notDeleted.append(oLog.filename)
@@ -480,7 +502,7 @@ class LogsManagerDialog(
 				)
 			else:
 				# Translators: Message issued when 1 to 4 logs could not be deleted.
-				msgNotDeleted = _("The following logs files could not be deleted.\n\n{file}").format(file=oLog.filename)
+				msgNotDeleted = _("The following logs files could not be deleted.\n\n{files}").format(files='\n'.join(notDeleted))
 			# Translators: The title of a dialog displayed to the user when pressing the Delete button in
 			# the logs manager dialog
 			caption = _('Error')
@@ -490,6 +512,60 @@ class LogsManagerDialog(
 				style=wx.ICON_ERROR,
 				parent=self,
 			)
+
+	def onCopyFilesClick(self, evt=None):
+		compositeData = wx.DataObjectComposite()
+		fileData = wx.FileDataObject()
+		missing = []
+		selectedLogs = self.getSelectedLogs()
+		for lg, idx in selectedLogs:
+			if not os.path.isfile(lg.fullPath):
+				missing.append(idx)
+				log.debugWarning("Unable to copy the file {file}. It is not present anymore".format(file=lg.fullPath))
+				continue
+			fileData.AddFile(lg.fullPath)
+		compositeData.Add(fileData, preferred=True)
+		if wx.TheClipboard.Open():
+			wx.TheClipboard.Clear()
+			wx.TheClipboard.SetData(compositeData)
+			wx.TheClipboard.Close()
+			if missing:
+				for index in sorted(missing, reverse=True):
+					self.logsList.DeleteItem(index)
+				# Translators: Message issued when when copying logs.
+				messageBox(
+					# Translators: The content of a dialog displayed to the user when copying files in the logs manager
+					# dialog fails
+					message="One or more selected logs has not been copied because the corresponding files are missing.",
+					# Translators: The title of a dialog displayed to the user when copying files in the logs manager dialog
+					# fails
+					caption=_('Error'),
+					style=wx.ICON_ERROR,
+					parent=self,
+				)
+			else:
+				# Translators: reported when requesting to copy the logs selected in the logs manager dialog.
+				ui.message(_('Log files copied'))
+		else:
+			log.debugWarning('Unable to open the clipboard')
+			# Translators: reported when requesting to copy the logs selected in the logs manager dialog.
+			ui.message(_('Unable to copy the selected logs; the clipboard is not available.'))
+		
+		return
+		
+		# Create an array of wide character strings for the file path
+		file_path_w = ctypes.create_unicode_buffer(file_path)
+		# Allocate global memory for the file path
+		hGlobal = ctypes.windll.kernel32.GlobalAlloc(0x42, ctypes.sizeof(file_path_w))
+		ctypes.cdll.msvcrt.wcscpy(ctypes.c_wchar_p(hGlobal), file_path_w)
+		# Open the clipboard and empty it
+		if ctypes.windll.user32.OpenClipboard(0):
+			ctypes.windll.user32.EmptyClipboard()
+			ctypes.windll.user32.SetClipboardData(CF_HDROP, hGlobal)
+			ctypes.windll.user32.CloseClipboard()
+			ui.message("File copied")
+		else:
+			wx.MessageBox("Unable to open the clipboard.", "Error", wx.OK | wx.ICON_ERROR)
 
 	def onOpenSettingsClick(self, evt):
 		wx.CallAfter(

@@ -182,7 +182,13 @@ This add-on allows you to configure if you want to backup old logs and how many 
 
 A log manager dialog allows to view the backed up logs.
 It can be opened going to NVDA menu -> Tools -> Logs manager
-In this dialog, you can see the list of all the backup logs, open or delete them.
+In this dialog, you can see the list of all the backup logs and perform various actions on the selected log:
+* open it (press `Enter`)
+* delete it (press `Delete`)
+* copy the log file (press `control+C`)
+
+You can also select multiple logs to perform an actions on all of them.
+
 To be able to open a log, you should first have configured the [Command to open a file in your favorite editor](#settingsOpenCommand).
 
 ## Python console extension
