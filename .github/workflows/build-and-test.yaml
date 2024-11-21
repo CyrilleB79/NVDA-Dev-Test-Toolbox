@@ -39,7 +39,7 @@ jobs:
         expand-archive addon.zip $env:appdata\nvda\addons\addon
     - name: Get last release
       id: get-last-release
-      uses: actions/github-script@v6
+      uses: actions/github-script@v7
       with:
         script: |
           const result = await github.request('GET /repos/{owner}/{repo}/releases/latest', {
