@@ -8,15 +8,16 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        nvda-release: [2019.2, 2019.2.1, 2019.3, 2019.3.1, 2020.1, 2020.2, 2020.3, 2020.4, 2021.1, 2021.2, 2021.3, 2021.3.1, 2021.3.2, 2021.3.3, 2021.3.4, 2021.3.5, 2022.1, 2022.2, 2022.2.1, 2022.2.2, 2022.2.3, 2022.2.4, 2022.3, 2022.3.1, 2022.3.2, 2022.3.3, 2022.4, 2023.1, 2023.2, 2023.3, 2023.3.1, 2023.3.2, 2023.3.3]
+        # zzz nvda-release: [2019.2, 2019.2.1, 2019.3, 2019.3.1, 2020.1, 2020.2, 2020.3, 2020.4, 2021.1, 2021.2, 2021.3, 2021.3.1, 2021.3.2, 2021.3.3, 2021.3.4, 2021.3.5, 2022.1, 2022.2, 2022.2.1, 2022.2.2, 2022.2.3, 2022.2.4, 2022.3, 2022.3.1, 2022.3.2, 2022.3.3, 2022.4, 2023.1, 2023.2, 2023.3, 2023.3.1, 2023.3.2, 2023.3.3]
+        nvda-release: [2019.2.1, 2019.3]
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-    - name: Set up Python 3.7
+    - name: Set up Python 3.11
       uses: actions/setup-python@v5
       with:
-        python-version: 3.7
+        python-version: 3.11
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -24,6 +25,22 @@ jobs:
         pip install Markdown
         pip install flake8
         pip install flake8-tabs
+    - name: Download gettext
+      run: |
+        curl -LO https://github.com/mlocati/gettext-iconv-windows/releases/download/v0.22.5a-v1.17-r3/gettext0.22.5a-iconv1.17-shared-64.exe
+        Start-Process -FilePath .\gettext0.22.5a-iconv1.17-shared-64.exe -ArgumentList "/SILENT", "/DIR=C:\gettext" -Wait
+    - name: Add custom directory to PATH
+      shell: pwsh
+      run: |
+        Install-Package Gettext.Tools -Force;
+        Get-Item Env:PATH;
+        which msgfmt
+    # Step 3: Verify the updated PATH in subsequent steps
+    - name: Show PATH
+      run: echo %PATH%
+    - name: Verify msgfmt installation
+      run: msgfmt --version
+      shell: cmd
     - name: Lint with flake8
       run:
         flake8 --config .github/extra_resources/setup.cfg --exit-zero addon
