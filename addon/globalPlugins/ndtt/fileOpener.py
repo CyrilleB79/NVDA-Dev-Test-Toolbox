@@ -254,7 +254,11 @@ def openObject(objPath):
 	tokens = objPath.split('.')
 	for iToken in range(len(tokens)):
 		modName = '.'.join(tokens[0:iToken + 1])
-		objName = '.'.join(tokens[iToken + 1:])
+		inModuleTokens = tokens[iToken + 1:]
+		if inModuleTokens:
+			objName = '.'.join(inModuleTokens)
+		else:
+			objName = None
 		try:
 			mod = importFunction(modName)
 		# Python 2 raise ImportError for non-existing modules; Python 3 raises ModuleNotFoundError instead.
@@ -271,7 +275,7 @@ def openObject(objPath):
 
 
 def openObjectInModule(objName, mod):
-	tokens = objName.split('.')
+	tokens = objName.split('.') if objName else []
 	obj = mod
 	try:
 		for attr in tokens:
