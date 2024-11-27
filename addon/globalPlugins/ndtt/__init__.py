@@ -35,6 +35,7 @@ if not globalVars.appArgs.secure:
 	from . import logManagement  # No log in secure mode.
 	from .logReader import GlobalPlugin as LogReaderGP  # No log nor log viewer in secure mode.
 	from .pythonConsoleEx import GlobalPlugin as PythonConsoleExGP  # No Python console in secure mode
+	from .scriptOpener import GlobalPlugin as ScriptOpenerGP  # Do not open any editor in secure mode.
 
 addonHandler.initTranslation()
 
@@ -46,6 +47,7 @@ NDTT_LAYERED_COMMANDS_LIST = [
 	# - a gesture list
 	# - the associated script name
 	# - if the command is available in secure mode.
+	(["c"], "openScriptForNextGesture", False),
 	(["d"], "toggleESDMode", True),
 	(["e"], "reportLastError", False),
 	(["shift+e"], "togglePlayErrorSound", False),
@@ -92,7 +94,8 @@ else:
 			StackTracingGP,
 			logManagement.GlobalPlugin,
 			LogReaderGP,
-			PythonConsoleExGP
+			PythonConsoleExGP,
+			ScriptOpenerGP,
 	):
 		pass
 

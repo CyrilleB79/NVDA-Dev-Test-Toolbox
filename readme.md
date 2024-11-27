@@ -11,7 +11,7 @@ This add-on gathers various features for NVDA debugging and testing.
 * An enhanced restart dialog to specify some extra options when restarting NVDA.
 * Various features related to logged errors.
 * An object property explorer.
-* An extended script description mode: when enabled input help mode report information on scripts that have no description.
+* Script tools: an extended script description mode and a script opener.
 * Commands to help log reading and analyzing.
 * Backups of old logs
 * In the Python console workspace, a function to open the source code of an object.
@@ -71,7 +71,21 @@ A toggle command, `NVDA+X, control+N`, allows to switch between this custom repo
 For exemple, you may select "windowClassName" property and enable custom object reporting.
 Then when moving the navigator object to next or previous object, you will hear the object's windowClassName instead of usual reporting.
 
-## Extended script description mode
+## Script tools
+
+### The script opener
+
+The script opener command allows to open the code of a script knowing its gesture.
+
+To use it press `NVDA+x, C` and then the gesture of the script which you want to see the code of.
+For example to see the code of the script that reports the title of the foreground window, press `NVDA+X, C` and then `NVDA+T`.
+
+For this feature to work, you need to have configured your [favorite editor's command](#settingsOpenCommand) in the add-on's settings.
+If you are not running NVDA from source and want to open NVDA's code, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
+
+### Extended script description mode
+
+The extended script description mode allows to have reported information on scripts without description in input help mode.
 
 When the Extended script description mode is active, the input help mode (NVDA+1) is modified as follows.
 If a script has no description, the script's name and class are reported.
@@ -171,7 +185,7 @@ You may want to open the file containing this code to understand the context of 
 Just press C to open this file.
 
 For this feature to work, you need to have configured your [favorite editor's command](#settingsOpenCommand) in the add-on's settings.
-If you are not running NVDA from source, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
+If you are not running NVDA from source and want to open NVDA's code, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
 
 <a id="oldLogsBackup"></a>
 ## Backup of old logs
@@ -200,7 +214,7 @@ In the console, you can call the following function to view the source code that
 `openCodeFile(myVar)`  
 
 For this feature to work, you need to have configured your [favorite editor's command](#settingsOpenCommand) in the add-on's settings.
-If you are not running NVDA from source, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
+If you are not running NVDA from source and want to open NVDA's code, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
 
 The `openCodeFile` functions can be called on objects defined in NVDA's code or on objects defined by add-ons.
 It cannot be called on objects whose source code is not available such as python builtins.
