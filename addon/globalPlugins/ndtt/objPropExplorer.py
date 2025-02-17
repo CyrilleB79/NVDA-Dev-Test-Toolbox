@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2019-2024 Cyrille Bougot
+# Copyright (C) 2019-2025 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
@@ -17,10 +17,10 @@ import controlTypes as oldControlTypes
 from logHandler import log
 import addonHandler
 import scriptHandler
-from scriptHandler import script
 import speech
 
 from .securityUtils import secureBrowseableMessage
+from .speechOnDemand import script
 
 addonHandler.initTranslation()
 
@@ -107,6 +107,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			"Reports the currently selected property of the object property explorer for the navigator object."
 		),
 		category=ADDON_SUMMARY,
+		speakOnDemand=True,
 	)
 	def script_announceObjectInfo(self, gesture):
 		self.announceCurrentInfo(scriptHandler.getLastScriptRepeatCount())

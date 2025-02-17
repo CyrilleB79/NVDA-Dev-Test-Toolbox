@@ -2,11 +2,10 @@
 # NVDA Dev & Test Toolbox add-on for NVDA
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2019-2024 Cyrille Bougot
+# Copyright (C) 2019-2025 Cyrille Bougot
 
 import globalPluginHandler
 import addonHandler
-from scriptHandler import script
 import scriptHandler
 import logHandler
 import logging
@@ -16,6 +15,7 @@ import config
 import os
 
 from .compa import appDir
+from .speechOnDemand import script
 
 addonHandler.initTranslation()
 
@@ -111,6 +111,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		# Translators: Input help mode message for a command.
 		description=_("Report the last error logged. A second press clears the memorized last error."),
 		category=ADDON_SUMMARY,
+		speakOnDemand=True,
 	)
 	def script_reportLastError(self, gesture):
 		nRepeat = scriptHandler.getLastScriptRepeatCount()

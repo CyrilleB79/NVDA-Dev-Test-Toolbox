@@ -11,7 +11,6 @@ import wx
 
 import globalPluginHandler
 import addonHandler
-from scriptHandler import script
 import languageHandler
 import api
 import ui
@@ -32,6 +31,8 @@ try:
 except AttributeError:
 	# For older version such as NVDA 2019.3.1 (probably < NVDA 2021.1)
 	speechModule = speech
+
+from .speechOnDemand import script
 
 addonHandler.initTranslation()
 
@@ -90,6 +91,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		# Translators: Input help mode message for Reverse UI translation command
 		description=_("Perform a reverse UI translation of the last speech"),
 		category=ADDON_SUMMARY,
+		speakOnDemand=True,
 	)
 	def script_reverseUITranslation(self, gesture):
 		if not self.reverseCatalog:
