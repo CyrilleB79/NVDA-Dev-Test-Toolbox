@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2024 Cyrille Bougot
+# Copyright (C) 2024-2025 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 import globalPluginHandler
@@ -9,6 +9,8 @@ import ui
 from logHandler import log
 from scriptHandler import script
 import inputCore
+import core
+
 from .fileOpener import openCodeFile
 
 addonHandler.initTranslation()
@@ -32,11 +34,20 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		ui.message(_("Execute a gesture to open the code of the corresponding script."))
 
 	def  _openScriptForNextGestureCaptor(self, gesture):
+		if gesture.isModifier:
+			return False
+		inputCore.manager._captureFunc = None
 		script = gesture.script
 		if script:
-			inputCore.manager._captureFunc = None
 			openCodeFile(script)
-			return False
+		else:
+			core.callLater(
+				0,
+				ui.message,
+				# Translators: Reported when executing the command to open the script corresponding to the next gesture.
+				_("Script not found for {gestureName}".format(gestureName=gesture.displayName)),
+			)
+		return False
 
 	def terminate(self):
 		if inputCore.manager._captureFunc == self._openScriptForNextGestureCaptor:
