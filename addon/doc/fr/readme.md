@@ -423,10 +423,10 @@ lorsque la sauvegarde a lieu.
   messages ERROR normaux.
 * De nouvelles commandes de navigation rapide dans le journal ont été
   ajoutées pour passer aux messages d'entrée et de parole.
-* A new command allow to place a marker in the log; and specific quick
-  navigation commands in log reading mode allow to jump to them. Credit: the
-  initial idea for this feature comes from Debug Helper add-on by Luke
-  Davis.
+* Une nouvelle commande permet de placer un marqueur dans le journal; et des
+  commandes de navigation rapide spécifiques en mode lecture du journal
+  permettent de s'y rendre. Crédit : l'idée initiale de cette fonctionnalité
+  vient de l'extension Debug Helper de Luke Davis.
 * Correctif : La mémorisation de la dernière erreur n'échoue plus dans
   certains cas.
 * Correctif : l'extension peut s'initialiser à nouveau avec NVDA 2019.2.1.
