@@ -336,6 +336,17 @@ This option allows to choose if the [reverse translation command](#reverseTransl
 
 ## Change log
 
+### Version 7.0
+
+* Layered commands have been introduced; the entry point is `NVDA+X`.
+The existing commands have been modified accordingly.
+* A new command (`NVDA+X, R`) to reverse translate the last spoken message.
+* A new command (`NVDA+X, C`) to open the source code of the script associated to the next pressed gesture.
+* Added speech on demand support.
+* The log manager now allows more actions, either with the dedicated buttons in the dialogs or using keyboard shortcuts in the list: `enter` to open the log, `control+C` to copy the log file and `delete` to delete a log file.
+* The sorting order in the log manager has been reversed (most recent log on top).
+* Fixed an issue when trying to open a Python module with openCodeFile function.
+
 ### Version 6.3
 
 * Compatibility with NVDA 2024.1.
