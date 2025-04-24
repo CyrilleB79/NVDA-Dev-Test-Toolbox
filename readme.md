@@ -81,7 +81,7 @@ To use it press `NVDA+x, C` and then the gesture of the script which you want to
 For example to see the code of the script that reports the title of the foreground window, press `NVDA+X, C` and then `NVDA+T`.
 
 For this feature to work, you need to have configured your [favorite editor's command](#settingsOpenCommand) in the add-on's settings.
-If you are not running NVDA from source and want to open NVDA's code, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
+If you are not running NVDA from source, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
 
 ### Extended script description mode
 
@@ -179,7 +179,7 @@ In the log some line may refer to the source code:
 * The header line of a logged message contains the function which has logged this message, e.g.:  
   `INFO - config.ConfigManager._loadConfig (22:45:26.145) - MainThread (16580):`  
 * The content of a message logged in input help mode (logged at info level):  
-  Input help: gesture kb(desktop):NVDA+t, bound to script title on globalCommands.GlobalCommands`  
+  `Input help: gesture kb(desktop):NVDA+t, bound to script title on globalCommands.GlobalCommands`  
 
 You may want to open the file containing this code to understand the context of the traceback or the logged message.
 Just press C to open this file.
@@ -197,6 +197,7 @@ This add-on allows you to configure if you want to backup old logs and how many 
 A log manager dialog allows to view the backed up logs.
 It can be opened going to NVDA menu -> Tools -> Logs manager
 In this dialog, you can see the list of all the backup logs and perform various actions on the selected log:
+
 * open it (press `Enter`)
 * delete it (press `Delete`)
 * copy the log file (press `control+C`)
@@ -268,7 +269,7 @@ Many testers use NVDA in another language than English.
 But when reporting test results on GitHub, the description of the modified options or the messages reported by NVDA should be written in English.
 Its quite frustrating and time consuming to have to restart NVDA in English to check the exact wording of the options or messages.
 
-To avoid this, the add-on provides a reverse translation command, `NVDA+X, R` allowing to reverse translate NVDA's interface such as messages, control labels in the GUI, etc.
+To avoid this, the add-on provides a reverse translation command (`NVDA+X, R`) allowing to reverse translate NVDA's interface such as messages, control labels in the GUI, etc.
 This command uses NVDA's gettext translation to try to reverse translate the last speech.
 More specifically, the first string of the last speech sequence is reverse translated.
 
@@ -339,7 +340,7 @@ This option allows to choose if the [reverse translation command](#reverseTransl
 ### Version 7.0
 
 * Layered commands have been introduced; the entry point is `NVDA+X`.
-The existing commands have been modified accordingly.
+  The existing commands have been modified accordingly.
 * A new command (`NVDA+X, R`) to reverse translate the last spoken message.
 * A new command (`NVDA+X, C`) to open the source code of the script associated to the next pressed gesture.
 * Added speech on demand support.
