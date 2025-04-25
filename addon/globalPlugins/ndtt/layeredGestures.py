@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2024 Cyrille Bougot
+# Copyright (C) 2024-2025 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
@@ -11,8 +11,14 @@ from scriptHandler import script
 from tones import beep
 from keyLabels import localizedKeyLabels
 from baseObject import ScriptableObject
+import addonHandler
 
 from .securityUtils import secureBrowseableMessage
+
+try:
+	addonHandler.initTranslation()
+except addonHandler.AddonError:
+	pass
 
 
 # Below toggle code came from Tyler Spivey's code, with enhancements by Joseph Lee.
