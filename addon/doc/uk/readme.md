@@ -1,4 +1,5 @@
 # NVDA Dev & Test Toolbox #
+
 * Автор: Cyrille Bougot
 * Сумісність з NVDA: 2019.2 і пізніші
 * Завантажити [стабільну версію][1]
@@ -11,30 +12,38 @@
   перезапуску NVDA.
 * Різні функції, пов’язані з зареєстрованими помилками.
 * Дослідник властивостей об’єктів.
-* Розширений опис сценарію: якщо ввімкнено режим допомоги при введенні,
-  повідомляє інформацію про сценарії, які не мають опису.
+* Script tools: an extended script description mode and a script opener.
 * Команди, які допомагають читати та аналізувати журнали.
 * Резервні копії старих журналів
 * У робочій області консолі Python — функція для відкриття вихідного коду
   об’єкта.
 * Спеціальний сценарій запуску для консолі Python
 * Команда для журналу відстеження функції speech.speak.
+* A command to reverse translate the items of the interface.
+
+## Commands
+
+This add-on uses layered commands for all of the new commands it adds.  The
+entry point for these commands is `NVDA+X`; thus all the commands should be
+executed by `NVDA+X` followed by another single letter or gesture.  You can
+list all the available layered commands pressing `NVDA+X, H`.
+
+For the commands that you use more frequently, you can also define a direct
+gesture in the input gesture dialog.
 
 ## Розширений діалог перезапуску
 
-Команда NVDA+shift+Q відкриває діалог для встановлення додаткових параметрів
-перед перезапуском NVDA. Параметри, які можна вказати, відповідають
-[параметрам командного рядка][2], які можна використовувати з `nvda.exe`,
-напр. `-c` для шляху конфігурації, `--disable-addons` для вимкнення додатків
-тощо.
+The `NVDA+X, Q` command opens a dialog to specify some extra options before
+restarting NVDA.  The options that can be specified correspond to the
+[command line options][2] that can be used with `nvda.exe`, e.g. `-c` for
+config path, `--disable-addons` to disable add-ons, etc.
 
 ## Функції, пов’язані з зареєстрованими помилками
 
 ### Додано сценарій для повідомлення про останню зареєстровану помилку
 
-Натискання NVDA+shift+alt+E дозволяє повідомити про останню зареєстровану
-помилку без необхідності відкривати журнал. Повторне натискання видаляє
-останню запам’ятовану помилку.
+Pressing `NVDA+X, E` allows to report the last error logged without needing
+to open the log. A second press clears the memorized last error.
 
 ### Відтворення звуку під час журналювання помилок
 
@@ -42,8 +51,8 @@
 представлено в NVDA 2021.3 і дозволяє вказати, чи NVDA відтворюватиме звук
 помилки, якщо помилка зареєстрована.
 
-Додаток надає ще одну команду (NVDA+control+alt+E) для перемикання цього
-параметра. Можна вибрати:
+This add-on provides an additional command (`NVDA+X, shift+E`) to toggle
+this setting.  You can choose:
 
 * «Лише в тестових версіях» (початково), щоб сигнал помилки NVDA звучав,
   лише якщо поточна версія NVDA є тестовою (альфа-, бета-версія або запущена
@@ -63,10 +72,14 @@
 Щоб отримати список властивостей об’єкта, перемістіть до нього об’єктний
 навігатор і скористайтеся такими командами:
 
-* Вибирає попередню властивість і повідомляє її для об’єкта навігатора.
-* Вибирає наступну властивість і повідомляє її для об’єкта навігатора.
-* Повідомляє поточну вибрану властивість для об’єкта навігатора; два
-  натискання відображають цю інформацію у повідомленні для перегляду.
+* `NVDA+X, upArrow`: Selects the previous property and reports it for the
+  navigator object.
+* `NVDA+X, downArrow`: Selects the next property and reports it for the
+  navigator object.
+* `NVDA+X, N`: Reports the currently selected property for the navigator
+  object
+* `NVDA+X, shift+N`: Displays the currently selected property for the
+  navigator object in a browseable message
 
 Список підтримуваних властивостей такий: ім’я, роль, стан, значення,
 windowClassName, windowControlID, windowHandle, місцезнаходження, клас
@@ -74,25 +87,41 @@ Python, клас Python mro.
 
 When using object navigation commands, you can also choose to have the
 currently selected property reported instead of NVDA usual object
-reporting.  A toggle command allows to switch between this custom reporting
-of objects and NVDA usual reporting.
+reporting.  A toggle command, `NVDA+X, control+N`, allows to switch between
+this custom reporting of objects and NVDA usual reporting.
 
 For exemple, you may select "windowClassName" property and enable custom
 object reporting.  Then when moving the navigator object to next or previous
 object, you will hear the object's windowClassName instead of usual
 reporting.
 
-All the commands of the Object property explorer are unassigned by default;
-you will have to assign them a shortcut in the Input gesture dialog to use
-them.
+## Script tools
 
-## Режим розширеного опису сценарію
+### The script opener
 
-Коли режим розширеного опису сценарію активний, режим допомоги при введенні
-(NVDA+1) змінюється наступним чином. Якщо сценарій не має опису,
-повідомляється ім’я та клас сценарію. Якщо сценарій має опис, його опис
-повідомляється як зазвичай. Жест для ввімкнення або вимкнення цієї функції:
-NVDA+control+alt+D.
+The script opener command allows to open the code of a script knowing its
+gesture.
+
+To use it press `NVDA+x, C` and then the gesture of the script which you
+want to see the code of.  For example to see the code of the script that
+reports the title of the foreground window, press `NVDA+X, C` and then
+`NVDA+T`.
+
+For this feature to work, you need to have configured your [favorite
+editor's command](#settingsOpenCommand) in the add-on's settings.  If you
+are not running NVDA from source, the [location of NVDA source
+code](#settingsNvdaSourcePath) should also have been configured.
+
+### Режим розширеного опису сценарію
+
+The extended script description mode allows to have reported information on
+scripts without description in input help mode.
+
+When the Extended script description mode is active, the input help mode
+(NVDA+1) is modified as follows.  If a script has no description, the
+script's name and class are reported.  If a script has a description, its
+description is reported as usual.  The gesture to activate or deactivate
+this feature is `NVDA+X, D`.
 
 Виконання жесту, прив’язаного до сценарію без опису в режимі допомоги при
 введенні також створює запис для цього сценарію в діалозі керування
@@ -113,7 +142,7 @@ Control+shift+I також перемикає курсив у Word, навіть
 вам варто виконати такі кроки:
 
 * Відкрити документ Word.
-* Вмикає режим розширеного опису сценарію за допомогою NVDA+control+alt+D.
+* Enable the extended script description mode with `NVDA+X, D`.
 * Увімкніть режим допомоги при введенні за допомогою NVDA+1.
 * Натисніть Control+I, щоб повідомити про курсив і додати його в діалог
   жестів.
@@ -123,8 +152,7 @@ Control+shift+I також перемикає курсив у Word, навіть
   виберіть команду «toggleItalic на
   NVDAObjects.window.winword.WordDocument».
 * Додайте комбінацію клавіш control+shift+I та перевірте.
-* Якщо хочете, вимкніть режим розширеного опису сценарію за допомогою
-  NVDA+control+alt+D.
+* If you want, exit the extended script description mode with `NVDA+X, D`.
 
 Відома помилка: сценарій, доданий для певного класу, видимий, навіть якщо
 менеджер жестів відкрито в іншому контексті.
@@ -135,7 +163,7 @@ Control+shift+I також перемикає курсив у Word, навіть
 ### Place markers in the log
 
 While testing or working, you may want to mark a specific moment in the log, so that you can turn to it easily later when reading the log.
-To add a marker message in the log, press NVDA+control+K.
+To add a marker message in the log, press `NVDA+X, K`.
 A message as follows will be logged at INFO level:  
 `-- NDTT marker 0 --`  
 You can add as many markers as you want in the log.  The marker's number
@@ -144,14 +172,13 @@ reset when NVDA is restarted.
 
 ### Log reader mode
 
-Режим читання журналу надає команди для полегшення читання та аналізу
-журналу. У вікні перегляду журналу читання журналу початково ввімкнено, тому
-команди читання журналу доступні негайно. В іншій області читання тексту,
-наприклад у редакторі (Notepad++) або на веб-сторінці (наприклад, GitHub),
-вам потрібно натиснути NVDA+control+alt+L, щоб увімкнути режим читання
-журналу та використовувати його команди. Коли ви закінчите з читанням
-журналу та аналізом завдань, ви можете знову натиснути NVDA+control+alt+L,
-щоб вимкнути режим читання журналу.
+A log reader mode provides commands to ease log reading and analyzing.  In
+the log viewer window the log reader is enabled by default, thus log reading
+commands are available immediately.  In another text reading area such as an
+editor (e.g. Notepad++) or a webpage (e.g. GitHub issue), you need to press
+`NVDA+X, L` to enable log reader mode and use its commands.  When you are
+done with log reading and analyzing tasks, you can disable again `NVDA+X, L`
+to disable the log reader mode.
 
 Команди, доступні в режимі читання журналу, описані нижче.
 
@@ -210,16 +237,17 @@ If you want to disable speech translation, press T again.
   зареєструвала це повідомлення, наприклад.:
   `INFO - config.ConfigManager._loadConfig (22:45:26.145) - MainThread (16580):`  
 * The content of a message logged in input help mode (logged at info level):
-  Input help: gesture kb(desktop):NVDA+t, bound to script title on globalCommands.GlobalCommands`  
+  `Input help: gesture kb(desktop):NVDA+t, bound to script title on globalCommands.GlobalCommands`  
 
 Ви можете відкрити файл, що містить цей код, щоб зрозуміти контекст
 відстеження або зареєстрованого повідомлення. Просто натисніть C, щоб
 відкрити цей файл.
 
-Щоб ця функція працювала, вам потрібно налаштувати [улюблену команду
-редактора] (#settingsOpenCommand) у налаштуваннях додатка.  Якщо ви не
-запускаєте NVDA з вихідного коду, слід також налаштувати [місце розташування
-вихідного коду NVDA](#settingsNvdaSourcePath).
+For this feature to work, you need to have configured your [favorite
+editor's command](#settingsOpenCommand) in the add-on's settings.  If you
+are not running NVDA from source and want to open NVDA's code, the [location
+of NVDA source code](#settingsNvdaSourcePath) should also have been
+configured.
 
 <a id="oldLogsBackup"></a>
 ## Резервне копіювання старих журналів
@@ -231,10 +259,18 @@ NVDA вже надає резервну копію журналу поперед
 налаштувати, чи потрібно створювати резервну копію старих журналів і скільки
 їх має бути; це робиться у [налаштуваннях додатка] (#settingsLogsBackup).
 
-Діалог менеджера журналів дозволяє переглядати резервні копії журналів.
-Його можна відкрити за допомогою меню NVDA -> Інструменти -> Менеджер журналів
-У цьому діалозі ви можете переглянути список усіх журналів резервного копіювання, відкрити або видалити їх.
-Щоб мати змогу відкрити журнал, вам слід попередньо налаштувати [Команду для відкриття файлу у вашому улюбленому редакторі] (#settingsOpenCommand).
+A log manager dialog allows to view the backed up logs.
+It can be opened going to NVDA menu -> Tools -> Logs manager
+In this dialog, you can see the list of all the backup logs and perform various actions on the selected log:
+
+* open it (press `Enter`)
+* delete it (press `Delete`)
+* copy the log file (press `control+C`)
+
+You can also select multiple logs to perform an actions on all of them.
+
+To be able to open a log, you should first have configured the [Command to
+open a file in your favorite editor](#settingsOpenCommand).
 
 ## Розширення консолі Python
 
@@ -244,10 +280,11 @@ NVDA вже надає резервну копію журналу поперед
 У консолі можна викликати таку функцію, щоб переглянути вихідний код, який визначає змінну `myVar`:
 `openCodeFile(myVar)`
 
-Щоб ця функція працювала, вам потрібно налаштувати [улюблену команду
-редактора] (#settingsOpenCommand) у налаштуваннях додатка.  Якщо ви не
-запускаєте NVDA з вихідного коду, слід також налаштувати [місце розташування
-вихідного коду NVDA](#settingsNvdaSourcePath).
+For this feature to work, you need to have configured your [favorite
+editor's command](#settingsOpenCommand) in the add-on's settings.  If you
+are not running NVDA from source and want to open NVDA's code, the [location
+of NVDA source code](#settingsNvdaSourcePath) should also have been
+configured.
 
 Функції `openCodeFile` можна викликати для об’єктів, розміщених у коді NVDA,
 або для об’єктів, визначених додатками. Його не можна викликати на об’єктах,
@@ -292,14 +329,48 @@ NVDA вже надає резервну копію журналу поперед
 
 ## Журнал відстеження функцій мовлення
 
-Іноді вам потрібно буде подивитися, яка частина коду відповідає за
-мовлення. Для цього ви можете ввімкнути журнал відстеження функції мовлення,
-натиснувши NVDA+control+alt+S. Кожного разу, коли NVDA говорить, відповідна
-інформація буде записана в журналі.
+Sometimes, you may want to see which part of the code is responsible for
+speaking something.  For this, you can enable the stack trace logging of the
+speech function pressing `NVDA+X, S`.  Each time NVDA speaks, a
+corresponding stack trace will be logged in the log.
 
 Примітка. Ви можете змінити файл сценарію безпосередньо, щоб виправити іншу
 функцію. Перегляньте всі інструкції у файлі, щоб дізнатися більше про
 використання.
+
+<a id="reverseTranslationCommand"></a>
+## Reverse translation command
+
+Many testers use NVDA in another language than English.  But when reporting
+test results on GitHub, the description of the modified options or the
+messages reported by NVDA should be written in English.  Its quite
+frustrating and time consuming to have to restart NVDA in English to check
+the exact wording of the options or messages.
+
+To avoid this, the add-on provides a reverse translation command (`NVDA+X,
+R`) allowing to reverse translate NVDA's interface such as messages, control
+labels in the GUI, etc.  This command uses NVDA's gettext translation to try
+to reverse translate the last speech.  More specifically, the first string
+of the last speech sequence is reverse translated.
+
+For example, in French NVDA, if I arrow down to the Tools menu named
+"Outils", NVDA will say "Outils sous-Menu o" which stands for "Tools subMenu
+o".  If I press the reverse translation command just after that, NVDA will
+reverse translate "Outils" to "Tools".
+
+Looking at the log afterwards, we can find the following lines:
+```
+IO - speech.speech.speak (23:38:24.450) - MainThread (2044):
+Speaking ['Outils', 'sous-Menu', CharacterModeCommand(True), 'o', CharacterModeCommand(False), CancellableSpeech (still valid)]
+```
+This confirms that "Outils was the first string in the speech sequence.
+
+In case the reverse translation leads to two or more possible results, a
+context menu is opened listing all the possibilities.
+
+The result of the reverse translation is also copied to the clipboard if the
+corresponding [option](#settingsCopyReverseTranslation) is enabled, which is
+the default value.
 
 <a id="settings"></a>
 ## Налаштування
@@ -352,7 +423,35 @@ NVDA вже надає резервну копію журналу поперед
 чинності лише під час наступного запуску NVDA, коли буде виконано резервне
 копіювання.
 
+<a id="settingsCopyReverseTranslation"></a>
+### Copy reverse translation to clipboard
+
+This option allows to choose if the [reverse translation
+command](#reverseTranslationCommand) also copies its result to the
+clipboard.
+
 ## Журнал змін
+
+### Version 7.0
+
+* Layered commands have been introduced; the entry point is `NVDA+X`.  The
+  existing commands have been modified accordingly.
+* A new command (`NVDA+X, R`) to reverse translate the last spoken message.
+* A new command (`NVDA+X, C`) to open the source code of the script
+  associated to the next pressed gesture.
+* Added speech on demand support.
+* The log manager now allows more actions, either with the dedicated buttons
+  in the dialogs or using keyboard shortcuts in the list: `enter` to open
+  the log, `control+C` to copy the log file and `delete` to delete a log
+  file.
+* The sorting order in the log manager has been reversed (most recent log on
+  top).
+* Fixed an issue when trying to open a Python module with openCodeFile
+  function.
+
+### Version 6.3
+
+* Compatibility with NVDA 2024.1.
 
 ### Version 6.2
 
@@ -391,11 +490,9 @@ NVDA вже надає резервну копію журналу поперед
 * New log quick navigation commands have been added to jump to input and to
   speech messages.
 * A new command allow to place a marker in the log; and specific quick
-  navigation commands in log reading mode allow to jump to them. Credit: the
-  initial idea for this feature comes from Debug Helper add-on by Luke
-  Davis.
-* Bubfix: The memorization of the last error do not fail anymore in some
-  cases.
+  navigation commands in log reading mode allow to jump to them.
+  Credit: the initial idea for this feature comes from Debug Helper add-on by Luke Davis.
+* Bubfix: The memorization of the last error do not fail anymore in some cases.
 * Bugfix: The add-on can initialize again with NVDA 2019.2.1.
 * Bugfix: Log saving feature will not fail anymore with non-ASCII logs.
 

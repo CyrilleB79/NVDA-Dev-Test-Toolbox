@@ -18,10 +18,9 @@ msgstr ""
 "X-Generator: Poedit 3.4\n"
 
 #. Translators: The description of a command of this add-on.
-msgid "Opens NVDA Dev & Test Toolbox add-on settings"
+#, python-brace-format
+msgid "Opens {name} settings"
 msgstr ""
-"Abre las opciones del complemento Caja de herramientas de desarrollo y "
-"pruebas para NVDA"
 
 #. Translators: Input help mode message for a toggle command.
 msgid "Toggles play a sound for logged error."
@@ -101,6 +100,25 @@ msgstr "No se encuentra el objeto: {}"
 msgid "File not found: {}"
 msgstr "No se encuentra el archivo: {}"
 
+#. Translators: Part of the description for the layered command script.
+#, python-brace-format
+msgid "Entry point for {name} layered commands"
+msgstr ""
+
+#. Translators: The description of a command of this add-on.
+#, python-brace-format
+msgid "Displays help on {name} layered commands"
+msgstr ""
+
+#. Translators: Title of the layered command help window.
+#, python-brace-format
+msgid "{name} layered commands"
+msgstr ""
+
+#. Translators: Separator between key names in the layered command help window.
+msgid ", "
+msgstr ""
+
 #. Translators: Text appearing in the date column of the log manager when the date cnanot be determined.
 msgid "Unknown"
 msgstr "Desconocida"
@@ -129,6 +147,10 @@ msgstr "Nombre de archivo"
 #. Translators: The label for a button in Logs Manager dialog to open the selected logs.
 msgid "&Open"
 msgstr "&Abrir"
+
+#. Translators: The label for a button in Logs Manager dialog to copy the selected logs.
+msgid "&Copy files"
+msgstr ""
 
 #. Translators: The label for a button to delete the selected log(s) in Log Manager dialog.
 msgid "&Delete"
@@ -173,11 +195,11 @@ msgstr ""
 "de NVDA para más detalles."
 
 #. Translators: Message issued when 1 to 4 logs could not be deleted.
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid ""
 "The following logs files could not be deleted.\n"
 "\n"
-"{file}"
+"{files}"
 msgstr ""
 "No se han podido eliminar los siguientes archivos de registro.\n"
 "\n"
@@ -185,8 +207,18 @@ msgstr ""
 
 #. Translators: The title of a dialog displayed to the user when pressing the Delete button in
 #. the logs manager dialog
+#. Translators: The title of a dialog displayed to the user when copying files in the logs manager dialog
+#. fails
 msgid "Error"
 msgstr "Error"
+
+#. Translators: reported when requesting to copy the logs selected in the logs manager dialog.
+msgid "Log files copied"
+msgstr ""
+
+#. Translators: reported when requesting to copy the logs selected in the logs manager dialog.
+msgid "Unable to copy the selected logs; the clipboard is not available."
+msgstr ""
 
 #. Translators: menu item label to open the logs manager dialog.
 msgid "&Logs manager..."
@@ -207,10 +239,6 @@ msgstr "Se mueve al siguiente mensaje registrado de tipo {st}."
 #, python-brace-format
 msgid "Moves to the previous logged message of type {st}."
 msgstr "Se mueve al mensaje anterior registrado de tipo {st}."
-
-#. Translators: Input help mode message for Toggle log Reader script.
-msgid "Activates or deactivates the log Reader commands."
-msgstr "Activa o desactiva las órdenes del lector del registro."
 
 #. Translators: A message reported when toggling log reader commands.
 msgid "Log Reader commands enabled."
@@ -242,6 +270,14 @@ msgstr "Añade un marcador en el registro."
 #. Translators: a message telling the user that a marker has been inserted in the log.
 msgid "Marker {} added in the log"
 msgstr "Marcador {} añadido al registro"
+
+#. Translators: Input help mode message for Toggle log Reader script.
+msgid "Activates or deactivates the log Reader commands."
+msgstr "Activa o desactiva las órdenes del lector del registro."
+
+#. Translators: A message when using Toggle log Reader script.
+msgid "Not in a text area."
+msgstr ""
 
 #. Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
 msgid "Off"
@@ -290,11 +326,24 @@ msgstr "Copia de seguridad de registros antiguos:"
 msgid "Limit the number of backups to:"
 msgstr "Limitar la cantidad de copias de seguridad a:"
 
+#. Translators: This is a label for a setting in the settings panel
+msgid "Copy reverse &translation to clipboard"
+msgstr ""
+
 #. Translators: Input help mode message for a command of the object property explorer.
+#, fuzzy
 msgid ""
 "Reports the currently selected property of the object property explorer for "
-"the navigator object; two presses displays this information in a browseable "
-"message."
+"the navigator object."
+msgstr ""
+"Selecciona la propiedad siguiente del explorador de propiedades del objeto y "
+"la indica para el objeto actual."
+
+#. Translators: Input help mode message for a command of the object property explorer.
+#, fuzzy
+msgid ""
+"Displays the currently selected property of the object property explorer for "
+"the navigator object in a browseable message."
 msgstr ""
 "Anuncia la propiedad seleccionada actualmente del explorador de propiedades "
 "de objeto en el navegador de objetos; si se pulsa dos veces se muestra esta "
@@ -393,6 +442,37 @@ msgstr "No cambiar el indicador global del sistema para lectores de pantalla"
 msgid "Restarts NVDA with specific options."
 msgstr "Reinicia NVDA con opciones específicas."
 
+#. Translators: Input help mode message for Reverse UI translation command
+msgid "Perform a reverse UI translation of the last speech"
+msgstr ""
+
+#. Translators: An error message when calling the reverse UI translation command
+msgid "Reverse translation not available for this version of NVDA."
+msgstr ""
+
+#. Translators: An error message when calling the reverse UI translation command
+msgid "No last spoken text"
+msgstr ""
+
+#. Translators: An error message when calling the reverse UI translation command
+msgid "Message not found in translation catalog"
+msgstr ""
+
+#. Translators: Input help mode message for a command.
+msgid ""
+"NVDA will open the code of the script of the next gesture instead of "
+"executing the corresponding command."
+msgstr ""
+
+#. Translators: Reported when executing the command to open the script corresponding to the next gesture.
+msgid "Execute a gesture to open the code of the corresponding script."
+msgstr ""
+
+#. Translators: Reported when executing the command to open the script corresponding to the next gesture.
+#, python-brace-format
+msgid "Script not found for {gestureName}"
+msgstr ""
+
 #. Translators: Input help mode message for a toggle command.
 msgid "Toggles the stack trace log when the speech function is called."
 msgstr ""
@@ -417,3 +497,8 @@ msgstr "Caja de herramientas de desarrollo y pruebas para NVDA"
 msgid "A set of tools for NVDA developers and testers."
 msgstr ""
 "Un conjunto de herramientas para desarrolladores y evaluadores de NVDA."
+
+#~ msgid "Opens NVDA Dev & Test Toolbox add-on settings"
+#~ msgstr ""
+#~ "Abre las opciones del complemento Caja de herramientas de desarrollo y "
+#~ "pruebas para NVDA"
