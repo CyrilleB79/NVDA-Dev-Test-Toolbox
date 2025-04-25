@@ -444,7 +444,7 @@ class LogContainer(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for Toggle log translation script.
-		description=_("Toggle speech translation in the log"),
+		description=_("Toggles speech translation in the log"),
 		category=ADDON_SUMMARY,
 	)
 	def script_toggleLogTranslation(self, gesture):
