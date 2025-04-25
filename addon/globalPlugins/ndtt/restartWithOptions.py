@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2021-2024 Cyrille Bougot
+# Copyright (C) 2021-2025 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
@@ -319,7 +319,7 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph
 			# "Command Line Options")
 			description=_("Override the configured NVDA language"),
-			flagList=["--lang={LANGUAGE}"],
+			flagList=["-&n", "--lang={LANGUAGE}"],
 			allowInSecureMode=True,
 			choices=[''] + [
 				'{code} - {lng}'.format(
@@ -346,7 +346,7 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 			# Translators: The description of an NVDA start option, copied from the user guide (paragraph
 			# "Command Line Options")
 			description=_("Add-ons will have no effect"),
-			flagList=["--disable-addons"],
+			flagList=["-&d", "--disable-addons"],
 			allowInSecureMode=True,  # Restart with add-ons disabled allowed on secure screens by NVDA
 		),
 		# --debug-logging (Enable debug level logging just for this run. This setting will override any other
