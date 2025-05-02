@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: NVDA Geliştirici ve Test Araç Kutusu\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
 "POT-Creation-Date: 2023-06-16 14:09+0000\n"
-"PO-Revision-Date: 2024-05-27 23:30+0300\n"
+"PO-Revision-Date: 2025-04-25 17:41+0300\n"
 "Last-Translator: Umut KORKMAZ <umutkork@gmail.com>\n"
 "Language-Team: Umut KORKMAZ <umutkork@gmail.com>\n"
 "Language: tr_TR\n"
@@ -16,12 +16,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.6\n"
 
 #. Translators: The description of a command of this add-on.
 #, python-brace-format
 msgid "Opens {name} settings"
-msgstr ""
+msgstr "{name} ayarlarını açar"
 
 #. Translators: Input help mode message for a toggle command.
 msgid "Toggles play a sound for logged error."
@@ -106,21 +106,21 @@ msgstr "Dosya bulunamadı: {}"
 #. Translators: Part of the description for the layered command script.
 #, python-brace-format
 msgid "Entry point for {name} layered commands"
-msgstr ""
+msgstr "{name} katmanlı komutlar için giriş noktası"
 
 #. Translators: The description of a command of this add-on.
 #, python-brace-format
 msgid "Displays help on {name} layered commands"
-msgstr ""
+msgstr "{name} katmanlı komutlarla ilgili yardım görüntüler"
 
 #. Translators: Title of the layered command help window.
 #, python-brace-format
 msgid "{name} layered commands"
-msgstr ""
+msgstr "{name} katman komutları"
 
 #. Translators: Separator between key names in the layered command help window.
 msgid ", "
-msgstr ""
+msgstr ", "
 
 #. Translators: Text appearing in the date column of the log manager when the date cnanot be determined.
 msgid "Unknown"
@@ -153,7 +153,7 @@ msgstr "&Aç"
 
 #. Translators: The label for a button in Logs Manager dialog to copy the selected logs.
 msgid "&Copy files"
-msgstr ""
+msgstr "&Dosyaları Kopyala"
 
 #. Translators: The label for a button to delete the selected log(s) in Log Manager dialog.
 msgid "&Delete"
@@ -197,7 +197,7 @@ msgstr ""
 "{nLogs} günlük dosyaları silinemedi. Ayrıntılar için NVDA günlüğüne bakın."
 
 #. Translators: Message issued when 1 to 4 logs could not be deleted.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "The following logs files could not be deleted.\n"
 "\n"
@@ -205,7 +205,7 @@ msgid ""
 msgstr ""
 "Aşağıdaki günlük dosyaları silinemedi.\n"
 "\n"
-"{file}"
+"{files}"
 
 #. Translators: The title of a dialog displayed to the user when pressing the Delete button in
 #. the logs manager dialog
@@ -216,11 +216,11 @@ msgstr "Hata"
 
 #. Translators: reported when requesting to copy the logs selected in the logs manager dialog.
 msgid "Log files copied"
-msgstr ""
+msgstr "Günlük dosyaları kopyalandı"
 
 #. Translators: reported when requesting to copy the logs selected in the logs manager dialog.
 msgid "Unable to copy the selected logs; the clipboard is not available."
-msgstr ""
+msgstr "Seçilen günlükler kopyalanamıyor; pano kullanılamıyor."
 
 #. Translators: menu item label to open the logs manager dialog.
 msgid "&Logs manager..."
@@ -277,7 +277,7 @@ msgstr "Günlük Okuyucu komutlarını etkinleştirir veya devre dışı bırak�
 
 #. Translators: A message when using Toggle log Reader script.
 msgid "Not in a text area."
-msgstr ""
+msgstr "Metin alanında değil."
 
 #. Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
 msgid "Off"
@@ -329,26 +329,23 @@ msgstr "Yedekleme sayısını aşağıdakilerle sınırlandırın:"
 
 #. Translators: This is a label for a setting in the settings panel
 msgid "Copy reverse &translation to clipboard"
-msgstr ""
+msgstr "&Ters çeviriyi panoya kopyala"
 
 #. Translators: Input help mode message for a command of the object property explorer.
-#, fuzzy
 msgid ""
 "Reports the currently selected property of the object property explorer for "
 "the navigator object."
 msgstr ""
-"Nesne özellik gezgininin sonraki özelliğini seçer ve gezgin nesnesi için "
+"Gezgin nesnesindeki nesne özellik gezgininin o anda seçili olan özelliğini "
 "raporlar."
 
 #. Translators: Input help mode message for a command of the object property explorer.
-#, fuzzy
 msgid ""
 "Displays the currently selected property of the object property explorer for "
 "the navigator object in a browseable message."
 msgstr ""
-"Gezgin nesnesi için nesne özellik gezgininde o anda seçili olan özelliği "
-"bildirir; iki kez basıldığında bu bilgi göz atılabilir bir mesajda "
-"görüntülenir."
+"Gezgin nesnesindeki nesne özellik gezgininin o anda seçili olan özelliğini, "
+"göz atılabilir bir mesaj içinde görüntüler."
 
 #. Translators: Input help mode message for a command of the object property explorer.
 msgid ""
@@ -445,34 +442,36 @@ msgstr "Belirli seçeneklerle NVDA'yı yeniden başlatır."
 
 #. Translators: Input help mode message for Reverse UI translation command
 msgid "Perform a reverse UI translation of the last speech"
-msgstr ""
+msgstr "Son konuşmanın ters UI çevirisini yap"
 
 #. Translators: An error message when calling the reverse UI translation command
 msgid "Reverse translation not available for this version of NVDA."
-msgstr ""
+msgstr "Ters çeviri NVDA'nın bu sürümü için mevcut değil."
 
 #. Translators: An error message when calling the reverse UI translation command
 msgid "No last spoken text"
-msgstr ""
+msgstr "Son konuşulan metin yok"
 
 #. Translators: An error message when calling the reverse UI translation command
 msgid "Message not found in translation catalog"
-msgstr ""
+msgstr "Çeviri kataloğunda mesaj bulunamadı"
 
 #. Translators: Input help mode message for a command.
 msgid ""
 "NVDA will open the code of the script of the next gesture instead of "
 "executing the corresponding command."
 msgstr ""
+"NVDA, ilgili komutu çalıştırmak yerine bir sonraki hareketin komut "
+"dosyasının kodunu açacaktır."
 
 #. Translators: Reported when executing the command to open the script corresponding to the next gesture.
 msgid "Execute a gesture to open the code of the corresponding script."
-msgstr ""
+msgstr "İlgili komut dosyasının kodunu açmak için bir hareket uygulayın."
 
 #. Translators: Reported when executing the command to open the script corresponding to the next gesture.
 #, python-brace-format
 msgid "Script not found for {gestureName}"
-msgstr ""
+msgstr "{gestureName} için komut dosyası bulunamadı"
 
 #. Translators: Input help mode message for a toggle command.
 msgid "Toggles the stack trace log when the speech function is called."
