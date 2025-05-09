@@ -116,10 +116,11 @@ souhaitez voir le code.  Par exemple, pour voir le code du script qui
 annonce le titre de la fenêtre au premier plan, appuyez sur `NVDA+X, C` et
 ensuite `NVDA+T`.
 
-For this feature to work, you need to have configured your [favorite
-editor's command](#settingsOpenCommand) in the add-on's settings.  If you
-are not running NVDA from source, the [location of NVDA source
-code](#settingsNvdaSourcePath) should also have been configured.
+Pour utiliser cette fonctionnalité, vous devez avoir configuré [la ligne de
+commande de votre éditeur préféré](#settingsOpenCommand) dans les paramètres
+de l'extension. Si vous n'exécutez pas NVDA à partir des sources,
+[l'emplacement du code source NVDA](#settingsNvdaSourcePath) doit également
+avoir été configuré.
 
 ### Mode de description étendu des scripts
 
@@ -282,13 +283,13 @@ permet de configurer si vous souhaitez sauvegarder les anciens journaux et
 combien d'entre eux ; cela se fait dans les [paramètres de
 l'extension](#settingsLogsBackup).
 
-A log manager dialog allows to view the backed up logs.
-It can be opened going to NVDA menu -> Tools -> Logs manager
-In this dialog, you can see the list of all the backup logs and perform various actions on the selected log:
+Une boîte de dialogue Gestionnaire de journaux permet d'afficher les journaux sauvegardés.
+Elle peut être ouverte en allant dans le menu NVDA -> Outils -> Gestionnaire de journaux
+Dans cette boîte de dialogue, vous pouvez voir la liste de tous les journaux sauvegardés et effectuer diverses actions sur le journal sélectionné.
 
-* open it (press `Enter`)
-* delete it (press `Delete`)
-* copy the log file (press `control+C`)
+* l'ouvrir (appuyer sur `Entrée`)
+* le supprimer (appuyer sur `suppr`)
+* copier le fichier journal (appuyer sur `contrôle+C`)
 
 Vous pouvez également sélectionner plusieurs journaux pour effectuer des
 actions sur tous ceux-ci.
@@ -375,11 +376,13 @@ des options modifiées ou les messages annoncés par NVDA doivent être écrit
 en anglais.  C'est assez frustrant et long de devoir redémarrer NVDA en
 anglais pour vérifier le libellé exact des options ou des messages.
 
-To avoid this, the add-on provides a reverse translation command (`NVDA+X,
-R`) allowing to reverse translate NVDA's interface such as messages, control
-labels in the GUI, etc.  This command uses NVDA's gettext translation to try
-to reverse translate the last speech.  More specifically, the first string
-of the last speech sequence is reverse translated.
+Pour éviter cela, l'extension fournit une commande de traduction inverse
+(`NVDA+X, R`) permettant la traduction inverse de l'interface de NVDA,
+telles que les messages, les labels des contrôles dans l'interface
+graphique, etc. Cette commande utilise la traduction GetText de NVDA pour
+essayer de fournir une traduction inverse de la dernière annonce.  Plus
+précisément, une traduction inverse de la première chaîne de la dernière
+séquence de parole est fournie.
 
 Par exemple, dans NVDA en français, si je descends sur le menu outils nommé
 "Outils", NVDA dira "Outils Sous-menu O".  Si j'appelle la commande de
@@ -466,20 +469,22 @@ presse-papiers.
 
 ### Version 7.0
 
-* Layered commands have been introduced; the entry point is `NVDA+X`.  The
-  existing commands have been modified accordingly.
-* A new command (`NVDA+X, R`) to reverse translate the last spoken message.
-* A new command (`NVDA+X, C`) to open the source code of the script
-  associated to the next pressed gesture.
-* Added speech on demand support.
-* The log manager now allows more actions, either with the dedicated buttons
-  in the dialogs or using keyboard shortcuts in the list: `enter` to open
-  the log, `control+C` to copy the log file and `delete` to delete a log
-  file.
-* The sorting order in the log manager has been reversed (most recent log on
-  top).
-* Fixed an issue when trying to open a Python module with openCodeFile
-  function.
+* Les commandes séquentielles ont été introduites; Le point d'entrée est
+  `NVDA+X`. Les commandes existantes ont été modifiées en conséquence.
+* Une nouvelle commande (`NVDA+X, R`) pour effectuer une traduction inverse
+  du dernier message annoncé.
+* Une nouvelle commande (`NVDA+X, C`) pour ouvrir le code source du script
+  associé au geste suivant exécuté.
+* Ajout de la prise en charge de la parole à la demande.
+* Le gestionnaire de journaux permet désormais plus d'actions, soit à l'aide
+  des boutons dédiés dans la boîtes de dialogue, soit avec des raccourcis
+  clavier dans la liste: `entrée` pour ouvrir le fichier
+  journal,`contrôle+C` pour copier le fichier et `suppr` pour supprimer un
+  fichier.
+* L'ordre de tri dans le gestionnaire de journaux a été inversé (fichier de
+  journal le plus récent en haut).
+* Correction d'un problème lorsqu'on tente d'ouvrir un module Python avec la
+  fonction `openCodeFile`.
 
 ### Version 6.3
 
