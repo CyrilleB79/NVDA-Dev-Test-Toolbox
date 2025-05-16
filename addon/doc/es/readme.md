@@ -19,17 +19,17 @@ Este complemento reúne diversas funciones para depuración y pruebas en NVDA.
   código fuente de un objeto.
 * Un script personalizado de inicio para la consola Python
 * Una orden para registrar la pila de llamadas de la función speech.speak.
-* A command to reverse translate the items of the interface.
+* Una orden de traducción inversa de los elementos de la interfaz.
 
-## Commands
+## Órdenes
 
-This add-on uses layered commands for all of the new commands it adds.  The
-entry point for these commands is `NVDA+X`; thus all the commands should be
-executed by `NVDA+X` followed by another single letter or gesture.  You can
-list all the available layered commands pressing `NVDA+X, H`.
+Este complemento usa órdenes de capa para las nuevas órdenes que añada. El
+punto de entrada de estas órdenes es `NVDA+x`; por lo que todas las órdenes
+deberían ejecutarse con `NVDA+x` seguido de otra letra sola o un gesto. Se
+pueden listar todas las órdenes de capa disponibles pulsando `NVDA+x, h`.
 
-For the commands that you use more frequently, you can also define a direct
-gesture in the input gesture dialog.
+Se pueden definir gestos directos con las órdenes que más uses en el diálogo
+Gestos de entrada.
 
 ## Diálogo reiniciar mejorado
 
@@ -96,17 +96,16 @@ y habilitar el anuncio de objetos personalizado. Al moverte al siguiente
 objeto o al anterior con el navegador de objetos, escucharás el nombre de
 clase de ventana del objeto en lugar del anuncio habitual.
 
-## Script tools
+## Herramientas de scripts
 
-### The script opener
+### El abridor de scripts
 
-The script opener command allows to open the code of a script knowing its
-gesture.
+La orden de abrir scripts permite abrir el código de un script conociendo su
+gesto.
 
-To use it press `NVDA+x, C` and then the gesture of the script which you
-want to see the code of.  For example to see the code of the script that
-reports the title of the foreground window, press `NVDA+X, C` and then
-`NVDA+T`.
+Para usarla, pulsa `NVDA+x, c` y luego el gesto del script cuyo código
+quieras ver. Por ejemplo, para ver el código del script que indica el título
+de la ventana en primer plano, pulsa `NVDA+x, c` y luego `NVDA+t`.
 
 For this feature to work, you need to have configured your [favorite
 editor's command](#settingsOpenCommand) in the add-on's settings.  If you
@@ -270,11 +269,12 @@ A log manager dialog allows to view the backed up logs.
 It can be opened going to NVDA menu -> Tools -> Logs manager
 In this dialog, you can see the list of all the backup logs and perform various actions on the selected log:
 
-* open it (press `Enter`)
-* delete it (press `Delete`)
-* copy the log file (press `control+C`)
+* abrirlo (pulsa `intro`)
+* eliminarlo (pulsa `suprimir`)
+* copiar el archivo de registro (pulsa `control+c`)
 
-You can also select multiple logs to perform an actions on all of them.
+También puedes seleccionar varios registros para realizar acciones en todos
+ellos.
 
 To be able to open a log, you should first have configured the [Command to
 open a file in your favorite editor](#settingsOpenCommand).
@@ -346,7 +346,7 @@ Nota: puedes modificar directamente el archivo del script para parchear otra
 función. Consulta las instrucciones en el propio archivo para más detalles.
 
 <a id="reverseTranslationCommand"></a>
-## Reverse translation command
+## Orden de traducción inversa
 
 Many testers use NVDA in another language than English.  But when reporting
 test results on GitHub, the description of the modified options or the
@@ -440,14 +440,14 @@ clipboard.
 
 ## Registro de cambios
 
-### Version 7.0
+### Versión 7.0
 
 * Layered commands have been introduced; the entry point is `NVDA+X`.  The
   existing commands have been modified accordingly.
 * A new command (`NVDA+X, R`) to reverse translate the last spoken message.
 * A new command (`NVDA+X, C`) to open the source code of the script
   associated to the next pressed gesture.
-* Added speech on demand support.
+* Se ha añadido soporte del modo de voz a petición.
 * The log manager now allows more actions, either with the dedicated buttons
   in the dialogs or using keyboard shortcuts in the list: `enter` to open
   the log, `control+C` to copy the log file and `delete` to delete a log
@@ -457,9 +457,9 @@ clipboard.
 * Fixed an issue when trying to open a Python module with openCodeFile
   function.
 
-### Version 6.3
+### Versión 6.3
 
-* Compatibility with NVDA 2024.1.
+* Compatibilidad con NVDA 2024.1.
 
 ### Versión 6.2
 
@@ -502,8 +502,9 @@ clipboard.
   mensajes de error normales.
 * Se han añadido nuevas órdenes de navegación rápida por el registro para
   saltar a los mensajes de entrada y hablados.
-* A new command allow to place a marker in the log; and specific quick
-  navigation commands in log reading mode allow to jump to them.
+* Una nueva orden permite situar un marcador en el registro; y otras órdenes
+  concretas de navegación rápida en modo lector del registro permiten saltar
+  a ellos.
   Credit: the initial idea for this feature comes from Debug Helper add-on by Luke Davis.
 * Bubfix: The memorization of the last error do not fail anymore in some cases.
 * Bugfix: The add-on can initialize again with NVDA 2019.2.1.
