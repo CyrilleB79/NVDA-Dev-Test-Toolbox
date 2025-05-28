@@ -73,6 +73,7 @@ Then when moving the navigator object to next or previous object, you will hear 
 
 ## Script tools
 
+<a id="scriptOpener"></a>
 ### The script opener
 
 The script opener command allows to open the code of a script knowing its gesture.
@@ -301,7 +302,7 @@ These settings are global and can only be configured when the default profile is
 ### Command to open a file in your favorite editor
 
 Some features allow to see content in your favorite editor.
-This includes the commands to view the source file [from a log](#logReaderOpenSourceFile) or [from an object in the console](#pythonConsoleOpenCodeFile) as well as the [log manager](#oldLogsBackup)'s Open button.
+This includes the commands to view the source file [from a log](#logReaderOpenSourceFile), [from an object in the console](#pythonConsoleOpenCodeFile) or [from a typed gesture](#scriptOpener), as well as the [log manager](#oldLogsBackup)'s Open button.
 
 To use them, you first need to configure the command that will be called to open the file in your favorite editor.
 The command should be of the form:  
@@ -314,7 +315,7 @@ For Notepad++ for example the command to type in the console would be:
 <a id="settingsNvdaSourcePath"></a>
 ### NVDA source code path
 
-When using a command to [view the source file from a log](#logReaderOpenSourceFile) or [from an object in the console](#pythonConsoleOpenCodeFile), the file may belong to NVDA itself.
+When using a command to view the source file [from a log](#logReaderOpenSourceFile), [from an object in the console](#pythonConsoleOpenCodeFile) or [from a typed gesture](#scriptOpener), the file may belong to NVDA itself.
 If you are not running NVDA from source, your NVDA only contains compiled files.
 Thus you may specify here an alternate location where the corresponding source file will be found, e.g. the place where you have cloned NVDA source files, so that a source file can be opened anyway.
 The path should be such as:  
