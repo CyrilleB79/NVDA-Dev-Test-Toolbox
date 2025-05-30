@@ -97,6 +97,7 @@ reporting.
 
 ## Script tools
 
+<a id="scriptOpener"></a>
 ### The script opener
 
 The script opener command allows to open the code of a script knowing its
@@ -386,11 +387,11 @@ the default value.
 <a id="налаштування Відкрити Команду"></a>
 ### Команда для відкриття файлу у вашому улюбленому редакторі
 
-Деякі функції дозволяють переглядати вміст у вашому улюбленому редакторі.
-До них належать команди перегляду вихідного файлу [з
-журналу](#logReaderOpenSourceFile) або [з об'єкта у
-консолі](#pythonConsoleOpenCodeFile), а також кнопка Відкрити [менеджер
-журналів](#oldLogsBackup)
+Some features allow to see content in your favorite editor.  This includes
+the commands to view the source file [from a log](#logReaderOpenSourceFile),
+[from an object in the console](#pythonConsoleOpenCodeFile) or [from a typed
+gesture](#scriptOpener), as well as the [log manager](#oldLogsBackup)'s Open
+button.
 
 Щоб ними скористатися, спочатку потрібно налаштувати команду, яка буде викликати відкриття файлу у вашому улюбленому редакторі.
 Команда повинна мати вигляд:
@@ -403,10 +404,10 @@ the default value.
 <a id="settingsNvdaSourcePath"></a>
 ### Шлях вихідного коду NVDA
 
-При використанні команди для [перегляду вихідного файлу з журналу] (#logReaderOpenSourceFile) або [з об'єкта у консолі] (#pythonConsoleOpenCodeFile), файл може належати самій NVDA.
-Якщо ви не запускаєте NVDA з вихідного джерела, ваша NVDA містить лише скомпільовані файли.
-Таким чином, ви можете вказати тут альтернативне місце, де буде знайдено відповідний вихідний файл, наприклад, місце, куди ви клонували вихідні файли NVDA, щоб вихідний файл можна було відкрити у будь-якому випадку.
-Шлях має бути таким:  
+When using a command to view the source file [from a log](#logReaderOpenSourceFile), [from an object in the console](#pythonConsoleOpenCodeFile) or [from a typed gesture](#scriptOpener), the file may belong to NVDA itself.
+If you are not running NVDA from source, your NVDA only contains compiled files.
+Thus you may specify here an alternate location where the corresponding source file will be found, e.g. the place where you have cloned NVDA source files, so that a source file can be opened anyway.
+The path should be such as:  
 `C:\pathExample\GIT\nvda\source`  
 Звісно ж, замініть шлях джерела NVDA на правильний.
 

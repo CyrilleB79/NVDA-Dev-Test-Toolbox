@@ -100,6 +100,7 @@ Sie den windowClassName des Objekts anstelle der üblichen Meldung.
 
 ## Script tools
 
+<a id="scriptOpener"></a>
 ### The script opener
 
 The script opener command allows to open the code of a script knowing its
@@ -408,11 +409,11 @@ beeinflusst.
 <a id="settingsOpenCommand"></a>
 ### Befehl zum Öffnen einer Datei im bevorzugten Editor
 
-Mit einigen Funktionen können Sie den Inhalt im bevorzugten Editor
-einsehen. Dazu gehören die Befehle zum Anzeigen der Quelldatei [aus einem
-Protokoll](#logReaderOpenSourceFile) oder [aus einem Objekt in der
-Konsole](#pythonConsoleOpenCodeFile) sowie die Schaltfläche zum Öffnen der
-[Protokollverwaltung](#oldLogsBackup).
+Some features allow to see content in your favorite editor.  This includes
+the commands to view the source file [from a log](#logReaderOpenSourceFile),
+[from an object in the console](#pythonConsoleOpenCodeFile) or [from a typed
+gesture](#scriptOpener), as well as the [log manager](#oldLogsBackup)'s Open
+button.
 
 Um sie zu verwenden, müssen Sie zunächst den Befehl konfigurieren, der aufgerufen wird, um die Datei im bevorzugten Editor zu öffnen.
 Der Befehl sollte die folgende Form haben:
@@ -425,10 +426,10 @@ Bei Notepad++ wäre der Befehl, der in die Konsole eingegeben werden muss, beisp
 <a id="settingsNvdaSourcePath"></a>
 ### NVDA-Quellcode-Pfad
 
-Wenn Sie einen Befehl zum [Anzeigen der Quelldatei aus einem Protokoll](#logReaderOpenSourceFile) oder [aus einem Objekt in der Konsole](#pythonConsoleOpenCodeFile) verwenden, kann die Datei zu NVDA selbst gehören.
-Wenn Sie NVDA nicht aus dem Quellcode ausführen, enthält NVDA nur die kompilierte Dateien.
-Daher können Sie hier einen alternativen Ort angeben, an dem die entsprechende Quelldatei zu finden ist, z. B. den Ort, an dem Sie NVDA-Quelldateien geklont haben, so dass eine Quelldatei trotzdem geöffnet werden kann.
-Der Pfad sollte wie folgt lauten:
+When using a command to view the source file [from a log](#logReaderOpenSourceFile), [from an object in the console](#pythonConsoleOpenCodeFile) or [from a typed gesture](#scriptOpener), the file may belong to NVDA itself.
+If you are not running NVDA from source, your NVDA only contains compiled files.
+Thus you may specify here an alternate location where the corresponding source file will be found, e.g. the place where you have cloned NVDA source files, so that a source file can be opened anyway.
+The path should be such as:  
 `C:\<Pfad>\GIT\NVDA\source`
 Ersetzen Sie natürlich den Pfad der NVDA-Quelle durch den richtigen Pfad.
 

@@ -106,6 +106,7 @@ propriété windowClassName de l'objet au lieu de l'annonce habituel.
 
 ## Outils pour les scripts
 
+<a id="scriptOpener"></a>
 ### La commande d'ouverture de script
 
 La commande d'ouverture de script permet d'ouvrir le code d'un script en
@@ -421,9 +422,9 @@ profil par défaut est actif.
 
 Certaines fonctionnalités permettent de voir le contenu dans votre éditeur
 préféré. Cela inclut les commandes pour afficher le fichier source [à partir
-d'un journal](#logReaderOpenSourceFile) ou [à partir d'un objet dans la
-console](#pythonConsoleOpenCodeFile) ainsi que le bouton Ouvrir du
-[gestionnaire de journaux](#oldLogsBackup).
+d'un journal](#logReaderOpenSourceFile), [d'un objet dans la
+console](#pythonConsoleOpenCodeFile) ou [d'un geste exécuté](#scriptOpener),
+ainsi que le bouton Ouvrir du [gestionnaire de journaux](#oldLogsBackup).
 
 Pour les utiliser, vous devez d'abord configurer la commande qui sera appelée pour ouvrir le fichier dans votre éditeur préféré.
 La commande doit être de la forme :  
@@ -437,7 +438,7 @@ otepad++.exe" "{path}" -n{line}`
 <a id="settingsNvdaSourcePath"></a>
 ### Chemin du code source de NVDA
 
-Lors de l'utilisation d'une commande pour [afficher le fichier source à partir d'un journal](#logReaderOpenSourceFile) ou [à partir d'un objet dans la console](#pythonConsoleOpenCodeFile), le fichier peut appartenir à NVDA lui-même.
+Lors de l'utilisation d'une commande pour [afficher le fichier source à partir d'un journal](#logReaderOpenSourceFile), [d'un objet dans la console](#pythonConsoleOpenCodeFile) ou [d'un geste exécuté](#scriptOpener), le fichier peut appartenir à NVDA lui-même.
 Si vous n'exécutez pas NVDA à partir des sources, votre NVDA ne contient que des fichiers compilés.
 Ainsi, vous pouvez spécifier ici un emplacement alternatif où le fichier source correspondant sera trouvé, par ex. l'endroit où vous avez cloné les fichiers source NVDA, afin qu'un fichier source puisse être ouvert malgré tout.
 Le chemin doit être de la forme :  

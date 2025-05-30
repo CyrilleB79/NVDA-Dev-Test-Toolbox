@@ -99,6 +99,7 @@ reporting.
 
 ## Script tools
 
+<a id="scriptOpener"></a>
 ### The script opener
 
 The script opener command allows to open the code of a script knowing its
@@ -392,11 +393,11 @@ profile is active.
 <a id="comandăDeschidereSetări
 ### Comanda pentru a deschide un fișier în editorul tău preferat
 
-Unele funcții vă permit să vedeți conținutul în editorul
-dvs. preferat. Aceasta include comenzile pentru vizualizarea fișierului
-sursă [din jurnal](#logReaderOpenSourceFile) sau [dintr-un obiect din
-consolă](#pythonConsoleOpenCodeFile), precum și butonul Deschidere al [log
-manager](#oldLogsBackup).
+Some features allow to see content in your favorite editor.  This includes
+the commands to view the source file [from a log](#logReaderOpenSourceFile),
+[from an object in the console](#pythonConsoleOpenCodeFile) or [from a typed
+gesture](#scriptOpener), as well as the [log manager](#oldLogsBackup)'s Open
+button.
 
 Pentru a le folosi, mai întâi trebuie să configurați comanda care va fi apelată pentru a deschide fișierul în editorul dvs. preferat.
 Comanda ar trebui să fie de forma:
@@ -409,10 +410,10 @@ Pentru Notepad++, de exemplu, comanda de tastat în consolă ar fi:
 <a id="setăriNVDACodSursă"></a>
 ### Locaţia codului sursă NVDA
 
-Când utilizați o comandă pentru a [vizualiza fișierul sursă dintr-un jurnal](#logReaderOpenSourceFile) sau [dintr-un obiect din consolă](#pythonConsoleOpenCodeFile), fișierul poate aparține NVDA însuși.
-Dacă nu rulați NVDA din sursă, NVDA conține doar fișiere compilate.
-Astfel, puteți specifica aici o locație alternativă în care va fi găsit fișierul sursă corespunzător, de ex. locul în care ați clonat fișierele sursă NVDA, astfel încât un fișier sursă poate fi oricum deschis.
-Locaţia ar trebui să fie astfel:  
+When using a command to view the source file [from a log](#logReaderOpenSourceFile), [from an object in the console](#pythonConsoleOpenCodeFile) or [from a typed gesture](#scriptOpener), the file may belong to NVDA itself.
+If you are not running NVDA from source, your NVDA only contains compiled files.
+Thus you may specify here an alternate location where the corresponding source file will be found, e.g. the place where you have cloned NVDA source files, so that a source file can be opened anyway.
+The path should be such as:  
 `C:\pathExample\GIT\nvda\source`  
 Desigur, înlocuiți locaţia sursei NVDA cu cea corectă.
 

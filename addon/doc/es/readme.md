@@ -98,6 +98,7 @@ clase de ventana del objeto en lugar del anuncio habitual.
 
 ## Herramientas de scripts
 
+<a id="scriptOpener"></a>
 ### El abridor de scripts
 
 La orden de abrir scripts permite abrir el código de un script conociendo su
@@ -394,11 +395,11 @@ el perfil predeterminado.
 <a id="settingsOpenCommand"></a>
 ### Comando para abrir un archivo en tu editor favorito
 
-Algunas funciones permiten visualizar contenido en tu editor favorito. Esto
-incluye los comandos para ver el archivo de código fuente [desde un
-registro](#logReaderOpenSourceFile) o [desde un objeto en la
-consola](#pythonConsoleOpenCodeFile), así como el botón abrir del [gestor de
-registros](#oldLogsBackup).
+Some features allow to see content in your favorite editor.  This includes
+the commands to view the source file [from a log](#logReaderOpenSourceFile),
+[from an object in the console](#pythonConsoleOpenCodeFile) or [from a typed
+gesture](#scriptOpener), as well as the [log manager](#oldLogsBackup)'s Open
+button.
 
 Para usarlas, primero debes configurar el comando que se ejecutará para abrir el archivo en tu editor favorito.
 Dicho comando debería seguir el formato:
@@ -411,10 +412,10 @@ Por ejemplo, para Notepad++, el comando a escribir en la consola sería:
 <a id="settingsNvdaSourcePath"></a>
 ### Ruta al código fuente de NVDA
 
-Al usar un comando para [ver el archivo de código fuente desde un registro](#logReaderOpenSourceFile) o [desde un objeto en la consola](#pythonConsoleOpenCodeFile), el archivo debe pertenecer al propio NVDA.
-Si no ejecutas NVDA desde el código fuente, tu copia de NVDA sólo contiene archivos compilados.
-Por tanto, puedes configurar aquí una ubicación específica donde se encontrará el archivo de código fuente correspondiente, por ejemplo, el lugar donde has clonado los archivos de código fuente de NVDA, de tal forma que se pueda abrir un archivo de código fuente.
-La ruta podría ser como:
+When using a command to view the source file [from a log](#logReaderOpenSourceFile), [from an object in the console](#pythonConsoleOpenCodeFile) or [from a typed gesture](#scriptOpener), the file may belong to NVDA itself.
+If you are not running NVDA from source, your NVDA only contains compiled files.
+Thus you may specify here an alternate location where the corresponding source file will be found, e.g. the place where you have cloned NVDA source files, so that a source file can be opened anyway.
+The path should be such as:  
 `C:\EjemploRuta\GIT\nvda\source`  
 Por supuesto, reemplaza la ruta del código fuente de NVDA con la correcta.
 
