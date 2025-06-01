@@ -338,6 +338,10 @@ This option allows to choose if the [reverse translation command](#reverseTransl
 
 ## Change log
 
+### Version 7.1
+
+* Compatibility with NVDA 2025.1.
+
 ### Version 7.0
 
 * Layered commands have been introduced; the entry point is `NVDA+X`.
