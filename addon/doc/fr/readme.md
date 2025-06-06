@@ -1,4 +1,5 @@
 # NVDA Dev & Test Toolbox #
+
 * Auteur : Cyrille Bougot
 * Compatibilité NVDA : 2019.2 et au-delà
 * Télécharger [version stable][1]
@@ -12,9 +13,8 @@ tests dans NVDA.
   supplémentaires lors du redémarrage de NVDA.
 * Diverses fonctionnalités liées aux erreurs enregistrées.
 * Un explorateur de propriétés d'objets.
-* Un mode de description étendu pour les scripts : lorsqu'il est activé, le
-  mode d'aide à la saisie annonce des informations pour les scripts qui
-  n'ont aucune description.
+* Des outils pour les scripts : un mode de description étendue des scripts
+  et une ouverture facile des scripts.
 * Commendes pour aider à la lecture et l'analyse du journal.
 * Sauvegardes des anciens journaux
 * Dans l'espace de travail de la console Python, une fonction pour ouvrir le
@@ -22,10 +22,23 @@ tests dans NVDA.
 * Un script personnalisé de démarrage pour la console Python
 * Une commande pour journaliser la pile d'appels de la fonction
   speech.speak.
+* Une commande pour effectuer une traduction inverse des éléments de
+  l'interface.
+
+## Commandes
+
+Cette extension utilise des commandes séquentielles pour toutes les
+nouvelles commandes qu'elle ajoute.  Le point d'entrée de ces commandes est
+`NVDA+X` ; ainsi, toutes les commandes doivent être exécutées par `NVDA+X`
+suivi d'une autre lettre ou geste.  Vous pouvez obtenir la liste de toutes
+les commandes séquentielles en appuyant sur `NVDA+X, H`.
+
+Pour les commandes que vous utilisez plus fréquemment, vous pouvez également
+définir un geste direct dans la boîte de dialogue Gestes de commandes.
 
 ## Dialogue de redémarrage amélioré
 
-La commande NVDA+maj+Q ouvre un dialogue pour indiquer des options
+La commande `NVDA+X, Q` ouvre un dialogue pour indiquer des options
 supplémentaires avant de redémarrer NVDA. Les options qui peuvent être
 spécifiées correspondent aux [options de ligne de commande][2] qui peuvent
 être utilisées avec `nvda.exe`, telles que  `-c` pour le chemin de
@@ -35,9 +48,9 @@ configuration, `--disable-addons` pour désactiver les extensions, etc.
 
 ### Annoncer la dernière erreur enregistrée
 
-Appuyer sur NVDA+shift+alt+E permet d'annoncer la dernière erreur
-enregistrée sans avoir besoin d'ouvrir le journal. Un deuxième appui efface
-la dernière erreur mémorisée.
+Un appui sur `NVDA+X, E` permet d'annoncer la dernière erreur enregistrée
+sans avoir à ouvrir le journal. Un deuxième appui efface la dernière erreur
+mémorisée.
 
 ### Jouer un son pour les erreurs journalisées
 
@@ -45,8 +58,8 @@ Le [paramètre "Jouer un son pour les erreurs journalisées"][4] a été
 introduit dans NVDA 2021.3 et vous permet de spécifier si NVDA jouera un son
 d'erreur dans le cas où une erreur est journalisée.
 
-Cette extension fournit une commande supplémentaire (NVDA+contrôle+alt+E)
-pour basculer ce paramètre. Vous pouvez choisir :
+Cette extension fournit une commande supplémentaire (`NVDA+X, maj+E`) pour
+basculer ce paramètre. Vous pouvez choisir :
 
 * "Uniquement dans les versions de test de NVDA" (par défaut) de sorte que
   NVDA joue les sons d'erreur uniquement si  la version NVDA actuelle est
@@ -67,11 +80,14 @@ le navigateur d'objet sans ouvrir la visionneuse du journal.
 Pour lister les propriétés d'un objet, déplacez-y le navigateur d'objets et
 utilisez les commandes suivantes :
 
-* Sélectionne la propriété précédente et l'annonce pour l'objet navigateur.
-* Sélectionne la propriété suivante et l'annonce pour l'objet navigateur.
-* Annonce la propriété actuellement sélectionnée pour l'objet navigateur ;
-  un double appui affiche ces informations dans un message en mode
-  navigation.
+* `NVDA+X, flècheHaut` : Sélectionne la propriété précédente et l'annonce
+  pour l'objet navigateur.
+* `NVDA+X, flècheBas` :Sélectionne la propriété suivante et l'annonce pour
+  l'objet navigateur.
+* `NVDA+X, N` : Annonce la propriété actuellement sélectionnée pour l'objet
+  navigateur
+* `NVDA+X, maj+N` : Affiche la propriété actuellement sélectionnée pour
+  l'objet navigateur dans un message en mode navigation
 
 La liste des propriétés prises en charge est la suivante : name, role,
 state, value, windowClassName, windowControlID, windowHandle, location,
@@ -79,26 +95,45 @@ Python class, Python class mro.
 
 Lorsque vous utilisez les commandes de navigation par objet, vous pouvez
 également choisir que la propriété actuellement sélectionnée soit annoncée
-au lieu de l'annonce habituelle des objets de NVDA. Une commande bascule
-permet d'alterner entre cette annonce personnalisée des objets et l'annonce
-habituel de NVDA.
+au lieu de l'annonce habituelle des objets de NVDA. Une commande bascule,
+`NVDA+X, contrôle+N`, permet d'alterner entre cette annonce personnalisée
+des objets et l'annonce habituel de NVDA.
 
 Par exemple, vous pouvez sélectionner la propriété « windowClassName » et
 activer l'annonce des objets personnalisée. Ensuite, lorsque vous déplacez
 l'objet navigateur vers l'objet suivant ou précédent, vous entendrez la
 propriété windowClassName de l'objet au lieu de l'annonce habituel.
 
-Les commandes de l'explorateur de propriétés d'objets n'ont pas de raccourci
-assigné par défaut ; vous devrez leur en assigner un à partir du dialogue
-Gestes de commandes pour les utiliser.
+## Outils pour les scripts
 
-## Mode de description étendu des scripts
+<a id="scriptOpener"></a>
+### La commande d'ouverture de script
+
+La commande d'ouverture de script permet d'ouvrir le code d'un script en
+connaissant son geste associé.
+
+Pour l'utiliser, appuyez sur `NVDA+x, C` puis le geste du script dont vous
+souhaitez voir le code.  Par exemple, pour voir le code du script qui
+annonce le titre de la fenêtre au premier plan, appuyez sur `NVDA+X, C` et
+ensuite `NVDA+T`.
+
+Pour utiliser cette fonctionnalité, vous devez avoir configuré [la ligne de
+commande de votre éditeur préféré](#settingsOpenCommand) dans les paramètres
+de l'extension. Si vous n'exécutez pas NVDA à partir des sources,
+[l'emplacement du code source NVDA](#settingsNvdaSourcePath) doit également
+avoir été configuré.
+
+### Mode de description étendu des scripts
+
+Le mode de description étendu pour les scripts permet l'annonce
+d'informations pour les scripts qui n'ont aucune description en mode d'aide
+à la saisie.
 
 Lorsque le mode de description étendu des scripts est activé, le mode d'aide
 à la saisie (NVDA+1) est modifié comme suit. Si un script n'a aucune
 description, son nom et sa classe sont annoncés. Si un script a une
 description, il est annoncé de la manière habituelle. Le geste pour activer
-ou désactiver cette fonction est NVDA+contrôle+alt+D.
+ou désactiver cette fonction est `NVDA+X, D`.
 
 L'exécution d'un geste associé à un script sans description dans le mode
 d'aide à la saisie crée également une entrée pour ce script via le dialogue
@@ -121,8 +156,7 @@ contrôle+maj+I soit annoncé comme contrôle+I, vous devez suivre les étapes
 suivantes :
 
 * Ouvrir un document Word.
-* Activer le mode de description étendu des scripts avec
-  NVDA+contrôle+alt+D.
+* Activer le mode de description étendu des scripts avec `NVDA+X, D`.
 * Entrer en mode d'aide à la saisie avec NVDA+1.
 * Appuyer sur contrôle+I pour annoncer le script italique et l'ajouter dans
   le dialogue des gestes de commande.
@@ -133,7 +167,7 @@ suivantes :
   NVDAObjects.window.winword.WordDocument".
 * Ajouter le raccourci contrôle+maj+I et valider.
 * Si vous le souhaitez, quittez le mode description étendu des scripts avec
-  NVDA+contrôle+alt+D.
+  `NVDA+X, D`.
 
 Bogue connue : un script ajouté pour une classe spécifique est visible même
 si le dialogue Geste de Saisie est ouvert dans un autre contexte.
@@ -144,7 +178,7 @@ si le dialogue Geste de Saisie est ouvert dans un autre contexte.
 ### Placer des marqueurs dans le journal
 
 Lorsque vous faites des tests ou travaillez, vous voudrez peut-être marquer un moment spécifique dans le journal, afin que vous puissiez y retourner facilement plus tard lorsque vous lisez le journal.
-Pour ajouter un message de marqueur dans le journal, appuyez sur NVDA+contrôle+K.
+Pour ajouter un message de marqueur dans le journal, appuyez sur `NVDA+X, K`.
 Un message comme suit sera enregistré au niveau information :  
 `-- NDTT marker 0 --`  
 Vous pouvez ajouter autant de marqueurs que vous le souhaitez dans le
@@ -160,10 +194,10 @@ mode lecture du journal est activé par défaut, de sorte que les commandes de
 lecture  du journal sont immédiatement disponibles. Dans d'autres zones de
 lecture de texte, tels qu'un éditeur (par exemple, Notepad ++) ou une page
 Web (par exemple, un ticket sur GitHub),, il est nécessaire d'appuyer sur
-NVDA+contrôle+alt+L pour activer le mode lecture du journal et Utilisez ses
+`NVDA+X, L` pour activer le mode lecture du journal et Utilisez ses
 commandes. Lorsque vous avez terminé les tâches d'analyse et de lecture du
-journal, vous pouvez appuyer à nouveau sur NVDA+contrôle+alt+L pour
-désactiver le mode lecture du journal.
+journal, vous pouvez appuyer à nouveau sur `NVDA+X, L` pour désactiver le
+mode lecture du journal.
 
 Les commandes disponibles en mode lecture du journal sont décrites ci-après.
 
@@ -227,8 +261,7 @@ Dans le journal, une ligne peut faire référence au code source :
   `INFO - config.ConfigManager._loadConfig (22:45:26.145) - MainThread (16580):`  
 * Le contenu d'un message enregistré en mode aide à la saisie (enregistré au
   niveau info) :
-  Input help: gesture kb(desktop):NVDA+t, bound to script title on globalCommands.GlobalCommands`  
-
+  `Input help: gesture kb(desktop):NVDA+t, bound to script title on globalCommands.GlobalCommands`  
 
 Vous pouvez ouvrir le fichier qui contient le code pour comprendre le
 contexte de la pile d'appel ou du message journalisé. Appuyez sur C pour
@@ -236,9 +269,9 @@ ouvrir le fichier.
 
 Pour utiliser cette fonctionnalité, vous devez avoir configuré [la ligne de
 commande de votre éditeur préféré](#settingsOpenCommand) dans les paramètres
-de l'extension. Si vous n'exécutez pas NVDA à partir des sources,
-[l'emplacement du code source NVDA](#settingsNvdaSourcePath) doit également
-avoir été configuré.
+de l'extension. Si vous n'exécutez pas NVDA à partir des sources et que vous
+voulez ouvrir le code de NVDA, [l'emplacement du code source
+NVDA](#settingsNvdaSourcePath) doit également avoir été configuré.
 
 <a id="oldLogsBackup"></a>
 ## Sauvegarde des anciens journaux
@@ -253,8 +286,17 @@ l'extension](#settingsLogsBackup).
 
 Une boîte de dialogue Gestionnaire de journaux permet d'afficher les journaux sauvegardés.
 Elle peut être ouverte en allant dans le menu NVDA -> Outils -> Gestionnaire de journaux
-Dans cette boîte de dialogue, vous pouvez voir la liste de tous les journaux sauvegardés, les ouvrir ou les supprimer.
-Pour pouvoir ouvrir un journal, vous devez d'abord avoir configuré la [Commande pour ouvrir un fichier dans votre éditeur préféré](#settingsOpenCommand).
+Dans cette boîte de dialogue, vous pouvez voir la liste de tous les journaux sauvegardés et effectuer diverses actions sur le journal sélectionné.
+
+* l'ouvrir (appuyer sur `Entrée`)
+* le supprimer (appuyer sur `suppr`)
+* copier le fichier journal (appuyer sur `contrôle+C`)
+
+Vous pouvez également sélectionner plusieurs journaux pour effectuer des
+actions sur tous ceux-ci.
+
+Pour pouvoir ouvrir un log, vous devez avoir configuré la [Commande pour
+ouvrir un fichier dans votre éditeur préféré](#settingsOpenCommand).
 
 ## Extension de la console Python
 
@@ -266,9 +308,9 @@ Dans la console, vous pouvez appeler la fonction suivante pour voir le code sour
 
 Pour utiliser cette fonctionnalité, vous devez avoir configuré [la ligne de
 commande de votre éditeur préféré](#settingsOpenCommand) dans les paramètres
-de l'extension. Si vous n'exécutez pas NVDA à partir des sources,
-[l'emplacement du code source NVDA](#settingsNvdaSourcePath) doit également
-avoir été configuré.
+de l'extension. Si vous n'exécutez pas NVDA à partir des sources et que vous
+voulez ouvrir le code de NVDA, [l'emplacement du code source
+NVDA](#settingsNvdaSourcePath) doit également avoir été configuré.
 
 Vous pouvez appeler la fonction `openCodeFile` dans des objets définis dans
 le code NVDA ou dans des objets définis par les extensions. Vous ne pouvez
@@ -319,12 +361,50 @@ Par exemple :
 Parfois, vous voulez savoir quelle partie du code est responsable de
 l'annonce de quelque chose. Pour ce faire, vous pouvez activer la
 journalisation de la trace de pile d'appel de la fonction speech en appuyant
-sur NVDA+contrôle+alt+S. Chaque fois que NVDA parle, une trace de la pile
-d'appel sera enregistrée dans le journal.
+sur `NVDA+X, S`. Chaque fois que NVDA parle, une trace de la pile d'appel
+sera enregistrée dans le journal.
 
 Remarque : vous pouvez modifier directement le fichier du script pour
 patcher une autre fonction. Voir toutes les instructions dans le fichier
 pour plus de détails sur l'utilisation.
+
+<a id="reverseTranslationCommand"></a>
+## Commande de traduction inverse
+
+De nombreux testeurs utilisent NVDA dans une autre langue que l'anglais.
+Mais lorsqu'on rapporte des résultats de tests sur GitHub, la description
+des options modifiées ou les messages annoncés par NVDA doivent être écrit
+en anglais.  C'est assez frustrant et long de devoir redémarrer NVDA en
+anglais pour vérifier le libellé exact des options ou des messages.
+
+Pour éviter cela, l'extension fournit une commande de traduction inverse
+(`NVDA+X, R`) permettant la traduction inverse de l'interface de NVDA,
+telles que les messages, les labels des contrôles dans l'interface
+graphique, etc. Cette commande utilise la traduction GetText de NVDA pour
+essayer de fournir une traduction inverse de la dernière annonce.  Plus
+précisément, une traduction inverse de la première chaîne de la dernière
+séquence de parole est fournie.
+
+Par exemple, dans NVDA en français, si je descends sur le menu outils nommé
+"Outils", NVDA dira "Outils Sous-menu O".  Si j'appelle la commande de
+traduction inverse juste après cela, NVDA annoncera la traduction "Tools",
+la traduction inverse de "Outils".
+
+En regardant le journal après cela, nous pouvons trouver les lignes
+suivantes :
+```
+IO - speech.speech.speak (23:38:24.450) - MainThread (2044):
+Speaking ['Outils', 'sous-Menu', CharacterModeCommand(True), 'o', CharacterModeCommand(False), CancellableSpeech (still valid)]
+```
+Cela confirme que "Outils" était la première chaîne de la séquence de
+parole.
+
+Dans le cas où la traduction inverse conduit à deux ou plusieurs résultats
+possibles, un menu contextuel s'ouvre et liste toutes les possibilités.
+
+Le résultat de la traduction inverse est également copié dans le
+presse-papiers si l'[option correspondante](#settingScopyReverseTranslation)
+est activée, ce qui est la valeur par défaut.
 
 <a id="settings"></a>
 ## Paramètres
@@ -342,9 +422,9 @@ profil par défaut est actif.
 
 Certaines fonctionnalités permettent de voir le contenu dans votre éditeur
 préféré. Cela inclut les commandes pour afficher le fichier source [à partir
-d'un journal](#logReaderOpenSourceFile) ou [à partir d'un objet dans la
-console](#pythonConsoleOpenCodeFile) ainsi que le bouton Ouvrir du
-[gestionnaire de journaux](#oldLogsBackup).
+d'un journal](#logReaderOpenSourceFile), [d'un objet dans la
+console](#pythonConsoleOpenCodeFile) ou [d'un geste exécuté](#scriptOpener),
+ainsi que le bouton Ouvrir du [gestionnaire de journaux](#oldLogsBackup).
 
 Pour les utiliser, vous devez d'abord configurer la commande qui sera appelée pour ouvrir le fichier dans votre éditeur préféré.
 La commande doit être de la forme :  
@@ -358,7 +438,7 @@ otepad++.exe" "{path}" -n{line}`
 <a id="settingsNvdaSourcePath"></a>
 ### Chemin du code source de NVDA
 
-Lors de l'utilisation d'une commande pour [afficher le fichier source à partir d'un journal](#logReaderOpenSourceFile) ou [à partir d'un objet dans la console](#pythonConsoleOpenCodeFile), le fichier peut appartenir à NVDA lui-même.
+Lors de l'utilisation d'une commande pour [afficher le fichier source à partir d'un journal](#logReaderOpenSourceFile), [d'un objet dans la console](#pythonConsoleOpenCodeFile) ou [d'un geste exécuté](#scriptOpener), le fichier peut appartenir à NVDA lui-même.
 Si vous n'exécutez pas NVDA à partir des sources, votre NVDA ne contient que des fichiers compilés.
 Ainsi, vous pouvez spécifier ici un emplacement alternatif où le fichier source correspondant sera trouvé, par ex. l'endroit où vous avez cloné les fichiers source NVDA, afin qu'un fichier source puisse être ouvert malgré tout.
 Le chemin doit être de la forme :  
@@ -379,7 +459,37 @@ sauvegardes" le nombre maximum de sauvegardes que vous souhaitez
 conserver. Ces paramètres ne prennent effet qu'au prochain démarrage de NVDA
 lorsque la sauvegarde a lieu.
 
-## Journal des changements
+<a id="settingsCopyReverseTranslation"></a>
+### Copier la traduction inverse dans le presse-papiers
+
+Cette option permet de choisir si le résultat de la [Commande de traduction
+inverse](#ReverseTranslationCommand) est également copié dans le
+presse-papiers.
+
+## Journal des modifications
+
+### Version 7.0
+
+* Les commandes séquentielles ont été introduites; Le point d'entrée est
+  `NVDA+X`. Les commandes existantes ont été modifiées en conséquence.
+* Une nouvelle commande (`NVDA+X, R`) pour effectuer une traduction inverse
+  du dernier message annoncé.
+* Une nouvelle commande (`NVDA+X, C`) pour ouvrir le code source du script
+  associé au geste suivant exécuté.
+* Ajout de la prise en charge de la parole à la demande.
+* Le gestionnaire de journaux permet désormais plus d'actions, soit à l'aide
+  des boutons dédiés dans la boîtes de dialogue, soit avec des raccourcis
+  clavier dans la liste: `entrée` pour ouvrir le fichier
+  journal,`contrôle+C` pour copier le fichier et `suppr` pour supprimer un
+  fichier.
+* L'ordre de tri dans le gestionnaire de journaux a été inversé (fichier de
+  journal le plus récent en haut).
+* Correction d'un problème lorsqu'on tente d'ouvrir un module Python avec la
+  fonction `openCodeFile`.
+
+### Version 6.3
+
+* Compatibilité avec NVDA 2024.1.
 
 ### Version 6.2
 
@@ -400,7 +510,7 @@ lorsque la sauvegarde a lieu.
 ### Version 6.0
 
 * Lors de l'utilisation des commandes de navigation par objet, une propriété
-  specifique des objets peut être annoncée au lieu de l'annonce des objets
+  spécifique des objets peut être annoncée au lieu de l'annonce des objets
   habituel de NVDA.
 * En mode lecture du journal, la touche "C" pour ouvrir un fichier de code à
   partir du journal fonctionne désormais également sur un message d'aide à
@@ -425,13 +535,11 @@ lorsque la sauvegarde a lieu.
   ajoutées pour passer aux messages d'entrée et de parole.
 * Une nouvelle commande permet de placer un marqueur dans le journal; et des
   commandes de navigation rapide spécifiques en mode lecture du journal
-  permettent de s'y rendre. Crédit : l'idée initiale de cette fonctionnalité
-  vient de l'extension Debug Helper de Luke Davis.
-* Correctif : La mémorisation de la dernière erreur n'échoue plus dans
-  certains cas.
+  permettent de s'y rendre.
+Crédit : l'idée initiale de cette fonctionnalité provient de l'extension  Debug Helper par Luke Davis.
+* Correctif : La mémorisation de la dernière erreur n'échoue plus dans certains cas.
 * Correctif : l'extension peut s'initialiser à nouveau avec NVDA 2019.2.1.
-* Correctif : la fonctionnalité de sauvegarde des journaux n'échouera plus
-  avec les journaux non-ASCII.
+* Correctif : la fonctionnalité de sauvegarde des journaux n'échouera plus avec les journaux non-ASCII.
 
 ### Version 4.2
 
