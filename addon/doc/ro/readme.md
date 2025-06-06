@@ -250,9 +250,8 @@ deschide acest fișier.
 
 For this feature to work, you need to have configured your [favorite
 editor's command](#settingsOpenCommand) in the add-on's settings.  If you
-are not running NVDA from source and want to open NVDA's code, the [location
-of NVDA source code](#settingsNvdaSourcePath) should also have been
-configured.
+are not running NVDA from source, the [location of NVDA source
+code](#settingsNvdaSourcePath) should also have been configured.
 
 <a id="backupJurnaleVechi"></a>
 ## Backup al jurnalelor vechi
@@ -288,9 +287,8 @@ open a file in your favorite editor](#settingsOpenCommand).
 
 For this feature to work, you need to have configured your [favorite
 editor's command](#settingsOpenCommand) in the add-on's settings.  If you
-are not running NVDA from source and want to open NVDA's code, the [location
-of NVDA source code](#settingsNvdaSourcePath) should also have been
-configured.
+are not running NVDA from source, the [location of NVDA source
+code](#settingsNvdaSourcePath) should also have been configured.
 
 Funcțiile `openCodeFile` pot fi apelate pe obiecte definite în codul NVDA
 sau pe obiecte definite de suplimente. Nu poate fi apelat pe obiecte al

@@ -12,38 +12,42 @@ Esse complemento reúne vários recursos para depuração e teste do NVDA.
   algumas opções adicionais ao reiniciar o NVDA.
 * Vários recursos relacionados a erros registrados.
 * Um explorador de propriedades de objetos.
-* Script tools: an extended script description mode and a script opener.
+* Ferramentas de script: um modo de descrição de script estendido e um
+  abridor de script.
 * Comandos para ajudar na leitura e análise de registros.
 * Backups de registros antigos
 * No espaço de trabalho do console do Python, uma função para abrir o
   código-fonte de um objeto.
 * Um script de inicialização personalizado para o console Python
 * Um comando para registrar o rastreamento de pilha da função speech.speak.
-* A command to reverse translate the items of the interface.
+* Um comando para reverter a tradução dos itens da interface.
 
-## Commands
+## Comandos
 
-This add-on uses layered commands for all of the new commands it adds.  The
-entry point for these commands is `NVDA+X`; thus all the commands should be
-executed by `NVDA+X` followed by another single letter or gesture.  You can
-list all the available layered commands pressing `NVDA+X, H`.
+Esse complemento utiliza comandos em camadas para todos os novos comandos
+que adiciona.  O ponto de entrada para esses comandos é `NVDA+X`; portanto,
+todos os comandos devem ser executados por `NVDA+X` seguido de outra letra
+ou gesto.  Você pode listar todos os comandos em camadas disponíveis
+pressionando `NVDA+X, H`.
 
-For the commands that you use more frequently, you can also define a direct
-gesture in the input gesture dialog.
+Para os comandos que você usa com mais frequência, também é possível definir
+um gesto direto na caixa de diálogo de gestos de entrada.
 
 ## Diálogo de reinicialização aprimorado
 
-The `NVDA+X, Q` command opens a dialog to specify some extra options before
-restarting NVDA.  The options that can be specified correspond to the
-[command line options][2] that can be used with `nvda.exe`, e.g. `-c` for
-config path, `--disable-addons` to disable add-ons, etc.
+O comando `NVDA+X, Q` abre uma caixa de diálogo para especificar algumas
+opções extras antes de reiniciar o NVDA.  As opções que podem ser
+especificadas correspondem às [opções de linha de comando][2] que podem ser
+usadas com o `nvda.exe`, por exemplo, `-c` para o caminho de configuração,
+`--disable-addons` para desativar complementos etc.
 
 ## Recursos relacionados a erros registrados
 
 ### Relatar o último erro registrado
 
-Pressing `NVDA+X, E` allows to report the last error logged without needing
-to open the log. A second press clears the memorized last error.
+Pressionar `NVDA+X, E` permite relatar o último erro registrado sem a
+necessidade de abrir o registro. Um segundo pressionamento apaga o último
+erro memorizado.
 
 ### Reproduzir um som para erros registrados
 
@@ -51,8 +55,8 @@ A configuração [“Reproduzir um som para erros registrados”][4] foi
 introduzida no NVDA 2021.3 e permite especificar se o NVDA reproduzirá um
 som de erro caso um erro seja registrado.
 
-This add-on provides an additional command (`NVDA+X, shift+E`) to toggle
-this setting.  You can choose:
+Esse complemento fornece um comando adicional (`NVDA+X, shift+E`) para
+alternar essa configuração.  Você pode escolher:
 
 * “Somente em versões de teste” (padrão) para fazer o NVDA reproduzir sons
   de erro somente se a versão atual do NVDA for uma versão de teste (alfa,
@@ -73,57 +77,59 @@ atual sem abrir o visualizador de registros.
 Para listar as propriedades de um objeto, mova o objeto do navegador até ele
 e use os seguintes comandos:
 
-* `NVDA+X, upArrow`: Selects the previous property and reports it for the
-  navigator object.
-* `NVDA+X, downArrow`: Selects the next property and reports it for the
-  navigator object.
-* `NVDA+X, N`: Reports the currently selected property for the navigator
-  object
-* `NVDA+X, shift+N`: Displays the currently selected property for the
-  navigator object in a browseable message
+* `NVDA+X, setaParaCima`: Seleciona a propriedade anterior e a informa para
+  o objeto do navegador.
+* `NVDA+X, setaParaBaixo`: Seleciona a próxima propriedade e a informa para
+  o objeto do navegador.
+* `NVDA+X, N`: Informa a propriedade selecionada no momento para o objeto do
+  navegador
+* `NVDA+X, shift+N`: Exibe a propriedade selecionada no momento para o
+  objeto do navegador em uma mensagem navegável
 
 A lista das propriedades compatíveis é a seguinte: name, role, state, value,
 windowClassName, windowControlID, windowHandle, location, Python class,
 Python class mro.
 
-When using object navigation commands, you can also choose to have the
-currently selected property reported instead of NVDA usual object
-reporting.  A toggle command, `NVDA+X, control+N`, allows to switch between
-this custom reporting of objects and NVDA usual reporting.
+Quando usar os comandos de navegação de objetos, você também pode optar por
+ter a propriedade selecionada no momento relatada em vez do relatório de
+objetos usual do NVDA.  Um comando de alternância, `NVDA+X, control+N`,
+permite alternar entre esse relatório personalizado de objetos e o relatório
+normal do NVDA.
 
 Por exemplo, você pode selecionar a propriedade “windowClassName” e ativar o
 relatório de objeto personalizado.  Então, ao mover o objeto do navegador
 para o objeto seguinte ou anterior, você ouvirá o windowClassName do objeto
 em vez do relatório normal.
 
-## Script tools
+## Ferramentas de script
 
-<a id="scriptOpener"></a>
-### The script opener
+<a id=“scriptOpener”></a>
+<a id=“settings”></a>
+### Abertura do script
 
-The script opener command allows to open the code of a script knowing its
-gesture.
+O comando de abertura de script permite abrir o código de um script
+conhecendo seu gesto.
 
-To use it press `NVDA+x, C` and then the gesture of the script which you
-want to see the code of.  For example to see the code of the script that
-reports the title of the foreground window, press `NVDA+X, C` and then
-`NVDA+T`.
+Para utilizá-lo, pressione `NVDA+x, C` e, em seguida, o gesto do script cujo
+código você deseja visualizar.  Por exemplo, para ver o código do script que
+informa o título da janela em primeiro plano, pressione `NVDA+X, C` e, em
+seguida, `NVDA+T`.
 
-For this feature to work, you need to have configured your [favorite
-editor's command](#settingsOpenCommand) in the add-on's settings.  If you
-are not running NVDA from source, the [location of NVDA source
-code](#settingsNvdaSourcePath) should also have been configured.
+Para que esse recurso funcione, você precisa ter configurado seu [comando do
+editor favorito] (#settingsOpenCommand) nas configurações do complemento.
+Se não estiver executando o NVDA a partir da fonte, o [local do código-fonte
+do NVDA] (#settingsNvdaSourcePath) também deverá ter sido configurado.
 
 ### Modo de descrição de script estendido
 
-The extended script description mode allows to have reported information on
-scripts without description in input help mode.
+O modo de descrição de script estendido permite ter informações relatadas
+sobre scripts sem descrição no modo de ajuda de entrada.
 
-When the Extended script description mode is active, the input help mode
-(NVDA+1) is modified as follows.  If a script has no description, the
-script's name and class are reported.  If a script has a description, its
-description is reported as usual.  The gesture to activate or deactivate
-this feature is `NVDA+X, D`.
+Quando o modo de descrição de script estendido está ativo, o modo de ajuda
+de entrada (NVDA+1) é modificado da seguinte forma.  Se um script não tiver
+descrição, o nome e a classe do script serão informados.  Se um script tiver
+uma descrição, sua descrição será informada como de costume.  O gesto para
+ativar ou desativar esse recurso é `NVDA+X, D`.
 
 A execução de um gesto vinculado a um script sem descrição no modo de ajuda
 de entrada também cria uma entrada para esse script na caixa de diálogo de
@@ -145,7 +151,7 @@ relatado nativamente pelo NVDA.  Para que o resultado de control+shift+I
 seja relatado pelo NVDA como control+I, execute as seguintes etapas:
 
 * Abra um documento do Word.
-* Enable the extended script description mode with `NVDA+X, D`.
+* Habilite o modo de descrição de script estendido com `NVDA+X, D`.
 * Entre no modo de ajuda de entrada com o NVDA+1.
 * Pressione control+I para relatar o script em itálico e adicioná-lo à caixa
   de diálogo de gestos.
@@ -155,7 +161,7 @@ seja relatado pelo NVDA como control+I, execute as seguintes etapas:
   risco!)”, selecione o comando “toggleItalic on
   NVDAObjects.window.winword.WordDocument”.
 * Adicione o atalho control+shift+I e valide.
-* If you want, exit the extended script description mode with `NVDA+X, D`.
+* Se desejar, saia do modo de descrição de script estendido com `NVDA+X, D`.
 
 Erro conhecido: Um script adicionado a uma classe específica fica visível
 mesmo que o gerenciador de gestos seja aberto em outro contexto.
@@ -165,9 +171,9 @@ mesmo que o gerenciador de gestos seja aberto em outro contexto.
 <a id="logPlaceMarkers"></a>
 ### Colocar marcadores no registro
 
-While testing or working, you may want to mark a specific moment in the log, so that you can turn to it easily later when reading the log.
-To add a marker message in the log, press `NVDA+X, K`.
-A message as follows will be logged at INFO level:  
+Durante o teste ou o trabalho, talvez você queira marcar um momento específico no registro, para que possa acessá-lo facilmente mais tarde ao ler o registro.
+Para adicionar uma mensagem de marcador no registro, pressione `NVDA+X, K`.
+Uma mensagem como a seguinte será registrada no nível INFO:  
 Marcador NDTT 0 --`  
 Você pode adicionar quantos marcadores quiser no registro.  O número do
 marcador será incrementado sempre que você colocar um marcador no registro;
@@ -175,13 +181,15 @@ ele só será redefinido quando o NVDA for reiniciado.
 
 ### Modo de leitura de registros
 
-A log reader mode provides commands to ease log reading and analyzing.  In
-the log viewer window the log reader is enabled by default, thus log reading
-commands are available immediately.  In another text reading area such as an
-editor (e.g. Notepad++) or a webpage (e.g. GitHub issue), you need to press
-`NVDA+X, L` to enable log reader mode and use its commands.  When you are
-done with log reading and analyzing tasks, you can disable again `NVDA+X, L`
-to disable the log reader mode.
+Um modo de leitor de log fornece comandos para facilitar a leitura e a
+análise do log.  Na janela do visualizador de logs, o leitor de logs está
+ativado por padrão e, portanto, os comandos de leitura de logs estão
+disponíveis imediatamente.  Em outra área de leitura de texto, como um
+editor (por exemplo, Notepad++) ou uma página da Web (por exemplo, um
+problema no GitHub), é necessário pressionar `NVDA+X, L` para ativar o modo
+de leitura de log e usar seus comandos.  Quando terminar as tarefas de
+leitura e análise de logs, desative novamente `NVDA+X, L` para desativar o
+modo de leitor de logs.
 
 Os comandos disponíveis no modo de leitura de registros são descritos a
 seguir.
@@ -243,17 +251,17 @@ No registro, algumas linhas podem se referir ao código-fonte:
   `INFO - config.ConfigManager._loadConfig (22:45:26.145) - MainThread (16580):`  
 * O conteúdo de uma mensagem registrada no modo de ajuda de entrada
   (registrada no nível de informação):
-  `Input help: gesture kb(desktop):NVDA+t, bound to script title on globalCommands.GlobalCommands`  
+  `Ajuda de entrada: gesto kb(desktop):NVDA+t, vinculado ao título do script em globalCommands.GlobalCommands`  
+  Ajuda de entrada: gesto kb(desktop):NVDA+t, vinculado ao título do script em globalCommands.GlobalCommands`  
 
 Talvez você queira abrir o arquivo que contém esse código para entender o
 contexto do traceback ou da mensagem registrada.  Basta pressionar C para
 abrir esse arquivo.
 
-For this feature to work, you need to have configured your [favorite
-editor's command](#settingsOpenCommand) in the add-on's settings.  If you
-are not running NVDA from source and want to open NVDA's code, the [location
-of NVDA source code](#settingsNvdaSourcePath) should also have been
-configured.
+Para que esse recurso funcione, você precisa ter configurado seu [comando do
+editor favorito] (#settingsOpenCommand) nas configurações do complemento.
+Se não estiver executando o NVDA a partir da fonte, o [local do código-fonte
+do NVDA] (#settingsNvdaSourcePath) também deverá ter sido configurado.
 
 <a id="oldLogsBackup"></a>
 ## Backup de registros antigos
@@ -265,18 +273,19 @@ antes de consultar o `nvda-old.log`.  Esse complemento permite que você
 configure se deseja fazer backup de logs antigos e quantos deles; isso é
 feito nas [configurações do complemento] (#settingsLogsBackup).
 
-A log manager dialog allows to view the backed up logs.
-It can be opened going to NVDA menu -> Tools -> Logs manager
-In this dialog, you can see the list of all the backup logs and perform various actions on the selected log:
+Uma caixa de diálogo do gerenciador de registros permite visualizar os registros de backup.
+Ela pode ser aberta no menu NVDA -> Ferramentas -> Logs manager
+Nessa caixa de diálogo, é possível ver a lista de todos os logs de backup e executar várias ações no log selecionado:
 
-* open it (press `Enter`)
-* delete it (press `Delete`)
-* copy the log file (press `control+C`)
+* abra-o (pressione `Enter`)
+* exclua-o (pressione `Delete`)
+* copie o arquivo de registro (pressione `control+C`)
 
-You can also select multiple logs to perform an actions on all of them.
+Também é possível selecionar vários registros para executar uma ação em
+todos eles.
 
-To be able to open a log, you should first have configured the [Command to
-open a file in your favorite editor](#settingsOpenCommand).
+Para poder abrir um registro, primeiro você deve ter configurado o [Comando
+para abrir um arquivo no seu editor favorito] (#settingsOpenCommand).
 
 ## Extensão do console Python
 
@@ -286,11 +295,10 @@ open a file in your favorite editor](#settingsOpenCommand).
 No console, você pode chamar a seguinte função para exibir o código-fonte que define a variável `myVar`:  
 `openCodeFile(myVar)`  
 
-For this feature to work, you need to have configured your [favorite
-editor's command](#settingsOpenCommand) in the add-on's settings.  If you
-are not running NVDA from source and want to open NVDA's code, the [location
-of NVDA source code](#settingsNvdaSourcePath) should also have been
-configured.
+Para que esse recurso funcione, você precisa ter configurado seu [comando do
+editor favorito] (#settingsOpenCommand) nas configurações do complemento.
+Se não estiver executando o NVDA a partir da fonte, o [local do código-fonte
+do NVDA] (#settingsNvdaSourcePath) também deverá ter sido configurado.
 
 As funções `openCodeFile` podem ser chamadas em objetos definidos no código
 do NVDA ou em objetos definidos por complementos.  Elas não podem ser
@@ -336,48 +344,49 @@ Por exemplo:
 
 ## Registre o rastreamento de pilha da função de fala
 
-Sometimes, you may want to see which part of the code is responsible for
-speaking something.  For this, you can enable the stack trace logging of the
-speech function pressing `NVDA+X, S`.  Each time NVDA speaks, a
-corresponding stack trace will be logged in the log.
+Às vezes, você pode querer ver qual parte do código é responsável por falar
+algo.  Para isso, você pode ativar o registro de rastreamento de pilha da
+função de fala pressionando `NVDA+X, S`.  Cada vez que o NVDA falar, um
+rastreamento de pilha correspondente será registrado no log.
 
 Observação: Você pode modificar o arquivo do script diretamente para
 corrigir outra função.  Consulte todas as instruções no arquivo para obter
 detalhes sobre o uso.
 
-<a id="reverseTranslationCommand"></a>
-## Reverse translation command
+<a id=“reverseTranslationCommand”></a>
+## Comando de conversão reversa
 
-Many testers use NVDA in another language than English.  But when reporting
-test results on GitHub, the description of the modified options or the
-messages reported by NVDA should be written in English.  Its quite
-frustrating and time consuming to have to restart NVDA in English to check
-the exact wording of the options or messages.
+Muitos testadores usam o NVDA em outro idioma que não o inglês.  Porém, ao
+relatar os resultados do teste no GitHub, a descrição das opções modificadas
+ou as mensagens relatadas pelo NVDA devem ser escritas em inglês.  É muito
+frustrante e demorado ter que reiniciar o NVDA em inglês para verificar o
+texto exato das opções ou mensagens.
 
-To avoid this, the add-on provides a reverse translation command (`NVDA+X,
-R`) allowing to reverse translate NVDA's interface such as messages, control
-labels in the GUI, etc.  This command uses NVDA's gettext translation to try
-to reverse translate the last speech.  More specifically, the first string
-of the last speech sequence is reverse translated.
+Para evitar isso, o complemento fornece um comando de tradução reversa
+(`NVDA+X, R`) que permite a tradução reversa da interface do NVDA, como
+mensagens, rótulos de controle na GUI, etc.  Esse comando usa a tradução
+gettext do NVDA para tentar traduzir a última fala.  Mais especificamente, a
+primeira cadeia de caracteres da última sequência de fala é traduzida de
+forma reversa.
 
-For example, in French NVDA, if I arrow down to the Tools menu named
-"Outils", NVDA will say "Outils sous-Menu o" which stands for "Tools subMenu
-o".  If I press the reverse translation command just after that, NVDA will
-reverse translate "Outils" to "Tools".
+Por exemplo, no NVDA francês, se eu apontar a seta para baixo até o menu
+Ferramentas chamado “Outils”, o NVDA dirá “Outils sous-Menu o”, que
+significa “Tools subMenu o”.  Se eu pressionar o comando de tradução reversa
+logo em seguida, o NVDA fará a tradução reversa de “Outils” para “Tools”.
 
-Looking at the log afterwards, we can find the following lines:
+Observando o registro depois, podemos encontrar as seguintes linhas:
 ```
 IO - speech.speech.speak (23:38:24.450) - MainThread (2044):
-Speaking ['Outils', 'sous-Menu', CharacterModeCommand(True), 'o', CharacterModeCommand(False), CancellableSpeech (still valid)]
+Falando ['Outils', 'sous-Menu', CharacterModeCommand(True), 'o', CharacterModeCommand(False), CancellableSpeech (ainda válido)]
 ```
-This confirms that "Outils was the first string in the speech sequence.
+Isso confirma que “Outils foi a primeira string na sequência de fala.
 
-In case the reverse translation leads to two or more possible results, a
-context menu is opened listing all the possibilities.
+Caso a tradução reversa leve a dois ou mais resultados possíveis, um menu de
+contexto é aberto listando todas as possibilidades.
 
-The result of the reverse translation is also copied to the clipboard if the
-corresponding [option](#settingsCopyReverseTranslation) is enabled, which is
-the default value.
+O resultado da tradução reversa também é copiado para a área de
+transferência se a [opção](#settingsCopyReverseTranslation) correspondente
+estiver ativada, que é o valor padrão.
 
 <a id=“settings”></a>
 ## Configurações
@@ -393,11 +402,12 @@ padrão estiver ativo.
 <a id=“settingsOpenCommand”></a>
 ### Comando para abrir um arquivo em seu editor favorito
 
-Some features allow to see content in your favorite editor.  This includes
-the commands to view the source file [from a log](#logReaderOpenSourceFile),
-[from an object in the console](#pythonConsoleOpenCodeFile) or [from a typed
-gesture](#scriptOpener), as well as the [log manager](#oldLogsBackup)'s Open
-button.
+Alguns recursos permitem ver o conteúdo em seu editor favorito.  Isso inclui
+os comandos para visualizar o arquivo de origem [de um
+log](#logReaderOpenSourceFile), [de um objeto no
+console](#pythonConsoleOpenCodeFile) ou [de um gesto
+digitado](#scriptOpener), bem como o botão Abrir do [gerenciador de
+logs](#oldLogsBackup).
 
 Para usá-los, primeiro você precisa configurar o comando que será chamado para abrir o arquivo em seu editor favorito.
 O comando deve ter o formato:  
@@ -410,10 +420,10 @@ Para o Notepad++, por exemplo, o comando a ser digitado no console seria:
 <a id=“settingsNvdaSourcePath”></a>
 ### Caminho do código-fonte do NVDA
 
-When using a command to view the source file [from a log](#logReaderOpenSourceFile), [from an object in the console](#pythonConsoleOpenCodeFile) or [from a typed gesture](#scriptOpener), the file may belong to NVDA itself.
-If you are not running NVDA from source, your NVDA only contains compiled files.
-Thus you may specify here an alternate location where the corresponding source file will be found, e.g. the place where you have cloned NVDA source files, so that a source file can be opened anyway.
-The path should be such as:  
+Quando usar um comando para exibir o arquivo de origem [de um log] (#logReaderOpenSourceFile), [de um objeto no console] (#pythonConsoleOpenCodeFile) ou [de um gesto digitado] (#scriptOpener), o arquivo pode pertencer ao próprio NVDA.
+Se você não estiver executando o NVDA a partir do código-fonte, o NVDA conterá apenas arquivos compilados.
+Portanto, você pode especificar aqui um local alternativo onde o arquivo de origem correspondente será encontrado, por exemplo, o local onde você clonou os arquivos de origem do NVDA, de modo que um arquivo de origem possa ser aberto de qualquer forma.
+O caminho deve ser tal como:  
 `C:\pathExample\GIT\nvda\source`  
 Claro, substitua o caminho da fonte do NVDA pelo caminho correto.
 
@@ -430,34 +440,35 @@ de backups que deseja manter.  Essas configurações só entram em vigor na
 próxima inicialização do NVDA, quando o backup for realizado.
 
 <a id="settingsCopyReverseTranslation"></a>
-### Copy reverse translation to clipboard
+### Copiar a tradução reversa para a área de transferência
 
-This option allows to choose if the [reverse translation
-command](#reverseTranslationCommand) also copies its result to the
-clipboard.
+Essa opção permite escolher se o [comando de tradução reversa]
+(#reverseTranslationCommand) também copia o resultado para a área de
+transferência.
 
 ## Registro de alterações
 
-### Version 7.0
+### Versão 7.0
 
-* Layered commands have been introduced; the entry point is `NVDA+X`.  The
-  existing commands have been modified accordingly.
-* A new command (`NVDA+X, R`) to reverse translate the last spoken message.
-* A new command (`NVDA+X, C`) to open the source code of the script
-  associated to the next pressed gesture.
-* Added speech on demand support.
-* The log manager now allows more actions, either with the dedicated buttons
-  in the dialogs or using keyboard shortcuts in the list: `enter` to open
-  the log, `control+C` to copy the log file and `delete` to delete a log
-  file.
-* The sorting order in the log manager has been reversed (most recent log on
-  top).
-* Fixed an issue when trying to open a Python module with openCodeFile
-  function.
+* Foram introduzidos comandos em camadas; o ponto de entrada é `NVDA+X`.  Os
+  comandos existentes foram modificados de acordo.
+* Um novo comando (`NVDA+X, R`) para reverter a tradução da última mensagem
+  falada.
+* Um novo comando (`NVDA+X, C`) para abrir o código-fonte do script
+  associado ao próximo gesto pressionado.
+* Adicionado suporte a fala sob demanda.
+* O gerenciador de registros agora permite mais ações, seja com os botões
+  dedicados nas caixas de diálogo ou usando atalhos de teclado na lista:
+  `enter` para abrir o registro, `control+C` para copiar o arquivo de
+  registro e `delete` para excluir um arquivo de registro.
+* A ordem de classificação no gerenciador de registros foi invertida
+  (registro mais recente no topo).
+* Foi corrigido um problema ao tentar abrir um módulo Python com a função
+  openCodeFile.
 
-### Version 6.3
+### Versão 6.3
 
-* Compatibility with NVDA 2024.1.
+* Compatibilidade com o NVDA 2024.1.
 
 ### Versão 6.2
 
@@ -498,12 +509,13 @@ clipboard.
   as mensagens de ERRO CRÍTICO, bem como para as mensagens de ERRO normais.
 * Novos comandos de navegação rápida de registro foram adicionados para
   saltar para a entrada e para as mensagens de fala.
-* A new command allow to place a marker in the log; and specific quick
-  navigation commands in log reading mode allow to jump to them.
-  Credit: the initial idea for this feature comes from Debug Helper add-on by Luke Davis.
-* Bubfix: The memorization of the last error do not fail anymore in some cases.
-* Bugfix: The add-on can initialize again with NVDA 2019.2.1.
-* Bugfix: Log saving feature will not fail anymore with non-ASCII logs.
+* Um novo comando permite colocar um marcador no registro; e comandos
+  específicos de navegação rápida no modo de leitura de registro permitem
+  saltar para eles.
+  Crédito: a ideia inicial para esse recurso vem do complemento Debug Helper de Luke Davis.
+* Correção de erro: A memorização do último erro não falha mais em alguns casos.
+* Correção de bug: o complemento pode ser inicializado novamente com o NVDA 2019.2.1.
+* Correção de bug: o recurso de salvamento de registros não falhará mais com registros não ASCII.
 
 ### Versão 4.2
 

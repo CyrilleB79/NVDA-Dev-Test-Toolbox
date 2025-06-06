@@ -246,9 +246,8 @@ If you want to disable speech translation, press T again.
 
 For this feature to work, you need to have configured your [favorite
 editor's command](#settingsOpenCommand) in the add-on's settings.  If you
-are not running NVDA from source and want to open NVDA's code, the [location
-of NVDA source code](#settingsNvdaSourcePath) should also have been
-configured.
+are not running NVDA from source, the [location of NVDA source
+code](#settingsNvdaSourcePath) should also have been configured.
 
 <a id="oldLogsBackup"></a>
 ## Резервне копіювання старих журналів
@@ -283,9 +282,8 @@ open a file in your favorite editor](#settingsOpenCommand).
 
 For this feature to work, you need to have configured your [favorite
 editor's command](#settingsOpenCommand) in the add-on's settings.  If you
-are not running NVDA from source and want to open NVDA's code, the [location
-of NVDA source code](#settingsNvdaSourcePath) should also have been
-configured.
+are not running NVDA from source, the [location of NVDA source
+code](#settingsNvdaSourcePath) should also have been configured.
 
 Функції `openCodeFile` можна викликати для об’єктів, розміщених у коді NVDA,
 або для об’єктів, визначених додатками. Його не можна викликати на об’єктах,
