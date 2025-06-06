@@ -186,7 +186,7 @@ You may want to open the file containing this code to understand the context of 
 Just press C to open this file.
 
 For this feature to work, you need to have configured your [favorite editor's command](#settingsOpenCommand) in the add-on's settings.
-If you are not running NVDA from source and want to open NVDA's code, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
+If you are not running NVDA from source, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
 
 <a id="oldLogsBackup"></a>
 ## Backup of old logs
@@ -216,7 +216,7 @@ In the console, you can call the following function to view the source code that
 `openCodeFile(myVar)`  
 
 For this feature to work, you need to have configured your [favorite editor's command](#settingsOpenCommand) in the add-on's settings.
-If you are not running NVDA from source and want to open NVDA's code, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
+If you are not running NVDA from source, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
 
 The `openCodeFile` functions can be called on objects defined in NVDA's code or on objects defined by add-ons.
 It cannot be called on objects whose source code is not available such as python builtins.
