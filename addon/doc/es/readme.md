@@ -251,9 +251,8 @@ archivo.
 
 For this feature to work, you need to have configured your [favorite
 editor's command](#settingsOpenCommand) in the add-on's settings.  If you
-are not running NVDA from source and want to open NVDA's code, the [location
-of NVDA source code](#settingsNvdaSourcePath) should also have been
-configured.
+are not running NVDA from source, the [location of NVDA source
+code](#settingsNvdaSourcePath) should also have been configured.
 
 <a id="oldLogsBackup"></a>
 ## Copia de seguridad de registros antiguos
@@ -290,9 +289,8 @@ En la consola, puedes llamar a la siguiente función para ver el código fuente 
 
 For this feature to work, you need to have configured your [favorite
 editor's command](#settingsOpenCommand) in the add-on's settings.  If you
-are not running NVDA from source and want to open NVDA's code, the [location
-of NVDA source code](#settingsNvdaSourcePath) should also have been
-configured.
+are not running NVDA from source, the [location of NVDA source
+code](#settingsNvdaSourcePath) should also have been configured.
 
 Se puede llamar a la función `openCodeFile` en objetos definidos en el
 código de NVDA o en objetos definidos por los complementos. No se puede

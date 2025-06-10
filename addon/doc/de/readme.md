@@ -264,9 +264,8 @@ den Buchstaben C, um diese Datei zu öffnen.
 
 For this feature to work, you need to have configured your [favorite
 editor's command](#settingsOpenCommand) in the add-on's settings.  If you
-are not running NVDA from source and want to open NVDA's code, the [location
-of NVDA source code](#settingsNvdaSourcePath) should also have been
-configured.
+are not running NVDA from source, the [location of NVDA source
+code](#settingsNvdaSourcePath) should also have been configured.
 
 <a id="oldLogsBackup"></a>
 ## Backup älterer Protokolle
@@ -302,9 +301,8 @@ In der Konsole können Sie die folgende Funktion aufrufen, um den Quellcode anzu
 
 For this feature to work, you need to have configured your [favorite
 editor's command](#settingsOpenCommand) in the add-on's settings.  If you
-are not running NVDA from source and want to open NVDA's code, the [location
-of NVDA source code](#settingsNvdaSourcePath) should also have been
-configured.
+are not running NVDA from source, the [location of NVDA source
+code](#settingsNvdaSourcePath) should also have been configured.
 
 Die Funktion `openCodeFile` kann für Objekte aufgerufen werden, die im
 NVDA-Code oder in NVDA-Erweiterungen definiert sind.  Sie kann nicht für

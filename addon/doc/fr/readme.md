@@ -269,9 +269,9 @@ ouvrir le fichier.
 
 Pour utiliser cette fonctionnalité, vous devez avoir configuré [la ligne de
 commande de votre éditeur préféré](#settingsOpenCommand) dans les paramètres
-de l'extension. Si vous n'exécutez pas NVDA à partir des sources et que vous
-voulez ouvrir le code de NVDA, [l'emplacement du code source
-NVDA](#settingsNvdaSourcePath) doit également avoir été configuré.
+de l'extension. Si vous n'exécutez pas NVDA à partir des sources,
+[l'emplacement du code source NVDA](#settingsNvdaSourcePath) doit également
+avoir été configuré.
 
 <a id="oldLogsBackup"></a>
 ## Sauvegarde des anciens journaux
@@ -308,9 +308,9 @@ Dans la console, vous pouvez appeler la fonction suivante pour voir le code sour
 
 Pour utiliser cette fonctionnalité, vous devez avoir configuré [la ligne de
 commande de votre éditeur préféré](#settingsOpenCommand) dans les paramètres
-de l'extension. Si vous n'exécutez pas NVDA à partir des sources et que vous
-voulez ouvrir le code de NVDA, [l'emplacement du code source
-NVDA](#settingsNvdaSourcePath) doit également avoir été configuré.
+de l'extension. Si vous n'exécutez pas NVDA à partir des sources,
+[l'emplacement du code source NVDA](#settingsNvdaSourcePath) doit également
+avoir été configuré.
 
 Vous pouvez appeler la fonction `openCodeFile` dans des objets définis dans
 le code NVDA ou dans des objets définis par les extensions. Vous ne pouvez
