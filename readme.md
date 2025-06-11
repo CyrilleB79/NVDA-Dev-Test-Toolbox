@@ -344,8 +344,8 @@ This option allows to choose if the [reverse translation command](#reverseTransl
 
 ### Version 7.0
 
-* Layered commands have been introduced; the entry point is `NVDA+X`.
-  The existing commands have been modified accordingly.
+* Layered commands have been introduced; the entry point is `NVDA+X`.  
+  The existing commands have been modified accordingly.  
 * A new command (`NVDA+X, R`) to reverse translate the last spoken message.
 * A new command (`NVDA+X, C`) to open the source code of the script associated to the next pressed gesture.
 * Added speech on demand support.
@@ -381,7 +381,7 @@ This option allows to choose if the [reverse translation command](#reverseTransl
 * While in log reading mode, pressing E or shift+E now jumps to CRITICAL erorr messages as well as normal ERROR messages.
 * New log quick navigation commands have been added to jump to input and to speech messages.
 * A new command allow to place a marker in the log; and specific quick navigation commands in log reading mode allow to jump to them.  
-  Credit: the initial idea for this feature comes from Debug Helper add-on by Luke Davis.
+  Credit: the initial idea for this feature comes from Debug Helper add-on by Luke Davis.  
 * Bubfix: The memorization of the last error do not fail anymore in some cases.
 * Bugfix: The add-on can initialize again with NVDA 2019.2.1.
 * Bugfix: Log saving feature will not fail anymore with non-ASCII logs.
