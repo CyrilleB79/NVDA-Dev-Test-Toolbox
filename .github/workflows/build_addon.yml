@@ -59,6 +59,23 @@ jobs:
       uses: actions/download-artifact@v4
     - name: Display structure of downloaded files
       run: ls -R
+    - name: Extract change log
+      run: |
+        import re
+        pattern = r'[Vv](-?\d+.-?\d+.*?)(?:-dev-.*)?$'
+        refTag = '${{ github.ref_name }}'
+        print(f'===> Ref tag:{refTag}')
+        version = re.search(pattern, refTag).group(1)
+        print(f'===> Version:{version}')
+        pattern = rf'## Change log.*### Version {version}\s*(.*?)\s*(\n(### Version)|(\[\d+\]:)|$)'
+        fileContent = open('readme.md', 'r', encoding='utf8').read()
+        match = re.search(pattern, fileContent, re.DOTALL)
+        changeLog = match.group(1) if match else ""
+        changeLog += '\n'
+        print(f'===> ChangeLog:\n<<<{changeLog}>>>\n')
+        open('changelog.md', 'w', encoding='utf-8').write(changeLog)
+      shell: python
+
     - name: Calculate sha256
       run: |
         echo -e "\nSHA256: " >> changelog.md
@@ -70,6 +87,7 @@ jobs:
         files: |
           packaged_addon/*.nvda-addon
           packaged_addon/*.pot
+        name: Release ${{ github.ref_name }}
         body_path: changelog.md
         fail_on_unmatched_files: true
         prerelease: ${{ contains(github.ref, '-') }}

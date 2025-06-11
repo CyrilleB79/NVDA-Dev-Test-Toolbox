@@ -1,1 +1,1 @@
-Use this file to explain what has changed in your add-on since the previous release. This will be included automatically in the release description when used with GitHub actions.
+Do not use this file; the change log will be parsed from readme.md.
