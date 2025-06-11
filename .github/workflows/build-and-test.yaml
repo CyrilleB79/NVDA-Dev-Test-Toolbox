@@ -50,7 +50,7 @@ jobs:
         result-encoding: string
     - name: Cache NVDA
       id: cache-nvda
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: download
         key: ${{ runner.os }}-nvda_launcher-${{matrix.nvda-release}}

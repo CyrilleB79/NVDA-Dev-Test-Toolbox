@@ -62,7 +62,7 @@ jobs:
 
     - name: Cache NVDA
       id: cache-nvda
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: nvda
         key: ${{ runner.os }}-nvda_exe-${{ steps.get-last-release.outputs.result }}
