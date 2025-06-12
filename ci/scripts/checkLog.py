@@ -22,10 +22,12 @@ def isExpectedErrorMessage(errMsg):
 	if (
 		lines[0].startswith("ERROR - unhandled exception")
 		and tbIndex == 1
-		# and 'File "audioDucking.pyc", line 84, in _setDuckingState' in tbLines
-		and any(re.search(r'File "audioDucking\.pyc", line \d+, in initialize', l) for l in tbLines)
-		and any(re.search(r'File "audioDucking\.pyc", line \d+, in _setDuckingState', l) for l in tbLines)
-		and lines[-1] == "OSError: [WinError -2147023174] The RPC server is unavailable"
+		and any(re.search(r'File "audioDucking\.py[co]?", line \d+, in initialize', l) for l in tbLines)
+		and any(re.search(r'File "audioDucking\.py[co]?", line \d+, in _setDuckingState', l) for l in tbLines)
+		and lines[-1] in [
+			"OSError: [WinError -2147023174] The RPC server is unavailable",  # Python 3
+			"WindowsError: [Error -2147023174] The RPC server is unavailable",  # Python 2
+		]
 	):
 		return True
 	return False

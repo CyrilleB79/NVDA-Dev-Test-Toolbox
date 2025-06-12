@@ -67,7 +67,7 @@ def executeWithSpeakOnDemand(f, *args, **kwargs):
 
 def script(
 	speakOnDemand = False,
-	**kwargs,
+	**kwargs  # Python 2: do not put tailing comma after **kwargs
 ):
 	"""Define metadata for a script.
 	This function is an extended version of NVDA's original scriptHandler.script decorator.
