@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 'nvdaDevTestToolbox' '3.2'\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
 "POT-Creation-Date: 2023-06-16 14:09+0000\n"
-"PO-Revision-Date: 2023-10-06 16:18+0200\n"
+"PO-Revision-Date: 2025-06-11 11:21+0200\n"
 "Last-Translator: Cyrille Bougot <cyrille.bougot2@laposte.net>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -16,12 +16,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.4\n"
+"X-Generator: Poedit 3.6\n"
 
 #. Translators: The description of a command of this add-on.
 #, python-brace-format
 msgid "Opens {name} settings"
-msgstr ""
+msgstr "Ouvre les paramètres de {name}"
 
 #. Translators: Input help mode message for a toggle command.
 msgid "Toggles play a sound for logged error."
@@ -104,21 +104,21 @@ msgstr "Fichier non trouvé : {}"
 #. Translators: Part of the description for the layered command script.
 #, python-brace-format
 msgid "Entry point for {name} layered commands"
-msgstr ""
+msgstr "Point d'entrée pour les commandes séquentielles de {name}"
 
 #. Translators: The description of a command of this add-on.
 #, python-brace-format
 msgid "Displays help on {name} layered commands"
-msgstr ""
+msgstr "Affiche l'aide sur les commandes séquentielles de {name}"
 
 #. Translators: Title of the layered command help window.
 #, python-brace-format
 msgid "{name} layered commands"
-msgstr ""
+msgstr "Commandes séquentielles de {name}"
 
 #. Translators: Separator between key names in the layered command help window.
 msgid ", "
-msgstr ""
+msgstr ", "
 
 #. Translators: Text appearing in the date column of the log manager when the date cnanot be determined.
 msgid "Unknown"
@@ -151,7 +151,7 @@ msgstr "&Ouvrir"
 
 #. Translators: The label for a button in Logs Manager dialog to copy the selected logs.
 msgid "&Copy files"
-msgstr ""
+msgstr "&Copier les fichiers"
 
 #. Translators: The label for a button to delete the selected log(s) in Log Manager dialog.
 msgid "&Delete"
@@ -196,7 +196,7 @@ msgstr ""
 "NVDA pour plus de détails."
 
 #. Translators: Message issued when 1 to 4 logs could not be deleted.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "The following logs files could not be deleted.\n"
 "\n"
@@ -204,7 +204,7 @@ msgid ""
 msgstr ""
 "Les fichiers journaux suivants n'ont pas pu être supprimés.\n"
 "\n"
-"{file}"
+"{files}"
 
 #. Translators: The title of a dialog displayed to the user when pressing the Delete button in
 #. the logs manager dialog
@@ -215,11 +215,13 @@ msgstr "Erreur"
 
 #. Translators: reported when requesting to copy the logs selected in the logs manager dialog.
 msgid "Log files copied"
-msgstr ""
+msgstr "Fichiers de journal copiés"
 
 #. Translators: reported when requesting to copy the logs selected in the logs manager dialog.
 msgid "Unable to copy the selected logs; the clipboard is not available."
 msgstr ""
+"Impossible de copier les journaux sélectionnés; Le presse-papiers n'est pas "
+"disponible."
 
 #. Translators: menu item label to open the logs manager dialog.
 msgid "&Logs manager..."
@@ -277,7 +279,7 @@ msgstr "Active ou désactive les commandes de lecture de journal."
 
 #. Translators: A message when using Toggle log Reader script.
 msgid "Not in a text area."
-msgstr ""
+msgstr "Pas dans une zone de texte."
 
 #. Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
 msgid "Off"
@@ -330,26 +332,23 @@ msgstr "Limitez le nombre de sauvegardes à :"
 
 #. Translators: This is a label for a setting in the settings panel
 msgid "Copy reverse &translation to clipboard"
-msgstr ""
+msgstr "Copier la &traduction inverse dans le presse-papiers"
 
 #. Translators: Input help mode message for a command of the object property explorer.
-#, fuzzy
 msgid ""
 "Reports the currently selected property of the object property explorer for "
 "the navigator object."
 msgstr ""
-"Sélectionne la propriété suivante de l'explorateur de propriétés d'objets et "
-"l'annonce pour l'objet navigateur."
+"Annonce la propriété actuellement sélectionnée de l'explorateur de "
+"propriétés d'objets pour l'objet navigateur."
 
 #. Translators: Input help mode message for a command of the object property explorer.
-#, fuzzy
 msgid ""
 "Displays the currently selected property of the object property explorer for "
 "the navigator object in a browseable message."
 msgstr ""
-"Annonce la propriété actuellement sélectionnée de l'explorateur de "
-"propriétés d'objets pour l'objet navigateur ; deux appuis affiche ces "
-"informations en mode navigation."
+"Affiche la propriété actuellement sélectionnée de l'explorateur de "
+"propriétés d'objets pour l'objet navigateur en mode navigation."
 
 #. Translators: Input help mode message for a command of the object property explorer.
 msgid ""
@@ -419,7 +418,7 @@ msgstr "Le chemin vers lequel tous les paramètres de NVDA sont stockés"
 #. Translators: The description of an NVDA start option, copied from the user guide (paragraph
 #. "Command Line Options")
 msgid "Override the configured NVDA language"
-msgstr "Remplacer la langue de la configuration de NVDA."
+msgstr "Remplacer la langue configurée de NVDA"
 
 #. Translators: The description of an NVDA start option, copied from the user guide (paragraph
 #. "Command Line Options")
@@ -448,33 +447,36 @@ msgstr "Redémarrer NVDA avec des options spécifiques."
 #. Translators: Input help mode message for Reverse UI translation command
 msgid "Perform a reverse UI translation of the last speech"
 msgstr ""
+"Effectuer une traduction d'interface inverse de la dernière annonce vocale"
 
 #. Translators: An error message when calling the reverse UI translation command
 msgid "Reverse translation not available for this version of NVDA."
-msgstr ""
+msgstr "Traduction inverse non disponible pour cette version de NVDA."
 
 #. Translators: An error message when calling the reverse UI translation command
 msgid "No last spoken text"
-msgstr ""
+msgstr "Pas de dernière annonce vocale"
 
 #. Translators: An error message when calling the reverse UI translation command
 msgid "Message not found in translation catalog"
-msgstr ""
+msgstr "Message introuvable dans le catalogue de traduction"
 
 #. Translators: Input help mode message for a command.
 msgid ""
 "NVDA will open the code of the script of the next gesture instead of "
 "executing the corresponding command."
 msgstr ""
+"NVDA ouvrira le code du script du geste suivant au lieu d'exécuter la "
+"commande correspondante."
 
 #. Translators: Reported when executing the command to open the script corresponding to the next gesture.
 msgid "Execute a gesture to open the code of the corresponding script."
-msgstr ""
+msgstr "Exécutez un geste pour ouvrir le code du script correspondant."
 
 #. Translators: Reported when executing the command to open the script corresponding to the next gesture.
 #, python-brace-format
 msgid "Script not found for {gestureName}"
-msgstr ""
+msgstr "Script introuvable pour {gestureName}"
 
 #. Translators: Input help mode message for a toggle command.
 msgid "Toggles the stack trace log when the speech function is called."

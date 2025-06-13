@@ -450,8 +450,8 @@ transferência.
 
 ### Versão 7.0
 
-* Foram introduzidos comandos em camadas; o ponto de entrada é `NVDA+X`.  Os
-  comandos existentes foram modificados de acordo.
+* Layered commands have been introduced; the entry point is `NVDA+X`.
+  The existing commands have been modified accordingly.  
 * Um novo comando (`NVDA+X, R`) para reverter a tradução da última mensagem
   falada.
 * Um novo comando (`NVDA+X, C`) para abrir o código-fonte do script
@@ -509,13 +509,14 @@ transferência.
   as mensagens de ERRO CRÍTICO, bem como para as mensagens de ERRO normais.
 * Novos comandos de navegação rápida de registro foram adicionados para
   saltar para a entrada e para as mensagens de fala.
-* Um novo comando permite colocar um marcador no registro; e comandos
-  específicos de navegação rápida no modo de leitura de registro permitem
-  saltar para eles.
-  Crédito: a ideia inicial para esse recurso vem do complemento Debug Helper de Luke Davis.
-* Correção de erro: A memorização do último erro não falha mais em alguns casos.
-* Correção de bug: o complemento pode ser inicializado novamente com o NVDA 2019.2.1.
-* Correção de bug: o recurso de salvamento de registros não falhará mais com registros não ASCII.
+* A new command allow to place a marker in the log; and specific quick
+  navigation commands in log reading mode allow to jump to them.
+  Credit: the initial idea for this feature comes from Debug Helper add-on by Luke Davis.  
+* Correção: A memorização do último erro não falha mais em alguns casos.
+* Correção de bug: o complemento pode ser inicializado novamente com o NVDA
+  2019.2.1.
+* Correção de bug: O recurso de salvamento de registros não falhará mais com
+  registros não ASCII.
 
 ### Versão 4.2
 
