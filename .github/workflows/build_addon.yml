@@ -147,7 +147,7 @@ jobs:
     - name: Display structure of downloaded files
       run: ls -R
     - name: Extract change log
-      run: python ci\scripts\extractChangeLog.py "${{ github.ref_name }}"
+      run: python ci/scripts/extractChangeLog.py "${{ github.ref_name }}"
 
     - name: Calculate sha256
       run: |
