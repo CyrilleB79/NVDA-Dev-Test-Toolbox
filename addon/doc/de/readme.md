@@ -455,8 +455,8 @@ clipboard.
 
 ### Version 7.0
 
-* Layered commands have been introduced; the entry point is `NVDA+X`.  The
-  existing commands have been modified accordingly.
+* Layered commands have been introduced; the entry point is `NVDA+X`.
+  The existing commands have been modified accordingly.  
 * A new command (`NVDA+X, R`) to reverse translate the last spoken message.
 * A new command (`NVDA+X, C`) to open the source code of the script
   associated to the next pressed gesture.
@@ -516,10 +516,13 @@ clipboard.
   um zur Eingabe und zu den Sprachausgaben-Meldungen zu gelangen.
 * A new command allow to place a marker in the log; and specific quick
   navigation commands in log reading mode allow to jump to them.
-  Credit: the initial idea for this feature comes from Debug Helper add-on by Luke Davis.
-* Bubfix: The memorization of the last error do not fail anymore in some cases.
-* Bugfix: The add-on can initialize again with NVDA 2019.2.1.
-* Bugfix: Log saving feature will not fail anymore with non-ASCII logs.
+  Credit: the initial idea for this feature comes from Debug Helper add-on by Luke Davis.  
+* Bubfix: Die Speicherung des letzten Fehlers schlägt in einigen Fällen
+  nicht mehr fehl.
+* Bugfix: Die NVDA-Erweiterung kann mit NVDA 2019.2.1 wieder gestartet
+  werden.
+* Bugfix: Das Speichern von Protokollen schlägt bei Nicht-ASCII-Protokollen
+  nicht mehr fehl.
 
 ### Version 4.2
 

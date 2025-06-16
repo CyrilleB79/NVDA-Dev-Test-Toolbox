@@ -471,7 +471,8 @@ presse-papiers.
 ### Version 7.0
 
 * Les commandes séquentielles ont été introduites; Le point d'entrée est
-  `NVDA+X`. Les commandes existantes ont été modifiées en conséquence.
+  `NVDA+X`.
+  Les commandes existantes ont été modifiées en conséquence.  
 * Une nouvelle commande (`NVDA+X, R`) pour effectuer une traduction inverse
   du dernier message annoncé.
 * Une nouvelle commande (`NVDA+X, C`) pour ouvrir le code source du script
@@ -536,10 +537,12 @@ presse-papiers.
 * Une nouvelle commande permet de placer un marqueur dans le journal; et des
   commandes de navigation rapide spécifiques en mode lecture du journal
   permettent de s'y rendre.
-Crédit : l'idée initiale de cette fonctionnalité provient de l'extension  Debug Helper par Luke Davis.
-* Correctif : La mémorisation de la dernière erreur n'échoue plus dans certains cas.
+  Crédit: L'idée initiale de cette fonctionnalité provient de l'extension Debug Helper par Luke Davis.  
+* Correctif : La mémorisation de la dernière erreur n'échoue plus dans
+  certains cas.
 * Correctif : l'extension peut s'initialiser à nouveau avec NVDA 2019.2.1.
-* Correctif : la fonctionnalité de sauvegarde des journaux n'échouera plus avec les journaux non-ASCII.
+* Correctif : la fonctionnalité de sauvegarde des journaux n'échouera plus
+  avec les journaux non-ASCII.
 
 ### Version 4.2
 
