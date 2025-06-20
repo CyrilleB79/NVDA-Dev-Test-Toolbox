@@ -59,7 +59,7 @@ jobs:
       - name: Extract valid NVDA versions (non-experimental, major != 0)
         id: set-matrix
         run: |
-          versions=$(jq '[.[] 
+          versions=$(jq -c '[.[] 
             | select(.experimental != true)
             | select(.apiVer.major != 0)
             | .apiVer 
