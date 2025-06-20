@@ -48,9 +48,29 @@ jobs:
           ./*.nvda-addon
           ./*.pot
 
+  get-nvda-versions:
+    runs-on: ubuntu-latest
+    outputs:
+      versions: ${{ steps.set-matrix.outputs.versions }}
+    steps:
+      - name: Download nvdaAPIVersions.json
+        run: |
+          curl -L -s -o nvdaAPIVersions.json https://raw.githubusercontent.com/nvaccess/addon-datastore-transform/refs/heads/main/nvdaAPIVersions.json
+      - name: Extract valid NVDA versions (non-experimental, major != 0)
+        id: set-matrix
+        run: |
+          versions=$(jq '[.[] 
+            | select(.experimental != true)
+            | select(.apiVer.major != 0)
+            | .apiVer 
+            | if .patch == 0 then "\(.major).\(.minor)" else "\(.major).\(.minor).\(.patch)" end
+          ]' nvdaAPIVersions.json)
+          echo "versions=$versions"
+          echo "versions=$versions" >> $GITHUB_OUTPUT
+
   test:
     runs-on: windows-latest
-    needs: ["build"]
+    needs: ["build", "get-nvda-versions"]
     strategy:
       matrix:
         nvda-release: [
@@ -62,6 +82,7 @@ jobs:
           2024.1, 2024.2, 2024.3, 2024.3.1, 2024.4, 2024.4.1, 2024.4.2,
           2025.1, 2025.1.1, 2025.1.2rc1
         ]
+        nvda-release: ${{ fromJson(needs.get-nvda-versions.outputs.versions) }}
   
     steps:
 
@@ -136,10 +157,6 @@ jobs:
             }
         }
         Write-Host "NVDA process has exited or timeout reached"
-    - name: Ensure NVDA fully exited
-      if: false
-      run: ping 127.0.0.1 /n 20
-      shell: cmd  
     - name: get the log file from temp directory
       shell: cmd
       run: |
