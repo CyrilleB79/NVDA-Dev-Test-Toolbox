@@ -3,7 +3,7 @@ name: build addon
 on:
   push:
     tags: ["*"]
-    branches: [ master ]
+    branches: [ master , testWorkflow]
 
   pull_request:
     branches: [ master ]
@@ -122,7 +122,22 @@ jobs:
     - name: Quit NVDA
       run: start nvda -q
       shell: cmd
+    - name: Wait for NVDA to exit
+      shell: pwsh
+      run: |
+        $maxWait = 20
+        $elapsed = 0
+        while (Get-Process -Name nvda -ErrorAction SilentlyContinue) {
+            Start-Sleep -Seconds 1
+            $elapsed++
+            if ($elapsed -ge $maxWait) {
+                Write-Host "Timeout reached waiting for NVDA to quit"
+                break
+            }
+        }
+        Write-Host "NVDA process has exited or timeout reached"
     - name: Ensure NVDA fully exited
+      if: false
       run: ping 127.0.0.1 /n 20
       shell: cmd  
     - name: get the log file from temp directory
