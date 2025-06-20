@@ -85,6 +85,12 @@ jobs:
       run: |
         curl --location --create-dirs --output download\nvda_launcher.exe https://www.nvaccess.org/download/nvda/releases/${{matrix.nvda-release}}/nvda_${{matrix.nvda-release}}.exe
       shell: cmd
+    - name: Save NVDA cache
+      if: steps.cache-nvda.outputs.cache-hit != 'true'
+      uses: actions/cache@v4
+      with:
+        path: download
+        key: ${{ runner.os }}-nvda_launcher-${{matrix.nvda-release}}
     - name: Install NVDA
       run: |
         download\nvda_launcher.exe --install-silent
