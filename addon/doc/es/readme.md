@@ -454,8 +454,8 @@ portapapeles.
 
 ### Versión 7.0
 
-* Layered commands have been introduced; the entry point is `NVDA+X`.
-  The existing commands have been modified accordingly.  
+* Se han introducido órdenes de capa; el punto de entrada es `NVDA+x`.
+  Se han modificado las órdenes actuales en consecuencia.  
 * Una nueva orden (`NVDA+x, r`) para traducir de forma inversa el último
   mensaje hablado.
 * Una nueva orden (`NVDA+x, c`) para abrir el código fuente del script
@@ -515,9 +515,10 @@ portapapeles.
   mensajes de error normales.
 * Se han añadido nuevas órdenes de navegación rápida por el registro para
   saltar a los mensajes de entrada y hablados.
-* A new command allow to place a marker in the log; and specific quick
-  navigation commands in log reading mode allow to jump to them.
-  Credit: the initial idea for this feature comes from Debug Helper add-on by Luke Davis.  
+* Una nueva orden permite situar un marcador en el registro; y otras órdenes
+  concretas de navegación rápida en modo lector del registro permiten saltar
+  a ellos.
+  Créditos: la idea inicial de esta función viene del complemento Ayudante de depuración, de Luke Davis.  
 * Corrección: la memorización del último error ya no falla en algunos casos.
 * Corrección: el complemento puede inicializarse de nuevo en NVDA 2019.2.1.
 * Corrección: la función de guardar registro ya no fallará el registros no
