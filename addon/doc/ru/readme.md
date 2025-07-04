@@ -444,8 +444,9 @@ Speaking ['Outils', 'sous-Menu', CharacterModeCommand(True), 'o', CharacterModeC
 
 ### Версия 7.0
 
-* Layered commands have been introduced; the entry point is `NVDA+X`.
-  The existing commands have been modified accordingly.  
+* Были введены многослойные команды; Точка входа - `NVDA+X`.
+  Существующие команды были изменены соответственно.  
+\v
 * Новая команда (`NVDA+X, R`) обратного перевода последнего произнесённого
   сообщения.
 * Новая команда (`NVDA+X, C`) для открытия исходного скрипта, связанного со
@@ -500,9 +501,9 @@ Speaking ['Outils', 'sous-Menu', CharacterModeCommand(True), 'o', CharacterModeC
   критических сообщений об ошибках, а также обычных сообщений об ошибках.
 * Добавлены новые команды быстрой навигации по журналу для перехода к
   вводимым данным и речевым сообщениям.
-* A new command allow to place a marker in the log; and specific quick
-  navigation commands in log reading mode allow to jump to them.
-  Credit: the initial idea for this feature comes from Debug Helper add-on by Luke Davis.  
+* Новая команда позволяет размещать маркер в журнале; и конкретные команды
+  быстрой навигации в режиме чтения журнала позволяют переходить к ним.
+  Благодарность: Первоначальная идея для этой функции исходит из дополнения Debug Helper Luke Davis.  
 * Исправлена ошибка: Запоминание последней ошибки в некоторых случаях больше
   не терпит неудачу.
 * Исправлена ошибка: Дополнение может снова инициализироваться с NVDA
