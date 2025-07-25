@@ -253,7 +253,8 @@ msgid "Log Reader commands disabled."
 msgstr "Comandos do Leitor de registro  desabilitados."
 
 #. Translators: Input help mode message for Toggle log translation script.
-msgid "Toggle speech translation in the log"
+#, fuzzy
+msgid "Toggles speech translation in the log"
 msgstr "Alternar a tradução de fala no registro"
 
 #. Translators: Input help mode message for Open source file script.
@@ -371,8 +372,9 @@ msgstr ""
 "relata para o objeto do navegador."
 
 #. Translators: Input help mode message for a command of the object property explorer.
+#, fuzzy
 msgid ""
-"Toggle custom reporting of objects using the Object explorer's selected "
+"Toggles custom reporting of objects using the Object explorer's selected "
 "property when you use object navigation commands."
 msgstr ""
 "Alterna o relatório personalizado de objetos usando a propriedade "
@@ -449,7 +451,8 @@ msgid "Restarts NVDA with specific options."
 msgstr "Reinicia o NVDA com opções específicas."
 
 #. Translators: Input help mode message for Reverse UI translation command
-msgid "Perform a reverse UI translation of the last speech"
+#, fuzzy
+msgid "Performs a reverse UI translation of the last speech"
 msgstr ""
 "Realizar uma tradução reversa da interface do usuário do último discurso"
 
@@ -496,14 +499,14 @@ msgstr "Registro de rastreamento de pilha ativado"
 msgid "Stacktrace log disabled"
 msgstr "Registro de rastreamento de pilha desabilitado"
 
-#. Add-on summary, usually the user visible name of the addon.
-#. Translators: Summary for this add-on
-#. to be shown on installation and add-on information found in Add-ons Manager.
+#. Add-on summary/title, usually the user visible name of the add-on
+#. Translators: Summary/title for this add-on
+#. to be shown on installation and add-on information found in add-on store
 msgid "NVDA Dev & Test Toolbox"
 msgstr "Caixa de ferramentas de desenvolvimento e teste NVDA"
 
 #. Add-on description
-#. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+#. Translators: Long description to be shown for this add-on on add-on information from add-on store
 msgid "A set of tools for NVDA developers and testers."
 msgstr "Um conjunto de ferramentas para desenvolvedores e testadores de NVDA."
 
