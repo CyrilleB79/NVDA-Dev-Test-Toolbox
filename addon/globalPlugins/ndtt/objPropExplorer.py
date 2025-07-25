@@ -166,7 +166,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	@script(
 		description=_(
 			# Translators: Input help mode message for a command of the object property explorer.
-			"Toggle custom reporting of objects using the Object explorer's selected property when you use object"
+			"Toggles custom reporting of objects using the Object explorer's selected property when you use object"
 			" navigation commands."
 		),
 		category=ADDON_SUMMARY,

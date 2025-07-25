@@ -73,6 +73,7 @@ Then when moving the navigator object to next or previous object, you will hear 
 
 ## Script tools
 
+<a id="scriptOpener"></a>
 ### The script opener
 
 The script opener command allows to open the code of a script knowing its gesture.
@@ -81,7 +82,7 @@ To use it press `NVDA+x, C` and then the gesture of the script which you want to
 For example to see the code of the script that reports the title of the foreground window, press `NVDA+X, C` and then `NVDA+T`.
 
 For this feature to work, you need to have configured your [favorite editor's command](#settingsOpenCommand) in the add-on's settings.
-If you are not running NVDA from source and want to open NVDA's code, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
+If you are not running NVDA from source, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
 
 ### Extended script description mode
 
@@ -179,13 +180,13 @@ In the log some line may refer to the source code:
 * The header line of a logged message contains the function which has logged this message, e.g.:  
   `INFO - config.ConfigManager._loadConfig (22:45:26.145) - MainThread (16580):`  
 * The content of a message logged in input help mode (logged at info level):  
-  Input help: gesture kb(desktop):NVDA+t, bound to script title on globalCommands.GlobalCommands`  
+  `Input help: gesture kb(desktop):NVDA+t, bound to script title on globalCommands.GlobalCommands`  
 
 You may want to open the file containing this code to understand the context of the traceback or the logged message.
 Just press C to open this file.
 
 For this feature to work, you need to have configured your [favorite editor's command](#settingsOpenCommand) in the add-on's settings.
-If you are not running NVDA from source and want to open NVDA's code, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
+If you are not running NVDA from source, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
 
 <a id="oldLogsBackup"></a>
 ## Backup of old logs
@@ -197,6 +198,7 @@ This add-on allows you to configure if you want to backup old logs and how many 
 A log manager dialog allows to view the backed up logs.
 It can be opened going to NVDA menu -> Tools -> Logs manager
 In this dialog, you can see the list of all the backup logs and perform various actions on the selected log:
+
 * open it (press `Enter`)
 * delete it (press `Delete`)
 * copy the log file (press `control+C`)
@@ -214,7 +216,7 @@ In the console, you can call the following function to view the source code that
 `openCodeFile(myVar)`  
 
 For this feature to work, you need to have configured your [favorite editor's command](#settingsOpenCommand) in the add-on's settings.
-If you are not running NVDA from source and want to open NVDA's code, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
+If you are not running NVDA from source, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
 
 The `openCodeFile` functions can be called on objects defined in NVDA's code or on objects defined by add-ons.
 It cannot be called on objects whose source code is not available such as python builtins.
@@ -268,7 +270,7 @@ Many testers use NVDA in another language than English.
 But when reporting test results on GitHub, the description of the modified options or the messages reported by NVDA should be written in English.
 Its quite frustrating and time consuming to have to restart NVDA in English to check the exact wording of the options or messages.
 
-To avoid this, the add-on provides a reverse translation command, `NVDA+X, R` allowing to reverse translate NVDA's interface such as messages, control labels in the GUI, etc.
+To avoid this, the add-on provides a reverse translation command (`NVDA+X, R`) allowing to reverse translate NVDA's interface such as messages, control labels in the GUI, etc.
 This command uses NVDA's gettext translation to try to reverse translate the last speech.
 More specifically, the first string of the last speech sequence is reverse translated.
 
@@ -300,7 +302,7 @@ These settings are global and can only be configured when the default profile is
 ### Command to open a file in your favorite editor
 
 Some features allow to see content in your favorite editor.
-This includes the commands to view the source file [from a log](#logReaderOpenSourceFile) or [from an object in the console](#pythonConsoleOpenCodeFile) as well as the [log manager](#oldLogsBackup)'s Open button.
+This includes the commands to view the source file [from a log](#logReaderOpenSourceFile), [from an object in the console](#pythonConsoleOpenCodeFile) or [from a typed gesture](#scriptOpener), as well as the [log manager](#oldLogsBackup)'s Open button.
 
 To use them, you first need to configure the command that will be called to open the file in your favorite editor.
 The command should be of the form:  
@@ -313,7 +315,7 @@ For Notepad++ for example the command to type in the console would be:
 <a id="settingsNvdaSourcePath"></a>
 ### NVDA source code path
 
-When using a command to [view the source file from a log](#logReaderOpenSourceFile) or [from an object in the console](#pythonConsoleOpenCodeFile), the file may belong to NVDA itself.
+When using a command to view the source file [from a log](#logReaderOpenSourceFile), [from an object in the console](#pythonConsoleOpenCodeFile) or [from a typed gesture](#scriptOpener), the file may belong to NVDA itself.
 If you are not running NVDA from source, your NVDA only contains compiled files.
 Thus you may specify here an alternate location where the corresponding source file will be found, e.g. the place where you have cloned NVDA source files, so that a source file can be opened anyway.
 The path should be such as:  
@@ -336,10 +338,14 @@ This option allows to choose if the [reverse translation command](#reverseTransl
 
 ## Change log
 
+### Version 7.1
+
+* Compatibility with NVDA 2025.1.
+
 ### Version 7.0
 
-* Layered commands have been introduced; the entry point is `NVDA+X`.
-The existing commands have been modified accordingly.
+* Layered commands have been introduced; the entry point is `NVDA+X`.  
+  The existing commands have been modified accordingly.  
 * A new command (`NVDA+X, R`) to reverse translate the last spoken message.
 * A new command (`NVDA+X, C`) to open the source code of the script associated to the next pressed gesture.
 * Added speech on demand support.
@@ -375,7 +381,7 @@ The existing commands have been modified accordingly.
 * While in log reading mode, pressing E or shift+E now jumps to CRITICAL erorr messages as well as normal ERROR messages.
 * New log quick navigation commands have been added to jump to input and to speech messages.
 * A new command allow to place a marker in the log; and specific quick navigation commands in log reading mode allow to jump to them.  
-  Credit: the initial idea for this feature comes from Debug Helper add-on by Luke Davis.
+  Credit: the initial idea for this feature comes from Debug Helper add-on by Luke Davis.  
 * Bubfix: The memorization of the last error do not fail anymore in some cases.
 * Bugfix: The add-on can initialize again with NVDA 2019.2.1.
 * Bugfix: Log saving feature will not fail anymore with non-ASCII logs.

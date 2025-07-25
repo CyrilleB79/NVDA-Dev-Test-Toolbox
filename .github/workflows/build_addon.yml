@@ -3,11 +3,10 @@ name: build addon
 on:
   push:
     tags: ["*"]
-    # To build on main/master branch, uncomment the following line:
-    # branches: [ main , master ]
+    branches: [ master ]
 
   pull_request:
-    branches: [ main, master ]
+    branches: [ master ]
 
   workflow_dispatch:
 
@@ -17,14 +16,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
 
     - run: echo -e "pre-commit\nscons\nmarkdown">requirements.txt
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
-        python-version: 3.9
+        python-version: 3.11
         cache: 'pip'
 
     - name: Install dependencies
@@ -38,27 +39,134 @@ jobs:
       run: export SKIP=no-commit-to-branch; pre-commit run --all
 
     - name: building addon
-      run: scons
+      run: scons && scons pot
 
     - uses: actions/upload-artifact@v4
       with:
         name: packaged_addon
-        path: ./*.nvda-addon
+        path: |
+          ./*.nvda-addon
+          ./*.pot
+
+  test:
+    runs-on: windows-latest
+    needs: ["build"]
+    strategy:
+      matrix:
+        nvda-release: [
+          2019.2, 2019.2.1, 2019.3, 2019.3.1,
+          2020.1, 2020.2, 2020.3, 2020.4,
+          2021.1, 2021.2, 2021.3, 2021.3.1, 2021.3.2, 2021.3.3, 2021.3.4, 2021.3.5,
+          2022.1, 2022.2, 2022.2.1, 2022.2.2, 2022.2.3, 2022.2.4, 2022.3, 2022.3.1, 2022.3.2, 2022.3.3, 2022.4,
+          2023.1, 2023.2, 2023.3, 2023.3.1, 2023.3.2, 2023.3.3, 2023.3.4,
+          2024.1, 2024.2, 2024.3, 2024.3.1, 2024.4, 2024.4.1, 2024.4.2,
+          2025.1, 2025.1.1, 2025.1.2rc1
+        ]
+  
+    steps:
+
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: 3.11
+
+    - name: Cache NVDA
+      id: cache-nvda
+      uses: actions/cache@v4
+      with:
+        path: download
+        key: ${{ runner.os }}-nvda_launcher-${{matrix.nvda-release}}
+    - name: Download NVDA
+      if: steps.cache-nvda.outputs.cache-hit != 'true'
+      run: |
+        curl --location --create-dirs --output download\nvda_launcher.exe https://www.nvaccess.org/download/nvda/releases/${{matrix.nvda-release}}/nvda_${{matrix.nvda-release}}.exe
+      shell: cmd
+    - name: Save NVDA cache
+      if: steps.cache-nvda.outputs.cache-hit != 'true'
+      uses: actions/cache@v4
+      with:
+        path: download
+        key: ${{ runner.os }}-nvda_launcher-${{matrix.nvda-release}}
+    - name: Install NVDA
+      run: |
+        download\nvda_launcher.exe --install-silent
+      shell: cmd
+    
+    - name: download add-on's releases files
+      uses: actions/download-artifact@v4
+      with:
+        name: packaged_addon
+    - name: Copy add-on in User config
+      run: |
+        move *.nvda-addon addon.zip
+        Expand-Archive addon.zip $env:APPDATA\nvda\addons\addon
+    
+    - name: Copy test config file
+      run: move ci\nvdaTestConfig.ini %appdata%\nvda\nvda.ini
+      shell: cmd
+    - name: Check config
+      run: |
+        type %appdata%\nvda\nvda.ini
+      shell: cmd
+    
+    - name: start nvda
+      run: start nvda -m -f %TEMP%\nvda-with-addon.log --debug-logging
+      shell: cmd
+    - name: Ensure NVDA fully started
+      run: ping 127.0.0.1 /n 20
+      shell: cmd
+    - name: Quit NVDA
+      run: start nvda -q
+      shell: cmd
+    - name: Ensure NVDA fully exited
+      run: ping 127.0.0.1 /n 20
+      shell: cmd  
+    - name: get the log file from temp directory
+      shell: cmd
+      run: |
+        copy %TEMP%\nvda-with-addon.log nvda.log
+    - name: Upload NVDA's log
+      uses: actions/upload-artifact@v4
+      with:
+        name: nvda-${{matrix.nvda-release}}.log
+        path: nvda.log
+    - name: Check NVDA's log
+      run: python ci\scripts\checkLog.py %TEMP%\nvda-with-addon.log
+      shell: cmd
 
   upload_release:
     runs-on: ubuntu-latest
     if: ${{ startsWith(github.ref, 'refs/tags/') }}
-    needs: ["build"]
+    needs: ["build", "test"]
+    permissions:
+      contents: write
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
     - name: download releases files
       uses: actions/download-artifact@v4
     - name: Display structure of downloaded files
       run: ls -R
+    - name: Extract change log
+      run: python ci/scripts/extractChangeLog.py "${{ github.ref_name }}"
+
+    - name: Calculate sha256
+      run: |
+        echo -e "\nSHA256: " >> changelog.md
+        sha256sum packaged_addon/*.nvda-addon >> changelog.md
 
     - name: Release
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
-        files: packaged_addon/*.nvda-addon
+        files: |
+          packaged_addon/*.nvda-addon
+          packaged_addon/*.pot
+        name: Release ${{ github.ref_name }}
+        body_path: changelog.md
         fail_on_unmatched_files: true
         prerelease: ${{ contains(github.ref, '-') }}

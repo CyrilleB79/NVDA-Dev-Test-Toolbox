@@ -89,7 +89,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@script(
 		# Translators: Input help mode message for Reverse UI translation command
-		description=_("Perform a reverse UI translation of the last speech"),
+		description=_("Performs a reverse UI translation of the last speech"),
 		category=ADDON_SUMMARY,
 		speakOnDemand=True,
 	)
