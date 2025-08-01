@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: nvdaDevTestToolbox 4.0\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
 "POT-Creation-Date: 2023-06-16 14:09+0000\n"
-"PO-Revision-Date: 2025-04-25 21:33+0200\n"
+"PO-Revision-Date: 2025-07-25 16:40+0200\n"
 "Last-Translator: José Manuel Delicado <jm.delicado@nvda.es>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -251,9 +251,8 @@ msgid "Log Reader commands disabled."
 msgstr "Órdenes del lector del registro desactivadas."
 
 #. Translators: Input help mode message for Toggle log translation script.
-#, fuzzy
 msgid "Toggles speech translation in the log"
-msgstr "Conmutar traducción del habla en el registro"
+msgstr "Conmuta la traducción del habla en el registro"
 
 #. Translators: Input help mode message for Open source file script.
 msgid ""
@@ -366,12 +365,11 @@ msgstr ""
 "la indica para el objeto actual."
 
 #. Translators: Input help mode message for a command of the object property explorer.
-#, fuzzy
 msgid ""
 "Toggles custom reporting of objects using the Object explorer's selected "
 "property when you use object navigation commands."
 msgstr ""
-"Conmutar anuncio personalizado de objetos usando la propiedad seleccionada "
+"Conmuta el anuncio personalizado de objetos usando la propiedad seleccionada "
 "del explorador de objetos al utilizar órdenes de navegación por objetos."
 
 #. Translators: Message reported by a command of the object property explorer.
@@ -444,9 +442,8 @@ msgid "Restarts NVDA with specific options."
 msgstr "Reinicia NVDA con opciones específicas."
 
 #. Translators: Input help mode message for Reverse UI translation command
-#, fuzzy
 msgid "Performs a reverse UI translation of the last speech"
-msgstr "Realizar una traducción de IU inversa del último mensaje hablado"
+msgstr "Realiza una traducción de IU inversa del último mensaje hablado"
 
 #. Translators: An error message when calling the reverse UI translation command
 msgid "Reverse translation not available for this version of NVDA."

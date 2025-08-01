@@ -331,16 +331,16 @@ for recarregado (NVDA+F3) depois que o console já tiver sido aberto.
 
 Por exemplo, o script permite executar novas importações e definir aliases que poderão ser usados diretamente no console, conforme mostrado abaixo:  
 
-    # Várias importações que eu quero no console.
-    importar globalVars como gv
-    importar núcleo
+    # Various import that I want in the console.
+    import globalVars as gv
+    import core
     import ui
     # Aliases
     ocf = openCodeFile
 
 O script do console Python deve ser colocado no seguinte local: `pathToNVDAConfig\ndtt\consoleStartup.py`  
 Por exemplo:
-`C:\Users\myUserName\AppData\Roaming\nvda\ndtt\consoleStartup.py`
+`C:\Users\meuUsuarioNome\AppData\Roaming\nvda\ndtt\consoleStartup.py`
 
 ## Registre o rastreamento de pilha da função de fala
 
@@ -450,8 +450,8 @@ transferência.
 
 ### Versão 7.0
 
-* Layered commands have been introduced; the entry point is `NVDA+X`.
-  The existing commands have been modified accordingly.  
+* Foram introduzidos comandos em camadas; o ponto de entrada é NVDA+X.
+  Os comandos existentes foram modificados de acordo
 * Um novo comando (`NVDA+X, R`) para reverter a tradução da última mensagem
   falada.
 * Um novo comando (`NVDA+X, C`) para abrir o código-fonte do script
@@ -509,9 +509,10 @@ transferência.
   as mensagens de ERRO CRÍTICO, bem como para as mensagens de ERRO normais.
 * Novos comandos de navegação rápida de registro foram adicionados para
   saltar para a entrada e para as mensagens de fala.
-* A new command allow to place a marker in the log; and specific quick
-  navigation commands in log reading mode allow to jump to them.
-  Credit: the initial idea for this feature comes from Debug Helper add-on by Luke Davis.  
+* Um novo comando permite colocar um marcador no registro; e comandos
+  específicos de navegação rápida no modo de leitura do registro permitem
+  saltar para eles.
+  Crédito: a ideia inicial para este recurso vem do complemento Debug Helper, de Luke Davis
 * Correção: A memorização do último erro não falha mais em alguns casos.
 * Correção de bug: o complemento pode ser inicializado novamente com o NVDA
   2019.2.1.
