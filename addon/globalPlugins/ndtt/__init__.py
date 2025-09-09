@@ -8,7 +8,6 @@ from __future__ import unicode_literals
 import wx
 
 import globalVars
-import globalPluginHandler
 from scriptHandler import script
 import addonHandler
 import gui
@@ -103,6 +102,7 @@ else:
 class MixedGlobalPluginWithInit(MixedGlobalPlugin):
 	def __init__(self):
 		super(MixedGlobalPluginWithInit, self).__init__(
+			layerName = "NDTT_Main",
 			layeredCommandsList=[(gestures, script) for (gestures, script, sec) in NDTT_LAYERED_COMMANDS_LIST if (not globalVars.appArgs.secure) or sec],
 		)	
 

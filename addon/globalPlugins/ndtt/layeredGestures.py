@@ -9,6 +9,7 @@ from functools import wraps
 
 from scriptHandler import script
 from tones import beep
+from logHandler import log
 from keyLabels import localizedKeyLabels
 from baseObject import ScriptableObject
 import addonHandler
@@ -35,40 +36,32 @@ def finally_(func, final):
 	return wrap(final)
 
 
-NDTT_LAYERED_COMMANDS_LIST = [
-	# A list of 3-tuples. Each 3-tuple contains:
-	# - a gesture list
-	# - the associated script name
-	# - if the command is available in secure mode.
-	(["d"], "toggleESDMode", True),
-	(["e"], "reportLastError", False),
-	(["shift+e"], "togglePlayErrorSound", False),
-	(["k"], "addMarkerInLog", False),
-	(["o"], "announceObjectInfo", True),
-	(["upArrow"], "nextObjectInfo", True),
-	(["downArrow"], "priorObjectInfo", True),
-	(["shift+o"], "toggleCustomObjectReporting", True),
-	(["q"], "restartWithOptions", True),
-	(["r"], "reverseUITranslation", True),
-	(["s"], "toggleStackTraceLog", False),
-	(["p"], "openSettings", False),
-	(["h"], "displayHelp", True),
-]
-
-
 def ScriptableObjectWithLayeredGestures(scriptableObjectName, entryPointGestures):
 	class MyScriptableObject(ScriptableObject):
 
 		scriptCategory = scriptableObjectName
 
-		def __init__(self, layeredCommandsList, *args, **kw):
+		def __init__(self, layerName, layeredCommandsList, *args, **kw):
 			super(MyScriptableObject, self).__init__(*args, **kw)
+			
+			# #24 / NVDA 18890: if the scriptable objects is not statically created at module level, NVDA cannot
+			# correctly remap its gestures.
+			# So work it around by creating a variable holding the class at module level and renaming the class's
+			# __name__ attribute accordingly as if the class were statically created at module level.
+			moduleLevelClassName = "ScriptableObjectWithLayeredGestures_{}".format(layerName)
+			if moduleLevelClassName in globals():
+				log.error("Layer {} has already been used. Please use another name.".format(layerName))
+			globals()[moduleLevelClassName] = MyScriptableObject
+			# For Python 2: explicitely convert to str to avoid unicode instead; no effect in Python 3
+			MyScriptableObject.__name__ = str(moduleLevelClassName)
+			
 			self.layerCommandsList = []
 			for gesturesList, scriptName in layeredCommandsList:
 				script = getattr(self, "script_{}".format(scriptName))
 				self.layerCommandsList.append(
 					(gesturesList, scriptName, script.__doc__),
 				)
+	
 			self.toggling = False
 
 		def getScript(self, gesture):
