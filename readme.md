@@ -338,6 +338,10 @@ This option allows to choose if the [reverse translation command](#reverseTransl
 
 ## Change log
 
+### Version 7.3
+
+* Bugfix: The command to activate layered commands of the add-on can now be assigned another gesture.
+
 ### Version 7.1
 
 * Compatibility with NVDA 2025.1.
