@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: nvdaDevTestToolbox 4.0\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
 "POT-Creation-Date: 2023-06-16 14:09+0000\n"
-"PO-Revision-Date: 2025-04-25 19:29-0300\n"
+"PO-Revision-Date: 2025-07-28 16:52-0300\n"
 "Last-Translator: Josevan Barbosa Fernandes <josevanfernandes@yahoo.com.br>\n"
 "Language-Team: NVDA Brazilian Portuguese translation team (Equipe de "
 "tradução do NVDA para Português Brasileiro) <clever97@gmail.com>\n"
@@ -253,8 +253,8 @@ msgid "Log Reader commands disabled."
 msgstr "Comandos do Leitor de registro  desabilitados."
 
 #. Translators: Input help mode message for Toggle log translation script.
-msgid "Toggle speech translation in the log"
-msgstr "Alternar a tradução de fala no registro"
+msgid "Toggles speech translation in the log"
+msgstr "Habilita/desabilita a tradução de voz no registro"
 
 #. Translators: Input help mode message for Open source file script.
 msgid ""
@@ -372,12 +372,12 @@ msgstr ""
 
 #. Translators: Input help mode message for a command of the object property explorer.
 msgid ""
-"Toggle custom reporting of objects using the Object explorer's selected "
+"Toggles custom reporting of objects using the Object explorer's selected "
 "property when you use object navigation commands."
 msgstr ""
-"Alterna o relatório personalizado de objetos usando a propriedade "
-"selecionada do Object Explorer quando você usa comandos de navegação de "
-"objetos."
+"Ativa ou desativa a geração de relatórios personalizados de objetos usando a "
+"propriedade selecionada do Explorador de objetos quando você usa comandos de "
+"navegação de objetos."
 
 #. Translators: Message reported by a command of the object property explorer.
 msgid "Custom object reporting enabled"
@@ -449,9 +449,8 @@ msgid "Restarts NVDA with specific options."
 msgstr "Reinicia o NVDA com opções específicas."
 
 #. Translators: Input help mode message for Reverse UI translation command
-msgid "Perform a reverse UI translation of the last speech"
-msgstr ""
-"Realizar uma tradução reversa da interface do usuário do último discurso"
+msgid "Performs a reverse UI translation of the last speech"
+msgstr "Executa uma tradução reversa da interface do usuário da última fala"
 
 #. Translators: An error message when calling the reverse UI translation command
 msgid "Reverse translation not available for this version of NVDA."
@@ -496,14 +495,14 @@ msgstr "Registro de rastreamento de pilha ativado"
 msgid "Stacktrace log disabled"
 msgstr "Registro de rastreamento de pilha desabilitado"
 
-#. Add-on summary, usually the user visible name of the addon.
-#. Translators: Summary for this add-on
-#. to be shown on installation and add-on information found in Add-ons Manager.
+#. Add-on summary/title, usually the user visible name of the add-on
+#. Translators: Summary/title for this add-on
+#. to be shown on installation and add-on information found in add-on store
 msgid "NVDA Dev & Test Toolbox"
 msgstr "Caixa de ferramentas de desenvolvimento e teste NVDA"
 
 #. Add-on description
-#. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+#. Translators: Long description to be shown for this add-on on add-on information from add-on store
 msgid "A set of tools for NVDA developers and testers."
 msgstr "Um conjunto de ferramentas para desenvolvedores e testadores de NVDA."
 

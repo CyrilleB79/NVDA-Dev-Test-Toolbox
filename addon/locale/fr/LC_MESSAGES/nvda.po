@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 'nvdaDevTestToolbox' '3.2'\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
 "POT-Creation-Date: 2023-06-16 14:09+0000\n"
-"PO-Revision-Date: 2025-06-11 11:21+0200\n"
+"PO-Revision-Date: 2025-07-25 16:51+0200\n"
 "Last-Translator: Cyrille Bougot <cyrille.bougot2@laposte.net>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -252,7 +252,7 @@ msgid "Log Reader commands disabled."
 msgstr "Commandes de lecture de journal désactivées."
 
 #. Translators: Input help mode message for Toggle log translation script.
-msgid "Toggle speech translation in the log"
+msgid "Toggles speech translation in the log"
 msgstr "Active ou désactive la traduction de la parole dans le journal"
 
 #. Translators: Input help mode message for Open source file script.
@@ -368,10 +368,10 @@ msgstr ""
 
 #. Translators: Input help mode message for a command of the object property explorer.
 msgid ""
-"Toggle custom reporting of objects using the Object explorer's selected "
+"Toggles custom reporting of objects using the Object explorer's selected "
 "property when you use object navigation commands."
 msgstr ""
-"Activez/désactivez l'annonce personnalisée des objets en utilisant la "
+"Active ou désactive l'annonce personnalisée des objets en utilisant la "
 "propriété sélectionnée de l'Explorateur d'objets lorsque vous utilisez les "
 "commandes de navigation par objet."
 
@@ -445,9 +445,9 @@ msgid "Restarts NVDA with specific options."
 msgstr "Redémarrer NVDA avec des options spécifiques."
 
 #. Translators: Input help mode message for Reverse UI translation command
-msgid "Perform a reverse UI translation of the last speech"
+msgid "Performs a reverse UI translation of the last speech"
 msgstr ""
-"Effectuer une traduction d'interface inverse de la dernière annonce vocale"
+"Effectue une traduction d'interface inverse de la dernière annonce vocale"
 
 #. Translators: An error message when calling the reverse UI translation command
 msgid "Reverse translation not available for this version of NVDA."
@@ -492,14 +492,14 @@ msgstr "Journalisation de la pile d'appel activée"
 msgid "Stacktrace log disabled"
 msgstr "Journalisation de la pile d'appel désactivée"
 
-#. Add-on summary, usually the user visible name of the addon.
-#. Translators: Summary for this add-on
-#. to be shown on installation and add-on information found in Add-ons Manager.
+#. Add-on summary/title, usually the user visible name of the add-on
+#. Translators: Summary/title for this add-on
+#. to be shown on installation and add-on information found in add-on store
 msgid "NVDA Dev & Test Toolbox"
 msgstr "NVDA Dev & Test Toolbox"
 
 #. Add-on description
-#. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+#. Translators: Long description to be shown for this add-on on add-on information from add-on store
 msgid "A set of tools for NVDA developers and testers."
 msgstr "Un ensemble d'outils pour les développeurs et testeurs de NVDA."
 

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: 'nvdaDevTestToolbox' '6.2'\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
 "POT-Creation-Date: 2023-06-06 09:14+0300\n"
-"PO-Revision-Date: 2025-04-26 17:28+0300\n"
+"PO-Revision-Date: 2025-07-27 10:37+0300\n"
 "Last-Translator: Ruslan Kolodyazhni <rupelodn@gmail.com>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -251,8 +251,8 @@ msgid "Log Reader commands disabled."
 msgstr "Команды чтения журнала выключены."
 
 #. Translators: Input help mode message for Toggle log translation script.
-msgid "Toggle speech translation in the log"
-msgstr "Переключить перевод речи в журнале"
+msgid "Toggles speech translation in the log"
+msgstr "Переключает перевод речи в журнале"
 
 #. Translators: Input help mode message for Open source file script.
 msgid ""
@@ -366,10 +366,10 @@ msgstr ""
 
 #. Translators: Input help mode message for a command of the object property explorer.
 msgid ""
-"Toggle custom reporting of objects using the Object explorer's selected "
+"Toggles custom reporting of objects using the Object explorer's selected "
 "property when you use object navigation commands."
 msgstr ""
-"Включение сообщений о пользовательских объектах с использованием выбранного "
+"Включает сообщения о пользовательских объектах с использованием выбранного "
 "свойства исследователя объектов при использовании команд объектной навигации."
 
 #. Translators: Message reported by a command of the object property explorer.
@@ -442,9 +442,9 @@ msgid "Restarts NVDA with specific options."
 msgstr "Перезапускает NVDA с определёнными параметрами."
 
 #. Translators: Input help mode message for Reverse UI translation command
-msgid "Perform a reverse UI translation of the last speech"
+msgid "Performs a reverse UI translation of the last speech"
 msgstr ""
-"Выполнить обратный перевод последней фразы пользовательского интерфейса"
+"Выполняет обратный перевод последней фразы пользовательского интерфейса"
 
 #. Translators: An error message when calling the reverse UI translation command
 msgid "Reverse translation not available for this version of NVDA."
@@ -487,16 +487,13 @@ msgstr "Журнал отслеживания стека включён"
 msgid "Stacktrace log disabled"
 msgstr "Журнал отслеживания стека выключен"
 
-#. Add-on summary, usually the user visible name of the addon.
-#. Translators: Summary for this add-on
-#. to be shown on installation and add-on information found in Add-ons Manager.
+#. Add-on summary/title, usually the user visible name of the add-on
+#. Translators: Summary/title for this add-on
+#. to be shown on installation and add-on information found in add-on store
 msgid "NVDA Dev & Test Toolbox"
 msgstr "NVDA Dev & Test Toolbox"
 
 #. Add-on description
-#. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+#. Translators: Long description to be shown for this add-on on add-on information from add-on store
 msgid "A set of tools for NVDA developers and testers."
 msgstr "Набор инструментов для разработчиков и тестировщиков NVDA."
-
-#~ msgid "Opens NVDA Dev & Test Toolbox add-on settings"
-#~ msgstr "Открывает настройки дополнения NVDA Dev & Test Toolbox"
