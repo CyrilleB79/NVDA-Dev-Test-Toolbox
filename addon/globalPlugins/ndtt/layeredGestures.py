@@ -25,15 +25,13 @@ except addonHandler.AddonError:
 # Below toggle code came from Tyler Spivey's code, with enhancements by Joseph Lee.
 def finally_(func, final):
 	"""Calls final after func, even if it fails."""
-	def wrap(f):
-		@wraps(f)
-		def new(*args, **kwargs):
-			try:
-				func(*args, **kwargs)
-			finally:
-				final()
-		return new
-	return wrap(final)
+	@wraps(func)
+	def new(*args, **kwargs):
+		try:
+			func(*args, **kwargs)
+		finally:
+			final()
+	return new
 
 
 def ScriptableObjectWithLayeredGestures(scriptableObjectName, entryPointGestures):
@@ -69,7 +67,7 @@ def ScriptableObjectWithLayeredGestures(scriptableObjectName, entryPointGestures
 				return super(MyScriptableObject, self).getScript(gesture)
 			script = super(MyScriptableObject, self).getScript(gesture)
 			if not script:
-				script = finally_(self.script_error, self.finish)
+				script = self.script_error
 			if getattr(script, 'allowMultipleLayeredCommands', None):
 				return script
 			else:
