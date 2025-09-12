@@ -11,7 +11,10 @@ from scriptHandler import script
 import inputCore
 import core
 
-from .fileOpener import openCodeFile
+from .fileOpener import (
+	openCodeFile,
+	FileOpenerError,
+)
 
 addonHandler.initTranslation()
 
@@ -39,7 +42,11 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		inputCore.manager._captureFunc = None
 		script = gesture.script
 		if script:
-			openCodeFile(script)
+			try:
+				openCodeFile(script)
+			except FileOpenerError as e:
+				log.debugWarning(str(e))
+				ui.message(e.getUserFriendlyMessage())
 		else:
 			core.callLater(
 				0,
