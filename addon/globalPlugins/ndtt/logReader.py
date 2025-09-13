@@ -627,6 +627,15 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			return False
 		return obj.windowHandle == consoleUI.outputCtrl.GetHandle()
 
+	def isNvdaLogViewer(self, obj):
+		hParent = winUser.getAncestor(obj.windowHandle, winUser.GA_PARENT)
+		try:
+			hLogViewer = gui.logViewer.logViewer.GetHandle()
+			return hLogViewer == hParent
+		# Error when logViewer is None or when its windows has been dismissed or closed.
+		except (AttributeError, RuntimeError):
+			return False
+
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		# Note: chooseNVDAObjectOverlayClasses needs to be explicitely called in the mother class; else, NVDA
 		# will skip it.
@@ -639,20 +648,12 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		else:
 			isEditable = False
 		if isEditable:
-			# Enable log reader in Python console output
-			shouldEnableLogReader = self.isNvdaPythonConsoleUIOutputCtrl(obj)
-			
-			
-			# Enable log reader in log viewer
-			if not shouldEnableLogReader:
-				hParent = winUser.getAncestor(obj.windowHandle, winUser.GA_PARENT)
-				try:
-					hLogViewer = gui.logViewer.logViewer.GetHandle()
-					shouldEnableLogReader = hLogViewer == hParent
-				# Error when logViewer is None or when its windows has been dismissed or closed.
-				except (AttributeError, RuntimeError):
-					shouldEnableLogReader = False
-
+			shouldEnableLogReader = (
+				# Enable log reader in Python console output
+				self.isNvdaPythonConsoleUIOutputCtrl(obj)
+				# Enable log reader in log viewer
+				or self.isNvdaLogViewer(obj)
+			)
 			if shouldEnableLogReader:
 				clsList.insert(0, LogViewerLogContainer)
 			else:
