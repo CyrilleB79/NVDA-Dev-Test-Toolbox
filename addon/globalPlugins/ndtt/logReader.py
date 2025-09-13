@@ -59,6 +59,7 @@ from inputCore import normalizeGestureIdentifier
 import gui.logViewer
 import api
 import treeInterceptorHandler
+from appModules.nvda import AppModule as NVDAAppModule
 
 from .compa import controlTypesCompatWrapper as controlTypes
 from .compa import matchDict
@@ -610,6 +611,31 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		scriptHandler._getObjScript = _getObjScript_original
 		super(GlobalPlugin, self).terminate(*args, **kwargs)
 
+	def isNvdaPythonConsoleUIOutputCtrl(self, obj):
+		if not isinstance(obj.appModule, NVDAAppModule):
+			return False
+		try:
+			# NVDA 2021.1
+			obj.appModule.isNvdaPythonConsoleUIOutputCtrl
+		except AttributeError:
+			pass
+		else:
+			return obj.appModule.isNvdaPythonConsoleUIOutputCtrl(obj)
+		# NVDA < 2021.1 - fallback to explicit code of the function
+		from pythonConsole import consoleUI
+		if not consoleUI:
+			return False
+		return obj.windowHandle == consoleUI.outputCtrl.GetHandle()
+
+	def isNvdaLogViewer(self, obj):
+		hParent = winUser.getAncestor(obj.windowHandle, winUser.GA_PARENT)
+		try:
+			hLogViewer = gui.logViewer.logViewer.GetHandle()
+			return hLogViewer == hParent
+		# Error when logViewer is None or when its windows has been dismissed or closed.
+		except (AttributeError, RuntimeError):
+			return False
+
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		# Note: chooseNVDAObjectOverlayClasses needs to be explicitely called in the mother class; else, NVDA
 		# will skip it.
@@ -622,15 +648,13 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		else:
 			isEditable = False
 		if isEditable:
-			isLogViewer = False
-			hParent = winUser.getAncestor(obj.windowHandle, winUser.GA_PARENT)
-			try:
-				hLogViewer = gui.logViewer.logViewer.GetHandle()
-				isLogViewer = hLogViewer == hParent
-			# Error when logViewer is None or when its windows has been dismissed or closed.
-			except (AttributeError, RuntimeError):
-				isLogViewer = False
-			if isLogViewer:
+			shouldEnableLogReader = (
+				# Enable log reader in Python console output
+				self.isNvdaPythonConsoleUIOutputCtrl(obj)
+				# Enable log reader in log viewer
+				or self.isNvdaLogViewer(obj)
+			)
+			if shouldEnableLogReader:
 				clsList.insert(0, LogViewerLogContainer)
 			else:
 				clsList.insert(0, EditableTextLogContainer)

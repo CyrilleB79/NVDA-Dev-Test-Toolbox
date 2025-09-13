@@ -132,7 +132,7 @@ The marker's number will be incremented each time you place a marker in the log;
 ### Log reader mode
 
 A log reader mode provides commands to ease log reading and analyzing.
-In the log viewer window the log reader is enabled by default, thus log reading commands are available immediately.
+In the log viewer window and in the Pyton console output area, the log reader is enabled by default, thus log reading commands are available immediately.
 In another text reading area such as an editor (e.g. Notepad++) or a webpage (e.g. GitHub issue), you need to press `NVDA+X, L` to enable log reader mode and use its commands.
 When you are done with log reading and analyzing tasks, you can disable again `NVDA+X, L` to disable the log reader mode.
 
