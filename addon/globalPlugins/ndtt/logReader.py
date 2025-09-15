@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2021-2024 Cyrille Bougot
+# Copyright (C) 2021-2025 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
@@ -14,6 +14,7 @@ from scriptHandler import script
 import globalPlugins
 import ui
 import textInfos
+from keyLabels import localizedKeyLabels
 import speech
 try:
 	from speech.commands import (  # noqa: F401 - may be used in the evaluated speech sequence
@@ -69,6 +70,7 @@ from .fileOpener import (
 	getNvdaCodePath,
 	FileOpenerError,
 )
+from .securityUtils import secureBrowseableMessage
 
 import re
 import os
@@ -398,18 +400,24 @@ class LogContainer(ScriptableObject):
 		if not hasattr(self, 'scriptTable'):
 			self.scriptTable = {}
 			for qn, (searchType, filterFun) in self.QUICK_NAV_SCRIPT_INFO.items():
-				gestureId = normalizeGestureIdentifier('kb:' + qn)
+				gestureId = "kb:" + qn
 				self.scriptTable[gestureId] = 'script_moveToNext{st}'.format(st=searchType)
-				gestureId = normalizeGestureIdentifier('kb:shift+' + qn)
+				gestureId = "kb:shift+" + qn
 				self.scriptTable[gestureId] = 'script_moveToPrevious{st}'.format(st=searchType)
-			self.scriptTable['kb:t'] = 'script_toggleLogTranslation'
-			self.scriptTable['kb:c'] = 'script_openSourceFile'
+			self.scriptTable["kb:t"] = "script_toggleLogTranslation"
+			self.scriptTable["kb:c"] = "script_openSourceFile"
+			self.scriptTable["kb:control+h"] = "script_displayLogReaderHelp"
 
 	def getLogReaderCommandScript(self, gesture):
 		if self.isLogReaderEnabled:
+			try:
+				normalizedScriptTable = self._normalizedScriptTable
+			except AttributeError:
+				normalizedScriptTable = {normalizeGestureIdentifier(g): n for (g, n) in self.scriptTable.items()}
+				self._normalizedScriptTable = normalizedScriptTable
 			for gestureId in gesture.normalizedIdentifiers:
 				try:
-					return getattr(self, self.scriptTable[gestureId])
+					return getattr(self, normalizedScriptTable[gestureId])
 				except KeyError:
 					pass
 		return None
@@ -485,6 +493,32 @@ class LogContainer(ScriptableObject):
 			return
 		# Translators: A message reported when trying to open the source code from the current line.
 		ui.message(_('No file path or object found on this line.'))
+
+	@script(
+		# Translators: Input help mode message for Log Reader help script.
+		description=_("Displays help for the Log reader commands"),
+		category=ADDON_SUMMARY,
+	)
+	def script_displayLogReaderHelp(self, gesture):
+		# Translators: Title of the Log Reader commands help window.
+		title = _("Log Reader commands ({name})").format(name=ADDON_SUMMARY)
+		cmdList = []
+		for (gesture, scriptName) in self.scriptTable.items():
+			gesture = ':'.join(gesture.split(":")[1:])
+			script = getattr(self, scriptName)
+			desc = script.__doc__
+			cmdParts = []
+			cmdParts.append(
+				# Translators: Separator between key names in the log reader command help window.
+				"+".join(
+					localizedKeyLabels.get(k.lower(), k) for k in gesture.split("+")
+				)
+			)
+			cmdParts.append(': ')
+			cmdParts.append(desc)
+			cmdList.append(''.join(cmdParts))
+		cmdList = '\r'.join(cmdList)
+		secureBrowseableMessage(cmdList, title)
 
 	@staticmethod
 	def openStackTraceLine(line):

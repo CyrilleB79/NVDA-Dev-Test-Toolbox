@@ -137,6 +137,7 @@ In another text reading area such as an editor (e.g. Notepad++) or a webpage (e.
 When you are done with log reading and analyzing tasks, you can disable again `NVDA+X, L` to disable the log reader mode.
 
 The commands available in log reader mode are described hereafter.
+In this mode, you can also press `control+h` to display all the commands available.
 
 <a id="logReaderQuickNavigationCommands"></a>
 #### Quick navigation commands
@@ -167,8 +168,6 @@ If you have [Instant Translate][3] add-on installed, you may use it in conjoncti
 * Use Quick navigation commands in the log, e.g. S, I, etc. Whenever a speech message is encountered, it will be spoken in your language (French in our previous example)
 
 If you want to disable speech translation, press T again.
-
-
 
 <a id="logReaderOpenSourceFile"></a>
 #### Open the file of the source code in your editor
