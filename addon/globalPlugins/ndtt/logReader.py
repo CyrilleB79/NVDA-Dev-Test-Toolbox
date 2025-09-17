@@ -122,7 +122,10 @@ RE_CALLBACK_COMMAND = re.compile(r'CallbackCommand\(name=say-all:[A-Za-z]+\)((?=
 
 # Regexps of log line containing a file path and a line number.
 RE_STACK_TRACE_LINE = re.compile(
-	r'^File "(?P<drive>(?:[A-Z]:\\)|)(?P<path>[^:"]+\.pyw?)[co]?", line (?P<line>\d+)(?:, in .+)?$'
+	r'^File "(?P<drive>(?:[A-Z]:\\)|)(?P<path>[^:"]+\.pyw?)[co]?", line (?P<line>\d+)(?:, in (?P<scope>.+))?$'
+)
+RE_ERROR_INDICATOR_LINE = re.compile(
+	"(?P<leadingSpaces> *)(?P<leadingCtxLoc>~*)(?P<loc>\^+)(?P<tailingCtxLoc>~*)"
 )
 
 # Regexps of input help log line
@@ -309,6 +312,69 @@ class LogMessage(object):
 		return cls(header, msg)
 
 
+class TracebackFrame(object):
+	def __init__(
+		self,
+		path,
+		line,
+		scope,
+		srcLine=None,
+		errLocation=None,
+		errContextLocation=None,
+	):
+			self.path = path
+			self.line = line
+			self.scope = scope
+			self.srcLine = srcLine
+			self.errLocation = errLocation
+			self.errContextLocation = errContextLocation
+
+	@classmethod
+	def makeFromTextInfo(cls, info, atStart=False):
+		info = info.copy()
+		if not atStart:
+			raise NotImplementedError
+		info.expand(textInfos.UNIT_LINE)
+		match = matchDict(RE_STACK_TRACE_LINE.search(info.text.strip()))
+		if not match:
+			raise RuntimeError("Unable to parse stack trace line.")
+		drive = match['drive']
+		path = match['path']
+		line = match['line']
+		scope = match['scope']
+
+		info.move(textInfos.UNIT_LINE, direction=1)
+		info.expand(textInfos.UNIT_LINE)
+		sourceCodeLine = info.text.rstrip("\r")
+
+		info.move(textInfos.UNIT_LINE, direction=1)
+		info.expand(textInfos.UNIT_LINE)
+		match = matchDict(RE_ERROR_INDICATOR_LINE.search(info.text.rstrip()))
+		if not match:
+			errLocation = None
+			errContextLocation = None
+		else:
+			nLeadingSpaces = len(match["leadingSpaces"])
+			nLeadingCtxLoc = len(match["leadingCtxLoc"])
+			nLoc = len(match["loc"])
+			nTailingCtxLoc = len(match["tailingCtxLoc"])
+			ctxLocStart = nLeadingSpaces
+			locStart = ctxLocStart + nLeadingCtxLoc
+			locEnd = locStart + nLoc
+			ctxLocEnd = locEnd + nTailingCtxLoc
+			errLocation = (locStart, locEnd)
+			errContextLocation = (ctxLocStart, ctxLocEnd)
+		
+		return cls(
+			path=path,
+			line=line,
+			scope=scope,
+			srcLine=sourceCodeLine,
+			errLocation=errLocation,
+			errContextLocation=errContextLocation,
+		)
+
+
 class LogReader(object):
 
 	SEARCHERS = {k: re.compile(RES_MESSAGE_HEADER.format(levelName=k.upper())) for k in (
@@ -356,6 +422,48 @@ class LogReader(object):
 			return
 		self.ti.updateSelection()
 		msg.speak(reason=controlTypes.OutputReason.CARET, mode=searchType)
+
+	def goToError(self, select=False, includeContext=False):
+		nReadLines = 0
+		ti = self.ti.copy()
+		# 3 lines = 1 with file path/line number, 1 with source code, 1 with error location indication
+		while nReadLines < 3:
+			ti.expand(textInfos.UNIT_LINE)
+			if RE_STACK_TRACE_LINE.search(ti.text.strip()):
+				tbFrame = TracebackFrame.makeFromTextInfo(
+					ti,
+					atStart=True
+				)
+				if tbFrame.errLocation is None:
+					ui.message("No error indicator for this frame")
+					return
+				ti.move(textInfos.UNIT_LINE, 1)
+				ti.updateCaret()
+				api.processPendingEvents(True)
+				speech.cancelSpeech()
+				if includeContext:
+					selStart = tbFrame.errContextLocation[0]
+					selEnd = tbFrame.errContextLocation[1]
+				else:
+					selStart = tbFrame.errLocation[0]
+					selEnd = tbFrame.errLocation[1]
+				ti.move(textInfos.UNIT_CHARACTER, selStart)
+				ti.collapse()
+				ti.move(textInfos.UNIT_CHARACTER, selEnd - selStart, "end")
+				if select:
+					ti.updateSelection()
+				else:
+					text = ti.text
+					ti.collapse()
+					ti.updateCaret()
+					speech.speak([text])
+				return
+			ti.collapse()
+			ti.move(textInfos.UNIT_LINE, -1)
+			nReadLines += 1
+		else:
+			# Translators: Reported when pressing the go to error command in a traceback line.
+			ui.message(_("No traceback here"))
 
 
 class LogContainer(ScriptableObject):
@@ -415,6 +523,7 @@ class LogContainer(ScriptableObject):
 				self.scriptTable[gestureId] = 'script_moveToNext{st}'.format(st=searchType)
 				gestureId = "kb:shift+" + qn
 				self.scriptTable[gestureId] = 'script_moveToPrevious{st}'.format(st=searchType)
+			self.scriptTable["kb:l"] = "script_goToError"
 			self.scriptTable["kb:t"] = "script_toggleLogTranslation"
 			self.scriptTable["kb:c"] = "script_openSourceFile"
 			self.scriptTable["kb:control+h"] = "script_displayLogReaderHelp"
@@ -505,6 +614,33 @@ class LogContainer(ScriptableObject):
 		# Translators: A message reported when trying to open the source code from the current line.
 		ui.message(_('No file path or object found on this line.'))
 
+	
+	@script(
+		description=_(
+			# Translators: Input help mode message for go to error script.
+			"Move the caret at the error's position in a traceback frame."
+			" A second press selects the erroneous code."
+			" A third press selects the error with its context."
+			),
+		category=ADDON_SUMMARY,
+	)
+	def script_goToError(self, gesture):
+		reader = LogReader(self)
+		nRepeat = scriptHandler.getLastScriptRepeatCount()
+		if nRepeat == 0:
+			select = False
+			includeContext = False	
+		elif nRepeat == 1:
+			select = True
+			includeContext = False	
+		elif nRepeat == 2:
+			select = True
+			includeContext = True
+		else:
+			return
+		reader.goToError(select, includeContext)
+		
+
 	@script(
 		# Translators: Input help mode message for Log Reader help script.
 		description=_("Displays help for the Log reader commands"),
@@ -565,6 +701,7 @@ class LogContainer(ScriptableObject):
 		match = matchDict(RE_INPUT_HELP.match(line))
 		if not match:
 			return False
+		
 		objPath = '{loc}.script_{name}'.format(loc=match['scriptLocation'], name=match['scriptName'])
 		openObject(objPath)
 		return True
