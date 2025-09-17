@@ -124,6 +124,9 @@ RE_CALLBACK_COMMAND = re.compile(r'CallbackCommand\(name=say-all:[A-Za-z]+\)((?=
 RE_STACK_TRACE_LINE = re.compile(
 	r'^File "(?P<drive>(?:[A-Z]:\\)|)(?P<path>[^:"]+\.pyw?)[co]?", line (?P<line>\d+)(?:, in .+)?$'
 )
+RE_ERROR_POINTER_LINE = re.compile(
+	"(?P<leadingSpaces> *)(?P<leadingExtLocation>~*)(?P<location>\^+)(?P<tailingExtLocation>~*)"
+)
 
 # Regexps of input help log line
 RE_INPUT_HELP = re.compile(
@@ -300,6 +303,43 @@ class LogMessage(object):
 		return cls(header, msg)
 
 
+class TracebackFrame(object):
+	def __init__(self, function, line, scope, srcLine=None, errLocationLine=None):
+			self.header = header
+			self.msg = msg.strip()
+
+	@classmethod
+	def makeFromTextInfo(cls, info, atStart=False):
+		info = info.copy()
+		if not atStart:
+			raise NotImplementedError
+		info.expand(textInfos.UNIT_LINE)
+		RE_ERROR_POINTER_LINE.search
+		header = LogMessageHeader.makeFromLine(info.text.strip())
+		info.collapse(end=True)
+		infoMsg = info.copy()
+		infoLine = info.copy()
+		infoLine.expand(textInfos.UNIT_LINE)
+		while info.move(textInfos.UNIT_LINE, direction=1):
+			infoLine = info.copy()
+			infoLine.expand(textInfos.UNIT_LINE)
+			if RE_MESSAGE_HEADER.search(infoLine.text.rstrip()):
+				# Next line equivalent to:
+				# infoMsg.end = infoLine.start
+				# but usable in older NVDA versions (e.g. 2019.2)
+				infoMsg.setEndPoint(infoLine, 'endToStart')
+				break
+		else:
+			# Next line equivalent to:
+			# infoMsg.end = infoLine.end
+			# but usable in older NVDA versions (e.g. 2019.2)
+			infoMsg.setEndPoint(infoLine, 'endToEnd')
+		msg = infoMsg.text
+		zzz
+		return cls(function, line, scope, srcLine=None, errLocationLine=None)
+
+		
+
 class LogReader(object):
 
 	SEARCHERS = {k: re.compile(RES_MESSAGE_HEADER.format(levelName=k.upper())) for k in (
@@ -346,6 +386,28 @@ class LogReader(object):
 			return
 		self.ti.updateSelection()
 		msg.speak(reason=controlTypes.OutputReason.CARET, mode=searchType)
+
+	def goToError(self):
+		shouldCheckLine = True
+		while shouldCheckLine:
+			tiLine = self.ti.copy()
+			tiLine.expand(textInfos.UNIT_LINE)
+			regexp = RE_ERROR_POINTER_LINE
+			if regexp.search(tiLine.text.rstrip()):
+				msg = LogMessage.makeFromTextInfo(
+					self.ti,
+					atStart=True
+				)
+				if filterFun(msg):
+					break
+			self.ti.move(textInfos.UNIT_LINE, direction)
+		else:
+			# Translators: Reported when pressing the go to error command in a traceback line.
+			ui.message(_('No more item'))
+			return
+		self.ti.updateSelection()
+		msg.speak(reason=controlTypes.OutputReason.CARET, mode=searchType)
+		
 
 
 class LogContainer(ScriptableObject):
@@ -404,6 +466,7 @@ class LogContainer(ScriptableObject):
 				self.scriptTable[gestureId] = 'script_moveToNext{st}'.format(st=searchType)
 				gestureId = "kb:shift+" + qn
 				self.scriptTable[gestureId] = 'script_moveToPrevious{st}'.format(st=searchType)
+			self.scriptTable["kb:w"] = "script_goToError"
 			self.scriptTable["kb:t"] = "script_toggleLogTranslation"
 			self.scriptTable["kb:c"] = "script_openSourceFile"
 			self.scriptTable["kb:control+h"] = "script_displayLogReaderHelp"
@@ -493,6 +556,17 @@ class LogContainer(ScriptableObject):
 			return
 		# Translators: A message reported when trying to open the source code from the current line.
 		ui.message(_('No file path or object found on this line.'))
+
+	
+	@script(
+		# Translators: Input help mode message for go to error script.
+		description=_("Move the caret at the error's position in a traceback line"),
+		category=ADDON_SUMMARY,
+	)
+	def script_goToError(self, gesture):
+		reader = LogReader(self)
+		reader.goToError()
+		
 
 	@script(
 		# Translators: Input help mode message for Log Reader help script.
