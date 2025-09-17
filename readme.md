@@ -188,6 +188,32 @@ Just press C to open this file.
 For this feature to work, you need to have configured your [favorite editor's command](#settingsOpenCommand) in the add-on's settings.
 If you are not running NVDA from source, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
 
+#### Analysing a traceback
+
+Sometimes you may have error tracebacks in the log, as in the following example:
+```
+ERROR - scriptHandler.executeScript (14:47:43.426) - MainThread (15492):
+error executing script: <bound method LogContainer.script_openSourceFile of <NVDAObjects.Dynamic_LogViewerLogContainerIAccessibleRichEdit50WindowNVDAObject object at 0x34C1E510>> with gesture 'c'
+Traceback (most recent call last):
+  File "scriptHandler.pyc", line 300, in executeScript
+  File "C:\Users\myUserName\AppData\Roaming\nvda\addons\nvdaDevTestToolbox\globalPlugins\ndtt\logReader.py", line 603, in script_openSourceFile
+    if self.openStackTraceLine(line):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\myUserName\AppData\Roaming\nvda\addons\nvdaDevTestToolbox\globalPlugins\ndtt\logReader.py", line 667, in openStackTraceLine
+    0 / 0  # An erroneaous code line
+    ~~^~~
+ZeroDivisionError: division by zero
+```
+
+For frames where the source code is available, you may have noticed markers with `^` (caret) and `~` (tilde) characters.
+That's the way Python visually indicates the error's location as well as its context in a traceback frame.
+Pressing `l` moves the cursor at the beginning of the error in the source code line, i.e. the text marked by `^` (caret) character.
+A double press, select this text.
+A third press selects the error with its context, i.e. the text of the source code line marked by `^` (caret) and `~` (tilde) characters.
+
+Please note that for logs taken with an NVDA version before 2024.1, thus with Python 3.7 or older, Python only indicates the error with one `^` (caret) character.
+Thus the double or triple press action of this command becomes rather useless.
+
 <a id="oldLogsBackup"></a>
 ## Backup of old logs
 
