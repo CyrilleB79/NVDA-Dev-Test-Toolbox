@@ -106,7 +106,7 @@ RE_MSG_BEEP = re.compile(
 )
 RE_MSG_INPUT = re.compile(r'^Input: (?P<device>.+?):(?P<key>.+)')
 RE_MSG_TYPED_WORD = re.compile(r'^typed word: (?P<word>.+)')
-RE_MSG_BRAILLE_REGION = re.compile(r'^Braille regions text: \[(?P<text>.*)\]')
+RE_MSG_BRAILLE_REGIONS = re.compile(r'^Braille regions text: \[(?P<seq>.*)\]')
 RE_MSG_BRAILLE_DOTS = re.compile(r'^Braille window dots:(?P<dots>.*)')
 RE_MSG_TIME_SINCE_INPUT = re.compile(r'^(?P<time>\d+.\d*) sec since input')
 
@@ -225,12 +225,21 @@ class LogMessage(object):
 		if match:
 			return self.msg
 
-		match = matchDict(RE_MSG_BRAILLE_REGION.match(self.msg))
+		match = matchDict(RE_MSG_BRAILLE_REGIONS.match(self.msg))
 		if match:
-			return self.msg
-		else:
-			import globalVars as gv
-			gv.dbg = self.msg
+			if mode == 'Braille':
+				prefix = ""
+			else:
+				prefix = "Braille: "
+			txtSeq = match["seq"]
+			# Add optional end comma so that the string is recognized as a tuple, no matter its number of substrings.
+			seq = eval(txtSeq + ",")
+			if LogContainer.translateLog:
+				seq = [self._translate(item) for item in seq]
+			return "{prefix}{text}".format(
+				prefix=prefix,
+				text=" ".join(seq),
+			)
 
 		match = matchDict(RE_MSG_BRAILLE_DOTS.match(self.msg))
 		if match:
@@ -311,11 +320,12 @@ class LogReader(object):
 		'Warning',
 	)}
 	SEARCHERS.update({
-		'Message': RE_MESSAGE_HEADER,
-		'Error': RE_ERROR_HEADER,
-		'Input': re.compile(RES_MESSAGE_HEADER.format(levelName='IO')),
-		'Speech': re.compile(RES_MESSAGE_HEADER.format(levelName='IO')),
-		'Marker': re.compile(RES_MESSAGE_HEADER.format(levelName='INFO')),
+		"Message": RE_MESSAGE_HEADER,
+		"Error": RE_ERROR_HEADER,
+		"Input": re.compile(RES_MESSAGE_HEADER.format(levelName="IO")),
+		"Speech": re.compile(RES_MESSAGE_HEADER.format(levelName="IO")),
+		"Braille": re.compile(RES_MESSAGE_HEADER.format(levelName="IO")),
+		"Marker": re.compile(RES_MESSAGE_HEADER.format(levelName="INFO")),
 	})
 
 	def __init__(self, obj):
@@ -380,16 +390,17 @@ class LogContainer(ScriptableObject):
 		return script_moveToHeader
 
 	QUICK_NAV_SCRIPT_INFO = {
-		'd': ('Debug', noFilter),
-		'e': ('Error', noFilter),
-		'f': ('Info', noFilter),
-		'g': ('DebugWarning', noFilter),
-		'i': ('Io', noFilter),
-		'k': ('Marker', lambda msg: RE_MSG_MARKER.match(msg.msg)),
-		'm': ('Message', noFilter),
-		'n': ('Input', lambda msg: RE_MSG_INPUT.match(msg.msg)),
-		's': ('Speech', lambda msg: RE_MSG_SPEAKING.match(msg.msg)),
-		'w': ('Warning', noFilter),
+		"b": ("Braille", lambda msg: RE_MSG_BRAILLE_REGIONS.match(msg.msg)),
+		"d": ("Debug", noFilter),
+		"e": ("Error", noFilter),
+		"f": ("Info", noFilter),
+		"g": ("DebugWarning", noFilter),
+		"i": ("Io", noFilter),
+		"k": ("Marker", lambda msg: RE_MSG_MARKER.match(msg.msg)),
+		"m": ("Message", noFilter),
+		"n": ("Input", lambda msg: RE_MSG_INPUT.match(msg.msg)),
+		"s": ("Speech", lambda msg: RE_MSG_SPEAKING.match(msg.msg)),
+		"w": ("Warning", noFilter),
 	}
 
 	for qn, (searchType, filterFun) in QUICK_NAV_SCRIPT_INFO.items():

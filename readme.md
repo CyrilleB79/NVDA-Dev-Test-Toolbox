@@ -153,6 +153,7 @@ Single letter command similar to browse mode quick navigation keys allow to move
 * i: input/output messages (`IO`)
 * n: input messages
 * s: speech messages
+* b: braille messages
 * d: debug messages (`DEBUG`)
 
 Pressing the single letter moves to the next occurrence of this message. Combining the letter with the shift key moves to the previous occurrence of this message.
