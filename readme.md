@@ -296,8 +296,11 @@ Many testers use NVDA in another language than English.
 But when reporting test results on GitHub, the description of the modified options or the messages reported by NVDA should be written in English.
 Its quite frustrating and time consuming to have to restart NVDA in English to check the exact wording of the options or messages.
 
-To avoid this, the add-on provides a reverse translation command (`NVDA+X, R`) allowing to reverse translate NVDA's interface such as messages, control labels in the GUI, etc.
-This command uses NVDA's gettext translation to try to reverse translate the last speech.
+To avoid this, the add-on provides two reverse translation commands allowing to reverse translate NVDA's interface such as messages, control labels in the GUI, etc.
+
+* `NVDA+X, R` uses NVDA's gettext translation to try to reverse translate the last speech.
+* `NVDA+shift+X, R` uses gettext translations from NVDA and its add-ons to try to reverse translate the last speech.
+
 More specifically, the first string of the last speech sequence is reverse translated.
 
 For example, in French NVDA, if I arrow down to the Tools menu named "Outils", NVDA will say "Outils  sous-Menu  o" which stands for "Tools  subMenu  o".
