@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2021-2024 Cyrille Bougot
+# Copyright (C) 2021-2025 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 import config
@@ -11,6 +11,8 @@ confspec = {
 	"logBackup": 'option("off", "maxNumber", default="off")',
 	"logBackupMaxNumber": 'integer(min=1, max=100, default=3)',
 	"copyRevTranslation": 'boolean(default=True)',
+	"preserveConsoleInputHistory": "boolean(default=False)",
+	"consoleInputHistorySize": "integer(min=1, max=10000, default=100)",
 }
 config.conf.spec["ndtt"] = confspec
 

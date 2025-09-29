@@ -14,8 +14,8 @@ This add-on gathers various features for NVDA debugging and testing.
 * Script tools: an extended script description mode and a script opener.
 * Commands to help log reading and analyzing.
 * Backups of old logs
+* Python console enhancements such as a custom startup script and the possibility to keep input history in memory after NVDA restarts.
 * In the Python console workspace, a function to open the source code of an object.
-* A custom startup script for the Python console
 * A command to log the stack trace of the speech.speak function.
 * A command to reverse translate the items of the interface.
 
@@ -280,6 +280,12 @@ For example, the script allows you to execute new imports and define aliases tha
 The Python console script should be placed in the following location: `pathToNVDAConfig\ndtt\consoleStartup.py`  
 For example: `C:\Users\myUserName\AppData\Roaming\nvda\ndtt\consoleStartup.py`
 
+### Preserving Python console input history
+
+In Python console history, you can use up and down arrows to review and modify previous inputs.
+Though, the list of previous inputs is cleared when exiting NVDA.
+This add-on provide [an option](#settingsPreserveHistory), enabled by default, allowing to preserve Python console input history even when NVDA is restarted.
+
 ## Log the stack trace of the speech function
 
 Sometimes, you may want to see which part of the code is responsible for speaking something.
@@ -364,6 +370,13 @@ These settings only take effect at next NVDA startup when the backup takes place
 ### Copy reverse translation to clipboard
 
 This option allows to choose if the [reverse translation command](#reverseTranslationCommand) also copies its result to the clipboard.
+
+<a id="settingsPreserveHistory"></a>
+### Preserve console input history after restart
+
+If this checkbox is checked, Python console input history will be preserved when NVDA is restarted.
+If it is checked, you can also specify below the maximum number of inputs that will be saved.
+If it is unchecked, NVDA will behave as usual, i.e. the console history will be empty after restart.
 
 ## Change log
 

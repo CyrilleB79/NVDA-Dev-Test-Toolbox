@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA add-on: NVDA Dev & Test Toolbox
-# Copyright (C) 2023-2024 Cyrille Bougot
+# Copyright (C) 2023-2025 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
@@ -9,14 +9,14 @@ import wx
 
 import gui
 from gui import guiHelper, nvdaControls
-from .compa import PANEL_DESCRIPTION_WIDTH
 import config
 from logHandler import log
-import globalVars
-
-from .utils import getBaseProfileConfigValue
-
 import addonHandler
+import globalVars
+import globalPluginHandler
+
+from .compa import PANEL_DESCRIPTION_WIDTH
+from .utils import getBaseProfileConfigValue
 
 addonHandler.initTranslation()
 
@@ -106,7 +106,30 @@ class NDTTSettingsPanel(gui.settingsDialogs.SettingsPanel):
 		)
 		if globalVars.appArgs.secure:
 			self.copyReverseTranslation.Disable()
-		sHelper.addItem(self.copyReverseTranslation)
+
+		self.preserveConsoleInputHistory = wx.CheckBox(
+			self,
+			# Translators: This is a label for a setting in the settings panel
+			label=_("Preserve console input history after restart"),
+		)
+		self.preserveConsoleInputHistory.SetValue(
+			config.conf["ndtt"]["preserveConsoleInputHistory"]
+		)
+		self.preserveConsoleInputHistory.Bind(wx.EVT_CHECKBOX, self.onSaveConsoleInputHistoryModified)
+		sHelper.addItem(self.preserveConsoleInputHistory)
+		
+		minConsoleHistorySize = int(self.getParameterBound("consoleInputHistorySize", "min"))
+		maxConsoleHistorySize = int(self.getParameterBound("consoleInputHistorySize", "max"))
+		# Translators: This is a label for a setting in the settings panel
+		text = _("Number of inputs preserved in Python console history")
+		self.nbPreservedInputsEdit = sHelper.addLabeledControl(
+			text,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=minConsoleHistorySize,
+			max=maxConsoleHistorySize,
+			initial=getBaseProfileConfigValue("ndtt", "consoleInputHistorySize"),
+		)
+		self.nbPreservedInputsEdit.Enable(self.preserveConsoleInputHistory.GetValue())
 
 	@staticmethod
 	def getParameterBound(name, boundType):
@@ -127,17 +150,25 @@ class NDTTSettingsPanel(gui.settingsDialogs.SettingsPanel):
 		index = evt.GetSelection()
 		self.updateNbBackupsEdit(self.BACKUP_TYPES[index][0])
 
+	def onSaveConsoleInputHistoryModified(self, evt):
+		self.nbPreservedInputsEdit.Enable(evt.IsChecked())
+
 	def updateNbBackupsEdit(self, backupType):
 		self.nbBackupsEdit.Enable(backupType == 'maxNumber')
 
 	def onSave(self):
 		# Make sure we're operating in the "normal" profile
-		if config.conf.profiles[-1].name is None and len(config.conf.profiles) == 1:
-			config.conf['ndtt']['sourceFileOpener'] = self.openInEditorCmdEdit.GetValue()
-			config.conf['ndtt']['nvdaSourcePath'] = self.nvdaSourceCodePathEdit.GetValue()
-			config.conf['ndtt']['logBackup'] = self.BACKUP_TYPES[self.makeBackupsList.Selection][0]
-			config.conf['ndtt']['logBackupMaxNumber'] = int(self.nbBackupsEdit.Value)
-			if not globalVars.appArgs.secure:
-				config.conf['ndtt']['copyRevTranslation'] = self.copyReverseTranslation.IsChecked()
-		else:
-			log.debugWarning('No configuration saved for NDTT since the current profile is not the default one.')
+		if not (config.conf.profiles[-1].name is None and len(config.conf.profiles) == 1):
+			log.debugWarning("No configuration saved for NDTT since the current profile is not the default one.")
+			return
+		config.conf['ndtt']['sourceFileOpener'] = self.openInEditorCmdEdit.GetValue()
+		config.conf['ndtt']['nvdaSourcePath'] = self.nvdaSourceCodePathEdit.GetValue()
+		config.conf['ndtt']['logBackup'] = self.BACKUP_TYPES[self.makeBackupsList.Selection][0]
+		config.conf['ndtt']['logBackupMaxNumber'] = int(self.nbBackupsEdit.Value)
+		if not globalVars.appArgs.secure:
+			config.conf['ndtt']['copyRevTranslation'] = self.copyReverseTranslation.IsChecked()
+		config.conf["ndtt"]["preserveConsoleInputHistory"] = self.preserveConsoleInputHistory.GetValue()
+		config.conf["ndtt"]["consoleInputHistorySize"] = int(self.nbPreservedInputsEdit.Value)
+		if not config.conf["ndtt"]["preserveConsoleInputHistory"]:
+			plugin = [p for p in globalPluginHandler.runningPlugins if p.__module__ == "globalPlugins.ndtt"][0]
+			plugin.deleteInputHistory()
