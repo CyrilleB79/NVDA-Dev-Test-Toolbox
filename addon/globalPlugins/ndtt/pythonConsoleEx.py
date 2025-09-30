@@ -39,7 +39,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		self.consoleStartupFilePath = os.path.join(NDTT_PATH, CONSOLE_STARTUP_FILE_NAME)
 		self.consoleHistoryFilePath = os.path.join(NDTT_PATH, CONSOLE_HISTORY_FILE_NAME)
 		if pythonConsole.consoleUI:
-			self.pythonConsolePostInitialize(alreadyOpen=True)
+			pass  # Do nothing: the Python console startup script will already have been executed.
 		else:
 			oldInitialize = pythonConsole.initialize
 
@@ -47,7 +47,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				oldInitialize()
 				self.pythonConsolePostInitialize()
 				pythonConsole.initialize = oldInitialize
-			pythonConsole.initialize = newInitialize
+			if not getattr(pythonConsole.initialize, "_pythonConsolePostInitializePatch", False):
+				pythonConsole.initialize = newInitialize
+				pythonConsole.initialize._pythonConsolePostInitializePatch = True
 
 	def terminate(self, *args, **kwargs):
 		self.saveInputHistory()

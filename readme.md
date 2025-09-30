@@ -14,7 +14,7 @@ This add-on gathers various features for NVDA debugging and testing.
 * Script tools: an extended script description mode and a script opener.
 * Commands to help log reading and analyzing.
 * Backups of old logs
-* Python console enhancements such as a custom startup script and the possibility to keep input history in memory after NVDA restarts.
+* Python console enhancements such as a custom startup script and the possibility to preserve input history in memory after NVDA restarts.
 * In the Python console workspace, a function to open the source code of an object.
 * A command to log the stack trace of the speech.speak function.
 * A command to reverse translate the items of the interface.
@@ -266,7 +266,7 @@ Below are examples of call in NVDA's code:
 
 ### Python console startup script
 
-You can define a custom script which will be executed in the Python console's namespace when it is first opened, or if the add-on is reloaded (NVDA+F3) after the console has already been opened.
+You can define a custom script which will be executed in the Python console's namespace when it is first opened.
 
 For example, the script allows you to execute new imports and define aliases that you will be able to use directly in the console, as shown below:  
 
