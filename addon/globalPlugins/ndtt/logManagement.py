@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2022-2023 Cyrille Bougot
+# Copyright (C) 2022-2025 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
@@ -87,6 +87,8 @@ def getFirstTimeLoggedByNVDA(path):
 	with open(path, 'r', encoding='utf8') as f:
 		line = f.readline()
 		m = matchDict(RE_FIRST_LINE.match(line.strip()))
+		if not m:  # Can occur when using option -l 100, where the logfile is just empty
+			return None
 		localTimezone = datetime.now(tz=tzUTC).astimezone().tzinfo
 		dt = datetime.now()
 		dt = dt.replace(
@@ -126,17 +128,22 @@ def saveOldLog():
 			dtEnd = datetime.utcfromtimestamp(stat.st_mtime)
 			timeStart = getFirstTimeLoggedByNVDA(oldLogFilePath)
 
-			# Create dtSTart with same D/M/Y values than dtEnd, assuming that the start time was logged the same day.
-			# Then if dtStart after dtEnd remove one day.
-			# This is not bullet proof but that's the best we can do without a logged time by NDTT.
-			dtStart = dtEnd.replace(
-				hour=timeStart.hour,
-				minute=timeStart.minute,
-				second=timeStart.second,
-				microsecond=timeStart.microsecond,
-			)
-			if dtStart > dtEnd:
-				dtStart = dtStart - timedelta(days=1)
+			if timeStart:
+				# Create dtSTart with same D/M/Y values than dtEnd, assuming that the start time was logged the same day.
+				# Then if dtStart after dtEnd remove one day.
+				# This is not bullet proof but that's the best we can do without a logged time by NDTT.
+				dtStart = dtEnd.replace(
+					hour=timeStart.hour,
+					minute=timeStart.minute,
+					second=timeStart.second,
+					microsecond=timeStart.microsecond,
+				)
+				if dtStart > dtEnd:
+					dtStart = dtStart - timedelta(days=1)
+			else:
+				# If no logged time is available, the log is empty, so we just use the file last modification date.
+				# (case when NVDA was started with option -l 100, i.e. log disabled.
+				dtStart = dtEnd
 			dtStartStr = dtStart.strftime(DT_FORMAT_STRING)
 		savedLogFileName = "nvda_{}.log".format(dtStartStr)
 		savedLogFilePath = os.path.join(logDirPath, savedLogFileName)
