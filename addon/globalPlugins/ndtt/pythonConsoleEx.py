@@ -25,7 +25,7 @@ from .fileOpener import openCodeFile, testCodeFinder
 ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
 
 
-NDTT_PATH = os.path.join(globalVars.appArgs.configPath, 'ndtt')
+NDTT_PATH = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "ndtt"))
 CONSOLE_STARTUP_FILE_NAME = "consoleStartup.py"
 CONSOLE_HISTORY_FILE_NAME = ".pythonConsoleHistory"
 
@@ -66,13 +66,18 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	
 	def loadStartupFile(self):
 		if os.path.isfile(self.consoleStartupFilePath):
-			log.debug('Loading console startupFile {}'.format(CONSOLE_STARTUP_FILE_NAME))
+			log.debug("Loading console startup file {}".format(self.consoleStartupFilePath))
 			stdout, stderr = sys.stdout, sys.stderr
 			sys.stdout = sys.stderr = pythonConsole.consoleUI.console
 			print('### Executing console startup script: {}'.format(self.consoleStartupFilePath))
+			#zzz with open(self.consoleStartupFilePath, 'r', encoding="UTF-8") as sf:
 			with open(self.consoleStartupFilePath, 'r') as sf:
-				pythonConsole.consoleUI.console.runsource(source=sf.read(), filename=CONSOLE_STARTUP_FILE_NAME, symbol='exec')
-			print('### Console startup script executed.')
+				incomplete = pythonConsole.consoleUI.console.runsource(source=sf.read(), filename=self.consoleStartupFilePath, symbol='exec')
+			if incomplete:
+				log.error("Console startup script incomplete ({})".format(self.consoleStartupFilePath))
+				print("### Console startup script not executed since incomplete.")
+			else:
+				print("### Console startup script executed.")
 			try:
 				# NVDA >= 2021.1
 				pythonConsole.consoleUI.outputPositions.append(pythonConsole.consoleUI.outputCtrl.GetInsertionPoint())
