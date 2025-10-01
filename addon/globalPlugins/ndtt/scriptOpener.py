@@ -46,7 +46,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				openCodeFile(script)
 			except FileOpenerError as e:
 				log.debugWarning(str(e))
-				ui.message(e.getUserFriendlyMessage())
+				# Call ui.message in the main thread (needed for braille)
+				msg = e.getUserFriendlyMessage()
+				core.callLater(0, lambda: ui.message(msg))
 		else:
 			core.callLater(
 				0,
