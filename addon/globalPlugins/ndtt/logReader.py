@@ -122,10 +122,10 @@ RE_CALLBACK_COMMAND = re.compile(r'CallbackCommand\(name=say-all:[A-Za-z]+\)((?=
 
 # Regexps of log line containing a file path and a line number.
 RE_STACK_TRACE_LINE = re.compile(
-	r'^File "(?P<drive>(?:[A-Z]:\\)|)(?P<path>[^:"]+\.pyw?)[co]?", line (?P<line>\d+)(?:, in (?P<scope>.+))?$'
+	r'^File "(?:(?P<path>(?P<drive>(?:[A-Z]:\\)?)[^<>:"]+\.pyw?)[co]?|(?P<specPath><[^>"]+>))", line (?P<line>\d+)(?:, in (?P<scope>.+))?$'
 )
 RE_ERROR_INDICATOR_LINE = re.compile(
-	"(?P<leadingSpaces> *)(?P<leadingCtxLoc>~*)(?P<loc>\^+)(?P<tailingCtxLoc>~*)"
+	"(?P<leadingSpaces>[\t ]*)(?P<leadingCtxLoc>~*)(?P<loc>\^+)(?P<tailingCtxLoc>~*)"
 )
 
 # Regexps of input help log line
@@ -340,6 +340,7 @@ class TracebackFrame(object):
 			raise RuntimeError("Unable to parse stack trace line.")
 		drive = match['drive']
 		path = match['path']
+		specPath = match["specPath"]
 		line = match['line']
 		scope = match['scope']
 
@@ -672,14 +673,16 @@ class LogContainer(ScriptableObject):
 		match = matchDict(RE_STACK_TRACE_LINE.match(line))
 		if not match:
 			return False
-		if match['drive'] == '':
+		if match["specPath"]:
+			path = match["specPath"]
+		elif match['drive'] == '':
 			nvdaSourcePath = getNvdaCodePath()
 			if not nvdaSourcePath:
-				# Return True even if no file open since a stack trace line has been identified.
+				 # Return True even if no file open since a stack trace line has been identified.
 				return True
 			path = os.path.join(nvdaSourcePath, match['path'])
 		else:
-			path = match['drive'] + match['path']
+			path = match['path']
 		line = match['line']
 		openSourceFile(path, line)
 		return True
