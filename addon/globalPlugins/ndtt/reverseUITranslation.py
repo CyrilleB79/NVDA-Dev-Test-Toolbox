@@ -101,8 +101,6 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			self._speak = speechModule.speak
 			speechModule.speak = self._localSpeak
 		self.lastSpeechString = None
-		import globalVars as gv
-		gv.dbg = self
 
 	def _localSpeak(self, sequence, *args, **kwargs):
 		self.memorizeLastSpeechString(sequence)
@@ -174,11 +172,6 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		except KeyError:
 			pass
 		else:
-			try:
-				len(valList) == 1 or len(set(i.text for i in valList)) == 1
-			except:
-				import globalVars as gv
-				gv.dbg2 = valList
 			if len(valList) == 1 or len(set(i.text for i in valList)) == 1:
 				val = valList[0]
 				self.reportAndCopyReverseTranslation(val.text)

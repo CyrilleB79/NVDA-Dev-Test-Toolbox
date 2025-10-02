@@ -20,6 +20,7 @@ import config
 from logHandler import log
 
 from .fileOpener import openCodeFile, testCodeFinder
+from .compa import FileNotFoundError, FileExistsError
 
 
 ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
@@ -70,8 +71,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			stdout, stderr = sys.stdout, sys.stderr
 			sys.stdout = sys.stderr = pythonConsole.consoleUI.console
 			print('### Executing console startup script: {}'.format(self.consoleStartupFilePath))
-			#zzz with open(self.consoleStartupFilePath, 'r', encoding="UTF-8") as sf:
-			with open(self.consoleStartupFilePath, 'r') as sf:
+			with open(self.consoleStartupFilePath, 'r', encoding="UTF-8") as sf:
 				incomplete = pythonConsole.consoleUI.console.runsource(source=sf.read(), filename=self.consoleStartupFilePath, symbol='exec')
 			if incomplete:
 				log.error("Console startup script incomplete ({})".format(self.consoleStartupFilePath))
@@ -105,15 +105,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			return
 		if not pythonConsole.consoleUI:
 			return
-		if int(sys.version[0]) >= 3:
-			# Python 3+
-			MkDirError = FileExistsError
-		else:
-			# Python 2
-			MkDirError = WindowsError
 		try:
 			os.mkdir(NDTT_PATH)
-		except MkDirError:
+		except FileExistsError:
 			pass
 		else:
 			log.debug("Created NDTT folder at {}".format(NDTT_PATH))

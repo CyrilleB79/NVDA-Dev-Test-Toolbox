@@ -49,7 +49,7 @@ try:
 	from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 except ImportError:
 	from .compa import DpiScalingHelperMixinWithoutInit
-from .compa import matchDict
+from .compa import matchDict, FileNotFoundError
 from .fileOpener import openSourceFile, FileOpenerError
 from .ndttGui import NDTTSettingsPanel
 from .utils import getBaseProfileConfigValue
@@ -108,14 +108,9 @@ def saveOldLog():
 	try:
 		logDirPath = os.path.dirname(globalVars.appArgs.logFileName)
 		oldLogFilePath = os.path.join(logDirPath, "nvda-old.log")
-		# Python 3's open raises FileNotFoundError and Python 2 IOError, so define the error on which to filter
-		if sys.version_info.major >= 3:
-			CommonFileNotFoundError = IOError
-		else:
-			CommonFileNotFoundError = IOError
 		try:
 			dtStartStr = getStartTimeLoggedByNDTT(oldLogFilePath)
-		except CommonFileNotFoundError:
+		except FileNotFoundError:
 			log.debugWarning('No nvda-old.log file to backup in {}'.format(logDirPath))
 			return True
 		if not dtStartStr:

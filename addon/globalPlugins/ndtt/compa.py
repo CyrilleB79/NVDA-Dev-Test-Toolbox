@@ -132,3 +132,13 @@ def getPanelDescriptionWidth():
 appDir = getApDir()
 controlTypesCompatWrapper = ControlTypesCompatWrapper()
 PANEL_DESCRIPTION_WIDTH = getPanelDescriptionWidth()
+
+
+if sys.version_info.major == 2:
+	# Python 2: Map equivalent error classes
+	FileExistsError = OSError
+	FileNotFoundError = WindowsError
+else:
+	# Python 3: Just define the same error name so that they can be imported.
+	FileExistsError = FileExistsError
+	FileNotFoundError = FileNotFoundError

@@ -280,6 +280,8 @@ For example, the script allows you to execute new imports and define aliases tha
 The Python console script should be placed in the following location: `pathToNVDAConfig\ndtt\consoleStartup.py`  
 For example: `C:\Users\myUserName\AppData\Roaming\nvda\ndtt\consoleStartup.py`
 
+Note: In Python 2, i.e. with NVDA 2019.2.1 or earlier, only pure ASCII scripts are supported; any other encoding such as Unicode is not supported.
+
 ### Preserving Python console input history
 
 In Python console history, you can use up and down arrows to review and modify previous inputs.

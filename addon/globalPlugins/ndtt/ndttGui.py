@@ -106,6 +106,7 @@ class NDTTSettingsPanel(gui.settingsDialogs.SettingsPanel):
 		)
 		if globalVars.appArgs.secure:
 			self.copyReverseTranslation.Disable()
+		sHelper.addItem(self.copyReverseTranslation)
 
 		self.preserveConsoleInputHistory = wx.CheckBox(
 			self,
