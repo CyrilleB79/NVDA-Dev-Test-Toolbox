@@ -100,7 +100,7 @@ Be aware however that it is often intended that such script do not have any desc
 Indeed, the gesture may be defined to match an application shortcut key.
 For example the script script_toggleItalic on NVDAObjects.window.winword.WordDocument is bound to control+I and this should not be modified since the gesture is passed to the application to actually execute the shortcut key.
 
-### Usage example
+#### Usage example
 
 Control+shift+I also toggle italic in Word, even if it is not natively reported by NVDA.
 To have the control+shift+I result reported by NVDA as control+I, you should perform the following steps:
@@ -302,7 +302,7 @@ See all instructions in the file for details on usage.
 
 Many testers use NVDA in another language than English.
 But when reporting test results on GitHub, the description of the modified options or the messages reported by NVDA should be written in English.
-Its quite frustrating and time consuming to have to restart NVDA in English to check the exact wording of the options or messages.
+It's quite frustrating and time consuming to have to restart NVDA in English to check the exact wording of the options or messages.
 
 To avoid this, the add-on provides two reverse translation commands allowing to reverse translate NVDA's interface such as messages, control labels in the GUI, etc.
 
@@ -324,6 +324,19 @@ This confirms that "Outils was the first string in the speech sequence.
 In case the reverse translation leads to two or more possible results, a context menu is opened listing all the possibilities.
 
 The result of the reverse translation is also copied to the clipboard if the corresponding [option](#settingsCopyReverseTranslation) is enabled, which is the default value.
+
+Reverse translation of NVDA strings is only available for NVDA version 2022.1 or above.
+For earlier versions of NVDA, only the add-ons strings are available for reverse translation.
+
+Besides, in NVDA version 2019.2.1 or earlier, in case no reverse translation is found, a second attempt is made in the first part of the string.
+ Indeed, in these NVDA version, the speech sequence looks like this:
+```
+IO - speech.speak (12:39:12.684):
+Speaking [u'Outils  sous-Menu  o']
+```
+We can see that an object label may be concatenated with role, state, shortcut, etc.
+So if the reverse translation gives no  result with the whole string, a second attempt is made on the part of the string before the double space ("  ").
+Though, this is not bullet-proof since we cannot exclude that a string actually natively contains a double space.
 
 <a id="settings"></a>
 ## Settings

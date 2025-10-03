@@ -1,10 +1,11 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2024 Cyrille Bougot
+# Copyright (C) 2024-2025 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
 
+import sys
 import re
 import gettext
 
@@ -15,6 +16,7 @@ import addonHandler
 import languageHandler
 import api
 import ui
+import buildVersion
 try:
 	# For NVDa 2024.2+
 	from speech.extensions import pre_speech
@@ -107,12 +109,16 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		self._speak(sequence, *args, **kwargs)
 
 	def memorizeLastSpeechString(self, speechSequence):
-		seq = (i for i in speechSequence if isinstance(i, str))
+		if sys.version_info.major == 2:
+			unicodeStr = unicode
+		else:
+			unicodeStr = str
+		seq = (i for i in speechSequence if isinstance(i, unicodeStr))
 		try:
 			self.lastSpeechString = next(seq)
 		except StopIteration:
 			# No update for speech strings with no text
-			pass
+			log.debugWarning("Last speech string not updated, the speech sequence does not contain any text.")
 
 	def terminate(self, *args, **kwargs):
 		if pre_speech:
@@ -158,7 +164,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			catalog, errCode = self.nvdaReverseCatalog
 			if errCode == BRC_ERROR_UNSUPPORTED_NVDA_VERSION:
 				# Translators: An error message when calling the reverse UI translation command for older NVDA versions
-				ui.message(_("Reverse translation not available: retrieving translated strings of NVDA not supported for this version of NVDA."))
+				ui.message(_("Retrieving translated strings of NVDA not supported for this version of NVDA."))
 				return
 			if errCode == BRC_ERROR_NVDA_TRANSLATION_NOT_AVAILABLE:
 				# Translators: An error message when calling the reverse UI translation command while NVDA is in English
@@ -167,21 +173,32 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		if self.lastSpeechString is None:
 			# Translators: An error message when calling the reverse UI translation command
 			ui.message(_("No last spoken text"))
+			return
 		try:
 			valList = catalog[self.lastSpeechString]
 		except KeyError:
-			pass
+			if (
+				(buildVersion.version_year, buildVersion.version_major) >= (2019, 3)
+				or "  " not in self.lastSpeechString
+			):
+				raise LookupError
+			# Pre-speech refactor (NVDA < 2019.3)
+			# Content strings are concatenated with role, state, shortcut, etc.
+			# So fall back splitting the original string with "  " and taking the first part.
+			try:
+				valList = catalog[self.lastSpeechString.split("  ")[0]]
+			except KeyError:
+				raise LookupError
+			log.debugWarning("Found fallback reverse translation string splitting the original string with '  '.")
+		if len(valList) == 1 or len(set(i.text for i in valList)) == 1:
+			val = valList[0]
+			self.reportAndCopyReverseTranslation(val.text)
+			return
+		elif len(valList) > 1:
+			self.choiceMenu(valList)
+			return
 		else:
-			if len(valList) == 1 or len(set(i.text for i in valList)) == 1:
-				val = valList[0]
-				self.reportAndCopyReverseTranslation(val.text)
-				return
-			elif len(valList) > 1:
-				self.choiceMenu(valList)
-				return
-			else:
-				RuntimeError('valList is empty')
-		raise LookupError
+			raise RuntimeError('valList is empty')
 
 	def buildReverseCatalog(self, addon=None):
 		if addon:
@@ -263,7 +280,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			for (catName, (catalog, errCode)) in self.reverseCatalogs.items():
 				if catalog is None:
 					globalErrCode |= errCode
-					log.debugWarning("No catalog for {catName}".format(catName=catName))
+					log.debugWarning("No catalog for {catName}".format(catName=(catName if catName else "NVDA")))
 					continue
 				else:
 					 anyTranslationPresent = True
