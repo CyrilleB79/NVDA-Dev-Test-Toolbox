@@ -117,8 +117,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		try:
 			self.lastSpeechString = next(seq)
 		except StopIteration:
-			# No update for speech strings with no text
-			log.debugWarning("Last speech string not updated, the speech sequence does not contain any text.")
+			pass
 
 	def terminate(self, *args, **kwargs):
 		if pre_speech:

@@ -46,6 +46,7 @@ NDTT_LAYERED_COMMANDS_LIST = [
 	# - a gesture list
 	# - the associated script name
 	# - if the command is available in secure mode.
+	(["a"], "copyAndAnonymizeSelection", False),
 	(["c"], "openScriptForNextGesture", False),
 	(["d"], "toggleESDMode", True),
 	(["e"], "reportLastError", False),

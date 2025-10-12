@@ -40,16 +40,20 @@ import globalPluginHandler
 import addonHandler
 import queueHandler
 import logHandler
+import api
+import textInfos
+import treeInterceptorHandler
 from logHandler import log
 import gui
 import ui
 from gui import guiHelper, nvdaControls
 from gui import messageBox
+from scriptHandler import script
 try:
 	from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 except ImportError:
 	from .compa import DpiScalingHelperMixinWithoutInit
-from .compa import matchDict, FileNotFoundError
+from .compa import matchDict, FileNotFoundError, FileExistsError
 from .fileOpener import openSourceFile, FileOpenerError
 from .ndttGui import NDTTSettingsPanel
 from .utils import getBaseProfileConfigValue
@@ -73,6 +77,54 @@ RE_FIRST_LINE = re.compile(
 	r'(?: - MainThread \(\d+\))?:$'
 )
 
+NDTT_PATH = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "ndtt"))
+ANONYMIZATION_RULES_FILE = "anonymizationRules.dic"
+
+EXAMPLE_ANONYMIZATION_RULES_FILE = r"""
+# ======================================================
+# NVDA log anonymization rules
+# Each line has the following format:
+#     originalPattern<TAB>replacement<TAB>[regex]
+# If the third column is "regex",
+# the first column is treated as a regular expression.
+# Lines starting with "#" are ignored.
+# Replacements are applied in the order they appear.
+#
+# Below are some commented example rules.
+# ======================================================
+
+# --- Personal names ---
+# JohnDoe	<User>
+# JaneSmith	<User>
+
+# --- Windows user directories ---
+# C:\\Users\\[A-Za-z0-9_]+	C:\\Users\\Anonymous	regex
+# C:\\Documents and Settings\\[A-Za-z0-9_]+	C:\\Documents and Settings\\Anonymous	regex
+
+# --- Email addresses ---
+# [A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}	<email>	regex
+
+# --- IP addresses ---
+# [0-9]{1,3}(\.[0-9]{1,3}){3}	<ip>	regex
+
+# --- UUIDs or serial numbers ---
+# [0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}	<uuid>	regex
+
+# --- Hostnames or computer names ---
+# PC-[A-Za-z0-9_-]+	<hostname>	regex
+# LAPTOP-[A-Za-z0-9_-]+	<hostname>	regex
+
+# --- File paths or sensitive folders ---
+# C:\\confidential\\	<C:\\anonymized\\>
+# D:\\Projects\\Secret\\	D:\\Projects\\Anonymous\\
+
+# --- Phone numbers (simple formats) ---
+# \+?[0-9][0-9 \-]{6,}[0-9]	<phone>	regex
+
+# --- Miscellaneous identifiers ---
+# token_[A-Za-z0-9]+	<token>	regex
+# sessionid=[A-Za-z0-9]+	sessionid=<id>	regex
+"""
 
 def getStartTimeLoggedByNDTT(path):
 	with open(path, 'r', encoding='utf8') as f:
@@ -581,6 +633,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	def __init__(self, *args, **kwargs):
 		super(GlobalPlugin, self).__init__(*args, **kwargs)
+
 		self.toolsMenu = gui.mainFrame.sysTrayIcon.toolsMenu
 		self.logsManager = self.toolsMenu.Append(
 			wx.ID_ANY,
@@ -589,11 +642,120 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		)
 		gui.mainFrame.sysTrayIcon.Bind(wx.EVT_MENU, self.onLogsManager, self.logsManager)
 
+		self.anonymizationFilePath = os.path.join(NDTT_PATH, ANONYMIZATION_RULES_FILE)
+		if not os.path.isfile(self.anonymizationFilePath):
+			try:
+				os.mkdir(NDTT_PATH)
+			except FileExistsError:
+				pass
+			else:
+				log.debug("Created NDTT folder at {}".format(NDTT_PATH))
+			with open(self.anonymizationFilePath, "w", encoding="utf-8") as f:
+				f.write(EXAMPLE_ANONYMIZATION_RULES_FILE)
+
 	def onLogsManager(self, evt):
 		gui.mainFrame.prePopup()
 		d = LogsManagerDialog(gui.mainFrame)
 		d.Show()
 		gui.mainFrame.postPopup()
+
+	@script(
+		# Translators: Input help mode message for Copy and anonymize log script.
+		description=_("Copy the selection and anonymize it."),
+		category=ADDON_SUMMARY,
+	)
+	def script_copyAndAnonymizeSelection(self, gesture):
+		obj = api.getFocusObject()
+		treeInterceptor = obj.treeInterceptor
+		if (
+			isinstance(treeInterceptor, treeInterceptorHandler.DocumentTreeInterceptor)
+			and not treeInterceptor.passThrough
+		):
+			obj = treeInterceptor
+		try:
+			info = obj.makeTextInfo(textInfos.POSITION_SELECTION)
+		except (RuntimeError, NotImplementedError):
+			info = None
+		if not info or info.isCollapsed:
+			# Translators: a message reported when calling the anonymization command
+			ui.message(_("No selection"))
+			return
+		content = info.text
+		error = False
+		try:
+			anonymizedContent = self._anonymizeText(content)
+		except Exception as e:
+			errMsg = str(e).strip() or repr(e)
+			log.error(errMsg, exc_info=True)
+			error = True
+		if not error:
+			error = not api.copyToClip(anonymizedContent)
+			errMsg = "Copy to clipboard failed"
+		if error:
+			import wx
+			wx.CallAfter(
+				messageBox,
+				# Translators: message of the message box error when calling the anonymization command
+				message=_("Could not anonymize and copy selection.\n\n{}").format(errMsg),
+				# Translators: Caption of the message box error when calling the anonymization command
+				caption=_("Error"),
+				style=wx.OK | wx.ICON_ERROR,
+			)
+		else:
+			# Translators: a message reported when calling the anonymization command
+			ui.message(_("Selected text anonymized and copied in the clipboard."))
+
+	def _anonymizeText(self, text):
+		rules = self._loadAnonymizationRules()
+		for pattern, replacement, isRegex, lineNum in rules:
+			if isRegex:
+				try:
+					text = pattern.sub(replacement, text)
+				except re.error as e:
+					# Add line number and pattern context to error
+					errorMsg = _(
+						# Translators: a message reported when calling the anonymization command
+						"Invalid regular expression in anonymization rules file.\n\n"
+						"File: {}\nLine: {}\nPattern: {}\nError: {}"
+					).format(self.anonymizationFilePath, lineNum, pattern, e)
+					raise ValueError(errorMsg)
+			else:
+				text = text.replace(pattern, replacement)
+		return text
+
+	def _loadAnonymizationRules(self):
+		rules = []
+		try:
+			with open(self.anonymizationFilePath, "r", encoding="utf-8") as f:
+				for i, rawLine in enumerate(f, start=1):
+					line = rawLine.strip()
+					if not line or line.startswith("#"):
+						continue
+					parts = line.split("\t")
+					if len(parts) < 2:
+						msg = "Invalid format at line {} in file {}: expected at least two tab-separated columns.".format(
+							i,
+							self.anonymizationFilePath,
+						)
+						raise ValueError(msg)
+					pattern = parts[0]
+					replacement = parts[1]
+					isRegex = len(parts) > 2 and parts[2].strip().lower() == "regex"
+					if isRegex:
+						pattern = re.compile(pattern)
+					rules.append((pattern, replacement, isRegex, i))
+		except UnicodeDecodeError as ude:
+			# UnicodeDecodeError doesn't include filename: add it
+			msg = "Could not decode anonymization rules file {} as UTF-8: {} (position {}-{}).".format(
+				self.anonymizationFilePath,
+				ude.reason,
+				ude.start,
+				ude.end,
+			)
+			raise UnicodeDecodeError(ude.encoding, ude.object, ude.start, ude.end, msg)
+		if not rules:
+			raise ValueError("No rules found in anonymization rules file: {}".format(self.anonymizationFilePath))
+		return rules
 
 	def terminate(self, *args, **kwargs):
 		try:

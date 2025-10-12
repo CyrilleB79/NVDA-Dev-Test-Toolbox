@@ -120,12 +120,14 @@ RE_CANCELLABLE_SPEECH = re.compile(
 )
 RE_CALLBACK_COMMAND = re.compile(r'CallbackCommand\(name=say-all:[A-Za-z]+\)((?=\])|, )')
 
+RE_THREAD_STACK_BLOCK = re.compile(r"Python stack for thread (?P<threadNum>\d+) \((?P<threadName>[^\r\n]+)\):")
+
 # Regexps of log line containing a file path and a line number.
 RE_STACK_TRACE_LINE = re.compile(
 	r'^File "(?:(?P<path>(?P<drive>(?:[A-Z]:\\)?)[^<>:"]+\.pyw?)[co]?|(?P<specPath><[^>"]+>))", line (?P<line>\d+)(?:, in (?P<scope>.+))?$'
 )
 RE_ERROR_INDICATOR_LINE = re.compile(
-	"(?P<leadingSpaces>[\t ]*)(?P<leadingCtxLoc>~*)(?P<loc>\^+)(?P<tailingCtxLoc>~*)"
+	r"(?P<leadingSpaces>[\t ]*)(?P<leadingCtxLoc>~*)(?P<loc>\^+)(?P<tailingCtxLoc>~*)"
 )
 
 # Regexps of input help log line
@@ -139,6 +141,11 @@ TYPE_STR = type('')
 
 NDTT_MARKER_STRING = '-- NDTT marker {} --'
 RE_MSG_MARKER = re.compile(NDTT_MARKER_STRING.format(r'\d+'))
+
+# Block types:
+THREAD_STACK = "ThreadStack"
+TRACEBACK_STACK = "TracebackStack"
+DEV_INFO_BLOCK = "DevInfoBlock"
 
 
 def noFilter(msg):
@@ -164,10 +171,81 @@ class LogMessageHeader(object):
 		return cls(match['level'], match['codePath'], match['time'], match['threadName'], match['thread'])
 
 
-class LogMessage(object):
-	def __init__(self, header, msg):
+class ThreadStackHeader(object):
+	def __init__(self, threadName=None, threadNum=None):
+		self.threadName = threadName
+		self.threadNum = threadNum
+
+	@classmethod
+	def makeFromLine(cls, text):
+		"""Create a ThreadStackHeader from a header line"""
+
+		match = matchDict(RE_THREAD_STACK_BLOCK.match(text))
+		if not match:
+			raise LookupError
+		return cls(match["threadName"], match["threadNum"])
+
+
+class TracebackStackHeader(object):
+	@classmethod
+	def makeFromLine(cls, text):
+		pass
+
+
+class LogSection(object):
+
+	def __init__(self, ti, header, content):
+		self.ti = ti
 		self.header = header
-		self.msg = msg.strip()
+		self.content = content[:-1] if content.endswith("\r") else content
+
+	@classmethod
+	def makeFromTextInfo(cls, info, atStart=False):
+		ti = info.copy()
+		info = info.copy()
+		if not atStart:
+			raise NotImplementedError
+		if cls.headerType is not None:
+			info.expand(textInfos.UNIT_LINE)
+			header = cls.headerType.makeFromLine(info.text.strip())
+			info.collapse(end=True)
+		else:
+			header = None
+		infoContent = info.copy()
+		while info.move(textInfos.UNIT_LINE, direction=1):
+			infoLine = info.copy()
+			infoLine.expand(textInfos.UNIT_LINE)
+			if not cls.isLineInContent(infoLine.text.rstrip()):
+				# Next line equivalent to:
+				# infoContent.end = infoLine.start
+				# but usable in older NVDA versions (e.g. 2019.2)
+				infoContent.setEndPoint(infoLine, 'endToStart')
+				break
+		else:
+			infoLine = info.copy()
+			infoLine.expand(textInfos.UNIT_LINE)
+			# Next line equivalent to:
+			# infoContent.end = infoLine.end
+			# but usable in older NVDA versions (e.g. 2019.2)
+			infoContent.setEndPoint(infoLine, 'endToEnd')
+		msg = infoContent.text
+		ti.setEndPoint(infoContent, "endToEnd")
+		return cls(ti, header, msg)
+
+	@classmethod
+	def isLineInContent(cls, line):
+		return not RE_MESSAGE_HEADER.search(line)
+
+
+class LogMessage(LogSection):
+
+	headerType = LogMessageHeader
+
+	def blockType(self):
+		for (blockType, BlockClass) in BLOCK_TYPE_PARAMS.items():
+			if BlockClass.containsThisBlockType(self.content):
+				return blockType
+		return None
 
 	def getSpeakMessage(self, mode):
 		if self.header.level == 'IO':
@@ -175,16 +253,16 @@ class LogMessage(object):
 		elif self.header.level == 'ERROR':
 			return self.getSpeakErrorMessage()
 		else:
-			return self.msg
+			return self.content
 
 	def getSpeakIoMessage(self, mode):
-		match = matchDict(RE_MSG_SPEAKING.match(self.msg))
+		match = matchDict(RE_MSG_SPEAKING.match(self.content))
 		if match:
 			try:
 				txtSeq = match['seq']
 			except Exception:
 				log.error("Sequence cannot be spoken: {seq}".format(seq=match['seq']))
-				return self.msg
+				return self.content
 			txtSeq = RE_CANCELLABLE_SPEECH.sub('', txtSeq)
 			txtSeq = RE_CALLBACK_COMMAND.sub('', txtSeq)
 			seq = eval(txtSeq)
@@ -202,7 +280,7 @@ class LogMessage(object):
 				seq = seq2
 			return seq
 
-		match = matchDict(RE_MSG_BEEP.match(self.msg))
+		match = matchDict(RE_MSG_BEEP.match(self.content))
 		if match:
 			return [BeepCommand(
 				float(match['freq']),
@@ -212,7 +290,7 @@ class LogMessage(object):
 			)]
 
 		# Check for input gesture:
-		match = matchDict(RE_MSG_INPUT.match(self.msg))
+		match = matchDict(RE_MSG_INPUT.match(self.content))
 		if match:
 			if mode == 'Input':
 				prefix = ""
@@ -224,11 +302,11 @@ class LogMessage(object):
 				device=match['device'],
 			)
 
-		match = matchDict(RE_MSG_TYPED_WORD.match(self.msg))
+		match = matchDict(RE_MSG_TYPED_WORD.match(self.content))
 		if match:
-			return self.msg
+			return self.content
 
-		match = matchDict(RE_MSG_BRAILLE_REGIONS.match(self.msg))
+		match = matchDict(RE_MSG_BRAILLE_REGIONS.match(self.content))
 		if match:
 			if mode == 'Braille':
 				prefix = ""
@@ -244,24 +322,24 @@ class LogMessage(object):
 				text=" ".join(seq),
 			)
 
-		match = matchDict(RE_MSG_BRAILLE_DOTS.match(self.msg))
+		match = matchDict(RE_MSG_BRAILLE_DOTS.match(self.content))
 		if match:
-			return self.msg
+			return self.content
 
-		match = matchDict(RE_MSG_TIME_SINCE_INPUT.match(self.msg))
+		match = matchDict(RE_MSG_TIME_SINCE_INPUT.match(self.content))
 		if match:
-			return self.msg
+			return self.content
 
 		# Unknown message format; to be implemented.
-		log.debugWarning('Message not implemented: {msg}'.format(msg=self.msg))
-		return self.msg
+		log.debugWarning('Message not implemented: {content}'.format(content=self.content))
+		return self.content
 
 	def getSpeakErrorMessage(self):
-		msgList = self.msg.split('\r')
+		msgList = self.content.split('\r')
 		try:
 			idxTraceback = msgList.index('Traceback (most recent call last):')
 		except ValueError:
-			return self.msg
+			return self.content
 		else:
 			errorMsg = '\r'.join(msgList[:idxTraceback])
 			errorDesc = msgList[-1]
@@ -283,33 +361,87 @@ class LogMessage(object):
 			seq = [self.header.level, ', '] + seq
 		speech.speak(seq)
 
+
+class ThreadStack(LogSection):
+
+	headerType = ThreadStackHeader
+
+	@staticmethod
+	def containsThisBlockType(msg):
+		return msg.split("\r")[0] == "Listing stacks for Python threads:"
+
+	@staticmethod
+	def blockStartIdentifier():
+		return RE_THREAD_STACK_BLOCK
+
 	@classmethod
-	def makeFromTextInfo(cls, info, atStart=False):
-		info = info.copy()
-		if not atStart:
-			raise NotImplementedError
-		info.expand(textInfos.UNIT_LINE)
-		header = LogMessageHeader.makeFromLine(info.text.strip())
-		info.collapse(end=True)
-		infoMsg = info.copy()
-		infoLine = info.copy()
-		infoLine.expand(textInfos.UNIT_LINE)
-		while info.move(textInfos.UNIT_LINE, direction=1):
-			infoLine = info.copy()
-			infoLine.expand(textInfos.UNIT_LINE)
-			if RE_MESSAGE_HEADER.search(infoLine.text.rstrip()):
-				# Next line equivalent to:
-				# infoMsg.end = infoLine.start
-				# but usable in older NVDA versions (e.g. 2019.2)
-				infoMsg.setEndPoint(infoLine, 'endToStart')
-				break
-		else:
-			# Next line equivalent to:
-			# infoMsg.end = infoLine.end
-			# but usable in older NVDA versions (e.g. 2019.2)
-			infoMsg.setEndPoint(infoLine, 'endToEnd')
-		msg = infoMsg.text
-		return cls(header, msg)
+	def isLineInContent(cls, line):
+		if not super(ThreadStack, cls).isLineInContent(line):
+			return False
+		return not RE_THREAD_STACK_BLOCK.search(line)
+
+	def speak(self, reason):
+		seq = ["{name}; thread {num}".format(name=self.header.threadName, num=self.header.threadNum)]
+		speech.speak(seq)
+
+
+class TracebackStack(LogSection):
+
+	headerType = TracebackStackHeader
+	
+	@staticmethod
+	def containsThisBlockType(msg):
+		return "Traceback (most recent call last):" in msg.split("\r")
+
+	@staticmethod
+	def blockStartIdentifier():
+		return re.compile(r"Traceback \(most recent call last\):")
+	
+	@classmethod
+	def isLineInContent(cls, line):
+		if not super(TracebackStack, cls).isLineInContent(line):
+			return False
+		return not cls.blockStartIdentifier().search(line)
+
+	def speak(self, reason):
+		contentLines = self.content.split("\r")
+		if len(contentLines) > 3 and contentLines[-3:] == ["", "During handling of the above exception, another exception occurred:", ""]:
+			del contentLines[-3:]
+		errorMsg = contentLines[-1]
+		seq = ["Traceback for {errorMsg}".format(errorMsg=errorMsg)]
+		speech.speak(seq)
+
+
+class DevInfoBlock(LogSection):
+
+	headerType = None
+
+	@staticmethod
+	def containsThisBlockType(msg):
+		return "Developer info for navigator object:" in msg.split("\r")
+
+	@staticmethod
+	def blockStartIdentifier():
+		return re.compile(r"^(?:(?:name: )|(?:appModule:)|(?:windowHandle: )|(?:IAccessibleObject: )|(?:UIAElement: ))")
+
+	@classmethod
+	def isLineInContent(cls, line):
+		if not super(DevInfoBlock, cls).isLineInContent(line):
+			return False
+		return not cls.blockStartIdentifier().search(line)
+
+	def speak(self, reason):
+		contentLines = self.content.split("\r")
+		seq = [contentLines[0]]
+		speech.speak(seq)
+
+
+
+BLOCK_TYPE_PARAMS = {
+	THREAD_STACK: ThreadStack,
+	TRACEBACK_STACK: TracebackStack,
+	DEV_INFO_BLOCK: DevInfoBlock,
+}
 
 
 class TracebackFrame(object):
@@ -397,36 +529,111 @@ class LogReader(object):
 
 	def __init__(self, obj):
 		self.obj = obj
-		self.ti = obj.makeTextInfo(textInfos.POSITION_CARET)
-		self.ti.collapse()
+		
+	def caretTextInfo(self):
+		ti = self.obj.makeTextInfo(textInfos.POSITION_CARET)
+		ti.collapse()
+		return ti
 
-	def moveToHeader(
+	def searchForMessage(
 			self,
 			direction,
 			searchType,
 			filterFun,
+			position=None,
 	):
-		while self.ti.move(textInfos.UNIT_LINE, direction):
-			tiLine = self.ti.copy()
+		if position:
+			ti = position
+		else:
+			ti = self.caretTextInfo().copy()
+		n=0
+		while ti.move(textInfos.UNIT_LINE, direction):
+			tiLine = ti.copy()
 			tiLine.expand(textInfos.UNIT_LINE)
 			regexp = self.__class__.SEARCHERS[searchType]
 			if regexp.search(tiLine.text.rstrip()):
 				msg = LogMessage.makeFromTextInfo(
-					self.ti,
+					ti,
 					atStart=True
 				)
 				if filterFun(msg):
 					break
 		else:
+			return None
+		return msg
+
+	def moveToMessage(
+		self,
+		direction,
+		searchType,
+		filterFun,
+	):
+		msg = self.searchForMessage(
+			direction,
+			searchType,
+			filterFun,
+		)
+		if msg is None:
 			# Translators: Reported when pressing a quick navigation command in the log.
 			ui.message(_('No more item'))
 			return
-		self.ti.updateSelection()
+		msgTi = msg.ti.copy()
+		msgTi.collapse()
+		msgTi.updateSelection()
 		msg.speak(reason=controlTypes.OutputReason.CARET, mode=searchType)
+	
+	def getCurrentMessage(self):
+		ti = self.caretTextInfo().copy()
+		tiLine = self.caretTextInfo().copy()
+		tiLine.expand(textInfos.UNIT_LINE)
+		if tiLine.text.strip():
+			# Go forward 1 character to be sure not to be at the beginning of the line in case we are already on a
+			# message header
+			ti.move(textInfos.UNIT_CHARACTER, 1)
+		return self.searchForMessage(
+			direction=-1,
+			searchType="Message",
+			filterFun=noFilter,
+			position=ti,
+		)
+
+	def searchForBlock(self, direction, blockType):
+		BlockClass = BLOCK_TYPE_PARAMS[blockType]
+		reBlockStart = BlockClass.blockStartIdentifier()
+		tiLine = self.caretTextInfo().copy()
+		tiLine.expand(textInfos.UNIT_LINE)
+		if RE_MESSAGE_HEADER.search(tiLine.text.rstrip()) and direction == -1:
+			return None
+		block = None
+		ti = self.caretTextInfo()
+		while ti.move(textInfos.UNIT_LINE, direction):
+			tiLine = ti.copy()
+			tiLine.expand(textInfos.UNIT_LINE)
+			if RE_MESSAGE_HEADER.search(tiLine.text.rstrip()):
+				break
+			if reBlockStart.search(tiLine.text.rstrip()):
+				block = BlockClass.makeFromTextInfo(
+					ti,
+					atStart=True
+				)
+				break
+		return block
+
+	def moveToBlock(self, direction, blockType):
+		block = self.searchForBlock(direction, blockType)
+		if block is None:
+			# Translators: Reported when pressing a quick navigation command in the log.
+			ui.message(_("No more block"))
+			return
+		blockTi = block.ti.copy()
+		blockTi.collapse()
+		blockTi.updateSelection()
+		block.speak(reason=controlTypes.OutputReason.CARET)
+		
 
 	def goToError(self, select=False, includeContext=False):
 		nReadLines = 0
-		ti = self.ti.copy()
+		ti = self.caretTextInfo().copy()
 		# 3 lines = 1 with file path/line number, 1 with source code, 1 with error location indication
 		while nReadLines < 3:
 			ti.expand(textInfos.UNIT_LINE)
@@ -436,7 +643,8 @@ class LogReader(object):
 					atStart=True
 				)
 				if tbFrame.errLocation is None:
-					ui.message("No error indicator for this frame")
+				# Translators: Reported when pressing the Go to error command in the log
+					ui.message(_("No error indicator for this frame"))
 					return
 				ti.move(textInfos.UNIT_LINE, 1)
 				ti.updateCaret()
@@ -459,12 +667,13 @@ class LogReader(object):
 					ti.updateCaret()
 					speech.speak([text])
 				return
+			elif RE_MESSAGE_HEADER.search(ti.text.rstrip()):
+				break
 			ti.collapse()
 			ti.move(textInfos.UNIT_LINE, -1)
 			nReadLines += 1
-		else:
-			# Translators: Reported when pressing the go to error command in a traceback line.
-			ui.message(_("No traceback here"))
+		# Translators: Reported when pressing the go to error command in a traceback line.
+		ui.message(_("No traceback here"))
 
 
 class LogContainer(ScriptableObject):
@@ -473,7 +682,7 @@ class LogContainer(ScriptableObject):
 	enableTable = {}
 	translateLog = False
 
-	def moveToHeaderFactory(
+	def moveToMessageFactory(
 			dir,
 			searchType,
 			filterFun,
@@ -493,28 +702,28 @@ class LogContainer(ScriptableObject):
 			description=description,
 			category=ADDON_SUMMARY,
 		)
-		def script_moveToHeader(self, gesture):
+		def script_moveToMessage(self, gesture):
 			reader = LogReader(self)
-			reader.moveToHeader(direction=dir, searchType=searchType, filterFun=filterFun)
-		return script_moveToHeader
+			reader.moveToMessage(direction=dir, searchType=searchType, filterFun=filterFun)
+		return script_moveToMessage
 
 	QUICK_NAV_SCRIPT_INFO = {
-		"b": ("Braille", lambda msg: RE_MSG_BRAILLE_REGIONS.match(msg.msg)),
+		"b": ("Braille", lambda msg: RE_MSG_BRAILLE_REGIONS.match(msg.content)),
 		"d": ("Debug", noFilter),
 		"e": ("Error", noFilter),
 		"f": ("Info", noFilter),
 		"g": ("DebugWarning", noFilter),
 		"i": ("Io", noFilter),
-		"k": ("Marker", lambda msg: RE_MSG_MARKER.match(msg.msg)),
+		"k": ("Marker", lambda msg: RE_MSG_MARKER.match(msg.content)),
 		"m": ("Message", noFilter),
-		"n": ("Input", lambda msg: RE_MSG_INPUT.match(msg.msg)),
-		"s": ("Speech", lambda msg: RE_MSG_SPEAKING.match(msg.msg)),
+		"n": ("Input", lambda msg: RE_MSG_INPUT.match(msg.content)),
+		"s": ("Speech", lambda msg: RE_MSG_SPEAKING.match(msg.content)),
 		"w": ("Warning", noFilter),
 	}
 
 	for qn, (searchType, filterFun) in QUICK_NAV_SCRIPT_INFO.items():
-		locals()['script_moveToNext{st}'.format(st=searchType)] = moveToHeaderFactory(1, searchType, filterFun)
-		locals()['script_moveToPrevious{st}'.format(st=searchType)] = moveToHeaderFactory(-1, searchType, filterFun)
+		locals()['script_moveToNext{st}'.format(st=searchType)] = moveToMessageFactory(1, searchType, filterFun)
+		locals()['script_moveToPrevious{st}'.format(st=searchType)] = moveToMessageFactory(-1, searchType, filterFun)
 
 	def initialize(self):
 		if not hasattr(self, 'scriptTable'):
@@ -524,8 +733,10 @@ class LogContainer(ScriptableObject):
 				self.scriptTable[gestureId] = 'script_moveToNext{st}'.format(st=searchType)
 				gestureId = "kb:shift+" + qn
 				self.scriptTable[gestureId] = 'script_moveToPrevious{st}'.format(st=searchType)
-			self.scriptTable["kb:l"] = "script_goToError"
-			self.scriptTable["kb:t"] = "script_toggleLogTranslation"
+			self.scriptTable["kb:control+e"] = "script_goToError"
+			self.scriptTable["kb:b"] = "script_moveToNextBlock"
+			self.scriptTable["kb:shift+b"] = "script_moveToPreviousBlock"
+			self.scriptTable["kb:control+t"] = "script_toggleLogTranslation"
 			self.scriptTable["kb:c"] = "script_openSourceFile"
 			self.scriptTable["kb:control+h"] = "script_displayLogReaderHelp"
 
@@ -581,15 +792,15 @@ class LogContainer(ScriptableObject):
 		if LogContainer.translateLog:
 			LogContainer.translateLog = False
 			# Translators: A message reported when disabling log translation.
-			ui.message('Log translation disabled')
+			ui.message(_("Log translation disabled"))
 		else:
 			if getattr(globalPlugins, 'instantTranslate', None):
 				LogContainer.translateLog = True
 				# Translators: A message reported when enabling log translation.
-				ui.message('Log translation enabled')
+				ui.message(_("Log translation enabled"))
 			else:
 				# Translators: A message reported when trying to enable log translation.
-				ui.message('Cannot enable log translation. Please install or enable Instant Translate add-on.')
+				ui.message(_("Cannot enable log translation. Please install or enable Instant Translate add-on."))
 
 	@script(
 		# Translators: Input help mode message for Open source file script.
@@ -640,7 +851,36 @@ class LogContainer(ScriptableObject):
 		else:
 			return
 		reader.goToError(select, includeContext)
-		
+
+	@script(
+		# Translators: Input help mode message for move to next block script.
+		description="Move the caret to the next block.",
+		category=ADDON_SUMMARY,
+	)
+	def script_moveToNextBlock(self, gesture):
+		reader = LogReader(self)
+		curMsg = reader.getCurrentMessage()
+		blockType = curMsg.blockType()
+		if blockType is None:
+			# Translators: A message reported when using block navigation command
+			ui.message(_("No block in this message"))
+			return
+		reader.moveToBlock(direction=1, blockType=blockType)
+
+	@script(
+		# Translators: Input help mode message for move to previous block script.
+		description="Move the caret to the previous block.",
+		category=ADDON_SUMMARY,
+	)
+	def script_moveToPreviousBlock(self, gesture):
+		reader = LogReader(self)
+		curMsg = reader.getCurrentMessage()
+		blockType = curMsg.blockType()
+		if blockType is None:
+			# Translators: A message reported when using block navigation command
+			ui.message(_("No block in this message"))
+			return
+		reader.moveToBlock(direction=-1, blockType=blockType)
 
 	@script(
 		# Translators: Input help mode message for Log Reader help script.
