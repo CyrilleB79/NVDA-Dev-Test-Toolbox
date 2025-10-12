@@ -137,7 +137,7 @@ In another text reading area such as an editor (e.g. Notepad++) or a webpage (e.
 When you are done with log reading and analyzing tasks, you can disable again `NVDA+X, L` to disable the log reader mode.
 
 The commands available in log reader mode are described hereafter.
-In this mode, you can also press `control+h` to display all the commands available.
+In this mode, you can also press `control+H` to display all the commands available.
 
 <a id="logReaderQuickNavigationCommands"></a>
 #### Quick navigation commands
@@ -158,6 +158,8 @@ Single letter command similar to browse mode quick navigation keys allow to move
 
 Pressing the single letter moves to the next occurrence of this message. Combining the letter with the shift key moves to the previous occurrence of this message.
 
+In addition, pressing `B`  or `shift+B`, you can move to the next or previous stack in the Python threads stacks message that NVDA logs when it freezes.
+
 #### Translation of speech message
 
 Sometimes, you may have to look at a log taken on a system in a foreignh language that you do not understand. E.g. the log was taken on a Chinese system / NVDA, whereas you only understand French.
@@ -165,10 +167,10 @@ If you have [Instant Translate][3] add-on installed, you may use it in conjoncti
 
 * First configure Instant Translate's languages. The source language should be the language of the system where the log has been taken (e.g. Chinese). The target language should be your language (e.g. French).
 * Open the log
-* Press T to enable automatic speech translation in the log
+* Press `control+T` to enable automatic speech translation in the log
 * Use Quick navigation commands in the log, e.g. S, I, etc. Whenever a speech message is encountered, it will be spoken in your language (French in our previous example)
 
-If you want to disable speech translation, press T again.
+If you want to disable speech translation, press `control+T` again.
 
 <a id="logReaderOpenSourceFile"></a>
 #### Open the file of the source code in your editor
@@ -207,9 +209,9 @@ ZeroDivisionError: division by zero
 
 For frames where the source code is available, you may have noticed markers with `^` (caret) and `~` (tilde) characters.
 That's the way Python visually indicates the error's location as well as its context in a traceback frame.
-Pressing `l` moves the cursor at the beginning of the error in the source code line, i.e. the text marked by `^` (caret) character.
+Pressing `control+E` moves the cursor at the beginning of the error in the source code line, i.e. the text marked by `^` (caret) character.
 A double press, select this text.
-A third press selects the error with its context, i.e. the text of the source code line marked by `^` (caret) and `~` (tilde) characters.
+A triple press selects the error with its context, i.e. the text of the source code line marked by `^` (caret) and `~` (tilde) characters.
 
 Please note that for logs taken with an NVDA version before 2024.1, thus with Python 3.7 or older, Python only indicates the error with one `^` (caret) character.
 Thus the double or triple press action of this command becomes rather useless.

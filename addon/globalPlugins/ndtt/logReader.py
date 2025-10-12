@@ -120,12 +120,14 @@ RE_CANCELLABLE_SPEECH = re.compile(
 )
 RE_CALLBACK_COMMAND = re.compile(r'CallbackCommand\(name=say-all:[A-Za-z]+\)((?=\])|, )')
 
+RE_THREAD_STACK_BLOCK = re.compile(r"Python stack for thread (?P<threadNum>\d+) \((?P<threadName>[^\r\n]+)\):")
+
 # Regexps of log line containing a file path and a line number.
 RE_STACK_TRACE_LINE = re.compile(
 	r'^File "(?:(?P<path>(?P<drive>(?:[A-Z]:\\)?)[^<>:"]+\.pyw?)[co]?|(?P<specPath><[^>"]+>))", line (?P<line>\d+)(?:, in (?P<scope>.+))?$'
 )
 RE_ERROR_INDICATOR_LINE = re.compile(
-	"(?P<leadingSpaces>[\t ]*)(?P<leadingCtxLoc>~*)(?P<loc>\^+)(?P<tailingCtxLoc>~*)"
+	r"(?P<leadingSpaces>[\t ]*)(?P<leadingCtxLoc>~*)(?P<loc>\^+)(?P<tailingCtxLoc>~*)"
 )
 
 # Regexps of input help log line
@@ -164,10 +166,63 @@ class LogMessageHeader(object):
 		return cls(match['level'], match['codePath'], match['time'], match['threadName'], match['thread'])
 
 
-class LogMessage(object):
-	def __init__(self, header, msg):
+class TracebackBlockHeader(object):
+	def __init__(self, threadName=None, threadNum=None):
+		self.threadName = threadName
+		self.threadNum = threadNum
+
+	@classmethod
+	def makeFromLine(cls, text):
+		"""Create a TracebackBlockHeader from a header line"""
+
+		match = matchDict(RE_THREAD_STACK_BLOCK.match(text))
+		if not match:
+			raise LookupError
+		return cls(match["threadName"], match["threadNum"])
+
+
+class LogSection(object):
+
+	def __init__(self, header, content):
 		self.header = header
-		self.msg = msg.strip()
+		self.content = content.strip()
+
+	@classmethod
+	def makeFromTextInfo(cls, info, atStart=False):
+		info = info.copy()
+		if not atStart:
+			raise NotImplementedError
+		info.expand(textInfos.UNIT_LINE)
+		header = cls.headerType.makeFromLine(info.text.strip())
+		info.collapse(end=True)
+		infoContent = info.copy()
+		infoLine = info.copy()
+		infoLine.expand(textInfos.UNIT_LINE)
+		while info.move(textInfos.UNIT_LINE, direction=1):
+			infoLine = info.copy()
+			infoLine.expand(textInfos.UNIT_LINE)
+			if not cls.isLineInContent(infoLine.text.rstrip()):
+				# Next line equivalent to:
+				# infoContent.end = infoLine.start
+				# but usable in older NVDA versions (e.g. 2019.2)
+				infoContent.setEndPoint(infoLine, 'endToStart')
+				break
+		else:
+			# Next line equivalent to:
+			# infoContent.end = infoLine.end
+			# but usable in older NVDA versions (e.g. 2019.2)
+			infoContent.setEndPoint(infoLine, 'endToEnd')
+		msg = infoContent.text
+		return cls(header, msg)
+
+
+class LogMessage(LogSection):
+
+	headerType = LogMessageHeader
+	
+	@classmethod
+	def isLineInContent(cls, line):
+		return not RE_MESSAGE_HEADER.search(line)
 
 	def getSpeakMessage(self, mode):
 		if self.header.level == 'IO':
@@ -175,16 +230,16 @@ class LogMessage(object):
 		elif self.header.level == 'ERROR':
 			return self.getSpeakErrorMessage()
 		else:
-			return self.msg
+			return self.content
 
 	def getSpeakIoMessage(self, mode):
-		match = matchDict(RE_MSG_SPEAKING.match(self.msg))
+		match = matchDict(RE_MSG_SPEAKING.match(self.content))
 		if match:
 			try:
 				txtSeq = match['seq']
 			except Exception:
 				log.error("Sequence cannot be spoken: {seq}".format(seq=match['seq']))
-				return self.msg
+				return self.content
 			txtSeq = RE_CANCELLABLE_SPEECH.sub('', txtSeq)
 			txtSeq = RE_CALLBACK_COMMAND.sub('', txtSeq)
 			seq = eval(txtSeq)
@@ -202,7 +257,7 @@ class LogMessage(object):
 				seq = seq2
 			return seq
 
-		match = matchDict(RE_MSG_BEEP.match(self.msg))
+		match = matchDict(RE_MSG_BEEP.match(self.content))
 		if match:
 			return [BeepCommand(
 				float(match['freq']),
@@ -212,7 +267,7 @@ class LogMessage(object):
 			)]
 
 		# Check for input gesture:
-		match = matchDict(RE_MSG_INPUT.match(self.msg))
+		match = matchDict(RE_MSG_INPUT.match(self.content))
 		if match:
 			if mode == 'Input':
 				prefix = ""
@@ -224,11 +279,11 @@ class LogMessage(object):
 				device=match['device'],
 			)
 
-		match = matchDict(RE_MSG_TYPED_WORD.match(self.msg))
+		match = matchDict(RE_MSG_TYPED_WORD.match(self.content))
 		if match:
-			return self.msg
+			return self.content
 
-		match = matchDict(RE_MSG_BRAILLE_REGIONS.match(self.msg))
+		match = matchDict(RE_MSG_BRAILLE_REGIONS.match(self.content))
 		if match:
 			if mode == 'Braille':
 				prefix = ""
@@ -244,24 +299,24 @@ class LogMessage(object):
 				text=" ".join(seq),
 			)
 
-		match = matchDict(RE_MSG_BRAILLE_DOTS.match(self.msg))
+		match = matchDict(RE_MSG_BRAILLE_DOTS.match(self.content))
 		if match:
-			return self.msg
+			return self.content
 
-		match = matchDict(RE_MSG_TIME_SINCE_INPUT.match(self.msg))
+		match = matchDict(RE_MSG_TIME_SINCE_INPUT.match(self.content))
 		if match:
-			return self.msg
+			return self.content
 
 		# Unknown message format; to be implemented.
-		log.debugWarning('Message not implemented: {msg}'.format(msg=self.msg))
-		return self.msg
+		log.debugWarning('Message not implemented: {content}'.format(content=self.content))
+		return self.content
 
 	def getSpeakErrorMessage(self):
-		msgList = self.msg.split('\r')
+		msgList = self.content.split('\r')
 		try:
 			idxTraceback = msgList.index('Traceback (most recent call last):')
 		except ValueError:
-			return self.msg
+			return self.content
 		else:
 			errorMsg = '\r'.join(msgList[:idxTraceback])
 			errorDesc = msgList[-1]
@@ -283,34 +338,18 @@ class LogMessage(object):
 			seq = [self.header.level, ', '] + seq
 		speech.speak(seq)
 
-	@classmethod
-	def makeFromTextInfo(cls, info, atStart=False):
-		info = info.copy()
-		if not atStart:
-			raise NotImplementedError
-		info.expand(textInfos.UNIT_LINE)
-		header = LogMessageHeader.makeFromLine(info.text.strip())
-		info.collapse(end=True)
-		infoMsg = info.copy()
-		infoLine = info.copy()
-		infoLine.expand(textInfos.UNIT_LINE)
-		while info.move(textInfos.UNIT_LINE, direction=1):
-			infoLine = info.copy()
-			infoLine.expand(textInfos.UNIT_LINE)
-			if RE_MESSAGE_HEADER.search(infoLine.text.rstrip()):
-				# Next line equivalent to:
-				# infoMsg.end = infoLine.start
-				# but usable in older NVDA versions (e.g. 2019.2)
-				infoMsg.setEndPoint(infoLine, 'endToStart')
-				break
-		else:
-			# Next line equivalent to:
-			# infoMsg.end = infoLine.end
-			# but usable in older NVDA versions (e.g. 2019.2)
-			infoMsg.setEndPoint(infoLine, 'endToEnd')
-		msg = infoMsg.text
-		return cls(header, msg)
 
+class TracebackBlock(LogSection):
+
+	headerType = TracebackBlockHeader
+	
+	@classmethod
+	def isLineInContent(cls, line):
+		return not RE_THREAD_STACK_BLOCK.search(line)
+
+	def speak(self, reason):
+		seq = ["{name}; thread {num}".format(name=self.header.threadName, num=self.header.threadNum)]
+		speech.speak(seq)
 
 class TracebackFrame(object):
 	def __init__(
@@ -424,6 +463,34 @@ class LogReader(object):
 		self.ti.updateSelection()
 		msg.speak(reason=controlTypes.OutputReason.CARET, mode=searchType)
 
+	def moveToTracebackBlock(self, direction):
+		atTop  = False
+		tiLine = self.ti.copy()
+		tiLine.expand(textInfos.UNIT_LINE)
+		if RE_MESSAGE_HEADER.search(tiLine.text.rstrip()) and direction == -1:
+			atTop = True
+		found = False
+		while (not atTop) and self.ti.move(textInfos.UNIT_LINE, direction):
+			tiLine = self.ti.copy()
+			tiLine.expand(textInfos.UNIT_LINE)
+			if RE_MESSAGE_HEADER.search(tiLine.text.rstrip()):
+				break
+			if direction == -1 and tiLine.text.rstrip() == "Listing stacks for Python threads:":
+				break
+			if RE_THREAD_STACK_BLOCK.search(tiLine.text.rstrip()):
+				block = TracebackBlock.makeFromTextInfo(
+					self.ti,
+					atStart=True
+				)
+				found = True
+				break
+		if not found:
+			# Translators: Reported when pressing a quick navigation command in the log.
+			ui.message(_("No more block"))
+			return
+		self.ti.updateSelection()
+		block.speak(reason=controlTypes.OutputReason.CARET)
+
 	def goToError(self, select=False, includeContext=False):
 		nReadLines = 0
 		ti = self.ti.copy()
@@ -499,16 +566,16 @@ class LogContainer(ScriptableObject):
 		return script_moveToHeader
 
 	QUICK_NAV_SCRIPT_INFO = {
-		"b": ("Braille", lambda msg: RE_MSG_BRAILLE_REGIONS.match(msg.msg)),
+		"b": ("Braille", lambda msg: RE_MSG_BRAILLE_REGIONS.match(msg.content)),
 		"d": ("Debug", noFilter),
 		"e": ("Error", noFilter),
 		"f": ("Info", noFilter),
 		"g": ("DebugWarning", noFilter),
 		"i": ("Io", noFilter),
-		"k": ("Marker", lambda msg: RE_MSG_MARKER.match(msg.msg)),
+		"k": ("Marker", lambda msg: RE_MSG_MARKER.match(msg.content)),
 		"m": ("Message", noFilter),
-		"n": ("Input", lambda msg: RE_MSG_INPUT.match(msg.msg)),
-		"s": ("Speech", lambda msg: RE_MSG_SPEAKING.match(msg.msg)),
+		"n": ("Input", lambda msg: RE_MSG_INPUT.match(msg.content)),
+		"s": ("Speech", lambda msg: RE_MSG_SPEAKING.match(msg.content)),
 		"w": ("Warning", noFilter),
 	}
 
@@ -524,8 +591,10 @@ class LogContainer(ScriptableObject):
 				self.scriptTable[gestureId] = 'script_moveToNext{st}'.format(st=searchType)
 				gestureId = "kb:shift+" + qn
 				self.scriptTable[gestureId] = 'script_moveToPrevious{st}'.format(st=searchType)
-			self.scriptTable["kb:l"] = "script_goToError"
-			self.scriptTable["kb:t"] = "script_toggleLogTranslation"
+			self.scriptTable["kb:control+e"] = "script_goToError"
+			self.scriptTable["kb:b"] = "script_moveToNextTracebackBlock"
+			self.scriptTable["kb:shift+b"] = "script_moveToPreviousTracebackBlock"
+			self.scriptTable["kb:control+t"] = "script_toggleLogTranslation"
 			self.scriptTable["kb:c"] = "script_openSourceFile"
 			self.scriptTable["kb:control+h"] = "script_displayLogReaderHelp"
 
@@ -640,7 +709,24 @@ class LogContainer(ScriptableObject):
 		else:
 			return
 		reader.goToError(select, includeContext)
-		
+
+	@script(
+		# Translators: Input help mode message for move to next traceback block script.
+		description="Move the caret to the next traceback block.",
+		category=ADDON_SUMMARY,
+	)
+	def script_moveToNextTracebackBlock(self, gesture):
+		reader = LogReader(self)
+		reader.moveToTracebackBlock(direction=1)
+
+	@script(
+		# Translators: Input help mode message for move to previous traceback block script.
+		description="Move the caret to the previous traceback block.",
+		category=ADDON_SUMMARY,
+	)
+	def script_moveToPreviousTracebackBlock(self, gesture):
+		reader = LogReader(self)
+		reader.moveToTracebackBlock(direction=-1)
 
 	@script(
 		# Translators: Input help mode message for Log Reader help script.
@@ -792,6 +878,34 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			# Translators: A message when using Toggle log Reader script.
 			ui.message(_("Not in a text area."))
 
+	@script(
+		# Translators: Input help mode message for Copy and anonymize log script.
+		description=_("Copy the selection and anonymize it."),
+		category=ADDON_SUMMARY,
+	)
+	def script_copyAndAnonymizeSelection(self, gesture):
+		obj = api.getFocusObject()
+		treeInterceptor = obj.treeInterceptor
+		if (
+			isinstance(treeInterceptor, treeInterceptorHandler.DocumentTreeInterceptor)
+			and not treeInterceptor.passThrough
+		):
+			obj = treeInterceptor
+		try:
+			info = obj.makeTextInfo(textInfos.POSITION_SELECTION)
+		except (RuntimeError, NotImplementedError):
+			info = None
+		if not info or info.isCollapsed:
+			# Translators: The message reported when there is no selection
+			ui.message(_("No selection"))
+			return
+		content = info.text
+		anonymizedContent = content
+		api.copyToClip(anonymizedContent)
+		# Translators: a message telling the user that the selection has been anonymized and copied in the clipboard
+		ui.message(_("Selected text anonymized and copied in the clipboard."))
+
+	
 	def terminate(self, *args, **kwargs):
 		scriptHandler._getObjScript = _getObjScript_original
 		super(GlobalPlugin, self).terminate(*args, **kwargs)
