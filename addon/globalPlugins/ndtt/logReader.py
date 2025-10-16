@@ -479,7 +479,9 @@ class LogReader(object):
 			# Translators: Reported when pressing a quick navigation command in the log.
 			ui.message(_('No more item'))
 			return
-		msg.ti.updateSelection()
+		msgTi = msg.ti.copy()
+		msgTi.collapse()
+		msgTi.updateSelection()
 		msg.speak(reason=controlTypes.OutputReason.CARET, mode=searchType)
 	
 	def getCurrentMessage(self):
@@ -498,7 +500,7 @@ class LogReader(object):
 			
 			
 
-	def moveToTracebackBlock(self, direction):
+	def searchForTracebackBlock(self, direction):
 		atTop = False
 		tiLine = self.ti.copy()
 		tiLine.expand(textInfos.UNIT_LINE)
@@ -519,12 +521,19 @@ class LogReader(object):
 				)
 				found = True
 				break
-		if not found:
+		return block
+
+	def moveToTracebackBlock(self, direction):
+		tb = self.searchForTracebackBlock(direction)
+		if tb is None:
 			# Translators: Reported when pressing a quick navigation command in the log.
 			ui.message(_("No more block"))
 			return
-		self.ti.updateSelection()
+		blockTi = block.ti.copy()
+		blockTi.collapse()
+		blockTi.updateSelection()
 		block.speak(reason=controlTypes.OutputReason.CARET)
+		
 
 	def goToError(self, select=False, includeContext=False):
 		nReadLines = 0
