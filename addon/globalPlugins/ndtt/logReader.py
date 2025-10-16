@@ -183,12 +183,14 @@ class TracebackBlockHeader(object):
 
 class LogSection(object):
 
-	def __init__(self, header, content):
+	def __init__(self, ti, header, content):
+		self.ti = ti
 		self.header = header
 		self.content = content.strip()
 
 	@classmethod
 	def makeFromTextInfo(cls, info, atStart=False):
+		ti = info.copy()
 		info = info.copy()
 		if not atStart:
 			raise NotImplementedError
@@ -213,7 +215,8 @@ class LogSection(object):
 			# but usable in older NVDA versions (e.g. 2019.2)
 			infoContent.setEndPoint(infoLine, 'endToEnd')
 		msg = infoContent.text
-		return cls(header, msg)
+		ti.setEndPoint(infoContent, "endToEnd")
+		return cls(ti, header, msg)
 
 
 class LogMessage(LogSection):
@@ -439,32 +442,64 @@ class LogReader(object):
 		self.ti = obj.makeTextInfo(textInfos.POSITION_CARET)
 		self.ti.collapse()
 
-	def moveToHeader(
+	def searchForMessage(
 			self,
 			direction,
 			searchType,
 			filterFun,
 	):
-		while self.ti.move(textInfos.UNIT_LINE, direction):
-			tiLine = self.ti.copy()
+		ti = self.ti.copy()
+		while ti.move(textInfos.UNIT_LINE, direction):
+			tiLine = ti.copy()
 			tiLine.expand(textInfos.UNIT_LINE)
 			regexp = self.__class__.SEARCHERS[searchType]
 			if regexp.search(tiLine.text.rstrip()):
 				msg = LogMessage.makeFromTextInfo(
-					self.ti,
+					ti,
 					atStart=True
 				)
 				if filterFun(msg):
 					break
 		else:
+			return None
+		return msg
+
+	def moveToMessage(
+		self,
+		direction,
+		searchType,
+		filterFun,
+	):
+		msg = self.searchForMessage(
+			direction,
+			searchType,
+			filterFun,
+		)
+		if msg is None:
 			# Translators: Reported when pressing a quick navigation command in the log.
 			ui.message(_('No more item'))
 			return
-		self.ti.updateSelection()
+		msg.ti.updateSelection()
 		msg.speak(reason=controlTypes.OutputReason.CARET, mode=searchType)
+	
+	def getCurrentMessage(self):
+		tiLine = self.ti.copy()
+		tiLine.expand(textInfos.UNIT_LINE)
+		if tiLine.text.strip():
+			# Go forward 1 character to be sure not to be at the beginning of the line in case we are already on a
+			# message header
+			tiLine.collapse()
+			tiLine.move(textInfos.UNI_CHARACTER, 1)
+		return self.searchForMessage(
+			direction=-1,
+			searchType="Message",
+			filterFun=noFilter,
+		)
+			
+			
 
 	def moveToTracebackBlock(self, direction):
-		atTop  = False
+		atTop = False
 		tiLine = self.ti.copy()
 		tiLine.expand(textInfos.UNIT_LINE)
 		if RE_MESSAGE_HEADER.search(tiLine.text.rstrip()) and direction == -1:
@@ -540,7 +575,7 @@ class LogContainer(ScriptableObject):
 	enableTable = {}
 	translateLog = False
 
-	def moveToHeaderFactory(
+	def moveToMessageFactory(
 			dir,
 			searchType,
 			filterFun,
@@ -560,10 +595,10 @@ class LogContainer(ScriptableObject):
 			description=description,
 			category=ADDON_SUMMARY,
 		)
-		def script_moveToHeader(self, gesture):
+		def script_moveToMessage(self, gesture):
 			reader = LogReader(self)
-			reader.moveToHeader(direction=dir, searchType=searchType, filterFun=filterFun)
-		return script_moveToHeader
+			reader.moveToMessage(direction=dir, searchType=searchType, filterFun=filterFun)
+		return script_moveToMessage
 
 	QUICK_NAV_SCRIPT_INFO = {
 		"b": ("Braille", lambda msg: RE_MSG_BRAILLE_REGIONS.match(msg.content)),
@@ -580,8 +615,8 @@ class LogContainer(ScriptableObject):
 	}
 
 	for qn, (searchType, filterFun) in QUICK_NAV_SCRIPT_INFO.items():
-		locals()['script_moveToNext{st}'.format(st=searchType)] = moveToHeaderFactory(1, searchType, filterFun)
-		locals()['script_moveToPrevious{st}'.format(st=searchType)] = moveToHeaderFactory(-1, searchType, filterFun)
+		locals()['script_moveToNext{st}'.format(st=searchType)] = moveToMessageFactory(1, searchType, filterFun)
+		locals()['script_moveToPrevious{st}'.format(st=searchType)] = moveToMessageFactory(-1, searchType, filterFun)
 
 	def initialize(self):
 		if not hasattr(self, 'scriptTable'):
