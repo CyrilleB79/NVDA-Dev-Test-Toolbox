@@ -227,6 +227,12 @@ class LogMessage(LogSection):
 	def isLineInContent(cls, line):
 		return not RE_MESSAGE_HEADER.search(line)
 
+	def hasBlocks(self):
+		for line in self.content.split("\r"):
+			if line == "Listing stacks for Python threads:":
+				return True
+		return False
+
 	def getSpeakMessage(self, mode):
 		if self.header.level == 'IO':
 			return self.getSpeakIoMessage(mode)
@@ -485,29 +491,26 @@ class LogReader(object):
 		msg.speak(reason=controlTypes.OutputReason.CARET, mode=searchType)
 	
 	def getCurrentMessage(self):
+		ti = self.ti.copy()
 		tiLine = self.ti.copy()
 		tiLine.expand(textInfos.UNIT_LINE)
 		if tiLine.text.strip():
 			# Go forward 1 character to be sure not to be at the beginning of the line in case we are already on a
 			# message header
-			tiLine.collapse()
-			tiLine.move(textInfos.UNI_CHARACTER, 1)
+			ti.move(textInfos.UNIT_CHARACTER, 1)
 		return self.searchForMessage(
 			direction=-1,
 			searchType="Message",
 			filterFun=noFilter,
 		)
-			
-			
 
 	def searchForTracebackBlock(self, direction):
-		atTop = False
 		tiLine = self.ti.copy()
 		tiLine.expand(textInfos.UNIT_LINE)
 		if RE_MESSAGE_HEADER.search(tiLine.text.rstrip()) and direction == -1:
-			atTop = True
-		found = False
-		while (not atTop) and self.ti.move(textInfos.UNIT_LINE, direction):
+			return None
+		block = None
+		while self.ti.move(textInfos.UNIT_LINE, direction):
 			tiLine = self.ti.copy()
 			tiLine.expand(textInfos.UNIT_LINE)
 			if RE_MESSAGE_HEADER.search(tiLine.text.rstrip()):
@@ -519,13 +522,12 @@ class LogReader(object):
 					self.ti,
 					atStart=True
 				)
-				found = True
 				break
 		return block
 
 	def moveToTracebackBlock(self, direction):
-		tb = self.searchForTracebackBlock(direction)
-		if tb is None:
+		block = self.searchForTracebackBlock(direction)
+		if block is None:
 			# Translators: Reported when pressing a quick navigation command in the log.
 			ui.message(_("No more block"))
 			return
@@ -636,8 +638,8 @@ class LogContainer(ScriptableObject):
 				gestureId = "kb:shift+" + qn
 				self.scriptTable[gestureId] = 'script_moveToPrevious{st}'.format(st=searchType)
 			self.scriptTable["kb:control+e"] = "script_goToError"
-			self.scriptTable["kb:b"] = "script_moveToNextTracebackBlock"
-			self.scriptTable["kb:shift+b"] = "script_moveToPreviousTracebackBlock"
+			self.scriptTable["kb:b"] = "script_moveToNextBlock"
+			self.scriptTable["kb:shift+b"] = "script_moveToPreviousBlock"
 			self.scriptTable["kb:control+t"] = "script_toggleLogTranslation"
 			self.scriptTable["kb:c"] = "script_openSourceFile"
 			self.scriptTable["kb:control+h"] = "script_displayLogReaderHelp"
@@ -755,21 +757,35 @@ class LogContainer(ScriptableObject):
 		reader.goToError(select, includeContext)
 
 	@script(
-		# Translators: Input help mode message for move to next traceback block script.
-		description="Move the caret to the next traceback block.",
+		# Translators: Input help mode message for move to next block script.
+		description="Move the caret to the next block.",
 		category=ADDON_SUMMARY,
 	)
-	def script_moveToNextTracebackBlock(self, gesture):
+	def script_moveToNextBlock(self, gesture):
 		reader = LogReader(self)
+		ui.message(f"{reader.ti._endOffset}")
+		curMsg = reader.getCurrentMessage()
+		ui.message(f"{reader.ti._endOffset}")
+		if not curMsg.hasBlocks():
+			ui.message("No block in this message")
+			return
+		ui.message(f"{reader.ti._endOffset}")
 		reader.moveToTracebackBlock(direction=1)
 
 	@script(
-		# Translators: Input help mode message for move to previous traceback block script.
-		description="Move the caret to the previous traceback block.",
+		# Translators: Input help mode message for move to previous block script.
+		description="Move the caret to the previous block.",
 		category=ADDON_SUMMARY,
 	)
-	def script_moveToPreviousTracebackBlock(self, gesture):
+	def script_moveToPreviousBlock(self, gesture):
 		reader = LogReader(self)
+		ui.message(f"{reader.ti._endOffset}")
+		curMsg = reader.getCurrentMessage()
+		ui.message(f"{reader.ti._endOffset}")
+		if not curMsg.hasBlocks():
+			ui.message("No block in this message")
+			return
+		ui.message(f"{reader.ti._endOffset}")
 		reader.moveToTracebackBlock(direction=-1)
 
 	@script(
