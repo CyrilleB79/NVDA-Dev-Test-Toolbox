@@ -445,16 +445,23 @@ class LogReader(object):
 
 	def __init__(self, obj):
 		self.obj = obj
-		self.ti = obj.makeTextInfo(textInfos.POSITION_CARET)
-		self.ti.collapse()
+		
+	def caretTextInfo(self):
+		ti = self.obj.makeTextInfo(textInfos.POSITION_CARET)
+		ti.collapse()
+		return ti
 
 	def searchForMessage(
 			self,
 			direction,
 			searchType,
 			filterFun,
+			position=None,
 	):
-		ti = self.ti.copy()
+		if position:
+			ti = position
+		else:
+			ti = self.caretTextInfo().copy()
 		while ti.move(textInfos.UNIT_LINE, direction):
 			tiLine = ti.copy()
 			tiLine.expand(textInfos.UNIT_LINE)
@@ -491,8 +498,8 @@ class LogReader(object):
 		msg.speak(reason=controlTypes.OutputReason.CARET, mode=searchType)
 	
 	def getCurrentMessage(self):
-		ti = self.ti.copy()
-		tiLine = self.ti.copy()
+		ti = self.caretTextInfo().copy()
+		tiLine = self.caretTextInfo().copy()
 		tiLine.expand(textInfos.UNIT_LINE)
 		if tiLine.text.strip():
 			# Go forward 1 character to be sure not to be at the beginning of the line in case we are already on a
@@ -502,16 +509,18 @@ class LogReader(object):
 			direction=-1,
 			searchType="Message",
 			filterFun=noFilter,
+			position=ti,
 		)
 
 	def searchForTracebackBlock(self, direction):
-		tiLine = self.ti.copy()
+		tiLine = self.caretTextInfo().copy()
 		tiLine.expand(textInfos.UNIT_LINE)
 		if RE_MESSAGE_HEADER.search(tiLine.text.rstrip()) and direction == -1:
 			return None
 		block = None
-		while self.ti.move(textInfos.UNIT_LINE, direction):
-			tiLine = self.ti.copy()
+		ti = self.caretTextInfo()
+		while ti.move(textInfos.UNIT_LINE, direction):
+			tiLine = ti.copy()
 			tiLine.expand(textInfos.UNIT_LINE)
 			if RE_MESSAGE_HEADER.search(tiLine.text.rstrip()):
 				break
@@ -519,7 +528,7 @@ class LogReader(object):
 				break
 			if RE_THREAD_STACK_BLOCK.search(tiLine.text.rstrip()):
 				block = TracebackBlock.makeFromTextInfo(
-					self.ti,
+					ti,
 					atStart=True
 				)
 				break
@@ -539,7 +548,7 @@ class LogReader(object):
 
 	def goToError(self, select=False, includeContext=False):
 		nReadLines = 0
-		ti = self.ti.copy()
+		ti = self.caretTextInfo().copy()
 		# 3 lines = 1 with file path/line number, 1 with source code, 1 with error location indication
 		while nReadLines < 3:
 			ti.expand(textInfos.UNIT_LINE)
@@ -763,13 +772,11 @@ class LogContainer(ScriptableObject):
 	)
 	def script_moveToNextBlock(self, gesture):
 		reader = LogReader(self)
-		ui.message(f"{reader.ti._endOffset}")
 		curMsg = reader.getCurrentMessage()
-		ui.message(f"{reader.ti._endOffset}")
 		if not curMsg.hasBlocks():
+			# Translators: A message reported when using block navigation command
 			ui.message("No block in this message")
 			return
-		ui.message(f"{reader.ti._endOffset}")
 		reader.moveToTracebackBlock(direction=1)
 
 	@script(
@@ -779,13 +786,11 @@ class LogContainer(ScriptableObject):
 	)
 	def script_moveToPreviousBlock(self, gesture):
 		reader = LogReader(self)
-		ui.message(f"{reader.ti._endOffset}")
 		curMsg = reader.getCurrentMessage()
-		ui.message(f"{reader.ti._endOffset}")
 		if not curMsg.hasBlocks():
+			# Translators: A message reported when using block navigation command
 			ui.message("No block in this message")
 			return
-		ui.message(f"{reader.ti._endOffset}")
 		reader.moveToTracebackBlock(direction=-1)
 
 	@script(
