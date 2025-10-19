@@ -142,6 +142,10 @@ TYPE_STR = type('')
 NDTT_MARKER_STRING = '-- NDTT marker {} --'
 RE_MSG_MARKER = re.compile(NDTT_MARKER_STRING.format(r'\d+'))
 
+# Block types:
+THREAD_STACK = "ThreadStack"
+TRACEBACK_STACK = "TracebackStack"
+
 
 def noFilter(msg):
 	"""A pass all filter function"""
@@ -166,19 +170,25 @@ class LogMessageHeader(object):
 		return cls(match['level'], match['codePath'], match['time'], match['threadName'], match['thread'])
 
 
-class TracebackBlockHeader(object):
+class ThreadStackHeader(object):
 	def __init__(self, threadName=None, threadNum=None):
 		self.threadName = threadName
 		self.threadNum = threadNum
 
 	@classmethod
 	def makeFromLine(cls, text):
-		"""Create a TracebackBlockHeader from a header line"""
+		"""Create a ThreadStackHeader from a header line"""
 
 		match = matchDict(RE_THREAD_STACK_BLOCK.match(text))
 		if not match:
 			raise LookupError
 		return cls(match["threadName"], match["threadNum"])
+
+
+class TracebackStackHeader(object):
+	@classmethod
+	def makeFromLine(cls, text):
+		pass
 
 
 class LogSection(object):
@@ -227,11 +237,12 @@ class LogMessage(LogSection):
 	def isLineInContent(cls, line):
 		return not RE_MESSAGE_HEADER.search(line)
 
-	def hasBlocks(self):
+	def blockType(self):
 		for line in self.content.split("\r"):
-			if line == "Listing stacks for Python threads:":
-				return True
-		return False
+			for (blockType, (blockTypeString, reBlockStart, BlockClass)) in BLOCK_TYPE_PARAMS.items():
+				if line == blockTypeString:
+					return blockType
+		return None
 
 	def getSpeakMessage(self, mode):
 		if self.header.level == 'IO':
@@ -348,9 +359,9 @@ class LogMessage(LogSection):
 		speech.speak(seq)
 
 
-class TracebackBlock(LogSection):
+class ThreadStack(LogSection):
 
-	headerType = TracebackBlockHeader
+	headerType = ThreadStackHeader
 	
 	@classmethod
 	def isLineInContent(cls, line):
@@ -359,6 +370,34 @@ class TracebackBlock(LogSection):
 	def speak(self, reason):
 		seq = ["{name}; thread {num}".format(name=self.header.threadName, num=self.header.threadNum)]
 		speech.speak(seq)
+
+
+class TracebackStack(LogSection):
+
+	headerType = TracebackStackHeader
+	
+	@classmethod
+	def isLineInContent(cls, line):
+		return "zzz" and not RE_THREAD_STACK_BLOCK.search(line)
+
+	def speak(self, reason):
+		seq = ["zzz Traceback"]
+		speech.speak(seq)
+
+
+BLOCK_TYPE_PARAMS = {
+	THREAD_STACK: (
+		"Listing stacks for Python threads:",
+		RE_THREAD_STACK_BLOCK,
+		ThreadStack,
+	),
+	TRACEBACK_STACK: (
+		"Traceback (most recent call last):",
+		re.compile(r"Traceback \(most recent call last\):"),
+		TracebackStack,
+	),
+}
+
 
 class TracebackFrame(object):
 	def __init__(
@@ -512,7 +551,7 @@ class LogReader(object):
 			position=ti,
 		)
 
-	def searchForTracebackBlock(self, direction):
+	def searchForBlock(self, direction, blockType):
 		tiLine = self.caretTextInfo().copy()
 		tiLine.expand(textInfos.UNIT_LINE)
 		if RE_MESSAGE_HEADER.search(tiLine.text.rstrip()) and direction == -1:
@@ -524,18 +563,17 @@ class LogReader(object):
 			tiLine.expand(textInfos.UNIT_LINE)
 			if RE_MESSAGE_HEADER.search(tiLine.text.rstrip()):
 				break
-			if direction == -1 and tiLine.text.rstrip() == "Listing stacks for Python threads:":
-				break
-			if RE_THREAD_STACK_BLOCK.search(tiLine.text.rstrip()):
-				block = TracebackBlock.makeFromTextInfo(
+			(blockTypeString, reBlockStart, BlockClass) = BLOCK_TYPE_PARAMS[blockType]
+			if reBlockStart.search(tiLine.text.rstrip()):
+				block = BlockClass.makeFromTextInfo(
 					ti,
 					atStart=True
 				)
 				break
 		return block
 
-	def moveToTracebackBlock(self, direction):
-		block = self.searchForTracebackBlock(direction)
+	def moveToBlock(self, direction, blockType):
+		block = self.searchForBlock(direction, blockType)
 		if block is None:
 			# Translators: Reported when pressing a quick navigation command in the log.
 			ui.message(_("No more block"))
@@ -773,11 +811,12 @@ class LogContainer(ScriptableObject):
 	def script_moveToNextBlock(self, gesture):
 		reader = LogReader(self)
 		curMsg = reader.getCurrentMessage()
-		if not curMsg.hasBlocks():
+		blockType = curMsg.blockType()
+		if blockType is None:
 			# Translators: A message reported when using block navigation command
 			ui.message("No block in this message")
 			return
-		reader.moveToTracebackBlock(direction=1)
+		reader.moveToBlock(direction=1, blockType=blockType)
 
 	@script(
 		# Translators: Input help mode message for move to previous block script.
@@ -787,11 +826,12 @@ class LogContainer(ScriptableObject):
 	def script_moveToPreviousBlock(self, gesture):
 		reader = LogReader(self)
 		curMsg = reader.getCurrentMessage()
-		if not curMsg.hasBlocks():
+		blockType = curMsg.blockType()
+		if blockType is None:
 			# Translators: A message reported when using block navigation command
 			ui.message("No block in this message")
 			return
-		reader.moveToTracebackBlock(direction=-1)
+		reader.moveToBlock(direction=-1, blockType=blockType)
 
 	@script(
 		# Translators: Input help mode message for Log Reader help script.
