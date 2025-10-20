@@ -228,20 +228,19 @@ class LogSection(object):
 		ti.setEndPoint(infoContent, "endToEnd")
 		return cls(ti, header, msg)
 
-
-class LogMessage(LogSection):
-
-	headerType = LogMessageHeader
-	
 	@classmethod
 	def isLineInContent(cls, line):
 		return not RE_MESSAGE_HEADER.search(line)
 
+
+class LogMessage(LogSection):
+
+	headerType = LogMessageHeader
+
 	def blockType(self):
-		for line in self.content.split("\r"):
-			for (blockType, (blockTypeString, reBlockStart, BlockClass)) in BLOCK_TYPE_PARAMS.items():
-				if line == blockTypeString:
-					return blockType
+		for (blockType, BlockClass) in BLOCK_TYPE_PARAMS.items():
+			if BlockClass.containsThisBlockType(self.content):
+				return blockType
 		return None
 
 	def getSpeakMessage(self, mode):
@@ -362,9 +361,19 @@ class LogMessage(LogSection):
 class ThreadStack(LogSection):
 
 	headerType = ThreadStackHeader
-	
+
+	@staticmethod
+	def containsThisBlockType(msg):
+		return msg.split("\r")[0] == "Listing stacks for Python threads:"
+
+	@staticmethod
+	def blockStartIdentifier():
+		return RE_THREAD_STACK_BLOCK
+
 	@classmethod
 	def isLineInContent(cls, line):
+		if not super(ThreadStack, cls).isLineInContent(line):
+			return False
 		return not RE_THREAD_STACK_BLOCK.search(line)
 
 	def speak(self, reason):
@@ -376,26 +385,29 @@ class TracebackStack(LogSection):
 
 	headerType = TracebackStackHeader
 	
+	@staticmethod
+	def containsThisBlockType(msg):
+		return "Traceback (most recent call last):" in msg.split("\r")
+
+	@staticmethod
+	def blockStartIdentifier():
+		return re.compile(r"Traceback \(most recent call last\):")
+	
 	@classmethod
 	def isLineInContent(cls, line):
-		return "zzz" and not RE_THREAD_STACK_BLOCK.search(line)
+		if not super(TracebackStack, cls).isLineInContent(line):
+			return False
+		return not cls.blockStartIdentifier().search(line)
 
 	def speak(self, reason):
-		seq = ["zzz Traceback"]
+		errorMsg = self.content.split("\r")[-1]
+		seq = ["Traceback for {errorMsg}".format(errorMsg=errorMsg)]
 		speech.speak(seq)
 
 
 BLOCK_TYPE_PARAMS = {
-	THREAD_STACK: (
-		"Listing stacks for Python threads:",
-		RE_THREAD_STACK_BLOCK,
-		ThreadStack,
-	),
-	TRACEBACK_STACK: (
-		"Traceback (most recent call last):",
-		re.compile(r"Traceback \(most recent call last\):"),
-		TracebackStack,
-	),
+	THREAD_STACK: ThreadStack,
+	TRACEBACK_STACK: TracebackStack,
 }
 
 
@@ -501,6 +513,7 @@ class LogReader(object):
 			ti = position
 		else:
 			ti = self.caretTextInfo().copy()
+		n=0
 		while ti.move(textInfos.UNIT_LINE, direction):
 			tiLine = ti.copy()
 			tiLine.expand(textInfos.UNIT_LINE)
@@ -552,6 +565,8 @@ class LogReader(object):
 		)
 
 	def searchForBlock(self, direction, blockType):
+		BlockClass = BLOCK_TYPE_PARAMS[blockType]
+		reBlockStart = BlockClass.blockStartIdentifier()
 		tiLine = self.caretTextInfo().copy()
 		tiLine.expand(textInfos.UNIT_LINE)
 		if RE_MESSAGE_HEADER.search(tiLine.text.rstrip()) and direction == -1:
@@ -563,7 +578,6 @@ class LogReader(object):
 			tiLine.expand(textInfos.UNIT_LINE)
 			if RE_MESSAGE_HEADER.search(tiLine.text.rstrip()):
 				break
-			(blockTypeString, reBlockStart, BlockClass) = BLOCK_TYPE_PARAMS[blockType]
 			if reBlockStart.search(tiLine.text.rstrip()):
 				block = BlockClass.makeFromTextInfo(
 					ti,
@@ -811,7 +825,9 @@ class LogContainer(ScriptableObject):
 	def script_moveToNextBlock(self, gesture):
 		reader = LogReader(self)
 		curMsg = reader.getCurrentMessage()
+		#zzz ui.message(curMsg.content)
 		blockType = curMsg.blockType()
+		#zzz ui.message(blockType)
 		if blockType is None:
 			# Translators: A message reported when using block navigation command
 			ui.message("No block in this message")
