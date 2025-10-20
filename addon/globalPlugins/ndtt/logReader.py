@@ -145,6 +145,7 @@ RE_MSG_MARKER = re.compile(NDTT_MARKER_STRING.format(r'\d+'))
 # Block types:
 THREAD_STACK = "ThreadStack"
 TRACEBACK_STACK = "TracebackStack"
+DEV_INFO_BLOCK = "DevInfoBlock"
 
 
 def noFilter(msg):
@@ -403,6 +404,33 @@ class TracebackStack(LogSection):
 		contentLines = self.content.split("\r")
 		if len(contentLines) > 3 and contentLines[-3:] == ["", "During handling of the above exception, another exception occurred:", ""]:
 			del contentLines[-3:]
+		errorMsg = contentLines[-1]
+		seq = ["Traceback for {errorMsg}".format(errorMsg=errorMsg)]
+		speech.speak(seq)
+
+
+class DevInfoBlock(LogSection):
+
+	headerType = None
+
+	@staticmethod
+	def containsThisBlockType(msg):
+		return "Developer info for navigator object:" in msg.split("\r")
+
+	@staticmethod
+	def blockStartIdentifier():
+		return re.compile(r"^(?:(?:name: )|(?:appModule:)|(?:windowHandle: )|(?:IAccessibleObject: )|(?:UIAElement: ))")
+
+	@classmethod
+	def isLineInContent(cls, line):
+		if not super(TracebackStack, cls).isLineInContent(line):
+			return False
+		return not cls.blockStartIdentifier().search(line)
+
+	def speak(self, reason):
+		contentLines = self.content.split("\r")
+		if len(contentLines) > 3 and contentLines[-3:] == ["", "During handling of the above exception, another exception occurred:", ""]:
+			del contentLines[-3:]
 		else:
 			import globalVars as gv
 			gv.dbg = contentLines
@@ -411,9 +439,11 @@ class TracebackStack(LogSection):
 		speech.speak(seq)
 
 
+
 BLOCK_TYPE_PARAMS = {
 	THREAD_STACK: ThreadStack,
 	TRACEBACK_STACK: TracebackStack,
+	DEV_INFO_BLOCK: DevInfoBlock,
 }
 
 
