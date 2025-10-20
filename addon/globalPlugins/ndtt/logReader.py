@@ -196,7 +196,7 @@ class LogSection(object):
 	def __init__(self, ti, header, content):
 		self.ti = ti
 		self.header = header
-		self.content = content.strip()
+		self.content = content[:-1] if content.endswith("\r") else content
 
 	@classmethod
 	def makeFromTextInfo(cls, info, atStart=False):
@@ -400,7 +400,13 @@ class TracebackStack(LogSection):
 		return not cls.blockStartIdentifier().search(line)
 
 	def speak(self, reason):
-		errorMsg = self.content.split("\r")[-1]
+		contentLines = self.content.split("\r")
+		if len(contentLines) > 3 and contentLines[-3:] == ["", "During handling of the above exception, another exception occurred:", ""]:
+			del contentLines[-3:]
+		else:
+			import globalVars as gv
+			gv.dbg = contentLines
+		errorMsg = contentLines[-1]
 		seq = ["Traceback for {errorMsg}".format(errorMsg=errorMsg)]
 		speech.speak(seq)
 
