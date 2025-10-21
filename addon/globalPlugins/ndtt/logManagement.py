@@ -40,11 +40,15 @@ import globalPluginHandler
 import addonHandler
 import queueHandler
 import logHandler
+import api
+import textInfos
+import treeInterceptorHandler
 from logHandler import log
 import gui
 import ui
 from gui import guiHelper, nvdaControls
 from gui import messageBox
+from scriptHandler import script
 try:
 	from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 except ImportError:
@@ -72,6 +76,9 @@ RE_FIRST_LINE = re.compile(
 	r'^INFO - __main__ \((?P<hour>\d{2}):(?P<minute>\d{2}):(?P<second>\d{2}).(?P<millisecond>\d{3})\)'
 	r'(?: - MainThread \(\d+\))?:$'
 )
+
+NDTT_PATH = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "ndtt"))
+ANONYMIZATION_RULES_FILE = "anonymizationRules.dic"
 
 
 def getStartTimeLoggedByNDTT(path):
@@ -622,8 +629,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		# Translators: a message telling the user that the selection has been anonymized and copied in the clipboard
 		ui.message(_("Selected text anonymized and copied in the clipboard."))
 
-	@staticmethod
-	def _anonymizeText(text):
+	def _anonymizeText(self, text):
 		rules = self._loadAnonymizationRules()
 		for pattern, replacement, isRegex in rules:
 			try:
@@ -642,17 +648,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		...
 		return text
 
-	@staticmethod
 	def _loadAnonymizationRules(self):
-		try:
-			filePath = os.path.join(ndttFolder, "anonymizationRules.dic")
-		except NameError:
-			ui.message(_("Configuration folder not found."))
-			
+		filePath = os.path.join(NDTT_PATH, ANONYMIZATION_RULES_FILE)
 		rules = []
-		if not os.path.exists(filePath):
-			ui.message(_("Anonymization rules file not found: %s") % filePath)
-			return None
 		try:
 			with open(filePath, "r", encoding="utf-8") as f:
 				for line in f:
@@ -666,8 +664,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 						isRegex = len(parts) > 2 and parts[2].lower() == "regex"
 						rules.append((pattern, replacement, isRegex))
 		except Exception as e:
-			ui.message(_("Error reading rules file: %s") % str(e))
-			return text
+			log.error(e)
+			return None
+		return rules
 
 	def terminate(self, *args, **kwargs):
 		try:
