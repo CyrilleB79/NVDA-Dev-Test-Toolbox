@@ -1032,34 +1032,6 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			# Translators: A message when using Toggle log Reader script.
 			ui.message(_("Not in a text area."))
 
-	@script(
-		# Translators: Input help mode message for Copy and anonymize log script.
-		description=_("Copy the selection and anonymize it."),
-		category=ADDON_SUMMARY,
-	)
-	def script_copyAndAnonymizeSelection(self, gesture):
-		obj = api.getFocusObject()
-		treeInterceptor = obj.treeInterceptor
-		if (
-			isinstance(treeInterceptor, treeInterceptorHandler.DocumentTreeInterceptor)
-			and not treeInterceptor.passThrough
-		):
-			obj = treeInterceptor
-		try:
-			info = obj.makeTextInfo(textInfos.POSITION_SELECTION)
-		except (RuntimeError, NotImplementedError):
-			info = None
-		if not info or info.isCollapsed:
-			# Translators: The message reported when there is no selection
-			ui.message(_("No selection"))
-			return
-		content = info.text
-		anonymizedContent = content
-		api.copyToClip(anonymizedContent)
-		# Translators: a message telling the user that the selection has been anonymized and copied in the clipboard
-		ui.message(_("Selected text anonymized and copied in the clipboard."))
-
-	
 	def terminate(self, *args, **kwargs):
 		scriptHandler._getObjScript = _getObjScript_original
 		super(GlobalPlugin, self).terminate(*args, **kwargs)

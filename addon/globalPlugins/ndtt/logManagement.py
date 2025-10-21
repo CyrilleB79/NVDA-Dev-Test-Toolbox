@@ -595,6 +595,80 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		d.Show()
 		gui.mainFrame.postPopup()
 
+	@script(
+		# Translators: Input help mode message for Copy and anonymize log script.
+		description=_("Copy the selection and anonymize it."),
+		category=ADDON_SUMMARY,
+	)
+	def script_copyAndAnonymizeSelection(self, gesture):
+		obj = api.getFocusObject()
+		treeInterceptor = obj.treeInterceptor
+		if (
+			isinstance(treeInterceptor, treeInterceptorHandler.DocumentTreeInterceptor)
+			and not treeInterceptor.passThrough
+		):
+			obj = treeInterceptor
+		try:
+			info = obj.makeTextInfo(textInfos.POSITION_SELECTION)
+		except (RuntimeError, NotImplementedError):
+			info = None
+		if not info or info.isCollapsed:
+			# Translators: The message reported when there is no selection
+			ui.message(_("No selection"))
+			return
+		content = info.text
+		anonymizedContent = self._anonymizeText(content)
+		api.copyToClip(anonymizedContent)
+		# Translators: a message telling the user that the selection has been anonymized and copied in the clipboard
+		ui.message(_("Selected text anonymized and copied in the clipboard."))
+
+	@staticmethod
+	def _anonymizeText(text):
+		rules = self._loadAnonymizationRules()
+		for pattern, replacement, isRegex in rules:
+			try:
+				if isRegex:
+					text = re.sub(pattern, replacement, text)
+				else:
+					text = text.replace(pattern, replacement)
+			except re.error as e:
+				# On continue même si une regex est malformée
+				ui.message(_("Invalid regex skipped: %s") % pattern)
+				continue
+
+		return text
+
+		dic = ...
+		...
+		return text
+
+	@staticmethod
+	def _loadAnonymizationRules(self):
+		try:
+			filePath = os.path.join(ndttFolder, "anonymizationRules.dic")
+		except NameError:
+			ui.message(_("Configuration folder not found."))
+			
+		rules = []
+		if not os.path.exists(filePath):
+			ui.message(_("Anonymization rules file not found: %s") % filePath)
+			return None
+		try:
+			with open(filePath, "r", encoding="utf-8") as f:
+				for line in f:
+					line = line.strip()
+					if not line or line.startswith("#"):
+						continue
+					parts = line.split("\t")
+					if len(parts) >= 2:
+						pattern = parts[0]
+						replacement = parts[1]
+						isRegex = len(parts) > 2 and parts[2].lower() == "regex"
+						rules.append((pattern, replacement, isRegex))
+		except Exception as e:
+			ui.message(_("Error reading rules file: %s") % str(e))
+			return text
+
 	def terminate(self, *args, **kwargs):
 		try:
 			self.toolsMenu.Remove(self.logsManager)
