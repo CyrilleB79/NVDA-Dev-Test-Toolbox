@@ -205,12 +205,13 @@ class LogSection(object):
 		info = info.copy()
 		if not atStart:
 			raise NotImplementedError
-		info.expand(textInfos.UNIT_LINE)
-		header = cls.headerType.makeFromLine(info.text.strip())
-		info.collapse(end=True)
+		if cls.headerType is not None:
+			info.expand(textInfos.UNIT_LINE)
+			header = cls.headerType.makeFromLine(info.text.strip())
+			info.collapse(end=True)
+		else:
+			header = None
 		infoContent = info.copy()
-		infoLine = info.copy()
-		infoLine.expand(textInfos.UNIT_LINE)
 		while info.move(textInfos.UNIT_LINE, direction=1):
 			infoLine = info.copy()
 			infoLine.expand(textInfos.UNIT_LINE)
@@ -221,6 +222,8 @@ class LogSection(object):
 				infoContent.setEndPoint(infoLine, 'endToStart')
 				break
 		else:
+			infoLine = info.copy()
+			infoLine.expand(textInfos.UNIT_LINE)
 			# Next line equivalent to:
 			# infoContent.end = infoLine.end
 			# but usable in older NVDA versions (e.g. 2019.2)
@@ -423,19 +426,13 @@ class DevInfoBlock(LogSection):
 
 	@classmethod
 	def isLineInContent(cls, line):
-		if not super(TracebackStack, cls).isLineInContent(line):
+		if not super(DevInfoBlock, cls).isLineInContent(line):
 			return False
 		return not cls.blockStartIdentifier().search(line)
 
 	def speak(self, reason):
 		contentLines = self.content.split("\r")
-		if len(contentLines) > 3 and contentLines[-3:] == ["", "During handling of the above exception, another exception occurred:", ""]:
-			del contentLines[-3:]
-		else:
-			import globalVars as gv
-			gv.dbg = contentLines
-		errorMsg = contentLines[-1]
-		seq = ["Traceback for {errorMsg}".format(errorMsg=errorMsg)]
+		seq = [contentLines[0]]
 		speech.speak(seq)
 
 
@@ -646,7 +643,8 @@ class LogReader(object):
 					atStart=True
 				)
 				if tbFrame.errLocation is None:
-					ui.message("No error indicator for this frame")
+				# Translators: Reported when pressing the Go to error command in the log
+					ui.message(_("No error indicator for this frame"))
 					return
 				ti.move(textInfos.UNIT_LINE, 1)
 				ti.updateCaret()
@@ -669,12 +667,13 @@ class LogReader(object):
 					ti.updateCaret()
 					speech.speak([text])
 				return
+			elif RE_MESSAGE_HEADER.search(ti.text.rstrip()):
+				break
 			ti.collapse()
 			ti.move(textInfos.UNIT_LINE, -1)
 			nReadLines += 1
-		else:
-			# Translators: Reported when pressing the go to error command in a traceback line.
-			ui.message(_("No traceback here"))
+		# Translators: Reported when pressing the go to error command in a traceback line.
+		ui.message(_("No traceback here"))
 
 
 class LogContainer(ScriptableObject):
@@ -793,15 +792,15 @@ class LogContainer(ScriptableObject):
 		if LogContainer.translateLog:
 			LogContainer.translateLog = False
 			# Translators: A message reported when disabling log translation.
-			ui.message('Log translation disabled')
+			ui.message(_("Log translation disabled"))
 		else:
 			if getattr(globalPlugins, 'instantTranslate', None):
 				LogContainer.translateLog = True
 				# Translators: A message reported when enabling log translation.
-				ui.message('Log translation enabled')
+				ui.message(_("Log translation enabled"))
 			else:
 				# Translators: A message reported when trying to enable log translation.
-				ui.message('Cannot enable log translation. Please install or enable Instant Translate add-on.')
+				ui.message(_("Cannot enable log translation. Please install or enable Instant Translate add-on."))
 
 	@script(
 		# Translators: Input help mode message for Open source file script.
@@ -861,12 +860,10 @@ class LogContainer(ScriptableObject):
 	def script_moveToNextBlock(self, gesture):
 		reader = LogReader(self)
 		curMsg = reader.getCurrentMessage()
-		#zzz ui.message(curMsg.content)
 		blockType = curMsg.blockType()
-		#zzz ui.message(blockType)
 		if blockType is None:
 			# Translators: A message reported when using block navigation command
-			ui.message("No block in this message")
+			ui.message(_("No block in this message"))
 			return
 		reader.moveToBlock(direction=1, blockType=blockType)
 
@@ -881,7 +878,7 @@ class LogContainer(ScriptableObject):
 		blockType = curMsg.blockType()
 		if blockType is None:
 			# Translators: A message reported when using block navigation command
-			ui.message("No block in this message")
+			ui.message(_("No block in this message"))
 			return
 		reader.moveToBlock(direction=-1, blockType=blockType)
 
