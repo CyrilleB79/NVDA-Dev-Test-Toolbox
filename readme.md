@@ -158,7 +158,13 @@ Single letter command similar to browse mode quick navigation keys allow to move
 
 Pressing the single letter moves to the next occurrence of this message. Combining the letter with the shift key moves to the previous occurrence of this message.
 
-In addition, pressing `B`  or `shift+B`, you can move to the next or previous stack in the Python threads stacks message that NVDA logs when it freezes.
+In addition, inside certain types of messages, you can jump block by block pressing `B`  or `shift+B`.
+The following message types and associated blocks are supported:
+
+* In messages containing tracebacks, block navigation allows you to jump between tracebacks
+  This is useful when more than one traceback is present, e.g. when an error occurs in the "except" part of a try/except clause.
+* In the message listing the stacks for Python threads logged when a freeze occurs, block navigation allows you to jump between thread stacks.
+* In the message providing developer info for the navigator object logged when you press `NVDA+F1`, block navigation allows you to jump between blocks of properties.
 
 #### Translation of speech message
 
