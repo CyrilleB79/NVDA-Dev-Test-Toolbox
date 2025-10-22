@@ -14,6 +14,7 @@ This add-on gathers various features for NVDA debugging and testing.
 * Script tools: an extended script description mode and a script opener.
 * Commands to help log reading and analyzing.
 * Backups of old logs
+* A command to anonymize a log
 * Python console enhancements such as a custom startup script and the possibility to preserve input history in memory after NVDA restarts.
 * In the Python console workspace, a function to open the source code of an object.
 * A command to log the stack trace of the speech.speak function.
@@ -221,6 +222,21 @@ A triple press selects the error with its context, i.e. the text of the source c
 
 Please note that for logs taken with an NVDA version before 2024.1, thus with Python 3.7 or older, Python only indicates the error with one `^` (caret) character.
 Thus the double or triple press action of this command becomes rather useless.
+
+## Anonymize a log
+
+When reporting issues, you may have to provide a log.
+However, logs may contain sensitive information (user names, e-mails, etc.).
+This add-on provides a command to anonymize a log's content.
+
+Select a part of the log or its whole content and press `NVDA+X, A`.
+The anonymized log content will be put in the clipboard.
+You can paste it on the current selection to replace it or anywhere else you wish.
+
+For this feature to work, you need to customize the anonymization rules used by this command.
+The file to configure these rules is located at: `pathToNVDAConfig\ndtt\anonymizationRules.dic` (e.g. `C:\Users\myUserName\AppData\Roaming\nvda\ndtt\consoleStartup.py`).
+You will find all the instructions to write this file in its header.
+In case you have corrupted your anonymization rules file or if you have deleted the header's instructions, just delete or rename this file and a new version of this file will be generated at next startup.
 
 <a id="oldLogsBackup"></a>
 ## Backup of old logs
