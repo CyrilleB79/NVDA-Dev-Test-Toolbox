@@ -617,7 +617,8 @@ class LogsManagerDialog(
 			ctypes.windll.user32.EmptyClipboard()
 			ctypes.windll.user32.SetClipboardData(CF_HDROP, hGlobal)
 			ctypes.windll.user32.CloseClipboard()
-			ui.message("File copied")
+			# Translators: reported when requesting to copy the logs selected in the logs manager dialog.
+			ui.message(_("File copied"))
 		else:
 			wx.MessageBox("Unable to open the clipboard.", "Error", wx.OK | wx.ICON_ERROR)
 
