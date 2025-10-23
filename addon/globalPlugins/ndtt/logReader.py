@@ -189,7 +189,7 @@ class ThreadStackHeader(object):
 class TracebackStackHeader(object):
 	@classmethod
 	def makeFromLine(cls, text):
-		pass
+		return "Traceback (most recent call last):"
 
 
 class LogSection(object):
@@ -235,6 +235,29 @@ class LogSection(object):
 	@classmethod
 	def isLineInContent(cls, line):
 		return not RE_MESSAGE_HEADER.search(line)
+	
+	def isLineInInterestingContent(self, line):
+		raise NotImplementedError
+
+	def moveToContentStart(self):
+		self.ti.collapse()
+		if self.header is not None:
+			self.ti.move(textInfos.UNIT_LINE, 1)
+		self.ti.updateCaret()
+		self.ti.expand(textInfos.UNIT_LINE)
+		speech.speakTextInfo(self.ti, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
+
+	def moveToContentEnd(self):
+		self.ti.collapse(end=True)
+		shouldMoveUp = True
+		while shouldMoveUp:
+			self.ti.move(textInfos.UNIT_LINE, -1)
+			tiLine = self.ti.copy()
+			tiLine.expand(textInfos.UNIT_LINE)
+			shouldMoveUp = not self.isLineInInterestingContent(tiLine.text.strip())
+		self.ti.updateCaret()
+		self.ti.expand(textInfos.UNIT_LINE)
+		speech.speakTextInfo(self.ti, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
 
 
 class LogMessage(LogSection):
@@ -362,7 +385,13 @@ class LogMessage(LogSection):
 		speech.speak(seq)
 
 
-class ThreadStack(LogSection):
+class LogBlock(LogSection):
+
+	def isLineInInterestingContent(self, line):
+		return line != ""
+
+
+class ThreadStack(LogBlock):
 
 	headerType = ThreadStackHeader
 
@@ -385,7 +414,7 @@ class ThreadStack(LogSection):
 		speech.speak(seq)
 
 
-class TracebackStack(LogSection):
+class TracebackStack(LogBlock):
 
 	headerType = TracebackStackHeader
 	
@@ -403,6 +432,11 @@ class TracebackStack(LogSection):
 			return False
 		return not cls.blockStartIdentifier().search(line)
 
+	def isLineInInterestingContent(self, line):
+		if line == "During handling of the above exception, another exception occurred:":
+			return False
+		return super(TracebackStack, self).isLineInInterestingContent(line)
+
 	def speak(self, reason):
 		contentLines = self.content.split("\r")
 		if len(contentLines) > 3 and contentLines[-3:] == ["", "During handling of the above exception, another exception occurred:", ""]:
@@ -412,7 +446,7 @@ class TracebackStack(LogSection):
 		speech.speak(seq)
 
 
-class DevInfoBlock(LogSection):
+class DevInfoBlock(LogBlock):
 
 	headerType = None
 
@@ -546,7 +580,6 @@ class LogReader(object):
 			ti = position
 		else:
 			ti = self.caretTextInfo().copy()
-		n=0
 		while ti.move(textInfos.UNIT_LINE, direction):
 			tiLine = ti.copy()
 			tiLine.expand(textInfos.UNIT_LINE)
@@ -597,15 +630,19 @@ class LogReader(object):
 			position=ti,
 		)
 
-	def searchForBlock(self, direction, blockType):
+	def searchForBlock(self, direction, blockType, position=None):
 		BlockClass = BLOCK_TYPE_PARAMS[blockType]
 		reBlockStart = BlockClass.blockStartIdentifier()
-		tiLine = self.caretTextInfo().copy()
+		if position is None:
+			ti = self.caretTextInfo().copy()
+		else:
+			ti = position.copy()
+			ti.collapse()
+		tiLine = ti.copy()
 		tiLine.expand(textInfos.UNIT_LINE)
 		if RE_MESSAGE_HEADER.search(tiLine.text.rstrip()) and direction == -1:
 			return None
 		block = None
-		ti = self.caretTextInfo()
 		while ti.move(textInfos.UNIT_LINE, direction):
 			tiLine = ti.copy()
 			tiLine.expand(textInfos.UNIT_LINE)
@@ -629,7 +666,25 @@ class LogReader(object):
 		blockTi.collapse()
 		blockTi.updateSelection()
 		block.speak(reason=controlTypes.OutputReason.CARET)
-		
+
+	def moveToBlockContentBoundary(self, direction, blockType):
+		ti = self.caretTextInfo().copy()
+		tiLine = self.caretTextInfo().copy()
+		tiLine.expand(textInfos.UNIT_LINE)
+		if tiLine.text.strip():
+			# Go forward 1 character to be sure not to be at the beginning of the current block
+			ti.move(textInfos.UNIT_CHARACTER, 1)
+		block = self.searchForBlock(direction=-1, blockType=blockType, position=ti)
+		if block is None:
+			# Translators: Reported when pressing a quick navigation command in the log.
+			ui.message(_("No block here"))
+			return	
+		if direction == 1:
+			block.moveToContentStart()
+		elif direction == -1:
+			block.moveToContentEnd()
+		else:
+			raise RuntimeError("Wrond direction {}".format(direction))
 
 	def goToError(self, select=False, includeContext=False):
 		nReadLines = 0
@@ -734,8 +789,10 @@ class LogContainer(ScriptableObject):
 				gestureId = "kb:shift+" + qn
 				self.scriptTable[gestureId] = 'script_moveToPrevious{st}'.format(st=searchType)
 			self.scriptTable["kb:control+e"] = "script_goToError"
-			self.scriptTable["kb:b"] = "script_moveToNextBlock"
-			self.scriptTable["kb:shift+b"] = "script_moveToPreviousBlock"
+			self.scriptTable["kb:o"] = "script_moveToNextBlock"
+			self.scriptTable["kb:shift+o"] = "script_moveToPreviousBlock"
+			self.scriptTable["kb:l"] = "script_moveToFirstInterestingBlockLine"
+			self.scriptTable["kb:shift+l"] = "script_moveToLastInterestingBlockLine"
 			self.scriptTable["kb:control+t"] = "script_toggleLogTranslation"
 			self.scriptTable["kb:c"] = "script_openSourceFile"
 			self.scriptTable["kb:control+h"] = "script_displayLogReaderHelp"
@@ -852,20 +909,27 @@ class LogContainer(ScriptableObject):
 			return
 		reader.goToError(select, includeContext)
 
+	def _moveToBlockHelper(self, direction):
+		reader = LogReader(self)
+		curMsg = reader.getCurrentMessage()
+		if curMsg is None:
+			# Translators: A message reported when using block navigation command
+			ui.message(_("Not in a log message"))
+			return
+		blockType = curMsg.blockType()
+		if blockType is None:
+			# Translators: A message reported when using block navigation command
+			ui.message(_("No block in this message"))
+			return
+		reader.moveToBlock(direction=direction, blockType=blockType)
+
 	@script(
 		# Translators: Input help mode message for move to next block script.
 		description="Move the caret to the next block.",
 		category=ADDON_SUMMARY,
 	)
 	def script_moveToNextBlock(self, gesture):
-		reader = LogReader(self)
-		curMsg = reader.getCurrentMessage()
-		blockType = curMsg.blockType()
-		if blockType is None:
-			# Translators: A message reported when using block navigation command
-			ui.message(_("No block in this message"))
-			return
-		reader.moveToBlock(direction=1, blockType=blockType)
+		self._moveToBlockHelper(direction=1)
 
 	@script(
 		# Translators: Input help mode message for move to previous block script.
@@ -873,14 +937,37 @@ class LogContainer(ScriptableObject):
 		category=ADDON_SUMMARY,
 	)
 	def script_moveToPreviousBlock(self, gesture):
+		self._moveToBlockHelper(direction=-1)
+
+	def _moveToBlockContentBoundaryHelper(self, direction):
 		reader = LogReader(self)
 		curMsg = reader.getCurrentMessage()
+		if curMsg is None:
+			# Translators: A message reported when using block navigation command
+			ui.message(_("Not in a log message"))
+			return
 		blockType = curMsg.blockType()
 		if blockType is None:
 			# Translators: A message reported when using block navigation command
 			ui.message(_("No block in this message"))
 			return
-		reader.moveToBlock(direction=-1, blockType=blockType)
+		reader.moveToBlockContentBoundary(direction=direction, blockType=blockType)
+
+	@script(
+		# Translators: Input help mode message for command to move to first interesting line of current block
+		description="Move the caret to the last interesting line of the current block's content.",
+		category=ADDON_SUMMARY,
+	)
+	def script_moveToFirstInterestingBlockLine(self, gesture):
+		self._moveToBlockContentBoundaryHelper(direction=-1)
+
+	@script(
+		# Translators: Input help mode message for command to move to last interesting line of current block
+		description="Move the caret to the last interesting line of the current block's content.",
+		category=ADDON_SUMMARY,
+	)
+	def script_moveToLastInterestingBlockLine(self, gesture):
+		self._moveToBlockContentBoundaryHelper(direction=1)
 
 	@script(
 		# Translators: Input help mode message for Log Reader help script.

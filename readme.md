@@ -159,13 +159,18 @@ Single letter command similar to browse mode quick navigation keys allow to move
 
 Pressing the single letter moves to the next occurrence of this message. Combining the letter with the shift key moves to the previous occurrence of this message.
 
-In addition, inside certain types of messages, you can jump block by block pressing `B`  or `shift+B`.
+In addition, inside certain types of messages, you can jump block by block pressing `O`  or `shift+O`.
 The following message types and associated blocks are supported:
 
-* In messages containing tracebacks, block navigation allows you to jump between tracebacks
-  This is useful when more than one traceback is present, e.g. when an error occurs in the "except" part of a try/except clause.
+* In messages containing tracebacks, e.g. error messages, block navigation allows you to jump between tracebacks
+  This is specifically useful when more than one traceback is present, e.g. when an error is raised in the "except" part of a try/except clause.
 * In the message listing the stacks for Python threads logged when a freeze occurs, block navigation allows you to jump between thread stacks.
-* In the message providing developer info for the navigator object logged when you press `NVDA+F1`, block navigation allows you to jump between blocks of properties.
+* In the message providing developer info for the navigator object logged when you press `NVDA+F1`, block navigation allows you to jump between groups of properties.
+  There are four groups of properties: general properties, appModule properties, window properties and interface-specific (IAccessible, UIA) properties.
+
+At last, inside a block, you may want to jump quickly to first or last line of interest of the block.
+Use `shift+L` to jump to the first line of interest of the current block's content, e.g. the first frame of a traceback.
+And `L` to jump to the last line of interest of the block's content, e.g. last frame of a thread stack or error below a traceback.
 
 #### Translation of speech message
 
