@@ -189,7 +189,7 @@ class ThreadStackHeader(object):
 class TracebackStackHeader(object):
 	@classmethod
 	def makeFromLine(cls, text):
-		pass
+		return "Traceback (most recent call last):"
 
 
 class LogSection(object):
@@ -235,6 +235,9 @@ class LogSection(object):
 	@classmethod
 	def isLineInContent(cls, line):
 		return not RE_MESSAGE_HEADER.search(line)
+	
+	def isLineInInterestingContent(self, line):
+		raise NotImplementedError
 
 	def moveToContentStart(self):
 		self.ti.collapse()
@@ -246,7 +249,12 @@ class LogSection(object):
 
 	def moveToContentEnd(self):
 		self.ti.collapse(end=True)
-		self.ti.move(textInfos.UNIT_LINE, -1)
+		shouldMoveUp = True
+		while shouldMoveUp:
+			self.ti.move(textInfos.UNIT_LINE, -1)
+			tiLine = self.ti.copy()
+			tiLine.expand(textInfos.UNIT_LINE)
+			shouldMoveUp = not self.isLineInInterestingContent(tiLine.text.strip())
 		self.ti.updateCaret()
 		self.ti.expand(textInfos.UNIT_LINE)
 		speech.speakTextInfo(self.ti, unit=textInfos.UNIT_LINE, reason=controlTypes.OutputReason.CARET)
@@ -377,7 +385,13 @@ class LogMessage(LogSection):
 		speech.speak(seq)
 
 
-class ThreadStack(LogSection):
+class LogBlock(LogSection):
+
+	def isLineInInterestingContent(self, line):
+		return line != ""
+
+
+class ThreadStack(LogBlock):
 
 	headerType = ThreadStackHeader
 
@@ -400,7 +414,7 @@ class ThreadStack(LogSection):
 		speech.speak(seq)
 
 
-class TracebackStack(LogSection):
+class TracebackStack(LogBlock):
 
 	headerType = TracebackStackHeader
 	
@@ -418,6 +432,11 @@ class TracebackStack(LogSection):
 			return False
 		return not cls.blockStartIdentifier().search(line)
 
+	def isLineInInterestingContent(self, line):
+		if line == "During handling of the above exception, another exception occurred:":
+			return False
+		return super(TracebackStack, self).isLineInInterestingContent(line)
+
 	def speak(self, reason):
 		contentLines = self.content.split("\r")
 		if len(contentLines) > 3 and contentLines[-3:] == ["", "During handling of the above exception, another exception occurred:", ""]:
@@ -427,7 +446,7 @@ class TracebackStack(LogSection):
 		speech.speak(seq)
 
 
-class DevInfoBlock(LogSection):
+class DevInfoBlock(LogBlock):
 
 	headerType = None
 
@@ -615,15 +634,15 @@ class LogReader(object):
 		BlockClass = BLOCK_TYPE_PARAMS[blockType]
 		reBlockStart = BlockClass.blockStartIdentifier()
 		if position is None:
-			tiLine = self.caretTextInfo().copy()
+			ti = self.caretTextInfo().copy()
 		else:
-			tiLine = position.copy()
-			tiLine.collapse()
+			ti = position.copy()
+			ti.collapse()
+		tiLine = ti.copy()
 		tiLine.expand(textInfos.UNIT_LINE)
 		if RE_MESSAGE_HEADER.search(tiLine.text.rstrip()) and direction == -1:
 			return None
 		block = None
-		ti = self.caretTextInfo()
 		while ti.move(textInfos.UNIT_LINE, direction):
 			tiLine = ti.copy()
 			tiLine.expand(textInfos.UNIT_LINE)
@@ -772,8 +791,8 @@ class LogContainer(ScriptableObject):
 			self.scriptTable["kb:control+e"] = "script_goToError"
 			self.scriptTable["kb:o"] = "script_moveToNextBlock"
 			self.scriptTable["kb:shift+o"] = "script_moveToPreviousBlock"
-			self.scriptTable["kb:u"] = "script_moveToCurrentBlockContentStart"
-			self.scriptTable["kb:shift+u"] = "script_moveToCurrentBlockContentEnd"
+			self.scriptTable["kb:l"] = "script_moveToFirstInterestingBlockLine"
+			self.scriptTable["kb:shift+l"] = "script_moveToLastInterestingBlockLine"
 			self.scriptTable["kb:control+t"] = "script_toggleLogTranslation"
 			self.scriptTable["kb:c"] = "script_openSourceFile"
 			self.scriptTable["kb:control+h"] = "script_displayLogReaderHelp"
@@ -935,19 +954,19 @@ class LogContainer(ScriptableObject):
 		reader.moveToBlockContentBoundary(direction=direction, blockType=blockType)
 
 	@script(
-		# Translators: Input help mode message for move to current block's content sstart script.
-		description="Move the caret to the start of the current block's content.",
+		# Translators: Input help mode message for command to move to first interesting line of current block
+		description="Move the caret to the last interesting line of the current block's content.",
 		category=ADDON_SUMMARY,
 	)
-	def script_moveToCurrentBlockContentStart(self, gesture):
+	def script_moveToFirstInterestingBlockLine(self, gesture):
 		self._moveToBlockContentBoundaryHelper(direction=-1)
 
 	@script(
-		# Translators: Input help mode message for move to current block's content end script.
-		description="Move the caret to the end of the current block's content.",
+		# Translators: Input help mode message for command to move to last interesting line of current block
+		description="Move the caret to the last interesting line of the current block's content.",
 		category=ADDON_SUMMARY,
 	)
-	def script_moveToCurrentBlockContentEnd(self, gesture):
+	def script_moveToLastInterestingBlockLine(self, gesture):
 		self._moveToBlockContentBoundaryHelper(direction=1)
 
 	@script(
