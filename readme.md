@@ -228,6 +228,10 @@ A triple press selects the error with its context, i.e. the text of the source c
 Please note that for logs taken with an NVDA version before 2024.1, thus with Python 3.7 or older, Python only indicates the error with one `^` (caret) character.
 Thus the double or triple press action of this command becomes rather useless.
 
+#### Getting a summary of the available commands
+
+To display a list of all the available commands in log reading mode, press `NVDA+X, H`.
+
 ## Anonymize a log
 
 When reporting issues, you may have to provide a log.
@@ -423,6 +427,25 @@ If it is checked, you can also specify below the maximum number of inputs that w
 If it is unchecked, NVDA will behave as usual, i.e. the console history will be empty after restart.
 
 ## Change log
+
+### Version 8.0
+
+* Python console history can now be preserved accross restarts.
+* Reverse translation: Added a second command to reverse translate a string using both NVDA and its add-ons translations.
+* New log reader commans to jump to previous or next braille output message
+* New log reader commans to jump to previous or next block in a message, e.g. previous or next thread stack in a watchdog freeze report, previous or next block of properties in the developer info for navigator object, etc.
+* New log reader commands to jump to the first or last interesting line of a block, e.g. first or last frame of a traceback
+* A new log reader "Go to error" command to jump to the error in a traceback frame.
+* A new log reader command to display an help message listing all the available commands while reading a log.
+* The log reading mode is now enabled by default in the Python console output pane.
+* A new command to anonymize a log
+* The console startup script now supports unicode strings (for Python 3 only); full unicode file may not be supported though.
+* The Python console startup script will now only be executed once and only once when the console opens.
+A bug where this script could be executed many times when reloading the add-ons has been fixed.
+* Improved error handling in the console startup script.
+* Bugfix: An empty log files created when log is disabled do not fail anymore to be saved as old log.
+* Speech on demand is now supported in layered commands
+* Improved error handling of the script opener command (in case of wrong or missing configuration, or when a braille display is in use).
 
 ### Version 7.3
 
