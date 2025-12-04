@@ -12,6 +12,7 @@ import globalPluginHandler
 import addonHandler
 from scriptHandler import script
 import languageHandler
+import config
 
 import wx
 import sys
@@ -23,6 +24,12 @@ addonHandler.initTranslation()
 
 ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
 
+try:
+	# For NVDA version >= 2026.1
+	logLevelsList = [(l.value, l.displayString) for l in config.configFlags.LoggingLevel]
+except AttributeError:
+	# For NVDA version < 2026.1
+	logLevelsList = gui.settingsDialogs.GeneralSettingsPanel.LOG_LEVELS
 
 def restartWithOptions(options):
 	"""Restarts NVDA by starting a new copy, providing some options."""
@@ -305,7 +312,7 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 				'{level} ({name})'.format(
 					name=name,
 					level=level
-				) for level, name in gui.settingsDialogs.GeneralSettingsPanel.LOG_LEVELS
+				) for level, name in logLevelsList
 			],
 		),
 		CommandLineFolderOption(
