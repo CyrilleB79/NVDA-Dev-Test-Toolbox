@@ -8,6 +8,7 @@ from __future__ import unicode_literals
 import sys
 import re
 import gettext
+from functools import partial
 
 import wx
 
@@ -312,12 +313,13 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			menuItems.append(((val.text, val.ctx, val.n, val.addon), label))
 		# Convert to dict to remove duplicate
 		menuItems = dict(menuItems)
-		for label in menuItems.values():
-			self.menu.Append(
+		for key, label in menuItems.items():
+			item = self.menu.Append(
 				wx.ID_ANY,
 				label,
 			)
-			self.menu.Bind(wx.EVT_MENU, lambda evt: self.onChoice(evt, val))
+			handler = partial(self.onChoice, text=key[0])
+			self.menu.Bind(wx.EVT_MENU, handler, id=item.GetId())
 
 		def openMenu():
 			gui.mainFrame.prePopup()
@@ -325,5 +327,5 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			gui.mainFrame.postPopup()
 		wx.CallLater(0, openMenu)
 	
-	def onChoice(self, evt, val):
-		core.callLater(100, lambda: self.reportAndCopyReverseTranslation(val.text))
+	def onChoice(self, evt, text):
+		core.callLater(100, lambda: self.reportAndCopyReverseTranslation(text))
