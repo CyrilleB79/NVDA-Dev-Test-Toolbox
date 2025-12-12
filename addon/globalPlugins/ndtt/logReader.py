@@ -118,7 +118,7 @@ RE_CANCELLABLE_SPEECH = re.compile(
 	r"\)"
 	r"((?=\])|, )"
 )
-RE_CALLBACK_COMMAND = re.compile(r'CallbackCommand\(name=say-all:[A-Za-z]+\)((?=\])|, )')
+RE_CALLBACK_COMMAND = re.compile(r'CallbackCommand\(name=[^)\r\n]+\)((?=\])|, )')
 
 RE_THREAD_STACK_BLOCK = re.compile(r"Python stack for thread (?P<threadNum>\d+) \((?P<threadName>[^\r\n]+)\):")
 
