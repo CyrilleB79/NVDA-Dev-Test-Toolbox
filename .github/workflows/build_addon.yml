@@ -75,7 +75,7 @@ jobs:
 
     - name: Cache NVDA
       id: cache-nvda
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: download
         key: ${{ runner.os }}-nvda_launcher-${{matrix.nvda-release}}
@@ -86,7 +86,7 @@ jobs:
       shell: cmd
     - name: Save NVDA cache
       if: steps.cache-nvda.outputs.cache-hit != 'true'
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: download
         key: ${{ runner.os }}-nvda_launcher-${{matrix.nvda-release}}
