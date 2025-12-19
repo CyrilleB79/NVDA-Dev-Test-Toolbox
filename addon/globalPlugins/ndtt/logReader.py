@@ -173,7 +173,7 @@ if not preSpeechRefactor:
 		EndUtteranceCommand,
 		WaveFileCommand,
 	])
-ALLOWED_COMMANDS = {c.__name__: c for c in [BeepCommand, EndUtteranceCommand]}
+ALLOWED_COMMANDS = {c.__name__: c for c in cmdList}
 
 def generateSpeechSequence(txtSeq):
 	"""Generates a speech sequence from its representation in the log.
@@ -194,22 +194,37 @@ def generateSpeechSequence(txtSeq):
 			if name in FORBIDDEN_COMMANDS:
 				continue
 			if name not in ALLOWED_COMMANDS:
-				raise ValueError(f"Unsupported command: {name}")
+				log.error(f"Unsupported command: {name}")
+				continue
 			args = []
+			valid = False
 			for arg in elt.args:
 				if isinstance(arg, ast.Constant):
 					args.append(arg.value)
 				else:
-					raise ValueError(f"Non-literal argument in {name}")
+					log.error(f"Non-literal argument in {name}")
+					break
+			else:
+				valid = True
+			if not valid:
+				continue
+
 			kwargs = {}
+			valid = False
 			for kw in elt.keywords:
 				if not isinstance(kw.value, ast.Constant):
-					raise ValueError(f"Non-literal kwarg in {name}")
+					log.error(f"Non-literal kwarg in {name}")
+					break
 				kwargs[kw.arg] = kw.value.value
+			else:
+				valid = True
+			if not valid:
+				continue
 			cmd_cls = ALLOWED_COMMANDS[name]
 			seq.append(cmd_cls(*args, **kwargs))
 			continue
-		raise ValueError(f"Unsupported AST node: {ast.dump(elt)}")
+		log.error(f"Unsupported AST node: {ast.dump(elt)}")
+		continue
 	return seq
 
 class LogMessageHeader(object):
@@ -348,7 +363,12 @@ class LogMessage(LogSection):
 			# representation in the log is not valid Python syntax and in any case, we want to discard them.
 			txtSeq = RE_CANCELLABLE_SPEECH.sub('', txtSeq)
 			txtSeq = RE_CALLBACK_COMMAND.sub('', txtSeq)
-			seq = generateSpeechSequence(txtSeq)
+			try:
+				seq = generateSpeechSequence(txtSeq)
+			except SyntaxError:  # When parsing the logged text of the sequence.
+				log.error("Sequence cannot be spoken: {seq}".format(seq=match['seq']))
+				# Fallback to full line
+				return self.content
 			if LogContainer.translateLog:
 				seq2 = []
 				for s in seq:
