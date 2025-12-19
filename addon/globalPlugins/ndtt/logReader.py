@@ -18,12 +18,12 @@ import textInfos
 from keyLabels import localizedKeyLabels
 import speech
 try:
-	from speech.commands import (  # noqa: F401 - may be used in the evaluated speech sequence
+	from speech.commands import (
 		CallbackCommand,
 		BeepCommand,
 		ConfigProfileTriggerCommand,
 	)
-	from speech.commands import (  # noqa: F401 - may be used in the evaluated speech sequence
+	from speech.commands import (
 		CharacterModeCommand,
 		LangChangeCommand,
 		BreakCommand,
@@ -37,19 +37,14 @@ try:
 	preSpeechRefactor = False
 except ImportError:
 	# NVDA <= 2019.2.1
-	from speech import (  # noqa: F401 - may be used in the evaluated speech sequence
+	from speech import (
 		CharacterModeCommand,
 		LangChangeCommand,
 		BreakCommand,
-		# EndUtteranceCommand,
 		PitchCommand,
 		VolumeCommand,
 		RateCommand,
 		PhonemeCommand,
-		# CallbackCommand,
-		# BeepCommand,
-		# WaveFileCommand,
-		# ConfigProfileTriggerCommand,
 	)
 	preSpeechRefactor = True
 from logHandler import log
@@ -75,6 +70,8 @@ from .securityUtils import secureBrowseableMessage
 
 import re
 import os
+import sys
+import ast
 
 
 addonHandler.initTranslation()
@@ -156,6 +153,118 @@ def noFilter(msg):
 
 	return True
 
+
+cmdList = []
+if not preSpeechRefactor:
+	# We ignore CallbackCommand and ConfigProfileTriggerCommand to avoid producing errors or unexpected
+	# side effects.
+	cmdList.append(CallbackCommand)
+	cmdList.append(ConfigProfileTriggerCommand)
+FORBIDDEN_COMMANDS = {c.__name__ for c in cmdList}
+
+cmdList = [
+	CharacterModeCommand,
+	LangChangeCommand,
+	BreakCommand,
+	PitchCommand,
+	VolumeCommand,
+	RateCommand,
+	PhonemeCommand,
+]
+if not preSpeechRefactor:
+	cmdList.extend([
+		BeepCommand,
+		EndUtteranceCommand,
+		WaveFileCommand,
+	])
+ALLOWED_COMMANDS = {c.__name__: c for c in cmdList}
+
+
+def astNodeToStr(node):
+	# NVDA >= 2024.1 (using Python 3.11 or higher)
+	if sys.version_info >= (3, 8):
+		if isinstance(node, ast.Constant) and isinstance(node.value, str):
+			return node.value
+	# NVDA < 2024.1 (using Python 2.7 or 3.7)
+	else:
+		if isinstance(node, ast.Str):
+			return node.s
+	raise ValueError("Node is not a string")
+
+
+def astNodeToLitteral(node):
+	# NVDA >= 2024.1 (using Python 3.11 or higher)
+	if sys.version_info >= (3, 8):
+		if isinstance(node, ast.Constant):
+			return node.value
+	# NVDA < 2024.1 (using Python 2.7 or 3.7)
+	else:
+		if isinstance(node, ast.Str):
+			return node.s
+		if isinstance(node, ast.Num):
+			return node.n
+		if isinstance(node, ast.NameConstant):
+			return node.value
+	raise ValueError("Node is not a litteral")
+
+def generateSpeechSequence(txtSeq):
+	"""Generates a speech sequence from its representation in the log.
+	Irrelevant commands are filtered out (CallbackCommand, _CancellableSpeechCommand)
+	We do not use "eval" to avoid executing arbitrary code from a crafted log.
+	"""
+
+	tree = ast.parse(txtSeq, mode="eval")
+	if not isinstance(tree.body, ast.List):
+		raise ValueError("Speech sequence must be a list")
+	seq = []
+	for elt in tree.body.elts:
+		try:
+			strVal = astNodeToStr(elt)
+		except ValueError:
+			pass
+		else:
+			seq.append(strVal)
+			continue
+		if isinstance(elt, ast.Call) and isinstance(elt.func, ast.Name):
+			name = elt.func.id
+			if name in FORBIDDEN_COMMANDS:
+				continue
+			if name not in ALLOWED_COMMANDS:
+				log.error("Unsupported command: {name}".format(name=name))
+				continue
+			args = []
+			valid = False
+			for arg in elt.args:
+				try:
+					litteralVal = astNodeToLitteral(arg)
+				except ValueError:
+					log.error("Non-literal argument in {name}".format(name=name))
+					break
+				args.append(litteralVal)
+			else:
+				valid = True
+			if not valid:
+				continue
+
+			kwargs = {}
+			valid = False
+			for kw in elt.keywords:
+				try:
+					litteralVal = astNodeToLitteral(kw.value)
+				except ValueError:
+					log.error("Non-literal kwarg in {name}".format(name=name))
+					break
+				kwargs[kw.arg] = litteralVal
+			else:
+				valid = True
+			if not valid:
+				continue
+			cmd_cls = ALLOWED_COMMANDS[name]
+			seq.append(cmd_cls(*args, **kwargs))
+			continue
+		log.error("Unsupported AST node: {node}".format(node=ast.dump(elt)))
+		continue
+	return seq
 
 class LogMessageHeader(object):
 	def __init__(self, level, codePath, time, threadName=None, thread=None):
@@ -303,13 +412,16 @@ class LogMessage(LogSection):
 			except Exception:
 				log.error("Sequence cannot be spoken: {seq}".format(seq=match['seq']))
 				return self.content
+			# Supress Cancellable speech commands and callback speech commands before parsing the text because their
+			# representation in the log is not valid Python syntax and in any case, we want to discard them.
 			txtSeq = RE_CANCELLABLE_SPEECH.sub('', txtSeq)
 			txtSeq = RE_CALLBACK_COMMAND.sub('', txtSeq)
-			seq = eval(txtSeq)
-			# Ignore CallbackCommand and ConfigProfileTriggerCommand to avoid producing errors or unexpected
-			# side effects.
-			if not preSpeechRefactor:
-				seq = [c for c in seq if not isinstance(c, (CallbackCommand, ConfigProfileTriggerCommand))]
+			try:
+				seq = generateSpeechSequence(txtSeq)
+			except SyntaxError:  # When parsing the logged text of the sequence.
+				log.error("Sequence cannot be spoken: {seq}".format(seq=match['seq']))
+				# Fallback to full line
+				return self.content
 			if LogContainer.translateLog:
 				seq2 = []
 				for s in seq:
