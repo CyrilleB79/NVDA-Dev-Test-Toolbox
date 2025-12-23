@@ -69,6 +69,7 @@ from .securityUtils import secureBrowseableMessage
 
 import re
 import os
+import sys
 import ast
 
 
@@ -175,6 +176,34 @@ if not preSpeechRefactor:
 	])
 ALLOWED_COMMANDS = {c.__name__: c for c in cmdList}
 
+
+def astNodeToStr(node):
+	# NVDA >= 2024.1 (using Python 3.11 or higher)
+	if sys.version_info >= (3, 8):
+		if isinstance(node, ast.Constant) and isinstance(node.value, str):
+			return node.value
+	# NVDA < 2024.1 (using Python 2.7 or 3.7)
+	else:
+		if isinstance(node, ast.Str):
+			return node.s
+	return None
+
+
+def astNodeToLitteral(node):
+	# NVDA >= 2024.1 (using Python 3.11 or higher)
+	if sys.version_info >= (3, 8):
+		if isinstance(node, ast.Constant):
+			return node.value
+	# NVDA < 2024.1 (using Python 2.7 or 3.7)
+	else:
+		if isinstance(node, ast.Str):
+			return node.s
+		if isinstance(node, ast.Num):
+			return node.n
+		if isinstance(node, ast.NameConstant):
+			return node.value
+	return None
+
 def generateSpeechSequence(txtSeq):
 	"""Generates a speech sequence from its representation in the log.
 	Irrelevant commands are filtered out (CallbackCommand, _CancellableSpeechCommand)
@@ -186,8 +215,9 @@ def generateSpeechSequence(txtSeq):
 		raise ValueError("Speech sequence must be a list")
 	seq = []
 	for elt in tree.body.elts:
-		if isinstance(elt, ast.Constant) and isinstance(elt.value, str):
-			seq.append(elt.value)
+		strVal = astNodeToStr(elt)
+		if strVal is not None:
+			seq.append(strVal)
 			continue
 		if isinstance(elt, ast.Call) and isinstance(elt.func, ast.Name):
 			name = elt.func.id
@@ -199,8 +229,9 @@ def generateSpeechSequence(txtSeq):
 			args = []
 			valid = False
 			for arg in elt.args:
-				if isinstance(arg, ast.Constant):
-					args.append(arg.value)
+				litteralVal = astNodeToLitteral(arg)
+				if litteralVal is not None:
+					args.append(litteralVal)
 				else:
 					log.error(f"Non-literal argument in {name}")
 					break
