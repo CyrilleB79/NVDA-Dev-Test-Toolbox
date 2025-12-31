@@ -13,6 +13,7 @@ import scriptHandler
 from scriptHandler import script
 import globalPlugins
 import ui
+from tones import beep
 import textInfos
 from keyLabels import localizedKeyLabels
 import speech
@@ -305,12 +306,17 @@ class LogMessage(LogSection):
 
 		match = matchDict(RE_MSG_BEEP.match(self.content))
 		if match:
-			return [BeepCommand(
-				float(match['freq']),
-				int(match['duration']),
-				int(match['leftVol']),
-				int(match['rightVol']),
-			)]
+			if not preSpeechRefactor:
+			# Trick: For versions supporting BeepCommands, Beep IO messages are reported by a beep command.
+				return [BeepCommand(
+					float(match['freq']),
+					int(match['duration']),
+					int(match['leftVol']),
+					int(match['rightVol']),
+				)]
+			# Esle, for pre-speech refactor versions, we should never end here since the Beep IO message should have
+			# already been handled.
+			raise RuntimeError("Beep message logging should have been handled in speak method directly")
 
 		# Check for input gesture:
 		match = matchDict(RE_MSG_INPUT.match(self.content))
@@ -374,6 +380,20 @@ class LogMessage(LogSection):
 		return it.translateAndCache(text, it.lang_from, it.lang_to).translation
 
 	def speak(self, reason, mode):
+		if preSpeechRefactor and self.header.level == 'IO':
+		# For pre-speech refactor versions (NVDA version < 2019.3), we cannot use the BeepCommand to report IO
+		# Beep logging messages
+			match = matchDict(RE_MSG_BEEP.match(self.content))
+			if match:
+				if mode == 'Message':
+					speech.speak([self.header.level + ", "])
+				beep(
+					float(match['freq']),
+					int(match['duration']),
+					int(match['leftVol']),
+					int(match['rightVol']),
+				)
+				
 		seq = self.getSpeakMessage(mode)
 		if isinstance(seq, TYPE_STR):
 			seq = [seq]
