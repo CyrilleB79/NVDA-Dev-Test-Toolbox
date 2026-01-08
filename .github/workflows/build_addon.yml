@@ -129,7 +129,7 @@ jobs:
       run: |
         copy %TEMP%\nvda-with-addon.log nvda.log
     - name: Upload NVDA's log
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: nvda-${{matrix.nvda-release}}.log
         path: nvda.log
