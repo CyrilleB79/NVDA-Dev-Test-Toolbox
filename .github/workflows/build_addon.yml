@@ -24,7 +24,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v6
       with:
-        python-version: 3.11
+        python-version: 3.13
         cache: 'pip'
 
     - name: Install dependencies
@@ -71,7 +71,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v6
       with:
-        python-version: 3.11
+        python-version: 3.13
 
     - name: Cache NVDA
       id: cache-nvda
