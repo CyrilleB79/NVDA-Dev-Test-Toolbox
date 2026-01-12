@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2020-2024 Cyrille Bougot
+# Copyright (C) 2020-2026 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
@@ -48,6 +48,7 @@ NDTT_LAYERED_COMMANDS_LIST = [
 	# - if the command is available in secure mode.
 	(["a"], "copyAndAnonymizeSelection", False),
 	(["c"], "openScriptForNextGesture", False),
+	(["shift+c"], "openSourcePathAtCaret", False),
 	(["d"], "toggleESDMode", True),
 	(["e"], "reportLastError", False),
 	(["shift+e"], "togglePlayErrorSound", False),
