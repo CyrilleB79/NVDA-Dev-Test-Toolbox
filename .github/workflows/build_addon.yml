@@ -96,7 +96,7 @@ jobs:
       shell: cmd
     
     - name: download add-on's releases files
-      uses: actions/download-artifact@v6
+      uses: actions/download-artifact@v7
       with:
         name: packaged_addon
     - name: Copy add-on in User config
