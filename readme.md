@@ -17,7 +17,7 @@ This add-on gathers various features for NVDA debugging and testing.
 * A command to anonymize a log
 * Python console enhancements such as a custom startup script and the possibility to preserve input history in memory after NVDA restarts.
 * In the Python console workspace, a function to open the source code of an object.
-* A command to log the stack trace of the speech.speak function.
+* A command to log the calls of a specific function (e.g. speech.speech.speak`), including its stack trace.
 * A command to reverse translate the items of the interface.
 
 ## Commands
@@ -230,7 +230,7 @@ Thus the double or triple press action of this command becomes rather useless.
 
 #### Getting a summary of the available commands
 
-To display a list of all the available commands in log reading mode, press `NVDA+X, H`.
+To display a list of all the available commands in log reading mode, press `control+H`.
 
 ## Anonymize a log
 
@@ -321,14 +321,25 @@ In Python console history, you can use up and down arrows to review and modify p
 Though, the list of previous inputs is cleared when exiting NVDA.
 This add-on provide [an option](#settingsPreserveHistory), enabled by default, allowing to preserve Python console input history even when NVDA is restarted.
 
-## Log the stack trace of the speech function
+<a id="loggingFunctionCall"></a>
+## Logging function calls
 
 Sometimes, you may want to see which part of the code is responsible for speaking something.
-For this, you can enable the stack trace logging of the speech function pressing `NVDA+X, S`.
-Each time NVDA speaks, a corresponding stack trace will be logged in the log.
+For this, you can enable the function calls logging for  the `speech.speech.speak` function pressing `NVDA+X, S`.
+Each time NVDA speaks, a corresponding message will be logged, including the stack trace, allowing you to identify the code that has caused this speech output.
+Once you are done, disable function calls logging with the same gesture.
 
-Note: You may modify the script's file directly to patch another function.
-See all instructions in the file for details on usage.
+The same way, you can choose to log the calls of output functions `tones.beep`, `braille.BrailleBuffer.update` or `nvwave.playWaveFile` to track the origin of a beep, braille output or a sound (e.g. spelling error sound).
+The [target function](#targetFunctionForCallLogSetting) can be chosen in the add-on's parameters.
+You can even log the calls stack of a custom function.
+
+By default, the log of the function calls is performed using the "settrace" method: it uses `sys.settrace`, `threading.settrace` and/or `threading.settrace_all_threads` to install a tracing callback that is invoked on target function return event.
+Alternatively, if you do not get satisfying results, you may opt for the "monkey patching" method where the target function (e.g. `speech.speech.speak`) is patched.
+Both methods have limitations that may prevent function calls to be logged in specific combined conditions.
+For example, the "settrace" method may not work with NVDA version lower than 2026.1, when the target function is run from a non-main thread and the function calls logging is enabled after the target function's thread has been started.
+On the other hand, the "monkey patching" method may not work when the target function is imported through a from import statement (e.g. `from tones import beep`).
+
+You can toggle the method used to log function calls in [the dedicated setting](#functionCallLogMethodSetting) or pressing `NVDA+X, shift+S`.
 
 <a id="reverseTranslationCommand"></a>
 ## Reverse translation command
@@ -340,7 +351,7 @@ It's quite frustrating and time consuming to have to restart NVDA in English to 
 To avoid this, the add-on provides two reverse translation commands allowing to reverse translate NVDA's interface such as messages, control labels in the GUI, etc.
 
 * `NVDA+X, R` uses NVDA's gettext translation to try to reverse translate the last speech.
-* `NVDA+shift+X, R` uses gettext translations from NVDA and its add-ons to try to reverse translate the last speech.
+* `NVDA+X, shift+R` uses gettext translations from NVDA and its add-ons to try to reverse translate the last speech.
 
 More specifically, the first string of the last speech sequence is reverse translated.
 
@@ -362,7 +373,7 @@ Reverse translation of NVDA strings is only available for NVDA version 2022.1 or
 For earlier versions of NVDA, only the add-ons strings are available for reverse translation.
 
 Besides, in NVDA version 2019.2.1 or earlier, in case no reverse translation is found, a second attempt is made in the first part of the string.
- Indeed, in these NVDA version, the speech sequence looks like this:
+Indeed, in these NVDA version, the speech sequence looks like this:
 ```
 IO - speech.speak (12:39:12.684):
 Speaking [u'Outils  sous-Menu  o']
@@ -425,6 +436,24 @@ This option allows to choose if the [reverse translation command](#reverseTransl
 If this checkbox is checked, Python console input history will be preserved when NVDA is restarted.
 If it is checked, you can also specify below the maximum number of inputs that will be saved.
 If it is unchecked, NVDA will behave as usual, i.e. the console history will be empty after restart.
+
+<a id="targetFunctionForCallLogSetting"></a>
+### Target function for function call logging
+
+This combobox defines the function whose calls will be logged when enabling [function call logging](#loggingFunctionCall).
+You can select the function among various output functions or opt for the custom function choice.
+
+If you select the custom function choice, you will need to enter the complete name of the function you want log calls for.
+This complete name should include its location (package, module, class, etc.).
+Be careful to define the function with its original location, i.e. where it was actually defined, else, call logging is less likely to work.
+For example, use `speech.speech.getCurrentLanguage` which targets the function defined in `speech\speech.py`, not `speech.getCurrentLanguage` witch target the symbol imported in `speech\__init__.py`.
+
+<a id="functionCallLogMethodSetting"></a>
+### Function call log method
+
+This combobox defines the method used to identify function calls when [function call logging](#loggingFunctionCall) is enabled.
+This parameter can also be toggled pressing `NVDA+X, shift+S`.
+When this method is modified, it will first apply the next time the function call log is activated; that is, it does not apply to current function call logging if currently enabled.
 
 ## Change log
 

@@ -1,9 +1,17 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2021-2025 Cyrille Bougot
+# Copyright (C) 2021-2026 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 import config
+
+try:
+	# For NVDA 2021.1 and above
+	from speech import speech
+	speakFun = "speech.speech.speak"
+except ImportError:
+	# For NVDA 2020.4 and below
+	speakFun = "speech.speak"
 
 confspec = {
 	"sourceFileOpener": 'string(default="")',
@@ -13,6 +21,8 @@ confspec = {
 	"copyRevTranslation": 'boolean(default=True)',
 	"preserveConsoleInputHistory": "boolean(default=False)",
 	"consoleInputHistorySize": "integer(min=1, max=10000, default=100)",
+	"functionCallsLogTarget": "string(default={speakFun})".format(speakFun=speakFun),
+	"functionCallsLogMethod": "string(default=settrace)",
 }
 config.conf.spec["ndtt"] = confspec
 

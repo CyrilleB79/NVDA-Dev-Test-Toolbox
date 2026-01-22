@@ -30,7 +30,7 @@ from .reverseUITranslation import GlobalPlugin as ReverseUITranslationGP
 if not globalVars.appArgs.secure:
 	# Plugins that may be used only in normal context, not in secure context.
 	from .beepError import GlobalPlugin as BeepErrorGP  # No error tone in secure mode
-	from .stackTracing import GlobalPlugin as StackTracingGP  # No log nor log viewer in secure mode
+	from .functionCallsLogging import GlobalPlugin as FunctionCallsLoggingGP  # No log nor log viewer in secure mode
 	from . import logManagement  # No log in secure mode.
 	from .logReader import GlobalPlugin as LogReaderGP  # No log nor log viewer in secure mode.
 	from .pythonConsoleEx import GlobalPlugin as PythonConsoleExGP  # No Python console in secure mode
@@ -62,7 +62,8 @@ NDTT_LAYERED_COMMANDS_LIST = [
 	(["q"], "restartWithOptions", True),
 	(["r"], "reverseNVDAUITranslation", True),
 	(["shift+r"], "reverseUITranslation", True),
-	(["s"], "toggleStackTraceLog", False),
+	(["s"], "toggleFunctionCallsLog", False),
+	(["shift+s"], "toggleFunctionCallsLogMethod", False),
 	(["o"], "openSettings", False),
 	(["h"], "displayHelp", True),
 ]
@@ -93,7 +94,7 @@ else:
 			ObjPropExplorerGP,
 			ReverseUITranslationGP,
 			BeepErrorGP,
-			StackTracingGP,
+			FunctionCallsLoggingGP,
 			logManagement.GlobalPlugin,
 			LogReaderGP,
 			PythonConsoleExGP,

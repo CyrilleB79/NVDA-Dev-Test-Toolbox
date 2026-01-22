@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2021-2023 Cyrille Bougot
+# Copyright (C) 2021-2026 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
@@ -245,6 +245,11 @@ class CodeLocator(object):
 
 
 def openObject(objPath):
+	obj = getObject(objPath)
+	openCodeFile(obj)
+	
+
+def getObject(objPath):
 	try:
 		importFunction = importlib.import_module
 	except NameError:
@@ -266,15 +271,14 @@ def openObject(objPath):
 		except ImportError:
 			continue
 		try:
-			openObjectInModule(objName, mod)
-			return
+			return getObjectInModule(objName, mod)
 		except FileOpenerError:
 			continue
 	else:
 		raise FileOpenerError(FileOpenerError.ET_OBJECT_NOT_FOUND, objPath)
 
 
-def openObjectInModule(objName, mod):
+def getObjectInModule(objName, mod):
 	tokens = objName.split('.') if objName else []
 	obj = mod
 	try:
@@ -282,6 +286,11 @@ def openObjectInModule(objName, mod):
 			obj = getattr(obj, attr)
 	except AttributeError:
 		raise FileOpenerError(FileOpenerError.ET_OBJECT_NOT_FOUND, mod.__name__ + '.' + objName)
+	return obj
+
+
+def _zzzToBeDeleted__openObjectInModule(objName, mod):
+	obj = getObjectInModule(objName, mod)
 	openCodeFile(obj)
 
 

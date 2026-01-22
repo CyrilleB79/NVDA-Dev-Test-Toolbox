@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA add-on: NVDA Dev & Test Toolbox
-# Copyright (C) 2023-2025 Cyrille Bougot
+# Copyright (C) 2023-2026 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
@@ -16,12 +16,20 @@ import globalVars
 import globalPluginHandler
 
 from .compa import PANEL_DESCRIPTION_WIDTH
+from .configNDTT import speakFun
 from .utils import getBaseProfileConfigValue
 
 addonHandler.initTranslation()
 
 ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
 
+
+PATCHABLE_FUNCTIONS = [
+	speakFun,
+	"tones.beep",
+	"braille.BrailleBuffer.update",
+	"nvwave.playWaveFile",
+]
 
 class NDTTSettingsPanel(gui.settingsDialogs.SettingsPanel):
 	title = ADDON_SUMMARY
@@ -40,6 +48,8 @@ class NDTTSettingsPanel(gui.settingsDialogs.SettingsPanel):
 	).format(name=ADDON_SUMMARY)
 
 	def makeSettings(self, settingsSizer):
+		from .functionCallsLogging import logMethodDisplayStrings
+
 		if config.conf.profiles[-1].name is not None or len(config.conf.profiles) != 1:
 			self.panelDescription = self.NO_DEFAULT_PROFILE_MESSAGE
 			helper = gui.guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -131,6 +141,45 @@ class NDTTSettingsPanel(gui.settingsDialogs.SettingsPanel):
 			initial=getBaseProfileConfigValue("ndtt", "consoleInputHistorySize"),
 		)
 		self.nbPreservedInputsEdit.Enable(self.preserveConsoleInputHistory.GetValue())
+		
+		self.functionsChoices = [name for name in PATCHABLE_FUNCTIONS]
+		# Translators: This is a label for a combo box in the NDTT Settings panel.
+		self.customFunctionChoice = "<{}>".format(_("Custom function"))
+		self.functionsChoices.append(self.customFunctionChoice)
+		self.functionCallsLogTarget = sHelper.addLabeledControl(
+			# Translators: This is a label for a setting in the settings panel
+			_("Target function for function call logging:"),
+			wx.Choice,
+			choices=self.functionsChoices,
+		)
+		
+		self.customFunctionLabel = _(
+			# Translators: This is a label for an edit field in the NDTT Settings panel.
+			"Custom function for stack tracing:",
+		)
+		self.customFunction = sHelper.addLabeledControl(self.customFunctionLabel, wx.TextCtrl)
+		
+		val = getBaseProfileConfigValue("ndtt", "functionCallsLogTarget")
+		if val in self.functionsChoices:
+			self.functionCallsLogTarget.StringSelection = val
+			self.customFunction.SetValue("")
+		else:
+			self.functionCallsLogTarget.StringSelection = self.customFunctionChoice
+			self.customFunction.SetValue(val)
+		
+		self.functionCallsLogTarget.Bind(wx.EVT_CHOICE, self.onFunctionCallsLogTargetChanged)		
+		self.onFunctionCallsLogTargetChanged()
+
+		# Translators: This is a label for the combo box in the NDTT Settings panel.
+		text = _("Function call log method:")
+		self.functionCallsLogMethodsList = sHelper.addLabeledControl(
+			text,
+			wx.Choice,
+			choices=[label for val, label in logMethodDisplayStrings],
+		)
+		val = getBaseProfileConfigValue("ndtt", "functionCallsLogMethod")
+		index = [val for val, label in logMethodDisplayStrings].index(val)
+		self.functionCallsLogMethodsList.Select(index)
 
 	@staticmethod
 	def getParameterBound(name, boundType):
@@ -157,7 +206,16 @@ class NDTTSettingsPanel(gui.settingsDialogs.SettingsPanel):
 	def updateNbBackupsEdit(self, backupType):
 		self.nbBackupsEdit.Enable(backupType == 'maxNumber')
 
+	def onFunctionCallsLogTargetChanged(self, evt=None):
+		val = self.functionCallsLogTarget.StringSelection
+		if val == self.customFunctionChoice:
+			self.customFunction.Enable()
+		else:
+			self.customFunction.Disable()
+				
+
 	def onSave(self):
+		from .functionCallsLogging import logMethodDisplayStrings
 		# Make sure we're operating in the "normal" profile
 		if not (config.conf.profiles[-1].name is None and len(config.conf.profiles) == 1):
 			log.debugWarning("No configuration saved for NDTT since the current profile is not the default one.")
@@ -173,3 +231,9 @@ class NDTTSettingsPanel(gui.settingsDialogs.SettingsPanel):
 		if not config.conf["ndtt"]["preserveConsoleInputHistory"]:
 			plugin = [p for p in globalPluginHandler.runningPlugins if p.__module__ == "globalPlugins.ndtt"][0]
 			plugin.deleteInputHistory()
+		val = self.functionCallsLogTarget.StringSelection
+		if val == self.customFunctionChoice:
+			config.conf["ndtt"]["functionCallsLogTarget"] = self.customFunction.GetValue()
+		else:
+			config.conf["ndtt"]["functionCallsLogTarget"] = val
+		config.conf["ndtt"]["functionCallsLogMethod"] = logMethodDisplayStrings[self.functionCallsLogMethodsList.Selection][0]

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2021-2025 Cyrille Bougot
+# Copyright (C) 2021-2026 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
@@ -123,6 +123,7 @@ RE_CALLBACK_COMMAND = re.compile(r'CallbackCommand\(name=[^)\r\n]+\)((?=\])|, )'
 
 RE_THREAD_STACK_BLOCK = re.compile(r"Python stack for thread (?P<threadNum>\d+) \((?P<threadName>[^\r\n]+)\):")
 
+RE_FUNC_CALL_LOG_BLOCK = re.compile(r"Function call trace for (?P<funcName>[^ ]+) \(thread=(?P<threadName>[^\r\n]+)\):")
 # Regexps of log line containing a file path and a line number.
 RE_STACK_TRACE_LINE = re.compile(
 	r'^File "(?:(?P<path>(?P<drive>(?:[A-Z]:\\)?)[^<>:"]+\.pyw?)[co]?|(?P<specPath><[^>"]+>))", line (?P<line>\d+)(?:, in (?P<scope>.+))?$'
@@ -145,6 +146,7 @@ RE_MSG_MARKER = re.compile(NDTT_MARKER_STRING.format(r'\d+'))
 
 # Block types:
 THREAD_STACK = "ThreadStack"
+FUNCTION_CALL_LOG = "FunctionCallLog"
 TRACEBACK_STACK = "TracebackStack"
 DEV_INFO_BLOCK = "DevInfoBlock"
 
@@ -185,6 +187,20 @@ class ThreadStackHeader(object):
 		if not match:
 			raise LookupError
 		return cls(match["threadName"], match["threadNum"])
+
+class FunctionCallLogHeader(object):
+	def __init__(self, funcName=None, threadName=None):
+		self.funcName = funcName
+		self.threadName = threadName
+
+	@classmethod
+	def makeFromLine(cls, text):
+		"""Create a FunctionCallLogHeader from a header line"""
+
+		match = matchDict(RE_FUNC_CALL_LOG_BLOCK.match(text))
+		if not match:
+			raise LookupError
+		return cls(match["funcName"], match["threadName"])
 
 
 class TracebackStackHeader(object):
@@ -434,6 +450,31 @@ class ThreadStack(LogBlock):
 		speech.speak(seq)
 
 
+class FunctionCallLog(LogBlock):
+
+	headerType = FunctionCallLogHeader
+
+	@staticmethod
+	def containsThisBlockType(msg):
+		return msg.split("\r")[0].startswith("Function call trace for ")
+
+	@staticmethod
+	def blockStartIdentifier():
+		return RE_FUNC_CALL_LOG_BLOCK
+
+	@classmethod
+	def isLineInContent(cls, line):
+		if not super(FunctionCallLog, cls).isLineInContent(line):
+			return False
+		return not RE_FUNC_CALL_LOG_BLOCK.search(line)
+
+	def speak(self, reason):
+		seq = ["{name}; thread {threadName}".format(name=self.header.funcName, threadName=self.header.threadName)]
+		speech.speak(seq)
+
+
+
+
 class TracebackStack(LogBlock):
 
 	headerType = TracebackStackHeader
@@ -493,6 +534,7 @@ class DevInfoBlock(LogBlock):
 
 BLOCK_TYPE_PARAMS = {
 	THREAD_STACK: ThreadStack,
+	FUNCTION_CALL_LOG: FunctionCallLog,
 	TRACEBACK_STACK: TracebackStack,
 	DEV_INFO_BLOCK: DevInfoBlock,
 }
