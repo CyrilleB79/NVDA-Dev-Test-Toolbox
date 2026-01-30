@@ -314,7 +314,7 @@ class LogMessage(LogSection):
 					int(match['leftVol']),
 					int(match['rightVol']),
 				)]
-			# Esle, for pre-speech refactor versions, we should never end here since the Beep IO message should have
+			# Else, for pre-speech refactor versions, we should never end here since the Beep IO message should have
 			# already been handled.
 			raise RuntimeError("Beep message logging should have been handled in speak method directly")
 
@@ -393,7 +393,7 @@ class LogMessage(LogSection):
 					int(match['leftVol']),
 					int(match['rightVol']),
 				)
-				
+				return
 		seq = self.getSpeakMessage(mode)
 		if isinstance(seq, TYPE_STR):
 			seq = [seq]
