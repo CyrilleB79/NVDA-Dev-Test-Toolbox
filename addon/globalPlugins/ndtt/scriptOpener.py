@@ -79,7 +79,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@script(
 		# Translators: Input help mode message for a command.
-		description=_("Opens the code of the path at the position of the cursor"),
+		description=_("Opens the code of the path at the position of the system cursor"),
 		category=ADDON_SUMMARY,
 	)
 	def script_openSourcePathAtCaret(self, gesture):
@@ -95,7 +95,21 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		except (NotImplementedError, RuntimeError):
 			info = obj.makeTextInfo(textInfos.POSITION_FIRST)
 		info.expand(textInfos.UNIT_LINE)
-		for match in RE_PATH.finditer(info.text):
+		self._findAndOpenPath(info.text)
+
+	@script(
+		# Translators: Input help mode message for a command.
+		description=_("Opens the code of the path at the position of the review cursor"),
+		category=ADDON_SUMMARY,
+	)
+	def script_openSourcePathAtReview(self, gesture):
+		info = api.getReviewPosition().copy()
+		info.expand(textInfos.UNIT_LINE)
+		self._findAndOpenPath(info.text)
+		
+	@staticmethod
+	def _findAndOpenPath(text):
+		for match in RE_PATH.finditer(text):
 			path = match.group("path")
 			if path.startswith('"') and path.endswith('"'):
 				path = path[1:-1]
@@ -103,7 +117,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			column = match.group("column")
 			break
 		else:
-			# Translators: Reported when executing the command to open the source code at the path/line at the caret position.
+			# Translators: Reported when executing the command to open the source code at the path/line at the caret or review position.
 			ui.message(_("No path on this line"))
 			return
 		try:
@@ -114,6 +128,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			msg = e.getUserFriendlyMessage()
 			core.callLater(0, lambda: ui.message(msg))
 
+	
 	def terminate(self):
 		if inputCore.manager._captureFunc == self._openScriptForNextGestureCaptor:
 			inputCore.manager._captureFunc = None

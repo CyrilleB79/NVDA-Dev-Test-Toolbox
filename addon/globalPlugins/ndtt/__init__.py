@@ -49,6 +49,7 @@ NDTT_LAYERED_COMMANDS_LIST = [
 	(["a"], "copyAndAnonymizeSelection", False),
 	(["c"], "openScriptForNextGesture", False),
 	(["shift+c"], "openSourcePathAtCaret", False),
+	(["control+c"], "openSourcePathAtReview", False),
 	(["d"], "toggleESDMode", True),
 	(["e"], "reportLastError", False),
 	(["shift+e"], "togglePlayErrorSound", False),
