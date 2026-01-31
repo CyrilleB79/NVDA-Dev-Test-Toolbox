@@ -23,25 +23,16 @@ addon_info = AddonInfo(
 	# Translators: Long description to be shown for this add-on on add-on information from add-on store
 	addon_description=_("""A set of tools for NVDA developers and testers."""),
 	# version
-	addon_version="8.0",
+	addon_version="9.0",
 	# Brief changelog for this version
 	# Translators: what's new content for the add-on version to be shown in the add-on store
-	addon_changelog=_("""* Python console history can now be preserved accross restarts.
-* Reverse translation: Added a second command to reverse translate a string using both NVDA and its add-ons translations.
-* New log reader commans to jump to previous or next braille output message
-* New log reader commans to jump to previous or next block in a message, e.g. previous or next thread stack in a watchdog freeze report, previous or next block of properties in the developer info for navigator object, etc.
-* New log reader commands to jump to the first or last interesting line of a block, e.g. first or last frame of a traceback
-* A new log reader "Go to error" command to jump to the error in a traceback frame.
-* A new log reader command to display an help message listing all the available commands while reading a log.
-* The log reading mode is now enabled by default in the Python console output pane.
-* A new command to anonymize a log
-* The console startup script now supports unicode strings (for Python 3 only); full unicode file may not be supported though.
-* The Python console startup script will now only be executed once and only once when the console opens.
-A bug where this script could be executed many times when reloading the add-ons has been fixed.
-* Improved error handling in the console startup script.
-* Bugfix: An empty log files created when log is disabled do not fail anymore to be saved as old log.
-* Speech on demand is now supported in layered commands
-* Improved error handling of the script opener command (in case of wrong or missing configuration, or when a braille display is in use).
+	addon_changelog=_("""* A new command to open a code file when the caret is on a file path/line has been added.
+* Function calls logging (previously known as stack logging) has been improved offering the possibility to log the call of any function and providing a most reliable method to identify function calls.
+* Fixed a security issue with the log reader ([GHSA-39pg-6xpm-mjgf](https://github.com/CyrilleB79/NVDA-Dev-Test-Toolbox/security/advisories/GHSA-39pg-6xpm-mjgf)).
+* IO beep messages are now correctly reported with NVDA 2019.2.1.
+* Log reading commands no longer fail to read some speech commands (e.g. when using Console Toolkit add-on)
+* Addressed an issues where, in case of multiple possible reverse translations, the last menu item was copied to clipboard, no matter the item actually clicked.
+* Prepared compatibility for NVDA 2026.1
 """),
 	# Author(s)
 	addon_author="Cyrille Bougot <cyrille.bougot2@laposte.net>",
@@ -54,7 +45,7 @@ A bug where this script could be executed many times when reloading the add-ons 
 	# Minimum NVDA version supported (e.g. "2019.3.0", minor version is optional)
 	addon_minimumNVDAVersion="2019.2",
 	# Last NVDA version supported/tested (e.g. "2024.4.0", ideally more recent than minimum version)
-	addon_lastTestedNVDAVersion="2025.3.1",
+	addon_lastTestedNVDAVersion="2025.3.2",
 	# Add-on update channel (default is None, denoting stable releases,
 	# and for development releases, use "dev".)
 	# Do not change unless you know what you are doing!

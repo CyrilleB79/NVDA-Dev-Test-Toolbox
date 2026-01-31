@@ -464,6 +464,16 @@ When this method is modified, it will first apply the next time the function cal
 
 ## Change log
 
+### Version 9.0
+
+* A new command to open a code file when the caret is on a file path/line has been added.
+* Function calls logging (previously known as stack logging) has been improved offering the possibility to log the call of any function and providing a most reliable method to identify function calls.
+* Fixed a security issue with the log reader ([GHSA-39pg-6xpm-mjgf](https://github.com/CyrilleB79/NVDA-Dev-Test-Toolbox/security/advisories/GHSA-39pg-6xpm-mjgf)).
+* IO beep messages are now correctly reported with NVDA 2019.2.1.
+* Log reading commands no longer fail to read some speech commands (e.g. when using Console Toolkit add-on)
+* Addressed an issues where, in case of multiple possible reverse translations, the last menu item was copied to clipboard, no matter the item actually clicked.
+* Prepared compatibility for NVDA 2026.1
+
 ### Version 8.0
 
 * Python console history can now be preserved accross restarts.
