@@ -161,7 +161,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		if nPress == 0:
 			ui.message(self.lastInfo)
 		elif nPress == 1:
-			secureBrowseableMessage(self.lastInfo)				
+			secureBrowseableMessage(self.lastInfo)
 
 	@script(
 		description=_(

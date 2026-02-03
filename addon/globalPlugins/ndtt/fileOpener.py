@@ -247,7 +247,7 @@ class CodeLocator(object):
 def openObject(objPath):
 	obj = getObject(objPath)
 	openCodeFile(obj)
-	
+
 
 def getObject(objPath):
 	try:

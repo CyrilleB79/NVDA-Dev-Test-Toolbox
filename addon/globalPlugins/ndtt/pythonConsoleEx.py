@@ -64,7 +64,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		pythonConsole.consoleUI.console.namespace.update({'openCodeFile': openCodeFile})
 		self.loadStartupFile()
 		self.loadInputHistory(alreadyOpen=alreadyOpen)
-	
+
 	def loadStartupFile(self):
 		if os.path.isfile(self.consoleStartupFilePath):
 			log.debug("Loading console startup file {}".format(self.consoleStartupFilePath))
@@ -115,7 +115,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			for line in pythonConsole.consoleUI.inputHistory[-(config.conf["ndtt"]["consoleInputHistorySize"] + 1):-1]:
 				f.write(line + "\n")
 		log.debug("Python console input history saved at {}".format(self.consoleHistoryFilePath))
-	
+
 	def deleteInputHistory(self):
 		try:
 			os.remove(self.consoleHistoryFilePath)

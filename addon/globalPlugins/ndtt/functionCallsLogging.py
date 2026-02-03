@@ -73,7 +73,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		ui.message(_("Function calls log uses {method}").format(
 			method=next(label for val, label in logMethodDisplayStrings if val == newVal),
 		))
-	
+
 	def enableFunctionCallsLog(self, enable=True):
 		if enable:
 			if config.conf["ndtt"]["functionCallsLogMethod"] == LOG_METHOD_SETTRACE:

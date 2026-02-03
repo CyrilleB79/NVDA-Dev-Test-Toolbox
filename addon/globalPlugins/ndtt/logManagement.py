@@ -379,7 +379,7 @@ class LogsManagerDialog(
 		self.copyFilesButton = entryButtonsHelper.addButton(self, label=_("&Copy files"))
 		self.copyFilesButton.Disable()
 		self.copyFilesButton.Bind(wx.EVT_BUTTON, self.onCopyFilesClick)
-				
+
 		# Translators: The label for a button to delete the selected log(s) in Log Manager dialog.
 		self.deleteButton = entryButtonsHelper.addButton(self, label=_("&Delete"))
 		self.deleteButton.Disable()
@@ -604,9 +604,9 @@ class LogsManagerDialog(
 			log.debugWarning('Unable to open the clipboard')
 			# Translators: reported when requesting to copy the logs selected in the logs manager dialog.
 			ui.message(_('Unable to copy the selected logs; the clipboard is not available.'))
-		
+
 		return
-		
+
 		# Create an array of wide character strings for the file path
 		file_path_w = ctypes.create_unicode_buffer(file_path)
 		# Allocate global memory for the file path

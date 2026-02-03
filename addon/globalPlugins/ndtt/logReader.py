@@ -252,7 +252,7 @@ class LogSection(object):
 	@classmethod
 	def isLineInContent(cls, line):
 		return not RE_MESSAGE_HEADER.search(line)
-	
+
 	def isLineInInterestingContent(self, line):
 		raise NotImplementedError
 
@@ -478,7 +478,7 @@ class FunctionCallLog(LogBlock):
 class TracebackStack(LogBlock):
 
 	headerType = TracebackStackHeader
-	
+
 	@staticmethod
 	def containsThisBlockType(msg):
 		return "Traceback (most recent call last):" in msg.split("\r")
@@ -486,7 +486,7 @@ class TracebackStack(LogBlock):
 	@staticmethod
 	def blockStartIdentifier():
 		return re.compile(r"Traceback \(most recent call last\):")
-	
+
 	@classmethod
 	def isLineInContent(cls, line):
 		if not super(TracebackStack, cls).isLineInContent(line):
@@ -593,7 +593,7 @@ class TracebackFrame(object):
 			ctxLocEnd = locEnd + nTailingCtxLoc
 			errLocation = (locStart, locEnd)
 			errContextLocation = (ctxLocStart, ctxLocEnd)
-		
+
 		return cls(
 			path=path,
 			line=line,
@@ -625,7 +625,7 @@ class LogReader(object):
 
 	def __init__(self, obj):
 		self.obj = obj
-		
+
 	def caretTextInfo(self):
 		ti = self.obj.makeTextInfo(textInfos.POSITION_CARET)
 		ti.collapse()
@@ -676,7 +676,7 @@ class LogReader(object):
 		msgTi.collapse()
 		msgTi.updateSelection()
 		msg.speak(reason=controlTypes.OutputReason.CARET, mode=searchType)
-	
+
 	def getCurrentMessage(self):
 		ti = self.caretTextInfo().copy()
 		tiLine = self.caretTextInfo().copy()
@@ -740,7 +740,7 @@ class LogReader(object):
 		if block is None:
 			# Translators: Reported when pressing a quick navigation command in the log.
 			ui.message(_("No block here"))
-			return	
+			return
 		if direction == 1:
 			block.moveToContentStart()
 		elif direction == -1:
@@ -892,7 +892,7 @@ class LogContainer(ScriptableObject):
 			return self.rootNVDAObject.windowHandle
 
 	def toggleLogReadingCommands(self):
-	
+
 		self.isLogReaderEnabled = not self.isLogReaderEnabled
 		if self.isLogReaderEnabled:
 			# Translators: A message reported when toggling log reader commands.
@@ -945,7 +945,7 @@ class LogContainer(ScriptableObject):
 		# Translators: A message reported when trying to open the source code from the current line.
 		ui.message(_('No file path or object found on this line.'))
 
-	
+
 	@script(
 		description=_(
 			# Translators: Input help mode message for go to error script.
@@ -960,10 +960,10 @@ class LogContainer(ScriptableObject):
 		nRepeat = scriptHandler.getLastScriptRepeatCount()
 		if nRepeat == 0:
 			select = False
-			includeContext = False	
+			includeContext = False
 		elif nRepeat == 1:
 			select = True
-			includeContext = False	
+			includeContext = False
 		elif nRepeat == 2:
 			select = True
 			includeContext = True
@@ -1093,7 +1093,7 @@ class LogContainer(ScriptableObject):
 		match = matchDict(RE_INPUT_HELP.match(line))
 		if not match:
 			return False
-		
+
 		objPath = '{loc}.script_{name}'.format(loc=match['scriptLocation'], name=match['scriptName'])
 		openObject(objPath)
 		return True
