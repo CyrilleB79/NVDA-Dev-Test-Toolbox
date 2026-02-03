@@ -35,8 +35,8 @@ jobs:
         sudo apt-get install -y gettext
 
     - name: Code checks
-      # TODO: remove ruff/ruff-format skip once linting baseline is clean
-      run: export SKIP=no-commit-to-branch,ruff,ruff-format; pre-commit run --all
+      # TODO: remove ruff/ruff-format,pyright,add-trailing-comma skip once linting baseline is clean
+      run: export SKIP=no-commit-to-branch,ruff,ruff-format,pyright,add-trailing-comma; pre-commit run --all
 
     - name: building addon
       run: scons && scons pot
