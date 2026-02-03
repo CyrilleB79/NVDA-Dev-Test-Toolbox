@@ -109,7 +109,7 @@ class MixedGlobalPluginWithInit(MixedGlobalPlugin):
 		super(MixedGlobalPluginWithInit, self).__init__(
 			layerName = "NDTT_Main",
 			layeredCommandsList=[(gestures, script) for (gestures, script, sec) in NDTT_LAYERED_COMMANDS_LIST if (not globalVars.appArgs.secure) or sec],
-		)	
+		)
 
 
 def useAlternativeClassInSecureMode(safeClass):

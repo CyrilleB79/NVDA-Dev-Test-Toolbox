@@ -128,7 +128,7 @@ class NDTTSettingsPanel(gui.settingsDialogs.SettingsPanel):
 		)
 		self.preserveConsoleInputHistory.Bind(wx.EVT_CHECKBOX, self.onSaveConsoleInputHistoryModified)
 		sHelper.addItem(self.preserveConsoleInputHistory)
-		
+
 		minConsoleHistorySize = int(self.getParameterBound("consoleInputHistorySize", "min"))
 		maxConsoleHistorySize = int(self.getParameterBound("consoleInputHistorySize", "max"))
 		# Translators: This is a label for a setting in the settings panel
@@ -141,7 +141,7 @@ class NDTTSettingsPanel(gui.settingsDialogs.SettingsPanel):
 			initial=getBaseProfileConfigValue("ndtt", "consoleInputHistorySize"),
 		)
 		self.nbPreservedInputsEdit.Enable(self.preserveConsoleInputHistory.GetValue())
-		
+
 		self.functionsChoices = [name for name in PATCHABLE_FUNCTIONS]
 		# Translators: This is a label for a combo box in the NDTT Settings panel.
 		self.customFunctionChoice = "<{}>".format(_("Custom function"))
@@ -152,13 +152,13 @@ class NDTTSettingsPanel(gui.settingsDialogs.SettingsPanel):
 			wx.Choice,
 			choices=self.functionsChoices,
 		)
-		
+
 		self.customFunctionLabel = _(
 			# Translators: This is a label for an edit field in the NDTT Settings panel.
 			"Custom function for stack tracing:",
 		)
 		self.customFunction = sHelper.addLabeledControl(self.customFunctionLabel, wx.TextCtrl)
-		
+
 		val = getBaseProfileConfigValue("ndtt", "functionCallsLogTarget")
 		if val in self.functionsChoices:
 			self.functionCallsLogTarget.StringSelection = val
@@ -166,8 +166,8 @@ class NDTTSettingsPanel(gui.settingsDialogs.SettingsPanel):
 		else:
 			self.functionCallsLogTarget.StringSelection = self.customFunctionChoice
 			self.customFunction.SetValue(val)
-		
-		self.functionCallsLogTarget.Bind(wx.EVT_CHOICE, self.onFunctionCallsLogTargetChanged)		
+
+		self.functionCallsLogTarget.Bind(wx.EVT_CHOICE, self.onFunctionCallsLogTargetChanged)
 		self.onFunctionCallsLogTargetChanged()
 
 		# Translators: This is a label for the combo box in the NDTT Settings panel.
@@ -212,7 +212,7 @@ class NDTTSettingsPanel(gui.settingsDialogs.SettingsPanel):
 			self.customFunction.Enable()
 		else:
 			self.customFunction.Disable()
-				
+
 
 	def onSave(self):
 		from .functionCallsLogging import logMethodDisplayStrings

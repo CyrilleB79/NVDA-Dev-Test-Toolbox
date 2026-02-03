@@ -54,7 +54,7 @@ BRC_ERROR_ADDON_TRANSLATION_NOT_AVAILABLE = 4
 def removeAccel(s):
 	"""Remove accelerator from a string.
 	"""
-	
+
 	# Remove accelerator
 	s = re.sub('&', '', s)
 
@@ -226,7 +226,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				raise RuntimeError('Unexpected context splitting rule')
 		except AttributeError:
 			pass  # trans.CONTEXT not available before Python 3.11, i.e. NVDA < 2024.1
-	
+
 		reverseCatalog = {}
 		for (k, v) in trans._catalog.items():
 			if k == "":
@@ -292,7 +292,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 					mergedReverseCatalog[translated].extend(catValueList)
 			self._mergedReverseCatalog = mergedReverseCatalog, (BRC_SUCCESS if anyTranslationPresent else globalErrCode)
 		return self._mergedReverseCatalog
-	
+
 	def reportAndCopyReverseTranslation(self, text):
 		speech.cancelSpeech()
 		ui.message(text)
@@ -326,6 +326,6 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			gui.mainFrame.sysTrayIcon.PopupMenu(self.menu)
 			gui.mainFrame.postPopup()
 		wx.CallLater(0, openMenu)
-	
+
 	def onChoice(self, evt, text):
 		core.callLater(100, lambda: self.reportAndCopyReverseTranslation(text))

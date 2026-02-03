@@ -106,7 +106,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		info = api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_LINE)
 		self._findAndOpenPath(info.text)
-		
+
 	@staticmethod
 	def _findAndOpenPath(text):
 		for match in RE_PATH.finditer(text):
@@ -128,7 +128,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			msg = e.getUserFriendlyMessage()
 			core.callLater(0, lambda: ui.message(msg))
 
-	
+
 	def terminate(self):
 		if inputCore.manager._captureFunc == self._openScriptForNextGestureCaptor:
 			inputCore.manager._captureFunc = None

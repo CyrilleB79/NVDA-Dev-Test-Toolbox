@@ -84,4 +84,3 @@ def script(
 
 	return script_decorator
 
-	

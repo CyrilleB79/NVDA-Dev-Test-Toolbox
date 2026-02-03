@@ -62,7 +62,7 @@ jobs:
           2024.1, 2024.2, 2024.3, 2024.3.1, 2024.4, 2024.4.1, 2024.4.2,
           2025.1, 2025.1.1, 2025.1.2, 2025.2, 2025.3, 2025.3.1
         ]
-  
+
     steps:
 
     - uses: actions/checkout@v6
@@ -95,7 +95,7 @@ jobs:
       run: |
         download\nvda_launcher.exe --install-silent
       shell: cmd
-    
+
     - name: download add-on's releases files
       uses: actions/download-artifact@v7
       with:
@@ -104,7 +104,7 @@ jobs:
       run: |
         move *.nvda-addon addon.zip
         Expand-Archive addon.zip $env:APPDATA\nvda\addons\addon
-    
+
     - name: Copy test config file
       run: move ci\nvdaTestConfig.ini %appdata%\nvda\nvda.ini
       shell: cmd
@@ -112,7 +112,7 @@ jobs:
       run: |
         type %appdata%\nvda\nvda.ini
       shell: cmd
-    
+
     - name: start nvda
       run: start nvda -m -f %TEMP%\nvda-with-addon.log --debug-logging
       shell: cmd
@@ -124,7 +124,7 @@ jobs:
       shell: cmd
     - name: Ensure NVDA fully exited
       run: ping 127.0.0.1 /n 20
-      shell: cmd  
+      shell: cmd
     - name: get the log file from temp directory
       shell: cmd
       run: |
@@ -138,7 +138,7 @@ jobs:
       run: python ci\scripts\checkLog.py %TEMP%\nvda-with-addon.log
       shell: cmd
 
-  
+
   upload_release:
     runs-on: ubuntu-latest
     if: ${{ startsWith(github.ref, 'refs/tags/') }}

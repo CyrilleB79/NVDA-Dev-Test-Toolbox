@@ -41,7 +41,7 @@ def ScriptableObjectWithLayeredGestures(scriptableObjectName, entryPointGestures
 
 		def __init__(self, layerName, layeredCommandsList, *args, **kw):
 			super(MyScriptableObject, self).__init__(*args, **kw)
-			
+
 			# #24 / NVDA 18890: if the scriptable objects is not statically created at module level, NVDA cannot
 			# correctly remap its gestures.
 			# So work it around by creating a variable holding the class at module level and renaming the class's
@@ -52,14 +52,14 @@ def ScriptableObjectWithLayeredGestures(scriptableObjectName, entryPointGestures
 			globals()[moduleLevelClassName] = MyScriptableObject
 			# For Python 2: explicitely convert to str to avoid unicode instead; no effect in Python 3
 			MyScriptableObject.__name__ = str(moduleLevelClassName)
-			
+
 			self.layerCommandsList = []
 			for gesturesList, scriptName in layeredCommandsList:
 				script = getattr(self, "script_{}".format(scriptName))
 				self.layerCommandsList.append(
 					(gesturesList, scriptName, script.__doc__),
 				)
-	
+
 			self.toggling = False
 
 		def getScript(self, gesture):
