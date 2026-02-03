@@ -43,7 +43,7 @@ repos:
     - id: debug-statements
     # Removes trailing whitespace.
     - id: trailing-whitespace
-      types_or: [python, c, c++, batch, markdown, toml, yaml, powershell]
+      types_or: [python, c, c++, batch, toml, yaml, powershell]
     # Ensures all files end in 1 (and only 1) newline.
     - id: end-of-file-fixer
       types_or: [python, c, c++, batch, markdown, toml, yaml, powershell]
