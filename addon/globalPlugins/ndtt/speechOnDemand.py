@@ -83,4 +83,3 @@ def script(
 		return decoratedScript
 
 	return script_decorator
-
