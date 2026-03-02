@@ -41,7 +41,7 @@ jobs:
     - name: building addon
       run: scons && scons pot
 
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@v7
       with:
         name: packaged_addon
         path: |
@@ -130,7 +130,7 @@ jobs:
       run: |
         copy %TEMP%\nvda-with-addon.log nvda.log
     - name: Upload NVDA's log
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: nvda-${{matrix.nvda-release}}.log
         path: nvda.log
