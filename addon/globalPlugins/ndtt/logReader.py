@@ -120,7 +120,8 @@ RE_CALLBACK_COMMAND = re.compile(r'CallbackCommand\(name=[^)\r\n]+\)((?=\])|, )'
 
 RE_THREAD_STACK_BLOCK = re.compile(r"Python stack for thread (?P<threadNum>\d+) \((?P<threadName>[^\r\n]+)\):")
 
-RE_FUNC_CALL_LOG_BLOCK = re.compile(r"Function call trace for (?P<funcName>[^ ]+) \(thread=(?P<threadName>[^\r\n]+)\):")
+RE_FUNC_CALL_LOG_BLOCK = re.compile(r"^(?:(?P<arg>Arguments)|(?P<trace>Call stack trace)):$")
+
 # Regexps of log line containing a file path and a line number.
 RE_STACK_TRACE_LINE = re.compile(
 	r'^File "(?:(?P<path>(?P<drive>(?:[A-Z]:\\)?)[^<>:"]+\.pyw?)[co]?|(?P<specPath><[^>"]+>))", line (?P<line>\d+)(?:, in (?P<scope>.+))?$'
@@ -266,8 +267,20 @@ def generateSpeechSequence(txtSeq):
 		continue
 	return seq
 
-class LogMessageHeader(object):
+
+class SectionHeader(object):
+
+	def __init__(self):
+		super(SectionHeader, self).__init__()
+
+	@classmethod
+	def makeFromLine(cls, text):
+		return cls()
+
+
+class LogMessageHeader(SectionHeader):
 	def __init__(self, level, codePath, time, threadName=None, thread=None):
+		super(LogMessageHeader, self).__init__()
 		self.level = level
 		self.codePath = codePath
 		self.time = time
@@ -283,8 +296,9 @@ class LogMessageHeader(object):
 		return cls(match['level'], match['codePath'], match['time'], match['threadName'], match['thread'])
 
 
-class ThreadStackHeader(object):
+class ThreadStackHeader(SectionHeader):
 	def __init__(self, threadName=None, threadNum=None):
+		super(ThreadStackHeader, self).__init__()
 		self.threadName = threadName
 		self.threadNum = threadNum
 
@@ -297,10 +311,10 @@ class ThreadStackHeader(object):
 			raise LookupError
 		return cls(match["threadName"], match["threadNum"])
 
-class FunctionCallLogHeader(object):
-	def __init__(self, funcName=None, threadName=None):
-		self.funcName = funcName
-		self.threadName = threadName
+class FunctionCallLogHeader(SectionHeader):
+	def __init__(self, infoType):
+		super(FunctionCallLogHeader, self).__init__()
+		self.type = infoType
 
 	@classmethod
 	def makeFromLine(cls, text):
@@ -309,13 +323,14 @@ class FunctionCallLogHeader(object):
 		match = matchDict(RE_FUNC_CALL_LOG_BLOCK.match(text))
 		if not match:
 			raise LookupError
-		return cls(match["funcName"], match["threadName"])
+		matchedTypes = [v for v in match.values() if v is not None]
+		if len(matchedTypes) != 1:
+			raise RuntimeError("Unexpected matched types: {t}".format(t=matchedTypes))
+		return cls(infoType=matchedTypes[0])
 
 
-class TracebackStackHeader(object):
-	@classmethod
-	def makeFromLine(cls, text):
-		return "Traceback (most recent call last):"
+class TracebackStackHeader(SectionHeader):
+	pass
 
 
 class LogSection(object):
@@ -534,9 +549,14 @@ class LogMessage(LogSection):
 
 
 class LogBlock(LogSection):
+	"""A block consisting in a consistent log section to which it may be interesting to navigate.
+	"""
 
 	def isLineInInterestingContent(self, line):
 		return line != ""
+	
+	def speak(self, reason):
+		raise NotImplementedError
 
 
 class ThreadStack(LogBlock):
@@ -568,23 +588,21 @@ class FunctionCallLog(LogBlock):
 
 	@staticmethod
 	def containsThisBlockType(msg):
-		return msg.split("\r")[0].startswith("Function call trace for ")
+		return msg.split("\r")[0].startswith("Function call information for ")
 
 	@staticmethod
 	def blockStartIdentifier():
-		return RE_FUNC_CALL_LOG_BLOCK
+		return re.compile(r"^(?:(?:Arguments:)|(?:Call stack trace:))")
 
 	@classmethod
 	def isLineInContent(cls, line):
 		if not super(FunctionCallLog, cls).isLineInContent(line):
 			return False
-		return not RE_FUNC_CALL_LOG_BLOCK.search(line)
+		return not cls.blockStartIdentifier().search(line)
 
 	def speak(self, reason):
-		seq = ["{name}; thread {threadName}".format(name=self.header.funcName, threadName=self.header.threadName)]
+		seq = [self.header.type]
 		speech.speak(seq)
-
-
 
 
 class TracebackStack(LogBlock):
@@ -625,7 +643,7 @@ class DevInfoBlock(LogBlock):
 
 	@staticmethod
 	def containsThisBlockType(msg):
-		return "Developer info for navigator object:" in msg.split("\r")
+		return "Developer info for navigator object:" in msg.split("\r")[0]
 
 	@staticmethod
 	def blockStartIdentifier():
@@ -638,10 +656,9 @@ class DevInfoBlock(LogBlock):
 		return not cls.blockStartIdentifier().search(line)
 
 	def speak(self, reason):
-		contentLines = self.content.split("\r")
-		seq = [contentLines[0]]
-		speech.speak(seq)
-
+			contentLines = self.content.split("\r")
+			seq = [contentLines[0]]
+			speech.speak(seq)
 
 
 BLOCK_TYPE_PARAMS = {
