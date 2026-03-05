@@ -150,11 +150,23 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		return self._traceFunc
 
 	def logTraceFunc(self, frame):
+		argInfo = inspect.getargvalues(frame)
+		import globalVars as gv
+		gv.dbg = argInfo
+		argsList = ["%s=%r" % (name, argInfo.locals[name]) for name in argInfo.args]
+		if argInfo.varargs:
+			argsList.append("*%r" % (argInfo.locals[argInfo.varargs],))
+		if argInfo.keywords:
+			argsList.append("**%r" % (argInfo.locals[argInfo.keywords],))
+		argsRepr = "  " + "\n  ".join(argsList)
+		
 		stack = traceback.format_stack(frame)
+		
 		log.debug(
-			"Function call trace for %s (thread=%s):\n%s",
+			"Function call information for %s (thread=%s):\nArguments:\n%s\nCall stack trace:\n%s",
 			config.conf["ndtt"]["functionCallsLogTarget"],
 			threading.current_thread().name,
+			argsRepr,
 			"".join(stack),
 		)
 
