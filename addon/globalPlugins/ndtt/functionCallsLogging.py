@@ -82,7 +82,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 					func = getObject(config.conf["ndtt"]["functionCallsLogTarget"])
 				except FileOpenerError:
 					# Translators: Reported when toggling the function calls log feature.
-					ui.message("{func} is not a valid function name.".format(func=config.conf["ndtt"]["functionCallsLogTarget"]))
+					ui.message(_("{func} is not a valid function name.").format(func=config.conf["ndtt"]["functionCallsLogTarget"]))
 					return False
 				self._targetCode = self._getCodeObject(func)
 				sys.settrace(self._traceFunc)
@@ -105,12 +105,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				sys.settrace(None)
 				threading.settrace(None)
 			elif self.logMethod == LOG_METHOD_MONKEY_PATCHING:
-				try:
-					setattr(self.patchedObject, self.patchedFunctionName, self.monkeyPatchedFunction.originalFunction)
-				except:
-					import globalVars as gv
-					gv.dbg = (self.patchedObject, self.patchedFunctionName, monkeyPatchedFunction)
-					raise
+				setattr(self.patchedObject, self.patchedFunctionName, self.monkeyPatchedFunction.originalFunction)
 				self.monkeyPatchedFunction = None
 			elif self.logMethod  is None:
 				# Disable may be called at add-on termination, even if there is currently no logging
@@ -151,13 +146,23 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	def logTraceFunc(self, frame):
 		argInfo = inspect.getargvalues(frame)
-		import globalVars as gv
-		gv.dbg = argInfo
 		argsList = ["%s=%r" % (name, argInfo.locals[name]) for name in argInfo.args]
-		if argInfo.varargs:
-			argsList.append("*%r" % (argInfo.locals[argInfo.varargs],))
-		if argInfo.keywords:
-			argsList.append("**%r" % (argInfo.locals[argInfo.keywords],))
+		varargsName = argInfo.varargs
+		if varargsName is not None:
+			argsList.append(
+				"*{name}={value!r}".format(
+					name=varargsName,
+					value=argInfo.locals[varargsName],
+				)
+			)
+		keywordsName = argInfo.keywords
+		if keywordsName is not None:
+			argsList.append(
+				"**{name}={value!r}".format(
+					name=keywordsName,
+					value=argInfo.locals[keywordsName],
+				)
+			)
 		argsRepr = "  " + "\n  ".join(argsList)
 		
 		stack = traceback.format_stack(frame)
@@ -177,7 +182,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			patchedObject = getObject(location)
 		except FileOpenerError:
 			# Translators: Reported when toggling the function calls log feature.
-			ui.message("{location} is not a valid name.".format(location=location))
+			ui.message(_("{location} is not a valid object name.").format(location=location))
 			return False
 		try:
 			originalFunction = getattr(patchedObject, funcName)
