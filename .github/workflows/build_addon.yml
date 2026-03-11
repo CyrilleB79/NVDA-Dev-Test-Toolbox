@@ -97,7 +97,7 @@ jobs:
       shell: cmd
 
     - name: download add-on's releases files
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@v8
       with:
         name: packaged_addon
     - name: Copy add-on in User config
@@ -148,7 +148,7 @@ jobs:
     steps:
     - uses: actions/checkout@v6
     - name: download releases files
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@v8
     - name: Display structure of downloaded files
       run: ls -R
     - name: Extract change log
