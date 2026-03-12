@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2022-2025 Cyrille Bougot
+# Copyright (C) 2022-2026 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
@@ -11,24 +11,14 @@ from glob import glob
 import shutil
 from datetime import datetime, timedelta
 try:
+	# NVDA version >= 2019.3 (Python 3.7+)
 	from datetime import timezone
-	tzUTC = timezone.utc
 except ImportError:
+	# NVDA version < 2019.3 (Python 2.7)
 	from datetime import tzinfo
+	timezone = None
 
-	class UTC(tzinfo):
-		"""UTC"""
-
-		def utcoffset(self, dt):
-			return timedelta(0)
-
-		def tzname(self, dt):
-			return "UTC"
-
-		def dst(self, dt):
-			return timedelta(0)
-	tzUTC = UTC()
-# For Python 2.7, open the open of Python 3, allowing to specify encoding.
+# For NVDA version <= 2019.3 (Python 2.7), open the open of Python 3, allowing to specify encoding.
 from io import open
 import weakref
 import re
@@ -126,6 +116,26 @@ EXAMPLE_ANONYMIZATION_RULES_FILE = r"""
 # sessionid=[A-Za-z0-9]+	sessionid=<id>	regex
 """
 
+def getTzUTC():
+	if timezone is not None:
+		# NVDA version >= 2019.3 (Python 3.7+)
+		return timezone.utc
+
+	# NVDA version < 2019.3 (Python 2.7)
+	# We define our own UTC timezone
+	class UTC(tzinfo):
+		"""UTC"""
+
+		def utcoffset(self, dt):
+			return timedelta(0)
+
+		def tzname(self, dt):
+			return "UTC"
+
+		def dst(self, dt):
+			return timedelta(0)
+	return UTC()
+
 def getStartTimeLoggedByNDTT(path):
 	with open(path, 'r', encoding='utf8') as f:
 		for line in f:
@@ -141,7 +151,7 @@ def getFirstTimeLoggedByNVDA(path):
 		m = matchDict(RE_FIRST_LINE.match(line.strip()))
 		if not m:  # Can occur when using option -l 100, where the logfile is just empty
 			return None
-		localTimezone = datetime.now(tz=tzUTC).astimezone().tzinfo
+		localTimezone = datetime.now(tz=getTzUTC()).astimezone().tzinfo
 		dt = datetime.now()
 		dt = dt.replace(
 			hour=int(m['hour']),
@@ -245,8 +255,19 @@ def moduleInitialize():
 		return
 	except AttributeError:
 		pass
-	# Log the start date/time
-	log.info('{token}{dt}'.format(token=TOKEN_INITIALIZATION, dt=datetime.utcnow().strftime(DT_FORMAT_STRING)))
+	# Log the start date/time (UTC)
+	try:
+		# NVDA version >= 2019.3 (Python 3.7+)
+		dtNow = datetime.now(getTzUTC())
+	except TypeError:
+		# NVDA version < 2019.3 (Python 2.7)
+		dtNow = datetime.utcnow()
+	log.info(
+		"{token}{dt}".format(
+			token=TOKEN_INITIALIZATION,
+			dt=dtNow.strftime(DT_FORMAT_STRING),
+		),
+	)
 	# Call logCleanup only when NVDA has finished startup actions, no need to do it as soon as the current
 	# module is imported.
 	queueHandler.queueFunction(queueHandler.eventQueue, logsCleanup)
@@ -300,8 +321,8 @@ class Log(object):
 			return _("Unknown")
 		if sys.version_info.major >= 3:
 			# Date is displayed in local time.
-			localTimezone = datetime.now(tz=tzUTC).astimezone().tzinfo
-			dt = self.date.replace(tzinfo=tzUTC).astimezone(tz=localTimezone)
+			localTimezone = datetime.now(tz=getTzUTC()).astimezone().tzinfo
+			dt = self.date.replace(tzinfo=getTzUTC()).astimezone(tz=localTimezone)
 			return dt.strftime('%X %x')
 		else:
 			dt = self.date
