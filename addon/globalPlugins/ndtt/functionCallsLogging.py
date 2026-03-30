@@ -167,7 +167,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 		stack = traceback.format_stack(frame)
 
-		returnValueRepr = "  %r" % (returnValue,) if returnValue is not None else "  None"
+		returnValueRepr = "  %r" % (returnValue,)
 
 		log.debug(
 			"Function call information for %s (thread=%s):\nArguments:\n%s\nReturn value:\n%s\nCall stack trace:\n%s",
