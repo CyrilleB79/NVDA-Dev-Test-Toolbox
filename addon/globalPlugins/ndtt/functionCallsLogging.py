@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2019-2026 Cyrille Bougot
+# Copyright (C) 2019-2026 Cyrille Bougot, hwf1324
 # This file is covered by the GNU General Public License.
 
 
@@ -139,12 +139,12 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		self.threadState.inTraceFunc = True
 		try:
 			if event == "return" and frame.f_code is self._targetCode:
-				self.logTraceFunc(frame)
+				self.logTraceFunc(frame, arg)
 		finally:
 			self.threadState.inTraceFunc = False
 		return self._traceFunc
 
-	def logTraceFunc(self, frame):
+	def logTraceFunc(self, frame, returnValue=None):
 		argInfo = inspect.getargvalues(frame)
 		argsList = ["%s=%r" % (name, argInfo.locals[name]) for name in argInfo.args]
 		varargsName = argInfo.varargs
@@ -164,14 +164,17 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				)
 			)
 		argsRepr = "  " + "\n  ".join(argsList)
-		
+
 		stack = traceback.format_stack(frame)
-		
+
+		returnValueRepr = "  %r" % (returnValue,)
+
 		log.debug(
-			"Function call information for %s (thread=%s):\nArguments:\n%s\nCall stack trace:\n%s",
+			"Function call information for %s (thread=%s):\nArguments:\n%s\nReturn value:\n%s\nCall stack trace:\n%s",
 			config.conf["ndtt"]["functionCallsLogTarget"],
 			threading.current_thread().name,
 			argsRepr,
+			returnValueRepr,
 			"".join(stack),
 		)
 
@@ -194,7 +197,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		def monkeyPatchedFunction(*args, **kw):
 			res = monkeyPatchedFunction.originalFunction(*args, **kw)
 			frame = inspect.currentframe()
-			self.logTraceFunc(frame)
+			self.logTraceFunc(frame, res)
 			return res
 
 		monkeyPatchedFunction.originalFunction = originalFunction
