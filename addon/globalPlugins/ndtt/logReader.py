@@ -512,10 +512,22 @@ class LogMessage(LogSection):
 			idxTraceback = msgList.index('Traceback (most recent call last):')
 		except ValueError:
 			return self.content
-		else:
-			errorMsg = '\r'.join(msgList[:idxTraceback])
-			errorDesc = msgList[-1]
-			return '\n'.join([errorDesc, errorMsg])
+		errorMsg = '\r'.join(msgList[:idxTraceback])
+		# For error description, get last line which do not begin with sapace and next ones.
+		for idx in range(idxTraceback + 1, len(msgList)):
+			line = msgList[idx]
+			if not line.strip():
+				continue
+			if not line.startswith(" "):
+				idxErr = idx
+		# There should be at least one line not beginning with space, except in manually modified log.
+		try:
+			idxErr
+		except NameError:
+			log.debugWarning("Unexpected log structure found while trying to speak the error; log probably manually modified.")
+			idxErr = -1
+		errorDesc = "\n".join(msgList[idxErr:])
+		return '\n'.join([errorDesc, errorMsg])
 
 	@staticmethod
 	def _translate(text):
