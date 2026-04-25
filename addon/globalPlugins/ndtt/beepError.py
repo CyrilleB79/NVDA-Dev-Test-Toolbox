@@ -2,7 +2,7 @@
 # NVDA Dev & Test Toolbox add-on for NVDA
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2019-2025 Cyrille Bougot
+# Copyright (C) 2019-2026 Cyrille Bougot
 
 import globalPluginHandler
 import addonHandler
@@ -46,8 +46,7 @@ def myHandle(fh, record, *args, **kwargs):
 	if record.levelno >= logging.ERROR:
 		errorInfo = []
 		errorInfo.append(record.levelname)
-		if record.msg is not None:
-			errorInfo.append(str(record.msg))
+		errorInfo.append(record.getMessage())
 		if record.exc_info:
 			excType = record.exc_info[1]
 			if excType is not None:
