@@ -2,7 +2,6 @@
 
 * Author: Cyrille Bougot
 * NVDA compatibility: 2019.2 and beyond
-* Download [stable version][1]
 
 This add-on gathers various features for NVDA debugging and testing.
 
@@ -601,8 +600,6 @@ A bug where this script could be executed many times when reloading the add-ons 
 ### Version 1.0
 
 * Initial release.
-
-[1]: https://www.nvaccess.org/addonStore/legacy?file=nvdaDevTestToolbox
 
 [2]: https://www.nvaccess.org/files/nvda/documentation/userGuide.html#CommandLineOptions
 
