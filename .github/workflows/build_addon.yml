@@ -13,40 +13,44 @@ on:
 
 jobs:
   build:
+    # Building the add-on template as an add-on does not make sense (and fails).
+    # Do not modify this repo name with your own one! (should remain the template)
+    if: github.repository != 'nvaccess/addonTemplate'
 
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v6
-
-    - run: echo -e "pre-commit\nscons\nmarkdown">requirements.txt
-
-    - name: Set up Python
-      uses: actions/setup-python@v6
+    - name: Checkout repo
+      uses: actions/checkout@v6
+    - name: Install uv
+      uses: astral-sh/setup-uv@v7
       with:
-        python-version: 3.13
-        cache: 'pip'
-
+        enable-cache: true
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip wheel
-        pip install -r requirements.txt
         sudo apt-get update  -y
         sudo apt-get install -y gettext
+        uv sync
 
     - name: Code checks
-      # TODO: remove ruff/ruff-format,pyright,add-trailing-comma skip once linting baseline is clean
-      run: export SKIP=no-commit-to-branch,ruff,ruff-format,pyright,add-trailing-comma; pre-commit run --all
+      run: export SKIP=no-commit-to-branch; uv run pre-commit run --all-files
 
     - name: building addon
-      run: scons && scons pot
+      run: uv run scons && uv run scons pot
 
-    - uses: actions/upload-artifact@v6
+    - uses: actions/upload-artifact@v7
       with:
         name: packaged_addon
         path: |
           ./*.nvda-addon
+        archive: false
+
+    - uses: actions/upload-artifact@v7
+      with:
+        name: translation_template
+        path: |
           ./*.pot
+        archive: false
 
   test:
     runs-on: windows-latest
@@ -147,8 +151,11 @@ jobs:
       contents: write
     steps:
     - uses: actions/checkout@v6
-    - name: download releases files
-      uses: actions/download-artifact@v7
+    - name: download all artifacts
+      uses: actions/download-artifact@v8
+      with:
+        path: .
+        merge-multiple: true
     - name: Display structure of downloaded files
       run: ls -R
     - name: Extract change log
@@ -160,7 +167,7 @@ jobs:
         sha256sum ./packaged_addon/*.nvda-addon >> changelog.md
 
     - name: Release
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v3
       with:
         files: |
           ./packaged_addon/*.nvda-addon
