@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2021-2022 Lukasz Golonka, Cyrille Bougot
+# Copyright (C) 2021-2026 Lukasz Golonka, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 import operator
@@ -137,7 +137,7 @@ PANEL_DESCRIPTION_WIDTH = getPanelDescriptionWidth()
 if sys.version_info.major == 2:
 	# Python 2: Map equivalent error classes
 	FileExistsError = OSError
-	FileNotFoundError = WindowsError
+	FileNotFoundError = OSError
 else:
 	# Python 3: Just define the same error name so that they can be imported.
 	FileExistsError = FileExistsError
