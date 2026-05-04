@@ -11,7 +11,6 @@ import globalVars
 from scriptHandler import script
 import addonHandler
 import gui
-from tones import beep
 
 from .layeredGestures import ScriptableObjectWithLayeredGestures
 
@@ -30,7 +29,9 @@ from .reverseUITranslation import GlobalPlugin as ReverseUITranslationGP
 if not globalVars.appArgs.secure:
 	# Plugins that may be used only in normal context, not in secure context.
 	from .beepError import GlobalPlugin as BeepErrorGP  # No error tone in secure mode
-	from .functionCallsLogging import GlobalPlugin as FunctionCallsLoggingGP  # No log nor log viewer in secure mode
+	from .functionCallsLogging import (
+		GlobalPlugin as FunctionCallsLoggingGP,
+	)  # No log nor log viewer in secure mode
 	from . import logManagement  # No log in secure mode.
 	from .logReader import GlobalPlugin as LogReaderGP  # No log nor log viewer in secure mode.
 	from .pythonConsoleEx import GlobalPlugin as PythonConsoleExGP  # No Python console in secure mode
@@ -73,33 +74,34 @@ NDTT_LAYERED_COMMANDS_LIST = [
 if globalVars.appArgs.secure:
 
 	class MixedGlobalPlugin(
-			ScriptableObjectWithLayeredGestures(
-				scriptableObjectName=ADDON_SUMMARY,
-				entryPointGestures=["kb:NVDA+x"],
-			),
-			ExtScriptDescGP,
-			RestartWithOptionsGP,
-			ObjPropExplorerGP,
-			ReverseUITranslationGP,
+		ScriptableObjectWithLayeredGestures(
+			scriptableObjectName=ADDON_SUMMARY,
+			entryPointGestures=["kb:NVDA+x"],
+		),
+		ExtScriptDescGP,
+		RestartWithOptionsGP,
+		ObjPropExplorerGP,
+		ReverseUITranslationGP,
 	):
 		pass
 
 else:
+
 	class MixedGlobalPlugin(
-			ScriptableObjectWithLayeredGestures(
-				scriptableObjectName=ADDON_SUMMARY,
-				entryPointGestures=["kb:NVDA+x"],
-			),
-			ExtScriptDescGP,
-			RestartWithOptionsGP,
-			ObjPropExplorerGP,
-			ReverseUITranslationGP,
-			BeepErrorGP,
-			FunctionCallsLoggingGP,
-			logManagement.GlobalPlugin,
-			LogReaderGP,
-			PythonConsoleExGP,
-			ScriptOpenerGP,
+		ScriptableObjectWithLayeredGestures(
+			scriptableObjectName=ADDON_SUMMARY,
+			entryPointGestures=["kb:NVDA+x"],
+		),
+		ExtScriptDescGP,
+		RestartWithOptionsGP,
+		ObjPropExplorerGP,
+		ReverseUITranslationGP,
+		BeepErrorGP,
+		FunctionCallsLoggingGP,
+		logManagement.GlobalPlugin,
+		LogReaderGP,
+		PythonConsoleExGP,
+		ScriptOpenerGP,
 	):
 		pass
 
@@ -107,8 +109,12 @@ else:
 class MixedGlobalPluginWithInit(MixedGlobalPlugin):
 	def __init__(self):
 		super(MixedGlobalPluginWithInit, self).__init__(
-			layerName = "NDTT_Main",
-			layeredCommandsList=[(gestures, script) for (gestures, script, sec) in NDTT_LAYERED_COMMANDS_LIST if (not globalVars.appArgs.secure) or sec],
+			layerName="NDTT_Main",
+			layeredCommandsList=[
+				(gestures, script)
+				for (gestures, script, sec) in NDTT_LAYERED_COMMANDS_LIST
+				if (not globalVars.appArgs.secure) or sec
+			],
 		)
 
 
@@ -118,6 +124,7 @@ def useAlternativeClassInSecureMode(safeClass):
 			return safeClass
 		else:
 			return decoratedClass
+
 	return decorator
 
 
@@ -151,6 +158,7 @@ class GlobalPlugin(MixedGlobalPluginWithInit):
 		)
 
 	if not globalVars.appArgs.secure:
+
 		def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 			# We need to call explicitely chooseNVDAObjectOverlayClasses of the child class; else NVDA will skip them.
 			LogReaderGP.chooseNVDAObjectOverlayClasses(self, obj, clsList)

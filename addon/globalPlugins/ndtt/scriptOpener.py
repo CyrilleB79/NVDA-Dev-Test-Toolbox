@@ -41,13 +41,14 @@ RE_PATH = re.compile(
 
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
-
 	def __init__(self):
 		super(GlobalPlugin, self).__init__()
 
 	@script(
-		# Translators: Input help mode message for a command.
-		description=_("NVDA will open the code of the script of the next gesture instead of executing the corresponding command."),
+		description=_(
+			# Translators: Input help mode message for a command.
+			"NVDA will open the code of the script of the next gesture instead of executing the corresponding command.",
+		),
 		category=ADDON_SUMMARY,
 	)
 	def script_openScriptForNextGesture(self, gesture):
@@ -55,7 +56,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		# Translators: Reported when executing the command to open the script corresponding to the next gesture.
 		ui.message(_("Execute a gesture to open the code of the corresponding script."))
 
-	def  _openScriptForNextGestureCaptor(self, gesture):
+	def _openScriptForNextGestureCaptor(self, gesture):
 		if gesture.isModifier:
 			return False
 		inputCore.manager._captureFunc = None
@@ -114,7 +115,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			if path.startswith('"') and path.endswith('"'):
 				path = path[1:-1]
 			line = match.group("line")
-			column = match.group("column")
+			_column = match.group("column")
 			break
 		else:
 			# Translators: Reported when executing the command to open the source code at the path/line at the caret or review position.
@@ -127,7 +128,6 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			# Call ui.message in the main thread (needed for braille)
 			msg = e.getUserFriendlyMessage()
 			core.callLater(0, lambda: ui.message(msg))
-
 
 	def terminate(self):
 		if inputCore.manager._captureFunc == self._openScriptForNextGestureCaptor:

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2024-2025 Cyrille Bougot
+# Copyright (C) 2024-2026 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
@@ -18,6 +18,7 @@ import languageHandler
 import api
 import ui
 import buildVersion
+
 try:
 	# For NVDa 2024.2+
 	from speech.extensions import pre_speech
@@ -52,11 +53,10 @@ BRC_ERROR_ADDON_TRANSLATION_NOT_AVAILABLE = 4
 
 
 def removeAccel(s):
-	"""Remove accelerator from a string.
-	"""
+	"""Remove accelerator from a string."""
 
 	# Remove accelerator
-	s = re.sub('&', '', s)
+	s = re.sub("&", "", s)
 
 	return s
 
@@ -93,7 +93,6 @@ class ReverseCatalogs:
 
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
-
 	def __init__(self, *args, **kwargs):
 		super(GlobalPlugin, self).__init__(*args, **kwargs)
 		self._reverseCatalogs = None
@@ -125,8 +124,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		super(GlobalPlugin, self).terminate(*args, **kwargs)
 
 	@script(
-		# Translators: Input help mode message for Reverse UI translation command
-		description=_("Performs a reverse UI translation of the last speech, using NVDA translation catalogs."),
+		description=_(
+			# Translators: Input help mode message for Reverse UI translation command
+			"Performs a reverse UI translation of the last speech, using NVDA translation catalogs.",
+		),
 		category=ADDON_SUMMARY,
 		speakOnDemand=True,
 	)
@@ -138,8 +139,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			ui.message(_("Message not found in NVDA's translation catalog"))
 
 	@script(
-		# Translators: Input help mode message for Reverse UI translation command
-		description=_("Performs a reverse UI translation of the last speech, using NVDA and add-ons translation catalogs."),
+		description=_(
+			# Translators: Input help mode message for Reverse UI translation command
+			"Performs a reverse UI translation of the last speech, using NVDA and add-ons translation catalogs.",
+		),
 		category=ADDON_SUMMARY,
 		speakOnDemand=True,
 	)
@@ -174,10 +177,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		try:
 			valList = catalog[self.lastSpeechString]
 		except KeyError:
-			if (
-				(buildVersion.version_year, buildVersion.version_major) >= (2019, 3)
-				or "  " not in self.lastSpeechString
-			):
+			if (buildVersion.version_year, buildVersion.version_major) >= (
+				2019,
+				3,
+			) or "  " not in self.lastSpeechString:
 				raise LookupError
 			# Pre-speech refactor (NVDA < 2019.3)
 			# Content strings are concatenated with role, state, shortcut, etc.
@@ -186,7 +189,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				valList = catalog[self.lastSpeechString.split("  ")[0]]
 			except KeyError:
 				raise LookupError
-			log.debugWarning("Found fallback reverse translation string splitting the original string with '  '.")
+			log.debugWarning(
+				"Found fallback reverse translation string splitting the original string with '  '.",
+			)
 		if len(valList) == 1 or len(set(i.text for i in valList)) == 1:
 			val = valList[0]
 			self.reportAndCopyReverseTranslation(val.text)
@@ -195,7 +200,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			self.choiceMenu(valList)
 			return
 		else:
-			raise RuntimeError('valList is empty')
+			raise RuntimeError("valList is empty")
 
 	def buildReverseCatalog(self, addon=None):
 		if addon:
@@ -207,7 +212,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			except AttributeError:
 				# For NVDA version < 2022.1
 				log.debugWarning(
-					"NVDA translations not retrieved for NVDA version before 2022.1."
+					"NVDA translations not retrieved for NVDA version before 2022.1.",
 				)
 				return None, BRC_ERROR_UNSUPPORTED_NVDA_VERSION
 		if not isinstance(trans, gettext.GNUTranslations):
@@ -215,17 +220,21 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				"No translation of {name} for {lang}".format(
 					name=("addon " + addon.name) if addon else "NVDA",
 					lang=languageHandler.getLanguage(),
-				)
+				),
 			)
-			return None, (BRC_ERROR_ADDON_TRANSLATION_NOT_AVAILABLE if addon else BRC_ERROR_NVDA_TRANSLATION_NOT_AVAILABLE)
+			return None, (
+				BRC_ERROR_ADDON_TRANSLATION_NOT_AVAILABLE
+				if addon
+				else BRC_ERROR_NVDA_TRANSLATION_NOT_AVAILABLE
+			)
 		try:
-			if trans.CONTEXT != '%s\x04%s':
-				raise RuntimeError('Unexpected context splitting rule')
+			if trans.CONTEXT != "%s\x04%s":
+				raise RuntimeError("Unexpected context splitting rule")
 		except AttributeError:
 			pass  # trans.CONTEXT not available before Python 3.11, i.e. NVDA < 2024.1
 
 		reverseCatalog = {}
-		for (k, v) in trans._catalog.items():
+		for k, v in trans._catalog.items():
 			if k == "":
 				continue
 			if isinstance(k, tuple):
@@ -233,7 +242,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			else:
 				kString = k
 				n = None
-			ctxSplitList = kString.split('\x04')
+			ctxSplitList = kString.split("\x04")
 			if len(ctxSplitList) == 1:
 				ctxString = None
 				sourceString = removeAccel(ctxSplitList[0])
@@ -241,18 +250,20 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				ctxString = ctxSplitList[0]
 				sourceString = removeAccel(ctxSplitList[1])
 			else:
-				RuntimeError('ctxSplitList = {}'.format(ctxSplitList))
+				RuntimeError("ctxSplitList = {}".format(ctxSplitList))
 			localeString = removeAccel(v)
 			try:
 				reverseCatalog[localeString]
 			except KeyError:
 				reverseCatalog[localeString] = []
-			reverseCatalog[localeString].append(ReverseCatalogValue(
-				sourceString,
-				ctx=ctxString,
-				n=n,
-				addon=addon.name if addon else None,
-			))
+			reverseCatalog[localeString].append(
+				ReverseCatalogValue(
+					sourceString,
+					ctx=ctxString,
+					n=n,
+					addon=addon.name if addon else None,
+				),
+			)
 		return reverseCatalog, BRC_SUCCESS
 
 	def _get_reverseCatalogs(self):
@@ -261,9 +272,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			log.debug("Building reverse catalog for NVDA.")
 			self._reverseCatalogs.add({"": self.buildReverseCatalog()})  # For NVDA
 			log.debug("Building reverse catalog for add-ons.")
-			self._reverseCatalogs.add({
-				a.name: self.buildReverseCatalog(a) for a in addonHandler.getRunningAddons()
-			})
+			self._reverseCatalogs.add(
+				{a.name: self.buildReverseCatalog(a) for a in addonHandler.getRunningAddons()},
+			)
 		return self._reverseCatalogs
 
 	def _get_nvdaReverseCatalog(self):
@@ -274,26 +285,31 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			globalErrCode = BRC_SUCCESS
 			anyTranslationPresent = False
 			mergedReverseCatalog = {}
-			for (catName, (catalog, errCode)) in self.reverseCatalogs.items():
+			for catName, (catalog, errCode) in self.reverseCatalogs.items():
 				if catalog is None:
 					globalErrCode |= errCode
-					log.debugWarning("No catalog for {catName}".format(catName=(catName if catName else "NVDA")))
+					log.debugWarning(
+						"No catalog for {catName}".format(catName=(catName if catName else "NVDA")),
+					)
 					continue
 				else:
-					 anyTranslationPresent = True
-				for (translated, catValueList) in catalog.items():
+					anyTranslationPresent = True
+				for translated, catValueList in catalog.items():
 					try:
 						mergedReverseCatalog[translated]
 					except KeyError:
 						mergedReverseCatalog[translated] = []
 					mergedReverseCatalog[translated].extend(catValueList)
-			self._mergedReverseCatalog = mergedReverseCatalog, (BRC_SUCCESS if anyTranslationPresent else globalErrCode)
+			self._mergedReverseCatalog = (
+				mergedReverseCatalog,
+				(BRC_SUCCESS if anyTranslationPresent else globalErrCode),
+			)
 		return self._mergedReverseCatalog
 
 	def reportAndCopyReverseTranslation(self, text):
 		speech.cancelSpeech()
 		ui.message(text)
-		if config.conf['ndtt']['copyRevTranslation'] and not globalVars.appArgs.secure:
+		if config.conf["ndtt"]["copyRevTranslation"] and not globalVars.appArgs.secure:
 			api.copyToClip(text)
 
 	def choiceMenu(self, valList):
@@ -302,9 +318,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		for val in valList:
 			label = val.text
 			if val.ctx is not None:
-				label += ', context = {}'.format(val.ctx)
+				label += ", context = {}".format(val.ctx)
 			if val.n is not None:
-				label += ', n = {}'.format(val.n)
+				label += ", n = {}".format(val.n)
 			if val.addon is not None:
 				label += ", addon = {}".format(val.addon)
 			menuItems.append(((val.text, val.ctx, val.n, val.addon), label))
@@ -322,6 +338,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			gui.mainFrame.prePopup()
 			gui.mainFrame.sysTrayIcon.PopupMenu(self.menu)
 			gui.mainFrame.postPopup()
+
 		wx.CallLater(0, openMenu)
 
 	def onChoice(self, evt, text):

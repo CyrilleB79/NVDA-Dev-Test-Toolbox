@@ -10,12 +10,14 @@ import sys
 from glob import glob
 import shutil
 from datetime import datetime, timedelta
+
 try:
 	# NVDA version >= 2019.3 (Python 3.7+)
 	from datetime import timezone
 except ImportError:
 	# NVDA version < 2019.3 (Python 2.7)
 	from datetime import tzinfo
+
 	timezone = None
 
 # For NVDA version <= 2019.3 (Python 2.7), open the open of Python 3, allowing to specify encoding.
@@ -39,6 +41,7 @@ import ui
 from gui import guiHelper, nvdaControls
 from gui import messageBox
 from scriptHandler import script
+
 try:
 	from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 except ImportError:
@@ -52,19 +55,19 @@ addonHandler.initTranslation()
 
 ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
 
-TOKEN_INITIALIZATION = 'NDTT - Log management initialization: '
-DT_FORMAT_STRING = '%Y-%m-%d_%H-%M-%S'
+TOKEN_INITIALIZATION = "NDTT - Log management initialization: "
+DT_FORMAT_STRING = "%Y-%m-%d_%H-%M-%S"
 
 RES_LOG_BACKUP_FILENAME = (
-	r'nvda_'
-	r'(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})_(?P<hour>\d{2})-(?P<minute>\d{2})-(?P<second>\d{2})'
-	r'\.log'
+	r"nvda_"
+	r"(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})_(?P<hour>\d{2})-(?P<minute>\d{2})-(?P<second>\d{2})"
+	r"\.log"
 )
 RE_LOG_BACKUP_FILENAME = re.compile(RES_LOG_BACKUP_FILENAME)
-RE_BACKUP_LOG_PATH = re.compile(r'^.+\\{filename}$'.format(filename=RES_LOG_BACKUP_FILENAME))
+RE_BACKUP_LOG_PATH = re.compile(r"^.+\\{filename}$".format(filename=RES_LOG_BACKUP_FILENAME))
 RE_FIRST_LINE = re.compile(
-	r'^INFO - __main__ \((?P<hour>\d{2}):(?P<minute>\d{2}):(?P<second>\d{2}).(?P<millisecond>\d{3})\)'
-	r'(?: - MainThread \(\d+\))?:$'
+	r"^INFO - __main__ \((?P<hour>\d{2}):(?P<minute>\d{2}):(?P<second>\d{2}).(?P<millisecond>\d{3})\)"
+	r"(?: - MainThread \(\d+\))?:$",
 )
 
 NDTT_PATH = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "ndtt"))
@@ -116,6 +119,7 @@ EXAMPLE_ANONYMIZATION_RULES_FILE = r"""
 # sessionid=[A-Za-z0-9]+	sessionid=<id>	regex
 """
 
+
 def getTzUTC():
 	if timezone is not None:
 		# NVDA version >= 2019.3 (Python 3.7+)
@@ -134,19 +138,21 @@ def getTzUTC():
 
 		def dst(self, dt):
 			return timedelta(0)
+
 	return UTC()
 
+
 def getStartTimeLoggedByNDTT(path):
-	with open(path, 'r', encoding='utf8') as f:
+	with open(path, "r", encoding="utf8") as f:
 		for line in f:
 			if line.startswith(TOKEN_INITIALIZATION):
-				dtString = line[len(TOKEN_INITIALIZATION):].strip()
+				dtString = line[len(TOKEN_INITIALIZATION) :].strip()
 				return dtString
 	return None
 
 
 def getFirstTimeLoggedByNVDA(path):
-	with open(path, 'r', encoding='utf8') as f:
+	with open(path, "r", encoding="utf8") as f:
 		line = f.readline()
 		m = matchDict(RE_FIRST_LINE.match(line.strip()))
 		if not m:  # Can occur when using option -l 100, where the logfile is just empty
@@ -154,10 +160,10 @@ def getFirstTimeLoggedByNVDA(path):
 		localTimezone = datetime.now(tz=getTzUTC()).astimezone().tzinfo
 		dt = datetime.now()
 		dt = dt.replace(
-			hour=int(m['hour']),
-			minute=int(m['minute']),
-			second=int(m['second']),
-			microsecond=int(m['millisecond']) * 1000,
+			hour=int(m["hour"]),
+			minute=int(m["minute"]),
+			second=int(m["second"]),
+			microsecond=int(m["millisecond"]) * 1000,
 			tzinfo=localTimezone,
 		)
 		utcTime = datetime.utcfromtimestamp(dt.timestamp()).time()
@@ -165,7 +171,7 @@ def getFirstTimeLoggedByNVDA(path):
 
 
 def saveOldLog():
-	if getBaseProfileConfigValue('ndtt', 'logBackup') == 'off':
+	if getBaseProfileConfigValue("ndtt", "logBackup") == "off":
 		return True
 	try:
 		logDirPath = os.path.dirname(globalVars.appArgs.logFileName)
@@ -173,13 +179,13 @@ def saveOldLog():
 		try:
 			dtStartStr = getStartTimeLoggedByNDTT(oldLogFilePath)
 		except FileNotFoundError:
-			log.debugWarning('No nvda-old.log file to backup in {}'.format(logDirPath))
+			log.debugWarning("No nvda-old.log file to backup in {}".format(logDirPath))
 			return True
 		if not dtStartStr:
 			log.debugWarning(
-				'No NDTT time found in the log ({path}); fallback to NVDA time and file date.'.format(
-					path=oldLogFilePath
-				)
+				"No NDTT time found in the log ({path}); fallback to NVDA time and file date.".format(
+					path=oldLogFilePath,
+				),
 			)
 			stat = os.stat(oldLogFilePath)
 			dtEnd = datetime.utcfromtimestamp(stat.st_mtime)
@@ -205,27 +211,27 @@ def saveOldLog():
 		savedLogFileName = "nvda_{}.log".format(dtStartStr)
 		savedLogFilePath = os.path.join(logDirPath, savedLogFileName)
 		shutil.copy(oldLogFilePath, savedLogFilePath)
-		log.debug('Old log backup: {}'.format(savedLogFilePath))
+		log.debug("Old log backup: {}".format(savedLogFilePath))
 		return True
 	except Exception:
-		msg = 'Unable to back up old log'
+		msg = "Unable to back up old log"
 		log.error(msg, exc_info=True)
 		return False
 
 
 def logsCleanup():
-	if getBaseProfileConfigValue('ndtt', 'logBackup') == 'off':
+	if getBaseProfileConfigValue("ndtt", "logBackup") == "off":
 		return
 	logDirPath = os.path.dirname(globalVars.appArgs.logFileName)
 	logList = listLogFiles(logDirPath)
-	if getBaseProfileConfigValue('ndtt', 'logBackup') == 'maxNumber':
-		nMax = getBaseProfileConfigValue('ndtt', 'logBackupMaxNumber')
+	if getBaseProfileConfigValue("ndtt", "logBackup") == "maxNumber":
+		nMax = getBaseProfileConfigValue("ndtt", "logBackupMaxNumber")
 		for file in logList[:-nMax]:
-			log.debug('Removing {file}'.format(file=file))
+			log.debug("Removing {file}".format(file=file))
 			try:
 				os.remove(file)
 			except Exception:
-				log.warning('Unable to remove {file}', exc_info=True)
+				log.warning("Unable to remove {file}", exc_info=True)
 
 		return
 	raise NotImplementedError
@@ -280,7 +286,7 @@ class Log(object):
 	def __init__(self, filename, folder):
 		self.filename = filename
 		self.folder = folder
-		self.type = 'backup'
+		self.type = "backup"
 		self._date = None
 
 	def __lt__(self, other):
@@ -296,19 +302,18 @@ class Log(object):
 
 	@property
 	def date(self):
-		"""Date (UTC)
-		"""
+		"""Date (UTC)"""
 
 		if not self._date:
 			m = matchDict(RE_LOG_BACKUP_FILENAME.match(self.filename))
 			if m:
 				self._date = datetime(
-					int(m['year']),
-					int(m['month']),
-					int(m['day']),
-					int(m['hour']),
-					int(m['minute']),
-					int(m['second']),
+					int(m["year"]),
+					int(m["month"]),
+					int(m["day"]),
+					int(m["hour"]),
+					int(m["minute"]),
+					int(m["second"]),
 				)
 			else:
 				log.error(self.filename, stack_info=True)
@@ -323,19 +328,19 @@ class Log(object):
 			# Date is displayed in local time.
 			localTimezone = datetime.now(tz=getTzUTC()).astimezone().tzinfo
 			dt = self.date.replace(tzinfo=getTzUTC()).astimezone(tz=localTimezone)
-			return dt.strftime('%X %x')
+			return dt.strftime("%X %x")
 		else:
 			dt = self.date
-			return dt.strftime('%X %x (UTC)')
+			return dt.strftime("%X %x (UTC)")
 
 
 class LogsManagerDialog(
-		DpiScalingHelperMixinWithoutInit,
-		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
+	DpiScalingHelperMixinWithoutInit,
+	wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	@classmethod
 	def _instance(cls):
-		""" type: () -> LogsManagerDialog
+		"""type: () -> LogsManagerDialog
 		return None until this is replaced with a weakref.ref object. Then the instance is retrieved
 		with by treating that object as a callable.
 		"""
@@ -423,13 +428,13 @@ class LogsManagerDialog(
 		mainSizer.Add(
 			generalActions.sizer,
 			border=guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.LEFT | wx.RIGHT
+			flag=wx.LEFT | wx.RIGHT,
 		)
 
 		mainSizer.Add(
 			wx.StaticLine(self),
 			border=guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.ALL | wx.EXPAND
+			flag=wx.ALL | wx.EXPAND,
 		)
 
 		# Translators: The label of a button to close the logs manager dialog.
@@ -438,7 +443,7 @@ class LogsManagerDialog(
 		mainSizer.Add(
 			closeButton,
 			border=guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.CENTER | wx.ALIGN_RIGHT
+			flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.CENTER | wx.ALIGN_RIGHT,
 		)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		self.EscapeId = wx.ID_CLOSE
@@ -458,11 +463,13 @@ class LogsManagerDialog(
 		self.logsList.DeleteAllItems()
 		self.curLogs = []
 		for oLog in sorted(getAvailableLogs(self.folder), reverse=True):
-			self.logsList.Append((
-				oLog.displayedDate,
-				oLog.type,
-				oLog.filename,
-			))
+			self.logsList.Append(
+				(
+					oLog.displayedDate,
+					oLog.type,
+					oLog.filename,
+				),
+			)
 			self.curLogs.append(oLog)
 		# select the given active log or the first log if not given
 		curLogsLen = len(self.curLogs)
@@ -506,7 +513,7 @@ class LogsManagerDialog(
 			self.onOpenClick()
 		elif keycode == wx.WXK_DELETE:
 			self.onDeleteClick()
-		elif evt.ControlDown() and keycode == ord('C'):
+		elif evt.ControlDown() and keycode == ord("C"):
 			self.onCopyFilesClick()
 		else:
 			evt.Skip()
@@ -535,24 +542,27 @@ class LogsManagerDialog(
 		if len(missing) == len(selectedLogs):
 			# We open the message box only if no log can be opened
 			# Translators: A message displayed to the user when pressing the Open button in the logs manager dialog
-			msg = _('The selected log(s) is (are) not available anymore')
+			msg = _("The selected log(s) is (are) not available anymore")
 			messageBox(message=msg, style=wx.ICON_ERROR, parent=self)
 
 	def onDeleteClick(self, evt=None):
 		selectedLogs = self.getSelectedLogs()
 		# Translators: A message displayed to the user when pressing the Delete button in the logs manager dialog
 		msg = _("The following files will be removed:\n{logsList}\n\nWould you like to continue?").format(
-			logsList='\n'.join(lg.filename for lg, idx in selectedLogs)
+			logsList="\n".join(lg.filename for lg, idx in selectedLogs),
 		)
 		# Translators: The title of a dialog displayed to the user when pressing the Delete button in the
 		# logs manager dialog
-		caption = _('Confirm deletion')
-		if messageBox(
-			message=msg,
-			caption=caption,
-			style=wx.YES_NO | wx.NO_DEFAULT,
-			parent=self,
-		) == wx.NO:
+		caption = _("Confirm deletion")
+		if (
+			messageBox(
+				message=msg,
+				caption=caption,
+				style=wx.YES_NO | wx.NO_DEFAULT,
+				parent=self,
+			)
+			== wx.NO
+		):
 			return
 		deleted = []
 		notDeleted = []
@@ -561,26 +571,30 @@ class LogsManagerDialog(
 				os.remove(oLog.fullPath)
 				deleted.append(index)
 			except FileNotFoundError:
-				log.debugWarning('File already missing (no action taken): {file}'.format(file=oLog.fullPath))
+				log.debugWarning("File already missing (no action taken): {file}".format(file=oLog.fullPath))
 				deleted.append(index)
 			except Exception:
-				log.warning('Unable to remove {file}'.format(file=oLog.fullPath), exc_info=True)
+				log.warning("Unable to remove {file}".format(file=oLog.fullPath), exc_info=True)
 				notDeleted.append(oLog.filename)
 		for index in sorted(deleted, reverse=True):
 			self.logsList.DeleteItem(index)
 		if notDeleted:
 			nNotDeleted = len(notDeleted)
 			if nNotDeleted >= 5:
-				# Translators: Message issued when 5 or more logs could not be deleted.
-				msgNotDeleted = _("{nLogs} log files could not be deleted. See NVDA's log for details.").format(
-					nLogs=nNotDeleted
+				msgNotDeleted = _(
+					# Translators: Message issued when 5 or more logs could not be deleted.
+					"{nLogs} log files could not be deleted. See NVDA's log for details.",
+				).format(
+					nLogs=nNotDeleted,
 				)
 			else:
 				# Translators: Message issued when 1 to 4 logs could not be deleted.
-				msgNotDeleted = _("The following logs files could not be deleted.\n\n{files}").format(files='\n'.join(notDeleted))
+				msgNotDeleted = _("The following logs files could not be deleted.\n\n{files}").format(
+					files="\n".join(notDeleted),
+				)
 			# Translators: The title of a dialog displayed to the user when pressing the Delete button in
 			# the logs manager dialog
-			caption = _('Error')
+			caption = _("Error")
 			messageBox(
 				message=msgNotDeleted,
 				caption=caption,
@@ -596,7 +610,9 @@ class LogsManagerDialog(
 		for lg, idx in selectedLogs:
 			if not os.path.isfile(lg.fullPath):
 				missing.append(idx)
-				log.debugWarning("Unable to copy the file {file}. It is not present anymore".format(file=lg.fullPath))
+				log.debugWarning(
+					"Unable to copy the file {file}. It is not present anymore".format(file=lg.fullPath),
+				)
 				continue
 			fileData.AddFile(lg.fullPath)
 		compositeData.Add(fileData, preferred=True)
@@ -614,34 +630,17 @@ class LogsManagerDialog(
 					message="One or more selected logs has not been copied because the corresponding files are missing.",
 					# Translators: The title of a dialog displayed to the user when copying files in the logs manager dialog
 					# fails
-					caption=_('Error'),
+					caption=_("Error"),
 					style=wx.ICON_ERROR,
 					parent=self,
 				)
 			else:
 				# Translators: reported when requesting to copy the logs selected in the logs manager dialog.
-				ui.message(_('Log files copied'))
+				ui.message(_("Log files copied"))
 		else:
-			log.debugWarning('Unable to open the clipboard')
+			log.debugWarning("Unable to open the clipboard")
 			# Translators: reported when requesting to copy the logs selected in the logs manager dialog.
-			ui.message(_('Unable to copy the selected logs; the clipboard is not available.'))
-
-		return
-
-		# Create an array of wide character strings for the file path
-		file_path_w = ctypes.create_unicode_buffer(file_path)
-		# Allocate global memory for the file path
-		hGlobal = ctypes.windll.kernel32.GlobalAlloc(0x42, ctypes.sizeof(file_path_w))
-		ctypes.cdll.msvcrt.wcscpy(ctypes.c_wchar_p(hGlobal), file_path_w)
-		# Open the clipboard and empty it
-		if ctypes.windll.user32.OpenClipboard(0):
-			ctypes.windll.user32.EmptyClipboard()
-			ctypes.windll.user32.SetClipboardData(CF_HDROP, hGlobal)
-			ctypes.windll.user32.CloseClipboard()
-			# Translators: reported when requesting to copy the logs selected in the logs manager dialog.
-			ui.message(_("File copied"))
-		else:
-			wx.MessageBox("Unable to open the clipboard.", "Error", wx.OK | wx.ICON_ERROR)
+			ui.message(_("Unable to copy the selected logs; the clipboard is not available."))
 
 	def onOpenSettingsClick(self, evt):
 		wx.CallAfter(
@@ -652,7 +651,6 @@ class LogsManagerDialog(
 
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
-
 	def __init__(self, *args, **kwargs):
 		super(GlobalPlugin, self).__init__(*args, **kwargs)
 
@@ -715,6 +713,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			errMsg = "Copy to clipboard failed"
 		if error:
 			import wx
+
 			wx.CallAfter(
 				messageBox,
 				# Translators: message of the message box error when calling the anonymization command
@@ -738,7 +737,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 					errorMsg = _(
 						# Translators: a message reported when calling the anonymization command
 						"Invalid regular expression in anonymization rules file.\n\n"
-						"File: {}\nLine: {}\nPattern: {}\nError: {}"
+						"File: {}\nLine: {}\nPattern: {}\nError: {}",
 					).format(self.anonymizationFilePath, lineNum, pattern, e)
 					raise ValueError(errorMsg)
 			else:
@@ -776,7 +775,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			)
 			raise UnicodeDecodeError(ude.encoding, ude.object, ude.start, ude.end, msg)
 		if not rules:
-			raise ValueError("No rules found in anonymization rules file: {}".format(self.anonymizationFilePath))
+			raise ValueError(
+				"No rules found in anonymization rules file: {}".format(self.anonymizationFilePath),
+			)
 		return rules
 
 	def terminate(self, *args, **kwargs):

@@ -18,10 +18,10 @@ def getBaseProfileConfigValue(*args):
 	else:
 		validationFuncName = config.conf.getConfigValidation(tuple(args)).validationFuncName
 		typeMaker = {
-			'integer': int,
-			'string': str,
-			'option': str,
-			'float': float,
+			"integer": int,
+			"string": str,
+			"option": str,
+			"float": float,
 		}.get(validationFuncName)
 		if not typeMaker:
 			raise NotImplementedError(validationFuncName)

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2021-2025 Cyrille Bougot
+# Copyright (C) 2021-2026 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from __future__ import unicode_literals
@@ -26,15 +26,17 @@ ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
 
 try:
 	# For NVDA version >= 2026.1
-	logLevelsList = [(l.value, l.displayString) for l in config.configFlags.LoggingLevel]
+	logLevelsList = [(lev.value, lev.displayString) for lev in config.configFlags.LoggingLevel]
 except AttributeError:
 	# For NVDA version < 2026.1
 	logLevelsList = gui.settingsDialogs.GeneralSettingsPanel.LOG_LEVELS
+
 
 def restartWithOptions(options):
 	"""Restarts NVDA by starting a new copy, providing some options."""
 	if globalVars.appArgs.launcher:
 		import gui
+
 		globalVars.exitCode = 3
 		try:
 			gui.safeAppExit()
@@ -44,6 +46,7 @@ def restartWithOptions(options):
 	import subprocess
 	import winUser
 	import shellapi
+
 	if not hasattr(sys, "frozen"):
 		options.insert(0, os.path.basename(sys.argv[0]))
 	if sys.version_info.major < 3 and "-r" not in options:
@@ -62,7 +65,7 @@ def restartWithOptions(options):
 		parameters=parameters,
 		directory=directory,
 		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
-		showCmd=winUser.SW_SHOWNORMAL
+		showCmd=winUser.SW_SHOWNORMAL,
 	)
 
 
@@ -72,15 +75,16 @@ class FileSelectionHelper(object):
 	button in horizontal layout. The Button launches a file explorer. To get the path selected by the user, use
 	the `pathControl` property which exposes a wx.TextCtrl.
 	"""
+
 	def __init__(self, parent, buttonText, wildcard, browseForFileTitle):
-		""" @param parent: An instance of the parent wx window. EG wx.Dialog
-			@param buttonText: The text for the button to launch a file selection dialog (wx.DirDialog). This is
-				typically 'Browse'
-			@type buttonText: string
-			@param wildcard: The text for the title of the file dialog (wx.FileDialog)
-			@type wildcard: string
-			@param browseForFileTitle: The text for the title of the file dialog (wx.FileDialog)
-			@type browseForFileTitle: string
+		"""@param parent: An instance of the parent wx window. EG wx.Dialog
+		@param buttonText: The text for the button to launch a file selection dialog (wx.DirDialog). This is
+			typically 'Browse'
+		@type buttonText: string
+		@param wildcard: The text for the title of the file dialog (wx.FileDialog)
+		@type wildcard: string
+		@param browseForFileTitle: The text for the title of the file dialog (wx.FileDialog)
+		@type browseForFileTitle: string
 		"""
 		object.__init__(self)
 		self._textCtrl = wx.TextCtrl(parent)
@@ -135,7 +139,7 @@ class CommandLineOption(object):
 	@property
 	def flagListLabel(self):
 		label = " ".join(self.flagList)
-		return label.replace('{', '').replace('}', '')
+		return label.replace("{", "").replace("}", "")
 
 	def disable(self):
 		for c in self.controls:
@@ -161,7 +165,7 @@ class CommandLineBooleanOption(CommandLineOption):
 			label="{description}:\n{flags}".format(
 				description=self.description,
 				flags=self.flagListLabel,
-			)
+			),
 		)
 		checkBox.SetValue(False)
 		sHelper.addItem(checkBox)
@@ -184,14 +188,13 @@ class CommandLineStringOption(CommandLineOption):
 		if val:
 			# We use the last element of flagList since it is the long form ("--flag=value"), which exists for
 			# all the options.
-			flagLHS, flagRHS = self.flagList[-1].split('=')
-			return flagLHS + '={}'.format(val)
+			flagLHS, flagRHS = self.flagList[-1].split("=")
+			return flagLHS + "={}".format(val)
 		else:
 			return ""
 
 
 class CommandLineChoiceOption(CommandLineStringOption):
-
 	def __init__(self, choices, *args, **kw):
 		super(CommandLineChoiceOption, self).__init__(*args, **kw)
 		self.choices = choices
@@ -208,11 +211,10 @@ class CommandLineChoiceOption(CommandLineStringOption):
 	@property
 	def value(self):
 		# List items are of the form "10 (debug)" or "en - English, en"
-		return self.mainControl.StringSelection.split(' ')[0]
+		return self.mainControl.StringSelection.split(" ")[0]
 
 
 class CommandLineLanguageOption(CommandLineChoiceOption):
-
 	def shouldBeDisplayed(self):
 		try:
 			# Forcing the language from the command line is available in NVDA 2022.1+.
@@ -223,7 +225,6 @@ class CommandLineLanguageOption(CommandLineChoiceOption):
 
 
 class CommandLineFileOption(CommandLineStringOption):
-
 	def addWithGuiHelper(self, parent, sHelper):
 		groupSizer = wx.StaticBoxSizer(
 			wx.VERTICAL,
@@ -252,7 +253,6 @@ class CommandLineFileOption(CommandLineStringOption):
 
 
 class CommandLineFolderOption(CommandLineStringOption):
-
 	def addWithGuiHelper(self, parent, sHelper):
 		groupSizer = wx.StaticBoxSizer(
 			wx.VERTICAL,
@@ -308,11 +308,13 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 			description=_("The lowest level of message logged"),
 			flagList=["-&l {LOGLEVEL}", "--log-level={LOGLEVEL}"],
 			allowInSecureMode=False,  # Logging in secure mode should be disabled
-			choices=[''] + [
-				'{level} ({name})'.format(
+			choices=[""]
+			+ [
+				"{level} ({name})".format(
 					name=name,
-					level=level
-				) for level, name in logLevelsList
+					level=level,
+				)
+				for level, name in logLevelsList
 			],
 		),
 		CommandLineFolderOption(
@@ -328,11 +330,13 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 			description=_("Override the configured NVDA language"),
 			flagList=["-&n", "--lang={LANGUAGE}"],
 			allowInSecureMode=True,
-			choices=[''] + [
-				'{code} - {lng}'.format(
+			choices=[""]
+			+ [
+				"{code} - {lng}".format(
 					code=c,
-					lng=l
-				) for (c, l) in languageHandler.getAvailableLanguages(presentational=True)
+					lng=lng,
+				)
+				for (c, lng) in languageHandler.getAvailableLanguages(presentational=True)
 			],
 		),
 		CommandLineBooleanOption(
@@ -402,7 +406,6 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
-
 	def __init__(self, *args, **kwargs):
 		super(GlobalPlugin, self).__init__(*args, **kwargs)
 

@@ -25,18 +25,19 @@ except addonHandler.AddonError:
 # Below toggle code came from Tyler Spivey's code, with enhancements by Joseph Lee.
 def finally_(func, final):
 	"""Calls final after func, even if it fails."""
+
 	@wraps(func)
 	def new(*args, **kwargs):
 		try:
 			func(*args, **kwargs)
 		finally:
 			final()
+
 	return new
 
 
 def ScriptableObjectWithLayeredGestures(scriptableObjectName, entryPointGestures):
 	class MyScriptableObject(ScriptableObject):
-
 		scriptCategory = scriptableObjectName
 
 		def __init__(self, layerName, layeredCommandsList, *args, **kw):
@@ -68,7 +69,7 @@ def ScriptableObjectWithLayeredGestures(scriptableObjectName, entryPointGestures
 			script = super(MyScriptableObject, self).getScript(gesture)
 			if not script:
 				script = self.script_error
-			if getattr(script, 'allowMultipleLayeredCommands', None):
+			if getattr(script, "allowMultipleLayeredCommands", None):
 				return script
 			else:
 				return finally_(script, self.finish)
@@ -93,7 +94,7 @@ def ScriptableObjectWithLayeredGestures(scriptableObjectName, entryPointGestures
 				self.script_error(gesture)
 				return
 			layerGestures = {}
-			for (gestures, command, desc) in self.layerCommandsList:
+			for gestures, command, desc in self.layerCommandsList:
 				for g in gestures:
 					layerGestures["kb:" + g] = command
 			self.bindGestures(layerGestures)
@@ -108,20 +109,19 @@ def ScriptableObjectWithLayeredGestures(scriptableObjectName, entryPointGestures
 			# Translators: Title of the layered command help window.
 			title = _("{name} layered commands").format(name=scriptableObjectName)
 			cmdList = []
-			for (gestures, command, desc) in self.layerCommandsList:
+			for gestures, command, desc in self.layerCommandsList:
 				cmdParts = []
 				cmdParts.append(
 					# Translators: Separator between key names in the layered command help window.
-					_(', ').join(
-						'+'.join(
-							localizedKeyLabels.get(k.lower(), k) for k in gesture.split('+')
-						) for gesture in gestures
-					)
+					_(", ").join(
+						"+".join(localizedKeyLabels.get(k.lower(), k) for k in gesture.split("+"))
+						for gesture in gestures
+					),
 				)
-				cmdParts.append(': ')
+				cmdParts.append(": ")
 				cmdParts.append(desc)
-				cmdList.append(''.join(cmdParts))
-			cmdList = '\r'.join(cmdList)
+				cmdList.append("".join(cmdParts))
+			cmdList = "\r".join(cmdList)
 			secureBrowseableMessage(cmdList, title)
 
 	return MyScriptableObject

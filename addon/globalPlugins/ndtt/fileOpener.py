@@ -22,6 +22,7 @@ import subprocess
 import ctypes
 import inspect
 import re
+
 try:
 	import importlib
 except ImportError:
@@ -42,8 +43,7 @@ addonHandler.initTranslation()
 
 
 class FileOpenerError(Exception):
-	"""An error that can be raised in the Python console and caught to report a message in the log reader.
-	"""
+	"""An error that can be raised in the Python console and caught to report a message in the log reader."""
 
 	# Possible error types
 	ET_CONFIG_NO_NVDA_SOURCE_PATH_DEFINED = 1
@@ -55,38 +55,38 @@ class FileOpenerError(Exception):
 
 	MESSAGE_DIC = {
 		ET_CONFIG_NO_NVDA_SOURCE_PATH_DEFINED: (
-			'No NVDA source path defined in configuration',
+			"No NVDA source path defined in configuration",
 			# Translators: A message reported when trying to open a source file.
-			_('No path configured for NVDA sources; please see documentation to configure it.'),
+			_("No path configured for NVDA sources; please see documentation to configure it."),
 		),
 		ET_CONFIG_NO_OPENER_DEFINED: (
-			'No open file command defined in configuration',
+			"No open file command defined in configuration",
 			# Translators: A message reported when trying to open a source file.
-			_('No open file command configured; please see documentation to configure it.'),
+			_("No open file command configured; please see documentation to configure it."),
 		),
 		ET_CONFIG_OPENER_DEFINITION_WRONG_FORMAT: (
-			'Wrong format for the open file command defined in configuration',
+			"Wrong format for the open file command defined in configuration",
 			_(
 				# Translators: A message reported when trying to open a source file.
-				'Wrong format for the open file command in the configuration; '
-				'please see documentation to configure it.'
+				"Wrong format for the open file command in the configuration; "
+				"please see documentation to configure it.",
 			),
 		),
 		ET_CONFIG_EDITOR_NOT_FOUND: (
-			'Editor not found {}',
+			"Editor not found {}",
 			# Translators: A message reported when trying to open a source file.
-			_('Editor not found at {}; please check your configuration.'),
+			_("Editor not found at {}; please check your configuration."),
 		),
 		ET_OBJECT_NOT_FOUND: (
-			'Object not found: {}',
+			"Object not found: {}",
 			# Translators: A message reported when trying to open a source file.
-			_('Object not found: {}'),
+			_("Object not found: {}"),
 		),
 		ET_FILE_NOT_FOUND: (
-			'File not found {}',
+			"File not found {}",
 			# Translators: A message reported when trying to open a source file.
-			_('File not found: {}'),
-		)
+			_("File not found: {}"),
+		),
 	}
 
 	def __init__(self, errorType, value=None):
@@ -97,7 +97,7 @@ class FileOpenerError(Exception):
 		msg = self.MESSAGE_DIC[self.errorType][0]
 		if self.value is not None:
 			msg = msg.format(self.value)
-		return '{msg} [ErrorType: {et}]'.format(
+		return "{msg} [ErrorType: {et}]".format(
 			msg=msg,
 			et=self.errorType,
 		)
@@ -110,12 +110,11 @@ class FileOpenerError(Exception):
 
 
 class SourceFileOpener(threading.Thread):
-
 	def __init__(self, path, line, *args, **kw):
 		super(SourceFileOpener, self).__init__(*args, **kw)
 		self.path = path
 		self.line = line
-		self.opener = config.conf['ndtt']['sourceFileOpener']
+		self.opener = config.conf["ndtt"]["sourceFileOpener"]
 		if not self.opener.strip():
 			raise FileOpenerError(FileOpenerError.ET_CONFIG_NO_OPENER_DEFINED)
 		try:
@@ -136,10 +135,10 @@ class SourceFileOpener(threading.Thread):
 				file=self.editor,
 				parameters=self.parameters,
 				directory=None,
-				showCmd=SW_SHOWNORMAL
+				showCmd=SW_SHOWNORMAL,
 			)
 		except Exception:
-			log.debug('Error when executing the following command:\n{cmd}'.format(cmd=self.cmd))
+			log.debug("Error when executing the following command:\n{cmd}".format(cmd=self.cmd))
 			raise
 
 
@@ -190,7 +189,7 @@ class CodeLocator(object):
 			className = self.obj.__qualname__
 		except AttributeError:  # Python 2: __name__ instead of __qualname__
 			className = self.obj.__name__
-		className = className.split('.')[-1]
+		className = className.split(".")[-1]
 		line = self.findClassDefinitionLine(className, path)
 		return path, line
 
@@ -204,8 +203,8 @@ class CodeLocator(object):
 
 	@staticmethod
 	def convertToSourcePath(path):
-		path = re.sub(r'^.+\\library.zip\\(.+.py)[co]?$', r'\1', path)
-		if ':' not in path:
+		path = re.sub(r"^.+\\library.zip\\(.+.py)[co]?$", r"\1", path)
+		if ":" not in path:
 			nvdaPath = getNvdaCodePath()
 			return os.path.join(nvdaPath, path)
 		else:
@@ -213,13 +212,13 @@ class CodeLocator(object):
 
 	@staticmethod
 	def findClassDefinitionLine(className, path):
-		reClassLine = r'\s*class\s+{}'.format(className)
+		reClassLine = r"\s*class\s+{}".format(className)
 		reComp = re.compile(reClassLine)
-		with open(path, 'r', encoding='utf8') as f:
-			for (n, l) in enumerate(f):
-				if reComp.match(l):
+		with open(path, "r", encoding="utf8") as f:
+			for n, line in enumerate(f):
+				if reComp.match(line):
 					return n + 1
-			log.warning('Class definition line not found:\n{}'.format(reClassLine))
+			log.warning("Class definition line not found:\n{}".format(reClassLine))
 			return 1
 
 	def getModuleOrClassCodePath(self):
@@ -228,9 +227,9 @@ class CodeLocator(object):
 		elif inspect.isclass(self.obj):
 			modName = self.obj.__module__
 		else:
-			raise RuntimeError('Unexpected object type: {}'.format(type(self.obj)))
-		if modName == '__main__':
-			return 'nvda.pyw'
+			raise RuntimeError("Unexpected object type: {}".format(type(self.obj)))
+		if modName == "__main__":
+			return "nvda.pyw"
 		try:
 			src = inspect.getsourcefile(self.obj)
 			if src:
@@ -256,12 +255,12 @@ def getObject(objPath):
 		# NVDA 2019.2.1: Although importlib is documented for Python 2, it is not present in NVDA's Python
 		# for this version. Thus use __import__ instead, as done in core code.
 		importFunction = __import__
-	tokens = objPath.split('.')
+	tokens = objPath.split(".")
 	for iToken in range(len(tokens)):
-		modName = '.'.join(tokens[0:iToken + 1])
-		inModuleTokens = tokens[iToken + 1:]
+		modName = ".".join(tokens[0 : iToken + 1])
+		inModuleTokens = tokens[iToken + 1 :]
 		if inModuleTokens:
-			objName = '.'.join(inModuleTokens)
+			objName = ".".join(inModuleTokens)
 		else:
 			objName = None
 		try:
@@ -279,13 +278,13 @@ def getObject(objPath):
 
 
 def getObjectInModule(objName, mod):
-	tokens = objName.split('.') if objName else []
+	tokens = objName.split(".") if objName else []
 	obj = mod
 	try:
 		for attr in tokens:
 			obj = getattr(obj, attr)
 	except AttributeError:
-		raise FileOpenerError(FileOpenerError.ET_OBJECT_NOT_FOUND, mod.__name__ + '.' + objName)
+		raise FileOpenerError(FileOpenerError.ET_OBJECT_NOT_FOUND, mod.__name__ + "." + objName)
 	return obj
 
 
@@ -311,9 +310,9 @@ def openCodeFile(obj):
 
 
 def getNvdaCodePath():
-	if getattr(sys, 'frozen', None):
+	if getattr(sys, "frozen", None):
 		# NVDA executable
-		nvdaSourcePath = config.conf['ndtt']['nvdaSourcePath'].strip()
+		nvdaSourcePath = config.conf["ndtt"]["nvdaSourcePath"].strip()
 		if nvdaSourcePath:
 			return nvdaSourcePath
 		else:
@@ -334,7 +333,7 @@ def win_CommandLineToArgvW(cmd):
 
 
 def testCodeFinder():
-	""" A test function for the `CodeLocator` class.
+	"""A test function for the `CodeLocator` class.
 	To execute it, open NVDA's Python console and run the following command:
 	globalPlugins.ndtt.GlobalPlugin.testCodeFinder()
 	"""
@@ -351,38 +350,42 @@ def testCodeFinder():
 
 	objList = [
 		# Module
-		(api, nvdaCodePath + r'\api.py', 1),
+		(api, nvdaCodePath + r"\api.py", 1),
 		# Main module
-		(__main__, nvdaCodePath + r'\nvda.pyw', 1),
+		(__main__, nvdaCodePath + r"\nvda.pyw", 1),
 		# Module-level function
-		(api.getFocusObject, nvdaCodePath + r'\api.py', 69),
+		(api.getFocusObject, nvdaCodePath + r"\api.py", 69),
 		# Module-level function with wrapper
-		(logViewer.activate, nvdaCodePath + r'\gui\logViewer.py', 108),
+		(logViewer.activate, nvdaCodePath + r"\gui\logViewer.py", 108),
 		# Class definition
-		(globalCommands.GlobalCommands, nvdaCodePath + r'\globalCommands.py', 99),
+		(globalCommands.GlobalCommands, nvdaCodePath + r"\globalCommands.py", 99),
 		# Class definition in main module
-		(__main__.NoConsoleOptionParser, nvdaCodePath + r'\nvda.pyw', 93),
+		(__main__.NoConsoleOptionParser, nvdaCodePath + r"\nvda.pyw", 93),
 		# Definition of the class of an object
-		(globalCommands.commands, nvdaCodePath + r'\globalCommands.py', 99),
+		(globalCommands.commands, nvdaCodePath + r"\globalCommands.py", 99),
 		# Method definition in a class
-		(globalCommands.GlobalCommands.script_cycleAudioDuckingMode, nvdaCodePath + r'\globalCommands.py', 103),
+		(
+			globalCommands.GlobalCommands.script_cycleAudioDuckingMode,
+			nvdaCodePath + r"\globalCommands.py",
+			103,
+		),
 		# Method definition of an object
-		(globalCommands.commands.script_cycleAudioDuckingMode, nvdaCodePath + r'\globalCommands.py', 103),
+		(globalCommands.commands.script_cycleAudioDuckingMode, nvdaCodePath + r"\globalCommands.py", 103),
 		# Package
-		(appModules, nvdaCodePath + r'\appModules\__init__.py', 1),
+		(appModules, nvdaCodePath + r"\appModules\__init__.py", 1),
 		# Module in subfolder
-		(appModules_excel, nvdaCodePath + r'\appModules\excel.py', 1),
+		(appModules_excel, nvdaCodePath + r"\appModules\excel.py", 1),
 	]
 	hasErrorOccurred = False
 	for obj, file, line in objList:
 		file1, line1 = CodeLocator(obj).getCodeLocation()
 		if file.lower() == file1.lower() and (line != 1) == (line1 != 1):
-			log.debug('Checked {} successfully.'.format(obj))
+			log.debug("Checked {} successfully.".format(obj))
 		else:
-			log.error('FileRef: {} - {}\nFileGCP: {} - {}'.format(file, line, file1, line1))
+			log.error("FileRef: {} - {}\nFileGCP: {} - {}".format(file, line, file1, line1))
 			hasErrorOccurred = True
 	if hasErrorOccurred:
-		msg = 'Test failed; see the log for details'
+		msg = "Test failed; see the log for details"
 	else:
-		msg = 'Test successful'
+		msg = "Test successful"
 	core.callLater(0, lambda: ui.message(msg))

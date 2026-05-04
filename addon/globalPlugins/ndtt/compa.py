@@ -13,8 +13,8 @@ import globalVars
 
 # Following code based on Lukasz Golonka's work.
 
-class EnhancedGetter(object):
 
+class EnhancedGetter(object):
 	def __init__(self, modWithAttrs, attrType, alternativeNameFactories):
 		super(EnhancedGetter, self).__init__()
 		self.mod = modWithAttrs
@@ -31,13 +31,17 @@ class EnhancedGetter(object):
 
 
 class ControlTypesCompatWrapper(object):
-
 	_ALIAS_FACTORIES = (
-		lambda attrType, attrName: "_".join(({
-			'OutputReason': 'REASON',
-			'Role': 'ROLE',
-			'State': 'STATE',
-		}[attrType], attrName)),
+		lambda attrType, attrName: "_".join(
+			(
+				{
+					"OutputReason": "REASON",
+					"Role": "ROLE",
+					"State": "STATE",
+				}[attrType],
+				attrName,
+			),
+		),
 		lambda attrType, attrName: ".".join((attrType, attrName)),
 	)
 
@@ -46,17 +50,17 @@ class ControlTypesCompatWrapper(object):
 		self.OutputReason = EnhancedGetter(
 			controlTypes,
 			"OutputReason",
-			self._ALIAS_FACTORIES
+			self._ALIAS_FACTORIES,
 		)
 		self.Role = EnhancedGetter(
 			controlTypes,
 			"Role",
-			self._ALIAS_FACTORIES
+			self._ALIAS_FACTORIES,
 		)
 		self.State = EnhancedGetter(
 			controlTypes,
 			"State",
-			self._ALIAS_FACTORIES
+			self._ALIAS_FACTORIES,
 		)
 
 	def __getattr__(self, attr):
@@ -78,8 +82,7 @@ def getApDir():
 
 
 def matchDict(m):
-	"""A helper function to get the match dictionary (useful in Python 2)
-	"""
+	"""A helper function to get the match dictionary (useful in Python 2)"""
 
 	if not m:
 		return m
@@ -103,14 +106,16 @@ def getScaleFactor(windowHandle):
 	order to get the window handle, this likely means calling the wx.window __init__ method prior
 	to calling self.GetHandle()"""
 	import windowUtils
+
 	return windowUtils.getWindowScalingFactor(windowHandle)
 
 
 # Copied from gui\dpiScalingHelper.py
 class DpiScalingHelperMixinWithoutInit(object):
 	"""Same concept as DpiScalingHelperMixin, but ensures you do not have to explicitly call the init
-		of wx.Window or this mixin
+	of wx.Window or this mixin
 	"""
+
 	_scaleFactor = None
 
 	def scaleSize(self, size):
@@ -123,6 +128,7 @@ class DpiScalingHelperMixinWithoutInit(object):
 def getPanelDescriptionWidth():
 	try:
 		from gui.settingsDialogs import PANEL_DESCRIPTION_WIDTH
+
 		return PANEL_DESCRIPTION_WIDTH
 	except ImportError:
 		# Not available before NVDA 2021.3:

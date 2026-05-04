@@ -2,13 +2,13 @@
 # NVDA Dev & Test Toolbox add-on for NVDA
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2022-2025 Cyrille Bougot
+# Copyright (C) 2022-2026 Cyrille Bougot
 
-"""Provides an extension of NVDA's Python console.
-"""
+"""Provides an extension of NVDA's Python console."""
 
 import os
 import sys
+
 # For Python 2.7, use the open of Python 3, allowing to specify encoding.
 from io import open
 
@@ -30,8 +30,8 @@ NDTT_PATH = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "ndtt"))
 CONSOLE_STARTUP_FILE_NAME = "consoleStartup.py"
 CONSOLE_HISTORY_FILE_NAME = ".pythonConsoleHistory"
 
-class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
+class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	# Store here the symbol to have it available in globalPlugins.ndtt.GlobalPlugin.
 	testCodeFinder = testCodeFinder
 
@@ -48,6 +48,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				oldInitialize()
 				self.pythonConsolePostInitialize()
 				pythonConsole.initialize = oldInitialize
+
 			if not getattr(pythonConsole.initialize, "_pythonConsolePostInitializePatch", False):
 				pythonConsole.initialize = newInitialize
 				pythonConsole.initialize._pythonConsolePostInitializePatch = True
@@ -55,13 +56,13 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def terminate(self, *args, **kwargs):
 		self.saveInputHistory()
 		try:
-			del pythonConsole.consoleUI.console.namespace['openCodeFile']
+			del pythonConsole.consoleUI.console.namespace["openCodeFile"]
 		except (AttributeError, KeyError):
 			pass
 		super(GlobalPlugin, self).terminate(*args, **kwargs)
 
 	def pythonConsolePostInitialize(self, alreadyOpen=False):
-		pythonConsole.consoleUI.console.namespace.update({'openCodeFile': openCodeFile})
+		pythonConsole.consoleUI.console.namespace.update({"openCodeFile": openCodeFile})
 		self.loadStartupFile()
 		self.loadInputHistory(alreadyOpen=alreadyOpen)
 
@@ -70,9 +71,13 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			log.debug("Loading console startup file {}".format(self.consoleStartupFilePath))
 			stdout, stderr = sys.stdout, sys.stderr
 			sys.stdout = sys.stderr = pythonConsole.consoleUI.console
-			print('### Executing console startup script: {}'.format(self.consoleStartupFilePath))
-			with open(self.consoleStartupFilePath, 'r', encoding="UTF-8") as sf:
-				incomplete = pythonConsole.consoleUI.console.runsource(source=sf.read(), filename=self.consoleStartupFilePath, symbol='exec')
+			print("### Executing console startup script: {}".format(self.consoleStartupFilePath))
+			with open(self.consoleStartupFilePath, "r", encoding="UTF-8") as sf:
+				incomplete = pythonConsole.consoleUI.console.runsource(
+					source=sf.read(),
+					filename=self.consoleStartupFilePath,
+					symbol="exec",
+				)
 			if incomplete:
 				log.error("Console startup script incomplete ({})".format(self.consoleStartupFilePath))
 				print("### Console startup script not executed since incomplete.")
@@ -80,18 +85,20 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				print("### Console startup script executed.")
 			try:
 				# NVDA >= 2021.1
-				pythonConsole.consoleUI.outputPositions.append(pythonConsole.consoleUI.outputCtrl.GetInsertionPoint())
+				pythonConsole.consoleUI.outputPositions.append(
+					pythonConsole.consoleUI.outputCtrl.GetInsertionPoint(),
+				)
 			except AttributeError:
 				pass
 			sys.stdout, sys.stderr = stdout, stderr
 		else:
-			log.debugWarning('No console startup file found for path {}'.format(self.consoleStartupFilePath))
+			log.debugWarning("No console startup file found for path {}".format(self.consoleStartupFilePath))
 
 	def loadInputHistory(self, alreadyOpen):
 		if config.conf["ndtt"]["preserveConsoleInputHistory"] and not alreadyOpen:
 			try:
-				with open(self.consoleHistoryFilePath, 'r', encoding="UTF-8") as f:
-					pythonConsole.consoleUI.inputHistory = [l.rstrip("\n") for l in f.readlines()]
+				with open(self.consoleHistoryFilePath, "r", encoding="UTF-8") as f:
+					pythonConsole.consoleUI.inputHistory = [line.rstrip("\n") for line in f.readlines()]
 			except FileNotFoundError:
 				log.debugWarning("No Python console history file found.")
 			else:
@@ -111,8 +118,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			pass
 		else:
 			log.debug("Created NDTT folder at {}".format(NDTT_PATH))
-		with open(self.consoleHistoryFilePath, 'w', encoding="UTF-8") as f:
-			for line in pythonConsole.consoleUI.inputHistory[-(config.conf["ndtt"]["consoleInputHistorySize"] + 1):-1]:
+		with open(self.consoleHistoryFilePath, "w", encoding="UTF-8") as f:
+			for line in pythonConsole.consoleUI.inputHistory[
+				-(config.conf["ndtt"]["consoleInputHistorySize"] + 1) : -1
+			]:
 				f.write(line + "\n")
 		log.debug("Python console input history saved at {}".format(self.consoleHistoryFilePath))
 

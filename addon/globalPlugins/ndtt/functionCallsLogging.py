@@ -32,8 +32,8 @@ logMethodDisplayStrings = [
 	(LOG_METHOD_SETTRACE, _("settrace")),
 ]
 
-class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
+class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def __init__(self):
 		super(GlobalPlugin, self).__init__()
 		self.logEnabled = False
@@ -49,10 +49,12 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		if self.enableFunctionCallsLog(not self.logEnabled):
 			if self.logEnabled:
 				# Translators: Reported when toggling the function call log feature.
-				msg = _("Function calls log enabled for {function}").format(function=config.conf["ndtt"]["functionCallsLogTarget"])
+				msg = _("Function calls log enabled for {function}").format(
+					function=config.conf["ndtt"]["functionCallsLogTarget"],
+				)
 			else:
 				# Translators: Reported when toggling the function call log feature.
-				msg = _('Function calls log disabled')
+				msg = _("Function calls log disabled")
 			ui.message(msg)
 
 	@script(
@@ -64,25 +66,32 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		oldVal = config.conf["ndtt"]["functionCallsLogMethod"]
 		if oldVal == LOG_METHOD_SETTRACE:
 			newVal = LOG_METHOD_MONKEY_PATCHING
-		elif oldVal ==  LOG_METHOD_MONKEY_PATCHING:
+		elif oldVal == LOG_METHOD_MONKEY_PATCHING:
 			newVal = LOG_METHOD_SETTRACE
 		else:
-			raise RuntimeError("Unexpected function calls log method: {}".format(val))
+			raise RuntimeError("Unexpected function calls log method: {}".format(oldVal))
 		config.conf["ndtt"]["functionCallsLogMethod"] = newVal
-		# Translators: Reported when toggling the function calls log method.
-		ui.message(_("Function calls log uses {method}").format(
-			method=next(label for val, label in logMethodDisplayStrings if val == newVal),
-		))
+		ui.message(
+			# Translators: Reported when toggling the function calls log method.
+			_("Function calls log uses {method}").format(
+				method=next(label for val, label in logMethodDisplayStrings if val == newVal),
+			),
+		)
 
 	def enableFunctionCallsLog(self, enable=True):
 		if enable:
 			if config.conf["ndtt"]["functionCallsLogMethod"] == LOG_METHOD_SETTRACE:
 				from .fileOpener import getObject, FileOpenerError
+
 				try:
 					func = getObject(config.conf["ndtt"]["functionCallsLogTarget"])
 				except FileOpenerError:
-					# Translators: Reported when toggling the function calls log feature.
-					ui.message(_("{func} is not a valid function name.").format(func=config.conf["ndtt"]["functionCallsLogTarget"]))
+					ui.message(
+						# Translators: Reported when toggling the function calls log feature.
+						_("{func} is not a valid function name.").format(
+							func=config.conf["ndtt"]["functionCallsLogTarget"],
+						),
+					)
 					return False
 				self._targetCode = self._getCodeObject(func)
 				sys.settrace(self._traceFunc)
@@ -92,11 +101,15 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				except AttributeError:
 					# For NVDA < 2026.1 (Python 3.11 or lower)
 					threading.settrace(self._traceFunc)
-			elif config.conf["ndtt"]["functionCallsLogMethod"] ==  LOG_METHOD_MONKEY_PATCHING:
+			elif config.conf["ndtt"]["functionCallsLogMethod"] == LOG_METHOD_MONKEY_PATCHING:
 				if not self.enableMonkeyPatching():
 					return False
 			else:
-				raise RuntimeError("Unexpected function calls log method: {}".format(config.conf["ndtt"]["functionCallsLogMethod"]))
+				raise RuntimeError(
+					"Unexpected function calls log method: {}".format(
+						config.conf["ndtt"]["functionCallsLogMethod"],
+					),
+				)
 			self.logEnabled = True
 			self.logMethod = config.conf["ndtt"]["functionCallsLogMethod"]
 		else:
@@ -105,9 +118,13 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				sys.settrace(None)
 				threading.settrace(None)
 			elif self.logMethod == LOG_METHOD_MONKEY_PATCHING:
-				setattr(self.patchedObject, self.patchedFunctionName, self.monkeyPatchedFunction.originalFunction)
+				setattr(
+					self.patchedObject,
+					self.patchedFunctionName,
+					self.monkeyPatchedFunction.originalFunction,
+				)
 				self.monkeyPatchedFunction = None
-			elif self.logMethod  is None:
+			elif self.logMethod is None:
 				# Disable may be called at add-on termination, even if there is currently no logging
 				# In this case, do nothing
 				pass
@@ -153,7 +170,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				"*{name}={value!r}".format(
 					name=varargsName,
 					value=argInfo.locals[varargsName],
-				)
+				),
 			)
 		keywordsName = argInfo.keywords
 		if keywordsName is not None:
@@ -161,7 +178,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				"**{name}={value!r}".format(
 					name=keywordsName,
 					value=argInfo.locals[keywordsName],
-				)
+				),
 			)
 		argsRepr = "  " + "\n  ".join(argsList)
 
@@ -180,6 +197,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	def enableMonkeyPatching(self):
 		from .fileOpener import getObject, FileOpenerError
+
 		location, funcName = config.conf["ndtt"]["functionCallsLogTarget"].rsplit(".", 1)
 		try:
 			patchedObject = getObject(location)

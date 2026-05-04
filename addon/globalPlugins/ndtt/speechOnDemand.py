@@ -1,4 +1,4 @@
-# Copyright (C) 2023-2025 Cyrille Bougot
+# Copyright (C) 2023-2026 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -14,8 +14,7 @@ from scriptHandler import script as original_script
 
 
 def isSpeechOnDemandFeatureAvailable():
-	"""Indicates if the speech on-demand feature is available in the current version of NVDA.
-	"""
+	"""Indicates if the speech on-demand feature is available in the current version of NVDA."""
 
 	try:
 		# NVDA >= 2024.1
@@ -36,7 +35,7 @@ def getSpeechOnDemandParameter():
 
 	if isSpeechOnDemandFeatureAvailable():
 		# Define on-demand parameter only if the feature is available.
-		return {'speakOnDemand': True}
+		return {"speakOnDemand": True}
 	else:
 		return {}
 
@@ -54,7 +53,7 @@ def executeWithSpeakOnDemand(f, *args, **kwargs):
 	"""
 
 	if threading.get_ident() != core.mainThreadId:
-		raise RuntimeError('This function should only be executed from the main thread.')
+		raise RuntimeError("This function should only be executed from the main thread.")
 
 	if not isSpeechOnDemandFeatureAvailable() or speech.getState().speechMode != speech.SpeechMode.onDemand:
 		return f(*args, **kwargs)
@@ -65,10 +64,8 @@ def executeWithSpeakOnDemand(f, *args, **kwargs):
 		speech.setSpeechMode(speech.SpeechMode.onDemand)
 
 
-def script(
-	speakOnDemand = False,
-	**kwargs  # Python 2: do not put tailing comma after **kwargs
-):
+def script(speakOnDemand=False, **kwargs):
+	# Beware to keep signature on one line to avoid comma after **kwargs, since Python 2 does not support it.
 	"""Define metadata for a script.
 	This function is an extended version of NVDA's original scriptHandler.script decorator.
 	It supports speakOnDemand parameter no matter the NVDA version, ignoring this parameter for NVDA versions

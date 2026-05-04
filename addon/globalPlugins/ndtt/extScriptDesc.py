@@ -23,14 +23,14 @@ _originalMethod = inputCore.manager._handleInputHelp
 
 def newHandleInputHelp(self, gesture, onlyLog=False):
 	script = gesture.script
-	scriptName = scriptHandler.getScriptName(script) if script else ''
+	scriptName = scriptHandler.getScriptName(script) if script else ""
 	addDesc = (
 		# The script must exist
 		script
 		# And the script must not be input help script
 		and scriptName != "toggleInputHelp"
 		# And the script must not have already a description.
-		and not getattr(script, '__doc__', None)
+		and not getattr(script, "__doc__", None)
 	)
 	if addDesc:
 		scriptLocation = scriptHandler.getScriptLocation(script)
@@ -50,7 +50,6 @@ def newHandleInputHelp(self, gesture, onlyLog=False):
 
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
-
 	scriptsWithAddedDoc = set()
 
 	def __init__(self):
@@ -74,11 +73,11 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		if enable:
 			inputCore.manager._handleInputHelp = MethodType(newHandleInputHelp, _originalMethod.__self__)
 			# Translators: A message reported when toggling Extended script description mode.
-			msg = _('Extended script description mode enabled')
+			msg = _("Extended script description mode enabled")
 		else:
 			inputCore.manager._handleInputHelp = _originalMethod
 			# Translators: A message reported when toggling Extended script description mode.
-			msg = _('Extended script description mode disabled')
+			msg = _("Extended script description mode disabled")
 			for script in self.__class__.scriptsWithAddedDoc:
 				del script.__func__.__doc__
 				del script.__func__.category

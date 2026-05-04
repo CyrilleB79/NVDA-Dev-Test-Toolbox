@@ -1,9 +1,10 @@
 import sys
 import re
 
+
 def isExpectedErrorMessage(errMsg):
 	TRACEBACK_START_MSG = "Traceback (most recent call last):"
-	lines = errMsg.split('\n')
+	lines = errMsg.split("\n")
 	if (
 		lines[0].startswith("ERROR - audio.soundSplit.initialize")
 		and lines[1] == "Could not initialize audio session manager"
@@ -18,13 +19,16 @@ def isExpectedErrorMessage(errMsg):
 		tbIndex = lines.index(TRACEBACK_START_MSG)
 	except ValueError:
 		return False
-	tbLines = [l.strip() for l in lines[tbIndex:]]
+	tbLines = [ln.strip() for ln in lines[tbIndex:]]
 	if (
 		lines[0].startswith("ERROR - unhandled exception")
 		and tbIndex == 1
-		and any(re.search(r'File "audioDucking\.py[co]?", line \d+, in initialize', l) for l in tbLines)
-		and any(re.search(r'File "audioDucking\.py[co]?", line \d+, in _setDuckingState', l) for l in tbLines)
-		and lines[-1] in [
+		and any(re.search(r'File "audioDucking\.py[co]?", line \d+, in initialize', ln) for ln in tbLines)
+		and any(
+			re.search(r'File "audioDucking\.py[co]?", line \d+, in _setDuckingState', ln) for ln in tbLines
+		)
+		and lines[-1]
+		in [
 			"OSError: [WinError -2147023174] The RPC server is unavailable",  # Python 3
 			"WindowsError: [Error -2147023174] The RPC server is unavailable",  # Python 2
 		]
@@ -32,12 +36,15 @@ def isExpectedErrorMessage(errMsg):
 		return True
 	return False
 
+
 def readLogMessages(filePath):
 	logMessages = []
 	currentMessage = []
 	with open(filePath, encoding="utf-8") as f:
 		for line in f:
-			if line.lstrip().startswith(("DEBUG -", "INFO -", "WARNING -", "ERROR -", "IO -", "DEBUGWARNING -", "CRITICAL -")):
+			if line.lstrip().startswith(
+				("DEBUG -", "INFO -", "WARNING -", "ERROR -", "IO -", "DEBUGWARNING -", "CRITICAL -"),
+			):
 				if currentMessage:
 					logMessages.append("".join(currentMessage).strip())
 					currentMessage = []
@@ -45,6 +52,7 @@ def readLogMessages(filePath):
 		if currentMessage:
 			logMessages.append("".join(currentMessage).strip())
 	return logMessages
+
 
 if len(sys.argv) < 2:
 	print("Usage: checkLog.py <logFilePath>")
