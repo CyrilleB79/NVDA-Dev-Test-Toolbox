@@ -142,3 +142,8 @@ else:
 	# Python 3: Just define the same error name so that they can be imported.
 	FileExistsError = FileExistsError
 	FileNotFoundError = FileNotFoundError
+
+if sys.version_info.major == 2:
+	unicodeStr = unicode
+else:
+	unicodeStr = str

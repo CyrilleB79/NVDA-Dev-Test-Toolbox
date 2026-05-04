@@ -12,6 +12,7 @@ import globalPluginHandler
 import ui
 import api
 from .compa import controlTypesCompatWrapper as controlTypes
+from .compa import unicodeStr as str
 # Import normal controlTypes and not the wrapper only to be used for older versions of NVDA.
 import controlTypes as oldControlTypes
 from logHandler import log

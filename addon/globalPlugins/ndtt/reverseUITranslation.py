@@ -110,10 +110,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		self._speak(sequence, *args, **kwargs)
 
 	def memorizeLastSpeechString(self, speechSequence):
-		if sys.version_info.major == 2:
-			unicodeStr = unicode
-		else:
-			unicodeStr = str
+		from .compa import unicodeStr
 		seq = (i for i in speechSequence if isinstance(i, unicodeStr))
 		try:
 			self.lastSpeechString = next(seq)
