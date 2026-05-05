@@ -123,6 +123,7 @@ class FileSelectionHelper(object):
 
 class CommandLineOption(object):
 	def __init__(self, description, flagList, allowInSecureMode):
+		super(CommandLineOption, self).__init__()
 		self.description = description
 		self.flagList = flagList
 		self.allowInSecureMode = allowInSecureMode
@@ -188,7 +189,7 @@ class CommandLineStringOption(CommandLineOption):
 		if val:
 			# We use the last element of flagList since it is the long form ("--flag=value"), which exists for
 			# all the options.
-			flagLHS, flagRHS = self.flagList[-1].split("=")
+			flagLHS, _flagRHS = self.flagList[-1].split("=")
 			return flagLHS + "={}".format(val)
 		else:
 			return ""
@@ -378,8 +379,8 @@ class RestartWithOptionsDialog(gui.settingsDialogs.SettingsDialog):
 		# check? --portable-path=PORTABLEPATH (The path where a portable copy will be created)
 	]
 
-	def makeSettings(self, settingsSizer):
-		sHelper = gui.guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+	def makeSettings(self, sizer):
+		sHelper = gui.guiHelper.BoxSizerHelper(self, sizer=sizer)
 		self.options = []
 		for option in self.OPTION_LIST:
 			if option.shouldBeDisplayed():

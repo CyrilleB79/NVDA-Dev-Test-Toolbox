@@ -11,15 +11,6 @@ from glob import glob
 import shutil
 from datetime import datetime, timedelta
 
-try:
-	# NVDA version >= 2019.3 (Python 3.7+)
-	from datetime import timezone
-except ImportError:
-	# NVDA version < 2019.3 (Python 2.7)
-	from datetime import tzinfo
-
-	timezone = None
-
 # For NVDA version <= 2019.3 (Python 2.7), open the open of Python 3, allowing to specify encoding.
 from io import open
 import weakref
@@ -46,7 +37,7 @@ try:
 	from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 except ImportError:
 	from .compa import DpiScalingHelperMixinWithoutInit
-from .compa import matchDict, FileNotFoundError, FileExistsError
+from .compa import matchDict, FileNotFoundError, FileExistsError, popupSettingsDialog
 from .fileOpener import openSourceFile, FileOpenerError
 from .ndttGui import NDTTSettingsPanel
 from .utils import getBaseProfileConfigValue
@@ -121,12 +112,18 @@ EXAMPLE_ANONYMIZATION_RULES_FILE = r"""
 
 
 def getTzUTC():
-	if timezone is not None:
+	try:
 		# NVDA version >= 2019.3 (Python 3.7+)
+		from datetime import timezone
+
 		return timezone.utc
+	except ImportError:
+		pass
 
 	# NVDA version < 2019.3 (Python 2.7)
-	# We define our own UTC timezone
+	from datetime import tzinfo
+
+	# We define our own UTC timezone since Python 2.7 hasn't.
 	class UTC(tzinfo):
 		"""UTC"""
 
@@ -284,6 +281,7 @@ def moduleInitialize():
 
 class Log(object):
 	def __init__(self, filename, folder):
+		super(Log, self).__init__()
 		self.filename = filename
 		self.folder = folder
 		self.type = "backup"
@@ -549,7 +547,7 @@ class LogsManagerDialog(
 		selectedLogs = self.getSelectedLogs()
 		# Translators: A message displayed to the user when pressing the Delete button in the logs manager dialog
 		msg = _("The following files will be removed:\n{logsList}\n\nWould you like to continue?").format(
-			logsList="\n".join(lg.filename for lg, idx in selectedLogs),
+			logsList="\n".join(lg.filename for lg, _idx in selectedLogs),
 		)
 		# Translators: The title of a dialog displayed to the user when pressing the Delete button in the
 		# logs manager dialog
@@ -644,7 +642,7 @@ class LogsManagerDialog(
 
 	def onOpenSettingsClick(self, evt):
 		wx.CallAfter(
-			gui.mainFrame._popupSettingsDialog,
+			popupSettingsDialog,
 			gui.settingsDialogs.NVDASettingsDialog,
 			NDTTSettingsPanel,
 		)
@@ -700,18 +698,11 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			# Translators: a message reported when calling the anonymization command
 			ui.message(_("No selection"))
 			return
-		content = info.text
-		error = False
-		try:
-			anonymizedContent = self._anonymizeText(content)
-		except Exception as e:
-			errMsg = str(e).strip() or repr(e)
-			log.error(errMsg, exc_info=True)
-			error = True
-		if not error:
-			error = not api.copyToClip(anonymizedContent)
-			errMsg = "Copy to clipboard failed"
-		if error:
+		success, errMsg = self.anonymizeAndCopyText(info.text)
+		if success:
+			# Translators: a message reported when calling the anonymization command
+			ui.message(_("Selected text anonymized and copied in the clipboard."))
+		else:
 			import wx
 
 			wx.CallAfter(
@@ -722,9 +713,17 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				caption=_("Error"),
 				style=wx.OK | wx.ICON_ERROR,
 			)
-		else:
-			# Translators: a message reported when calling the anonymization command
-			ui.message(_("Selected text anonymized and copied in the clipboard."))
+
+	def anonymizeAndCopyText(self, text):
+		try:
+			anonymizedContent = self._anonymizeText(text)
+		except Exception as e:
+			errMsg = str(e).strip() or repr(e)
+			log.error(errMsg, exc_info=True)
+			return False, errMsg
+		if not api.copyToClip(anonymizedContent):
+			return False, "Copy to clipboard failed"
+		return True, None
 
 	def _anonymizeText(self, text):
 		rules = self._loadAnonymizationRules()

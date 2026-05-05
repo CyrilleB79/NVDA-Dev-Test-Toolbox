@@ -52,14 +52,16 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		category=ADDON_SUMMARY,
 	)
 	def script_openScriptForNextGesture(self, gesture):
-		inputCore.manager._captureFunc = self._openScriptForNextGestureCaptor
+		inputCore.manager._captureFunc = (  # pyright: ignore[reportPrivateUsage]
+			self._openScriptForNextGestureCaptor
+		)
 		# Translators: Reported when executing the command to open the script corresponding to the next gesture.
 		ui.message(_("Execute a gesture to open the code of the corresponding script."))
 
 	def _openScriptForNextGestureCaptor(self, gesture):
 		if gesture.isModifier:
 			return False
-		inputCore.manager._captureFunc = None
+		inputCore.manager._captureFunc = None  # pyright: ignore[reportPrivateUsage]
 		script = gesture.script
 		if script:
 			try:
@@ -130,6 +132,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			core.callLater(0, lambda: ui.message(msg))
 
 	def terminate(self):
-		if inputCore.manager._captureFunc == self._openScriptForNextGestureCaptor:
-			inputCore.manager._captureFunc = None
+		captureFunc = inputCore.manager._captureFunc  # pyright: ignore[reportPrivateUsage]
+		if captureFunc == self._openScriptForNextGestureCaptor:
+			inputCore.manager._captureFunc = None  # pyright: ignore[reportPrivateUsage]
 		super(GlobalPlugin, self).terminate()

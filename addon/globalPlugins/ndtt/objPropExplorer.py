@@ -13,6 +13,7 @@ import ui
 import api
 from .compa import controlTypesCompatWrapper as controlTypes
 from .compa import unicodeStr as str
+
 # Import normal controlTypes and not the wrapper only to be used for older versions of NVDA.
 import controlTypes as oldControlTypes
 from logHandler import log
@@ -68,11 +69,6 @@ def getLocationInfo(o):
 		"{}: {}".format(i, getattr(o.location, i)) for i in ["left", "top", "width", "height"]
 	)
 	return info
-
-
-def makeGetInfo(infoType):
-	def getInfo(o):
-		return getattr(o, infoType)
 
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
@@ -136,7 +132,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		self.index = (self.index + 1) % len(self._INFO_TYPES)
 		self.announceCurrentInfo()
 
-	script_nextObjectInfo.allowMultipleLayeredCommands = True
+	script_nextObjectInfo.allowMultipleLayeredCommands = True  # pyright: ignore[reportFunctionMemberAccess]
 
 	@script(
 		description=_(
@@ -149,7 +145,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		self.index = (self.index - 1) % len(self._INFO_TYPES)
 		self.announceCurrentInfo()
 
-	script_priorObjectInfo.allowMultipleLayeredCommands = True
+	script_priorObjectInfo.allowMultipleLayeredCommands = True  # pyright: ignore[reportFunctionMemberAccess]
 
 	def announceCurrentInfo(self, nPress=0):
 		if nPress > 1:
@@ -190,8 +186,8 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	def customSpeakObjectFactory(self):
 		def new_speakObject(obj, reason=controlTypes.OutputReason.QUERY, _prefixSpeechCommand=None, **kwargs):
-		# Beware to keep this signature on a single line since trailing comma after **kwargs is not supported
-		# with Python 2.
+			# Beware to keep this signature on a single line since trailing comma after **kwargs is not supported
+			# with Python 2.
 			if not self.customObjectReporting:
 				return self.orig_speakObject(obj, reason, _prefixSpeechCommand, **kwargs)
 			s1 = inspect.stack()[1]

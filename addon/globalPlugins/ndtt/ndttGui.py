@@ -48,16 +48,15 @@ class NDTTSettingsPanel(gui.settingsDialogs.SettingsPanel):
 		"Please close this dialog, set your config profile to default and try again.",
 	).format(name=ADDON_SUMMARY)
 
-	def makeSettings(self, settingsSizer):
+	def makeSettings(self, sizer):
 		from .functionCallsLogging import logMethodDisplayStrings
 
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
 		if config.conf.profiles[-1].name is not None or len(config.conf.profiles) != 1:
 			self.panelDescription = self.NO_DEFAULT_PROFILE_MESSAGE
-			helper = gui.guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-			textItem = helper.addItem(wx.StaticText(self, label=self.panelDescription.replace("&", "&&")))
+			textItem = sHelper.addItem(wx.StaticText(self, label=self.panelDescription.replace("&", "&&")))
 			textItem.Wrap(self.scaleSize(PANEL_DESCRIPTION_WIDTH))
 			return
-		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		openInEditorCmdLabel = _(
 			# Translators: This is a label for an edit field in the NDTT Settings panel.
@@ -87,7 +86,7 @@ class NDTTSettingsPanel(gui.settingsDialogs.SettingsPanel):
 		self.makeBackupsList = sHelper.addLabeledControl(
 			text,
 			wx.Choice,
-			choices=[label for val, label in self.BACKUP_TYPES],
+			choices=[label for _val, label in self.BACKUP_TYPES],
 		)
 		val = getBaseProfileConfigValue("ndtt", "logBackup")
 		index = [v for v, _l in self.BACKUP_TYPES].index(val)
@@ -175,10 +174,10 @@ class NDTTSettingsPanel(gui.settingsDialogs.SettingsPanel):
 		self.functionCallsLogMethodsList = sHelper.addLabeledControl(
 			text,
 			wx.Choice,
-			choices=[label for val, label in logMethodDisplayStrings],
+			choices=[label for _val, label in logMethodDisplayStrings],
 		)
 		val = getBaseProfileConfigValue("ndtt", "functionCallsLogMethod")
-		index = [val for val, label in logMethodDisplayStrings].index(val)
+		index = [val for val, _label in logMethodDisplayStrings].index(val)
 		self.functionCallsLogMethodsList.Select(index)
 
 	@staticmethod

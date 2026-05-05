@@ -9,6 +9,15 @@ import sys
 
 import controlTypes
 import globalVars
+import gui
+
+
+try:
+	# For NVDA >= 2023.2
+	popupSettingsDialog = gui.mainFrame.popupSettingsDialog
+except AttributeError:
+	# For NVDA <= 2023.1
+	popupSettingsDialog = gui.mainFrame._popupSettingsDialog
 
 
 # Following code based on Lukasz Golonka's work.
@@ -150,6 +159,6 @@ else:
 	FileNotFoundError = FileNotFoundError
 
 if sys.version_info.major == 2:
-	unicodeStr = unicode
+	unicodeStr = unicode  # noqa: F821 - Exists in Python 2
 else:
 	unicodeStr = str

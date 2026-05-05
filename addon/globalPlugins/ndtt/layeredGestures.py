@@ -94,7 +94,7 @@ def ScriptableObjectWithLayeredGestures(scriptableObjectName, entryPointGestures
 				self.script_error(gesture)
 				return
 			layerGestures = {}
-			for gestures, command, desc in self.layerCommandsList:
+			for gestures, command, _desc in self.layerCommandsList:
 				for g in gestures:
 					layerGestures["kb:" + g] = command
 			self.bindGestures(layerGestures)
@@ -109,7 +109,7 @@ def ScriptableObjectWithLayeredGestures(scriptableObjectName, entryPointGestures
 			# Translators: Title of the layered command help window.
 			title = _("{name} layered commands").format(name=scriptableObjectName)
 			cmdList = []
-			for gestures, command, desc in self.layerCommandsList:
+			for gestures, _command, desc in self.layerCommandsList:
 				cmdParts = []
 				cmdParts.append(
 					# Translators: Separator between key names in the layered command help window.

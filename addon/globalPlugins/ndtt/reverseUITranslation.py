@@ -60,8 +60,9 @@ def removeAccel(s):
 	return s
 
 
-class ReverseCatalogValue:
+class ReverseCatalogValue(object):
 	def __init__(self, text, ctx=None, n=None, addon=None):
+		super(ReverseCatalogValue, self).__init__()
 		self.text = text
 		self.ctx = ctx
 		self.n = n
@@ -77,8 +78,9 @@ class ReverseCatalogValue:
 		)
 
 
-class ReverseCatalogs:
+class ReverseCatalogs(object):
 	def __init__(self):
+		super(ReverseCatalogs, self).__init__()
 		self.catalogs = {}
 
 	def add(self, dicCatalogs):
@@ -256,7 +258,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 				ctxString = ctxSplitList[0]
 				sourceString = removeAccel(ctxSplitList[1])
 			else:
-				RuntimeError("ctxSplitList = {}".format(ctxSplitList))
+				raise RuntimeError("ctxSplitList = {}".format(ctxSplitList))
 			localeString = removeAccel(v)
 			try:
 				reverseCatalog[localeString]

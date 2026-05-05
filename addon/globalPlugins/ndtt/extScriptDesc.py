@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # NVDA Dev & Test Toolbox add-on for NVDA
-# Copyright (C) 2020-2024 Cyrille Bougot
+# Copyright (C) 2020-2026 Cyrille Bougot
 # This file is covered by the GNU General Public License.
 
 from types import MethodType
@@ -18,7 +18,7 @@ ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
 # Translators: The name of a category in the Input gesture dialog
 SCRIPT_WITHOUT_DESC_CATEGORY = _("Scripts without description (modify at your own risk!)")
 
-_originalMethod = inputCore.manager._handleInputHelp
+_originalMethod = inputCore.manager._handleInputHelp  # pyright: ignore[reportPrivateUsage]
 
 
 def newHandleInputHelp(self, gesture, onlyLog=False):
@@ -71,11 +71,14 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def configureESDMode(self, enable, silent=False):
 		self.esdMode = enable
 		if enable:
-			inputCore.manager._handleInputHelp = MethodType(newHandleInputHelp, _originalMethod.__self__)
+			inputCore.manager._handleInputHelp = MethodType(  # pyright: ignore[reportPrivateUsage]
+				newHandleInputHelp,
+				_originalMethod.__self__,
+			)
 			# Translators: A message reported when toggling Extended script description mode.
 			msg = _("Extended script description mode enabled")
 		else:
-			inputCore.manager._handleInputHelp = _originalMethod
+			inputCore.manager._handleInputHelp = _originalMethod  # pyright: ignore[reportPrivateUsage]
 			# Translators: A message reported when toggling Extended script description mode.
 			msg = _("Extended script description mode disabled")
 			for script in self.__class__.scriptsWithAddedDoc:

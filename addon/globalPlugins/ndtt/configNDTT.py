@@ -7,7 +7,8 @@ import config
 
 try:
 	# For NVDA 2021.1 and above
-	from speech import speech  # noqa: F401 - Just test the existence of the module.
+	# Just test the existence of the module.
+	from speech import speech  # noqa: F401 # pyright: ignore[reportUnusedImport]
 
 	speakFun = "speech.speech.speak"
 except ImportError:

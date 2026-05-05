@@ -3,11 +3,11 @@ requires = ["setuptools~=80.9", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "addonTemplate"
+name = "nvdaDevTestToolbox"
 dynamic = ["version"]
-description = "NVDA add-on template"
+description = "NVDA Dev & Test Toolbox"
 maintainers = [
-	{name = "NV Access", email = "info@nvaccess.org"},
+	{name = "Cyrille Bougot", email = "cyrille.bougot2@laposte.net"},
 ]
 requires-python = ">=3.13,<3.14"
 classifiers = [
@@ -125,45 +125,32 @@ strictSetInference = true
 
 # Compliant rules
 reportAbstractUsage = true
-reportArgumentType = true
 reportAssertAlwaysTrue = true
 reportAssertTypeFailure = true
-reportAssignmentType = true
-reportAttributeAccessIssue = true
-reportCallInDefaultInitializer = true
-reportCallIssue = true
 reportConstantRedefinition = true
 reportDuplicateImport = true
 reportFunctionMemberAccess = true
 reportGeneralTypeIssues = true
-reportImplicitOverride = true
-reportImplicitStringConcatenation = true
 reportImportCycles = true
 reportIncompatibleMethodOverride = true
 reportIncompatibleVariableOverride = true
 reportIncompleteStub = true
 reportInconsistentConstructor = true
 reportInconsistentOverload = true
-reportIndexIssue = true
 reportInvalidStringEscapeSequence = true
 reportInvalidStubStatement = true
 reportInvalidTypeArguments = true
 reportInvalidTypeForm = true
 reportInvalidTypeVarUse = true
 reportMatchNotExhaustive = true
-reportMissingImports = true
 reportMissingModuleSource = true
-reportMissingParameterType = true
 reportMissingSuperCall = true
-reportMissingTypeArgument = true
 reportNoOverloadImplementation = true
 reportOperatorIssue = true
 reportOptionalCall = true
 reportOptionalContextManager = true
 reportOptionalIterable = true
-reportOptionalMemberAccess = true
 reportOptionalOperand = true
-reportOptionalSubscript = true
 reportOverlappingOverload = true
 reportPossiblyUnboundVariable = true
 reportPrivateImportUsage = true
@@ -175,25 +162,16 @@ reportSelfClsParameterName = true
 reportTypeCommentUsage = true
 reportTypedDictNotRequiredAccess = true
 reportUnboundVariable = true
-reportUndefinedVariable = true
 reportUnhashable = true
 reportUninitializedInstanceVariable = true
-reportUnknownArgumentType = true
-reportUnknownLambdaType = true
-reportUnknownMemberType = true
-reportUnknownParameterType = true
-reportUnknownVariableType = true
 reportUnnecessaryCast = true
 reportUnnecessaryComparison = true
 reportUnnecessaryContains = true
 reportUnnecessaryIsInstance = true
 reportUnnecessaryTypeIgnoreComment = true
 reportUnsupportedDunderAll = true
-reportUntypedBaseClass = true
 reportUntypedClassDecorator = true
-reportUntypedFunctionDecorator = true
 reportUntypedNamedTuple = true
-reportUnusedCallResult = true
 reportUnusedClass = true
 reportUnusedCoroutine = true
 reportUnusedExcept = true
@@ -210,3 +188,37 @@ reportMissingTypeStubs = false
 
 # Bad rules
 # These are sorted alphabetically and should be enabled and moved to compliant rules section when resolved.
+reportArgumentType = false
+reportAssignmentType = false
+reportCallInDefaultInitializer = false
+reportCallIssue = false
+reportImplicitStringConcatenation = false
+reportIndexIssue = false  # Issues when setting config.conf["x"]["y"] to anything
+reportMissingParameterType = false
+reportMissingTypeArgument = false
+reportUnknownArgumentType = false
+reportUnknownLambdaType = false
+reportUnknownMemberType = false
+reportUnknownParameterType = false
+reportUnknownVariableType = false
+
+# Disabled due to config.conf that can be None before initialization
+reportOptionalSubscript = false
+
+# Due to @script decorator adding attributes and to iteration on config section with .items() on largely typed config.conf
+reportAttributeAccessIssue = false
+
+# @override not present in Python 3.7-3.11's typing, nor in typing_extensions included in NVDA 2022.3.3
+reportImplicitOverride = false
+
+# Works locally but not in CI since NVDA side repo is not present.
+reportMissingImports = false
+reportUntypedBaseClass = false
+reportUntypedFunctionDecorator = false
+reportUndefinedVariable = false  # Because _ undefined
+
+# Issue with config.conf which can be None
+reportOptionalMemberAccess = false
+
+# Due to file.write, speech.speakTextInfo, api.setReviewPosition, sHelper.addItem returning something that we do not use.
+reportUnusedCallResult = false

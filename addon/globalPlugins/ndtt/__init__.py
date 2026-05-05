@@ -13,6 +13,7 @@ import addonHandler
 import gui
 
 from .layeredGestures import ScriptableObjectWithLayeredGestures
+from .compa import popupSettingsDialog
 
 # Initialize config spec; should be done before GlobalPlugins import
 from . import configNDTT  # noqa: F401 - Required to initialize config spec.
@@ -145,12 +146,6 @@ class GlobalPlugin(MixedGlobalPluginWithInit):
 		category=ADDON_SUMMARY,
 	)
 	def script_openSettings(self, gesture):
-		try:
-			# For NVDA >= 2023.2
-			popupSettingsDialog = gui.mainFrame.popupSettingsDialog
-		except AttributeError:
-			# For NVDA <= 2023.1
-			popupSettingsDialog = gui.mainFrame._popupSettingsDialog
 		wx.CallAfter(
 			popupSettingsDialog,
 			gui.settingsDialogs.NVDASettingsDialog,
