@@ -5,7 +5,6 @@
 
 from __future__ import unicode_literals
 
-import sys
 import re
 import gettext
 from functools import partial
@@ -110,6 +109,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	def memorizeLastSpeechString(self, speechSequence):
 		from .compa import unicodeStr
+
 		seq = (i for i in speechSequence if isinstance(i, unicodeStr))
 		try:
 			self.lastSpeechString = next(seq)
@@ -150,8 +150,14 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		try:
 			self._reverseTranslate(withAddons=True)
 		except LookupError:
-			# Translators: An error message when calling the NVDA+add-ons reverse UI translation command
-			ui.message(_("Message not found in NVDA's and addons translation catalogs"))
+			# Check if there is an NVDA catalog
+			if self.reverseCatalogs.catalogs[""][0] is not None:
+				# Translators: An error message when calling the NVDA+add-ons reverse UI translation command
+				msg = _("Message not found in NVDA's and addons translation catalogs")
+			else:
+				# Translators: An error message when calling the NVDA+add-ons reverse UI translation command
+				msg = _("Message not found in addons translation catalogs")
+			ui.message(msg)
 
 	def _reverseTranslate(self, withAddons=False):
 		if withAddons:
