@@ -4,7 +4,7 @@ on:
   push:
     tags: ["*"]
     # To build on main/master branch, uncomment the following line:
-    branches: [ main , master ]
+    branches: [ main , master , wf]
 
   pull_request:
     branches: [ main, master ]
@@ -39,7 +39,8 @@ jobs:
     - name: building addon
       run: uv run scons && uv run scons pot
 
-    - uses: actions/upload-artifact@v7
+    - id: upload-addon-artifact
+      uses: actions/upload-artifact@v7
       with:
         name: packaged_addon
         path: |
@@ -65,7 +66,8 @@ jobs:
           2022.1, 2022.2, 2022.2.1, 2022.2.2, 2022.2.3, 2022.2.4, 2022.3, 2022.3.1, 2022.3.2, 2022.3.3, 2022.4,
           2023.1, 2023.2, 2023.3, 2023.3.1, 2023.3.2, 2023.3.3, 2023.3.4,
           2024.1, 2024.2, 2024.3, 2024.3.1, 2024.4, 2024.4.1, 2024.4.2,
-          2025.1, 2025.1.1, 2025.1.2, 2025.2, 2025.3, 2025.3.1, 2025.3.2
+          2025.1, 2025.1.1, 2025.1.2, 2025.2, 2025.3, 2025.3.1, 2025.3.2, 2025.3.3,
+          2026.1
         ]
 
     steps:
@@ -104,7 +106,8 @@ jobs:
     - name: download add-on's releases files
       uses: actions/download-artifact@v8
       with:
-        name: packaged_addon
+        path: .
+        merge-multiple: true
     - name: Copy add-on in User config
       run: |
         move *.nvda-addon addon.zip
@@ -165,14 +168,14 @@ jobs:
     - name: Calculate sha256
       run: |
         echo -e "\nSHA256: " >> changelog.md
-        sha256sum ./packaged_addon/*.nvda-addon >> changelog.md
+        sha256sum *.nvda-addon >> changelog.md
 
     - name: Release
       uses: softprops/action-gh-release@v3
       with:
         files: |
-          ./packaged_addon/*.nvda-addon
-          ./packaged_addon/*.pot
+          *.nvda-addon
+          *.pot
         name: Release ${{ github.ref_name }}
         body_path: changelog.md
         fail_on_unmatched_files: true
