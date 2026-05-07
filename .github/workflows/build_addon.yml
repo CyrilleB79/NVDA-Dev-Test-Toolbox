@@ -19,6 +19,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    outputs:
+      addonArtifactId: ${{ steps.upload-addon-artifact.outputs.artifact-id }}
+      potArtifactId: ${{ steps.upload-translation-template-artifact.outputs.artifact-id }}
+
     steps:
     - name: Checkout repo
       uses: actions/checkout@v6
@@ -47,7 +51,8 @@ jobs:
           ./*.nvda-addon
         archive: false
 
-    - uses: actions/upload-artifact@v7
+    - id: upload-translation-template-artifact
+      uses: actions/upload-artifact@v7
       with:
         name: translation_template
         path: |
@@ -106,8 +111,7 @@ jobs:
     - name: download add-on's releases files
       uses: actions/download-artifact@v8
       with:
-        path: .
-        merge-multiple: true
+        artifact-ids: ${{ needs.build.outputs.addonArtifactId }}
     - name: Copy add-on in User config
       run: |
         move *.nvda-addon addon.zip
@@ -158,8 +162,9 @@ jobs:
     - name: download all artifacts
       uses: actions/download-artifact@v8
       with:
-        path: .
-        merge-multiple: true
+        artifact-ids: |
+          ${{ needs.build.outputs.addonArtifactId }},
+          ${{ needs.build.outputs.potArtifactId }}
     - name: Display structure of downloaded files
       run: ls -R
     - name: Extract change log
