@@ -154,7 +154,7 @@ class NDTTSettingsPanel(gui.settingsDialogs.SettingsPanel):
 
 		self.customFunctionLabel = _(
 			# Translators: This is a label for an edit field in the NDTT Settings panel.
-			"Custom function for stack tracing:",
+			"Custom function for function call logging:",
 		)
 		self.customFunction = sHelper.addLabeledControl(self.customFunctionLabel, wx.TextCtrl)
 
