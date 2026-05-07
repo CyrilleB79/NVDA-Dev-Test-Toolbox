@@ -463,6 +463,14 @@ When this method is modified, it will first apply the next time the function cal
 
 ## Change log
 
+### Version 10.0
+
+* Log reader: when logging function calls, arguments and return values are now logged too. (with the contribution of hwf1324).
+* Log reader: when using navigation commands, some messages are no longer reported as truncated or empty.
+* When reporting last error, some messages are no longer reported uninterpolated (e.g. containing "%s").
+* Fixed some errors with NVDA 2019.2: first usage of Python console history, reporting of non-ASCII object names with Object property explorer.
+* Compatibility with NVDA 2026.1.
+
 ### Version 9.0
 
 * A new command to open a code file when the caret is on a file path/line has been added.
