@@ -36,7 +36,8 @@ The options that can be specified correspond to the [command line options][2] th
 
 ### Report last logged error
 
-Pressing `NVDA+X, E` allows to report the last error logged without needing to open the log. A second press clears the memorized last error.
+Pressing `NVDA+X, E` allows to report the last error logged without needing to open the log.
+A second press clears the memorized last error.
 
 ### Play a sound for logged errors
 
@@ -83,12 +84,14 @@ To use it press `NVDA+x, C` and then the gesture of the script which you want to
 For example to see the code of the script that reports the title of the foreground window, press `NVDA+X, C` and then `NVDA+T`.
 
 The two other commands allow to open the source code from its path:
+
 * `NVDA+x, shift+C`, opens the source code whose path is located under the system caret.
 * `NVDA+x, control+C`, opens the source code whose path is located under the review cursor.
-E.g. if the caret or the review cursor is located on the following line, the command will open the corresponding file in your editor:
+
+E.g. if the caret or the review cursor is located on the following line, the command will open the corresponding file in your editor:  
 `C:\Users\username\AppData\Roaming\nvda\addons\addonName\globalPlugins\addonName\__init__.py:48`
 
-For those commands to work, you need to have configured your [favorite editor's command](#settingsOpenCommand) in the add-on's settings.
+To use those commands, you need to have configured your [favorite editor's command](#settingsOpenCommand) in the add-on's settings.
 If you are not running NVDA from source, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
 
 ### Extended script description mode
@@ -131,8 +134,9 @@ Known bug: A script added for a specific class is visible even if gesture manage
 
 While testing or working, you may want to mark a specific moment in the log, so that you can turn to it easily later when reading the log.
 To add a marker message in the log, press `NVDA+X, K`.
-A message as follows will be logged at INFO level:
-`-- NDTT marker 0 --`
+A message as follows will be logged at INFO level:  
+`-- NDTT marker 0 --`  
+
 You can add as many markers as you want in the log.
 The marker's number will be incremented each time you place a marker in the log; it will only be reset when NVDA is restarted.
 
@@ -163,9 +167,10 @@ Single letter command similar to browse mode quick navigation keys allow to move
 * b: braille messages
 * d: debug messages (`DEBUG`)
 
-Pressing the single letter moves to the next occurrence of this message. Combining the letter with the shift key moves to the previous occurrence of this message.
+Pressing the single letter moves to the next occurrence of this message.
+Combining the letter with the shift key moves to the previous occurrence of this message.
 
-In addition, inside certain types of messages, you can jump block by block pressing `O`  or `shift+O`.
+In addition, inside certain types of messages, you can jump block by block pressing `O` or `shift+O`.
 The following message types and associated blocks are supported:
 
 * In messages containing tracebacks, e.g. error messages, block navigation allows you to jump between tracebacks
@@ -180,10 +185,13 @@ And `L` to jump to the last line of interest of the block's content, e.g. last f
 
 #### Translation of speech message
 
-Sometimes, you may have to look at a log taken on a system in a foreignh language that you do not understand. E.g. the log was taken on a Chinese system / NVDA, whereas you only understand French.
+Sometimes, you may have to look at a log taken on a system in a foreignh language that you do not understand.
+E.g. the log was taken on a Chinese system / NVDA, whereas you only understand French.
 If you have [Instant Translate][3] add-on installed, you may use it in conjonction with [quick log navigation commands](#logReaderQuickNavigationCommands) to have speech messages translated.
 
-* First configure Instant Translate's languages. The source language should be the language of the system where the log has been taken (e.g. Chinese). The target language should be your language (e.g. French).
+* First configure Instant Translate's languages.
+  The source language should be the language of the system where the log has been taken (e.g. Chinese).
+  The target language should be your language (e.g. French).
 * Open the log
 * Press `control+T` to enable automatic speech translation in the log
 * Use Quick navigation commands in the log, e.g. S, I, etc. Whenever a speech message is encountered, it will be spoken in your language (French in our previous example)
@@ -195,44 +203,43 @@ If you want to disable speech translation, press `control+T` again.
 
 In the log some line may refer to the source code:
 
-* A line belonging to a traceback contains the path and the line in a file, e.g.:
-  `  File "virtualBuffers\__init__.pyc", line 226, in _getStoryLength`
-* The header line of a logged message contains the function which has logged this message, e.g.:
-  `INFO - config.ConfigManager._loadConfig (22:45:26.145) - MainThread (16580):`
-* The content of a message logged in input help mode (logged at info level):
-  `Input help: gesture kb(desktop):NVDA+t, bound to script title on globalCommands.GlobalCommands`
+* A line belonging to a traceback contains the path and the line in a file, e.g.:  
+  `  File "virtualBuffers\__init__.pyc", line 226, in _getStoryLength`  
+* The header line of a logged message contains the function which has logged this message, e.g.:  
+  `INFO - config.ConfigManager._loadConfig (22:45:26.145) - MainThread (16580):`  
+* The content of a message logged in input help mode (logged at info level):  
+  `Input help: gesture kb(desktop):NVDA+t, bound to script title on globalCommands.GlobalCommands`  
 
 You may want to open the file containing this code to understand the context of the traceback or the logged message.
 Just press C to open this file.
 
-For this feature to work, you need to have configured your [favorite editor's command](#settingsOpenCommand) in the add-on's settings.
+To use this feature, you need to have configured your [favorite editor's command](#settingsOpenCommand) in the add-on's settings.
 If you are not running NVDA from source, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
 
 #### Analysing a traceback
 
-Sometimes you may have error tracebacks in the log, as in the following example:
-```
-ERROR - scriptHandler.executeScript (14:47:43.426) - MainThread (15492):
-error executing script: <bound method LogContainer.script_openSourceFile of <NVDAObjects.Dynamic_LogViewerLogContainerIAccessibleRichEdit50WindowNVDAObject object at 0x34C1E510>> with gesture 'c'
-Traceback (most recent call last):
-  File "scriptHandler.pyc", line 300, in executeScript
-  File "C:\Users\myUserName\AppData\Roaming\nvda\addons\nvdaDevTestToolbox\globalPlugins\ndtt\logReader.py", line 603, in script_openSourceFile
-    if self.openStackTraceLine(line):
-       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\myUserName\AppData\Roaming\nvda\addons\nvdaDevTestToolbox\globalPlugins\ndtt\logReader.py", line 667, in openStackTraceLine
-    0 / 0  # An erroneaous code line
-    ~~^~~
-ZeroDivisionError: division by zero
-```
+Sometimes you may have error tracebacks in the log, as in the following example:  
+
+    ERROR - scriptHandler.executeScript (14:47:43.426) - MainThread (15492):
+    error executing script: <bound method LogContainer.script_openSourceFile of <NVDAObjects.Dynamic_LogViewerLogContainerIAccessibleRichEdit50WindowNVDAObject object at 0x34C1E510>> with gesture 'c'
+    Traceback (most recent call last):
+      File "scriptHandler.pyc", line 300, in executeScript
+      File "C:\Users\myUserName\AppData\Roaming\nvda\addons\nvdaDevTestToolbox\globalPlugins\ndtt\logReader.py", line 603, in script_openSourceFile
+        if self.openStackTraceLine(line):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "C:\Users\myUserName\AppData\Roaming\nvda\addons\nvdaDevTestToolbox\globalPlugins\ndtt\logReader.py", line 667, in openStackTraceLine
+        0 / 0  # An erroneaous code line
+        ~~^~~
+    ZeroDivisionError: division by zero
 
 For frames where the source code is available, you may have noticed markers with `^` (caret) and `~` (tilde) characters.
 That's the way Python visually indicates the error's location as well as its context in a traceback frame.
 Pressing `control+E` moves the cursor at the beginning of the error in the source code line, i.e. the text marked by `^` (caret) character.
-A double press, select this text.
+A double press select this text.
 A triple press selects the error with its context, i.e. the text of the source code line marked by `^` (caret) and `~` (tilde) characters.
 
 Please note that for logs taken with an NVDA version before 2024.1, thus with Python 3.7 or older, Python only indicates the error with one `^` (caret) character.
-Thus the double or triple press action of this command becomes rather useless.
+Thus the double or triple press actions of this command becomes rather useless.
 
 #### Getting a summary of the available commands
 
@@ -248,8 +255,8 @@ Select a part of the log or its whole content and press `NVDA+X, A`.
 The anonymized log content will be put in the clipboard.
 You can paste it on the current selection to replace it or anywhere else you wish.
 
-For this feature to work, you need to customize the anonymization rules used by this command.
-The file to configure these rules is located at: `pathToNVDAConfig\ndtt\anonymizationRules.dic` (e.g. `C:\Users\myUserName\AppData\Roaming\nvda\ndtt\consoleStartup.py`).
+To use this feature, you need to customize the anonymization rules used by this command.
+The file to configure these rules is located at: `pathToNVDAConfig\ndtt\anonymizationRules.dic` (e.g. `C:\Users\myUserName\AppData\Roaming\nvda\ndtt\anonymizationRules.dic`).
 You will find all the instructions to write this file in its header.
 In case you have corrupted your anonymization rules file or if you have deleted the header's instructions, just delete or rename this file and a new version of this file will be generated at next startup.
 
@@ -277,8 +284,8 @@ To be able to open a log, you should first have configured the [Command to open 
 <a id="pythonConsoleOpenCodeFile"></a>
 ### `openCodeFile` function
 
-In the console, you can call the following function to view the source code that defines the variable `myVar`:
-`openCodeFile(myVar)`
+In the console, you can call the following function to view the source code that defines the variable `myVar`:  
+`openCodeFile(myVar)`  
 
 For this feature to work, you need to have configured your [favorite editor's command](#settingsOpenCommand) in the add-on's settings.
 If you are not running NVDA from source, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
@@ -290,24 +297,24 @@ If you have not yet imported the object in the console, you can also pass its na
 
 Below are examples of call in NVDA's code:
 
-* View the definition of the function `speech.speech.speak`:
-  `openCodeFile(speech.speech.speak)`
-  or with the name passed as parameter:
-  `openCodeFile("speech.speech.speak")`
-* View the definition of the class `TextInfo`:
-  `openCodeFile(textInfos.TextInfo)`
-* View the definition of the method `copyToClipboard` of the class `TextInfo`:
-  `openCodeFile(textInfos.TextInfo.copyToClipboard)`
-* View the definition of the class of the focused object:
-  `openCodeFile(focus)`
-* Open the file `api.py` defining the module `api`:
-  `openCodeFile(api)`
+* View the definition of the function `speech.speech.speak`:  
+  `openCodeFile(speech.speech.speak)`  
+  or with the name passed as parameter:  
+  `openCodeFile("speech.speech.speak")`  
+* View the definition of the class `TextInfo`:  
+  `openCodeFile(textInfos.TextInfo)`  
+* View the definition of the method `copyToClipboard` of the class `TextInfo`:  
+  `openCodeFile(textInfos.TextInfo.copyToClipboard)`  
+* View the definition of the class of the focused object:  
+  `openCodeFile(focus)`  
+* Open the file `api.py` defining the module `api`:  
+  `openCodeFile(api)`  
 
 ### Python console startup script
 
 You can define a custom script which will be executed in the Python console's namespace when it is first opened.
 
-For example, the script allows you to execute new imports and define aliases that you will be able to use directly in the console, as shown below:
+For example, the script allows you to execute new imports and define aliases that you will be able to use directly in the console, as shown below:  
 
     # Various import that I want in the console.
     import globalVars as gv
@@ -316,7 +323,7 @@ For example, the script allows you to execute new imports and define aliases tha
     # Aliases
     ocf = openCodeFile
 
-The Python console script should be placed in the following location: `pathToNVDAConfig\ndtt\consoleStartup.py`
+The Python console script should be placed in the following location: `pathToNVDAConfig\ndtt\consoleStartup.py`  
 For example: `C:\Users\myUserName\AppData\Roaming\nvda\ndtt\consoleStartup.py`
 
 Note: In Python 2, i.e. with NVDA 2019.2.1 or earlier, only pure ASCII scripts are supported; any other encoding such as Unicode is not supported.
@@ -331,7 +338,7 @@ This add-on provide [an option](#settingsPreserveHistory), enabled by default, a
 ## Logging function calls
 
 Sometimes, you may want to see which part of the code is responsible for speaking something.
-For this, you can enable the function calls logging for  the `speech.speech.speak` function pressing `NVDA+X, S`.
+For this, you can enable the function calls logging for the `speech.speech.speak` function pressing `NVDA+X, S`.
 Each time NVDA speaks, a corresponding message will be logged, including the stack trace, allowing you to identify the code that has caused this speech output.
 Once you are done, disable function calls logging with the same gesture.
 
@@ -343,7 +350,7 @@ By default, the log of the function calls is performed using the "settrace" meth
 Alternatively, if you do not get satisfying results, you may opt for the "monkey patching" method where the target function (e.g. `speech.speech.speak`) is patched.
 Both methods have limitations that may prevent function calls to be logged in specific combined conditions.
 For example, the "settrace" method may not work with NVDA version lower than 2026.1, when the target function is run from a non-main thread and the function calls logging is enabled after the target function's thread has been started.
-On the other hand, the "monkey patching" method may not work when the target function is imported through a from import statement (e.g. `from tones import beep`).
+On the other hand, the "monkey patching" method may not work when the target function is imported through a "from import" statement (e.g. `from tones import beep`).
 
 You can toggle the method used to log function calls in [the dedicated setting](#functionCallLogMethodSetting) or pressing `NVDA+X, shift+S`.
 
@@ -365,10 +372,10 @@ For example, in French NVDA, if I arrow down to the Tools menu named "Outils", N
 If I press the reverse translation command just after that, NVDA will reverse translate "Outils" to "Tools".
 
 Looking at the log afterwards, we can find the following lines:
-```
-IO - speech.speech.speak (23:38:24.450) - MainThread (2044):
-Speaking ['Outils', 'sous-Menu', CharacterModeCommand(True), 'o', CharacterModeCommand(False), CancellableSpeech (still valid)]
-```
+
+    IO - speech.speech.speak (23:38:24.450) - MainThread (2044):
+    Speaking ['Outils', 'sous-Menu', CharacterModeCommand(True), 'o', CharacterModeCommand(False), CancellableSpeech (still valid)]
+
 This confirms that "Outils was the first string in the speech sequence.
 
 In case the reverse translation leads to two or more possible results, a context menu is opened listing all the possibilities.
@@ -380,12 +387,12 @@ For earlier versions of NVDA, only the add-ons strings are available for reverse
 
 Besides, in NVDA version 2019.2.1 or earlier, in case no reverse translation is found, a second attempt is made in the first part of the string.
 Indeed, in these NVDA version, the speech sequence looks like this:
-```
-IO - speech.speak (12:39:12.684):
-Speaking [u'Outils  sous-Menu  o']
-```
+
+    IO - speech.speak (12:39:12.684):
+    Speaking [u'Outils  sous-Menu  o']
+
 We can see that an object label may be concatenated with role, state, shortcut, etc.
-So if the reverse translation gives no  result with the whole string, a second attempt is made on the part of the string before the double space ("  ").
+So if the reverse translation gives no result with the whole string, a second attempt is made on the part of the string before the double space ("  ").
 Though, this is not bullet-proof since we cannot exclude that a string actually natively contains a double space.
 
 <a id="settings"></a>
@@ -405,11 +412,11 @@ Some features allow to see content in your favorite editor.
 This includes the commands to view the source file [from a log](#logReaderOpenSourceFile), [from an object in the console](#pythonConsoleOpenCodeFile) or [from a typed gesture](#sourceCodeOpeningCommands), as well as the [log manager](#oldLogsBackup)'s Open button.
 
 To use them, you first need to configure the command that will be called to open the file in your favorite editor.
-The command should be of the form:
-`"C:\path\to\my\editor\editor.exe" "{path}":{line}`
+The command should be of the form:  
+`"C:\path\to\my\editor\editor.exe" "{path}":{line}`  
 You should of course modify this line according to the real name and location of your editor and the syntax used by it to open files.
 `{path}` will be replaced by the full path of the file to open and `{line}` by the line number where you want the cursor to be set.
-For Notepad++ for example the command to type in the console would be:
+For Notepad++ for example the command to type in the console would be:  
 `"C:\Program Files\Notepad++\notepad++.exe" "{path}" -n{line}`
 
 <a id="settingsNvdaSourcePath"></a>
@@ -418,8 +425,8 @@ For Notepad++ for example the command to type in the console would be:
 When using a command to view the source file [from a log](#logReaderOpenSourceFile), [from an object in the console](#pythonConsoleOpenCodeFile) or [from a typed gesture or a path](#sourceCodeOpeningCommands), the file may belong to NVDA itself.
 If you are not running NVDA from source, your NVDA only contains compiled files.
 Thus you may specify here an alternate location where the corresponding source file will be found, e.g. the place where you have cloned NVDA source files, so that a source file can be opened anyway.
-The path should be such as:
-`C:\pathExample\GIT\nvda\source`
+The path should be such as:  
+`C:\pathExample\GIT\nvda\source`  
 Of course, replace the path of NVDA source with the correct one.
 
 Be sure however that the version of your source file (e.g. GIT commit) is the same as the one of the running instance of NVDA.
@@ -465,7 +472,7 @@ When this method is modified, it will first apply the next time the function cal
 
 ### Version 10.0
 
-* Log reader: when logging function calls, arguments and return values are now logged too. (with the contribution of hwf1324).
+* Log reader: when logging function calls, arguments and return values are now logged too. (with the contribution of hwf1324)
 * Log reader: when using navigation commands, some messages are no longer reported as truncated or empty.
 * When reporting last error, some messages are no longer reported uninterpolated (e.g. containing "%s").
 * Fixed some errors with NVDA 2019.2: first usage of Python console history, reporting of non-ASCII object names with Object property explorer.
@@ -474,7 +481,7 @@ When this method is modified, it will first apply the next time the function cal
 ### Version 9.0
 
 * A new command to open a code file when the caret is on a file path/line has been added.
-* Function calls logging (previously known as stack logging) has been improved offering the possibility to log the call of any function and providing a most reliable method to identify function calls.
+* Function calls logging (previously known as stack logging) has been improved offering the possibility to log the call of any function and providing a more reliable method to identify function calls.
 * Fixed a security issue with the log reader ([GHSA-39pg-6xpm-mjgf](https://github.com/CyrilleB79/NVDA-Dev-Test-Toolbox/security/advisories/GHSA-39pg-6xpm-mjgf)).
 * IO beep messages are now correctly reported with NVDA 2019.2.1.
 * Log reading commands no longer fail to read some speech commands (e.g. when using Console Toolkit add-on)
@@ -510,8 +517,8 @@ A bug where this script could be executed many times when reloading the add-ons 
 
 ### Version 7.0
 
-* Layered commands have been introduced; the entry point is `NVDA+X`.
-  The existing commands have been modified accordingly.
+* Layered commands have been introduced; the entry point is `NVDA+X`.  
+  The existing commands have been modified accordingly.  
 * A new command (`NVDA+X, R`) to reverse translate the last spoken message.
 * A new command (`NVDA+X, C`) to open the source code of the script associated to the next pressed gesture.
 * Added speech on demand support.
@@ -526,7 +533,8 @@ A bug where this script could be executed many times when reloading the add-ons 
 ### Version 6.2
 
 * Restores console opening for NVDA < 2021.1.
-* Addresses potential security issues related to [GHSA-xg6w-23rw-39r8][5] when using the add-on with older versions of NVDA. However, it is recommended to use NVDA 2023.3.3 or higher.
+* Addresses potential security issues related to [GHSA-xg6w-23rw-39r8][5] when using the add-on with older versions of NVDA.
+However, it is recommended to use NVDA 2023.3.3 or higher.
 
 ### Version 6.1
 
@@ -546,8 +554,8 @@ A bug where this script could be executed many times when reloading the add-ons 
 * If Instant Translate add-on is installed, it is now possible to have speech messages translated on the fly when using log reading commands.
 * While in log reading mode, pressing E or shift+E now jumps to CRITICAL erorr messages as well as normal ERROR messages.
 * New log quick navigation commands have been added to jump to input and to speech messages.
-* A new command allow to place a marker in the log; and specific quick navigation commands in log reading mode allow to jump to them.
-  Credit: the initial idea for this feature comes from Debug Helper add-on by Luke Davis.
+* A new command allow to place a marker in the log; and specific quick navigation commands in log reading mode allow to jump to them.  
+  Credit: the initial idea for this feature comes from Debug Helper add-on by Luke Davis.  
 * Bubfix: The memorization of the last error do not fail anymore in some cases.
 * Bugfix: The add-on can initialize again with NVDA 2019.2.1.
 * Bugfix: Log saving feature will not fail anymore with non-ASCII logs.
