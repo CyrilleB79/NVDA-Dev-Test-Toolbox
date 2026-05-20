@@ -162,6 +162,8 @@ jobs:
     - name: download all artifacts
       uses: actions/download-artifact@v8
       with:
+        path: .
+        merge-multiple: true
         artifact-ids: |
           ${{ needs.build.outputs.addonArtifactId }},
           ${{ needs.build.outputs.potArtifactId }}
