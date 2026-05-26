@@ -22,28 +22,32 @@ Cette extension rassemble diverses fonctionnalités pour le débogage et les tes
 ## Commandes
 
 Cette extension utilise des commandes séquentielles pour toutes les nouvelles commandes qu'elle ajoute.
-Le point d'entrée de ces commandes est `NVDA+X` ; ainsi, toutes les commandes doivent être exécutées par `NVDA+X` suivi d'une autre lettre ou geste.
-Vous pouvez obtenir la liste de toutes les commandes séquentielles en appuyant sur `NVDA+X, H`.
+Le point d'entrée de ces commandes est `NVDA+Z` ; ainsi, toutes les commandes doivent être exécutées par `NVDA+Z` suivi d'une autre lettre ou geste.
+Si nécessaire, vous pouvez le modifier dans la boîte de dialogue Gestes de saisie.
+
+Dans la suite de cette documentation, nous appellerons ce geste `GesteNDTT`.
+Ainsi, par exemple, `GesteNDTT, S` signifie `NVDA+Z, S`, sauf si vous avez modifié le geste par défaut.
+Vous pouvez obtenir la liste de toutes les commandes séquentielles en appuyant sur `GesteNDTT, H`.
 
 Pour les commandes que vous utilisez plus fréquemment, vous pouvez également définir un geste direct dans la boîte de dialogue Gestes de commandes.
 
 ## Dialogue de redémarrage amélioré
 
-La commande `NVDA+X, Q` ouvre un dialogue pour indiquer des options supplémentaires avant de redémarrer NVDA.
+La commande `GesteNDTT, Q` ouvre un dialogue pour indiquer des options supplémentaires avant de redémarrer NVDA.
 Les options qui peuvent être spécifiées correspondent aux [options de ligne de commande][2] qui peuvent être utilisées avec `nvda.exe`, telles que `-c` pour le chemin de configuration, `--disable-addons` pour désactiver les extensions, etc.
 
 ## Fonctionnalités liées aux erreurs enregistrées
 
 ### Annoncer la dernière erreur enregistrée
 
-Un appui sur `NVDA+X, E` permet d'annoncer la dernière erreur enregistrée sans avoir à ouvrir le journal.
+Un appui sur `GesteNDTT, E` permet d'annoncer la dernière erreur enregistrée sans avoir à ouvrir le journal.
 Un deuxième appui efface la dernière erreur mémorisée.
 
 ### Jouer un son pour les erreurs journalisées
 
 Le [paramètre "Jouer un son pour les erreurs journalisées"][4] a été introduit dans NVDA 2021.3 et vous permet de spécifier si NVDA jouera un son d'erreur dans le cas où une erreur est journalisée.
 
-Cette extension fournit une commande supplémentaire (`NVDA+X, maj+E`) pour basculer ce paramètre.
+Cette extension fournit une commande supplémentaire (`GesteNDTT, maj+E`) pour basculer ce paramètre.
 Vous pouvez choisir :
 
 * "Uniquement dans les versions de test de NVDA" (par défaut) de sorte que NVDA joue les sons d'erreur uniquement si la version NVDA actuelle est une version de test (alpha, bêta ou exécuté à partir du code source).
@@ -58,16 +62,16 @@ Cette fonction permet d'annoncer certaines propriétés de l'objet navigateur co
 
 Pour lister les propriétés d'un objet, déplacez-y le l'objet navigateur et utilisez les commandes suivantes :
 
-* `NVDA+X, flècheHaut` : Sélectionne la propriété précédente et l'annonce pour l'objet navigateur.
-* `NVDA+X, flècheBas` :Sélectionne la propriété suivante et l'annonce pour l'objet navigateur.
-* `NVDA+X, N` : Annonce la propriété actuellement sélectionnée pour l'objet navigateur
-* `NVDA+X, maj+N` : Affiche la propriété actuellement sélectionnée pour l'objet navigateur dans un message en mode navigation
+* `GesteNDTT, flècheHaut` : Sélectionne la propriété précédente et l'annonce pour l'objet navigateur.
+* `GesteNDTT, flècheBas` :Sélectionne la propriété suivante et l'annonce pour l'objet navigateur.
+* `GesteNDTT, N` : Annonce la propriété actuellement sélectionnée pour l'objet navigateur
+* `GesteNDTT, maj+N` : Affiche la propriété actuellement sélectionnée pour l'objet navigateur dans un message en mode navigation
 
 La liste des propriétés prises en charge est la suivante :
 name, role, state, value, windowClassName, windowControlID, windowHandle, location, Python class, Python class mro.
 
 Lorsque vous utilisez les commandes de navigation par objet, vous pouvez également choisir que la propriété actuellement sélectionnée soit annoncée au lieu de l'annonce habituelle des objets de NVDA.
-Une commande bascule, `NVDA+X, contrôle+N`, permet d'alterner entre cette annonce personnalisée des objets et l'annonce habituel de NVDA.
+Une commande bascule, `GesteNDTT, contrôle+N`, permet d'alterner entre cette annonce personnalisée des objets et l'annonce habituel de NVDA.
 
 Par exemple, vous pouvez sélectionner la propriété « windowClassName » et activer l'annonce des objets personnalisée.
 Ensuite, lorsque vous déplacez l'objet navigateur vers l'objet suivant ou précédent, vous entendrez la propriété windowClassName de l'objet au lieu de l'annonce habituel.
@@ -80,13 +84,13 @@ Ensuite, lorsque vous déplacez l'objet navigateur vers l'objet suivant ou préc
 L'extension fournit trois commandes permettant d'ouvrir le code source.
 
 La première commande permet d'ouvrir le code source d'un script connaissant son geste de commande.
-Pour l'utiliser, appuyez sur `NVDA+x, C` puis le geste du script dont vous souhaitez voir le code.
-Par exemple, pour voir le code du script qui annonce le titre de la fenêtre au premier plan, appuyez sur `NVDA+X, C` et ensuite `NVDA+T`.
+Pour l'utiliser, appuyez sur `GesteNDTT, C` puis le geste du script dont vous souhaitez voir le code.
+Par exemple, pour voir le code du script qui annonce le titre de la fenêtre au premier plan, appuyez sur `GesteNDTT, C` et ensuite `NVDA+T`.
 
 Les deux autres commandes permettent d'ouvrir le code source depuis son chemin :
 
-* `NVDA+x, shift+C`, ouvre le code source dont le chemin est situé sous le curseur système.
-* `NVDA+x, control+C`, ouvre le code source dont le chemin se trouve sous le curseur de revue.
+* `GesteNDTT, maj+C`, ouvre le code source dont le chemin est situé sous le curseur système.
+* `GesteNDTT, contrôle+C`, ouvre le code source dont le chemin se trouve sous le curseur de revue.
 
 Par exemple. si le curseur système ou le curseur de revue se trouve sur la ligne suivante, la commande ouvrira le fichier correspondant dans votre éditeur :  
 `C:\Users\username\AppData\Roaming\nvda\addons\addonName\globalPlugins\addonName\__init__.py:48`
@@ -101,7 +105,7 @@ Le mode de description étendu pour les scripts permet l'annonce d'informations 
 Lorsque le mode de description étendu des scripts est activé, le mode d'aide à la saisie (NVDA+1) est modifié comme suit.
 Si un script n'a aucune description, son nom et sa classe sont annoncés.
 Si un script a une description, il est annoncé de la manière habituelle.
-Le geste pour activer ou désactiver cette fonction est `NVDA+X, D`.
+Le geste pour activer ou désactiver cette fonction est `GesteNDTT, D`.
 
 L'exécution d'un geste associé à un script sans description dans le mode d'aide à la saisie crée également une entrée pour ce script via le dialogue Geste de Saisie.
 Cette entrée est située dans une catégorie dédiée appelée "Scripts sans description (modifiez à vos risques et périls !)".
@@ -116,14 +120,14 @@ Contrôle+maj+I bascule également l'italique dans Word, même si NVDA ne l'anno
 Afin que le résultat par l'appui sur contrôle+maj+I soit annoncé comme contrôle+I, vous devez suivre les étapes suivantes :
 
 * Ouvrir un document Word.
-* Activer le mode de description étendu des scripts avec `NVDA+X, D`.
+* Activer le mode de description étendu des scripts avec `GesteNDTT, D`.
 * Entrer en mode d'aide à la saisie avec NVDA+1.
 * Appuyer sur contrôle+I pour annoncer le script italique et l'ajouter dans le dialogue des gestes de commande.
 * Quitter le mode d'aide à la saisie avec NVDA+1.
 * Ouvrir le dialogue Gestes de commandes.
 * Dans la catégorie "Scripts sans description (modifiez à vos risques et périls !)", sélectionnez la commande "toggleItalic dans NVDAObjects.window.winword.WordDocument".
 * Ajouter le raccourci contrôle+maj+I et valider.
-* Si vous le souhaitez, quittez le mode description étendu des scripts avec `NVDA+X, D`.
+* Si vous le souhaitez, quittez le mode description étendu des scripts avec `GesteNDTT, D`.
 
 Bogue connue : un script ajouté pour une classe spécifique est visible même si le dialogue Geste de Saisie est ouvert dans un autre contexte.
 
@@ -133,7 +137,7 @@ Bogue connue : un script ajouté pour une classe spécifique est visible même s
 ### Placer des marqueurs dans le journal
 
 Lorsque vous faites des tests ou travaillez, vous voudrez peut-être marquer un moment spécifique dans le journal, afin que vous puissiez y retourner facilement plus tard lorsque vous lisez le journal.
-Pour ajouter un message de marqueur dans le journal, appuyez sur `NVDA+X, K`.
+Pour ajouter un message de marqueur dans le journal, appuyez sur `GesteNDTT, K`.
 Un message comme suit sera enregistré au niveau info :  
 `-- NDTT marker 0 --`  
 
@@ -144,8 +148,8 @@ Le numéro du marqueur sera incrémenté chaque fois que vous placez un marqueur
 
 Un mode lecture du journal fournit des commandes pour en faciliter la lecture et l'analyse.
 Dans la fenêtre de la visionneuse du journal et dans la zone de sortie de la console Python, le mode lecture du journal est activé par défaut, de sorte que les commandes de lecture du journal sont immédiatement disponibles.
-Dans d'autres zones de lecture de texte, tels qu'un éditeur (par exemple, Notepad ++) ou une page Web (par exemple, un ticket sur GitHub),, il est nécessaire d'appuyer sur `NVDA+X, L` pour activer le mode lecture du journal et Utilisez ses commandes.
-Lorsque vous avez terminé les tâches d'analyse et de lecture du journal, vous pouvez appuyer à nouveau sur `NVDA+X, L` pour désactiver le mode lecture du journal.
+Dans d'autres zones de lecture de texte, tels qu'un éditeur (par exemple, Notepad ++) ou une page Web (par exemple, un ticket sur GitHub),, il est nécessaire d'appuyer sur `GesteNDTT, L` pour activer le mode lecture du journal et Utilisez ses commandes.
+Lorsque vous avez terminé les tâches d'analyse et de lecture du journal, vous pouvez appuyer à nouveau sur `GesteNDTT, L` pour désactiver le mode lecture du journal.
 
 Les commandes disponibles en mode lecture du journal sont décrites ci-après.
 Dans ce mode, vous pouvez également appuyer sur `contrôle+H` pour afficher toutes les commandes disponibles.
@@ -234,7 +238,7 @@ Parfois, des traces d'erreurs peuvent apparaître dans le journal, comme dans l'
 
 Pour les frames où le code source est disponible, vous avez peut-être remarqué des marqueurs avec des caractères `^` (accent circonflexe) et `~` (tilde).
 C'est la façon dont Python indique visuellement l'emplacement de l'erreur ainsi que son contexte dans une frame de pile d'appel.
-Un appui sur `control+E` déplace le curseur au début de l'erreur dans la ligne du code source, c'est-à-dire le texte marqué par le caractère `^` (accent circonflexe).
+Un appui sur `contrôle+E` déplace le curseur au début de l'erreur dans la ligne du code source, c'est-à-dire le texte marqué par le caractère `^` (accent circonflexe).
 Un double appui sélectionne ce texte.
 Un triple appui sélectionne l'erreur avec son contexte, c'est-à-dire le texte de la ligne de code source marqué par les caractères `^` (accent circonflexe) et `~` (tilde).
 
@@ -243,7 +247,7 @@ Les actions pour un double ou triple appui de cette commande deviennent donc plu
 
 #### Obtenir un résumé des commandes disponibles
 
-Pour afficher une liste de toutes les commandes disponibles en mode lecture du journal, appuyez sur `control+H`.
+Pour afficher une liste de toutes les commandes disponibles en mode lecture du journal, appuyez sur `contrôle+H`.
 
 ## Anonymiser un journal
 
@@ -251,7 +255,7 @@ Lorsque vous signalez des problèmes, il se peut que vous ayez à fournir un jou
 Cependant, les journaux peuvent contenir des informations sensibles (noms d'utilisateurs, e-mails, etc.).
 Cette extension fournit une commande pour anonymiser le contenu d'un journal.
 
-Sélectionnez une partie du journal ou tout son contenu et appuyez sur `NVDA+X, A`.
+Sélectionnez une partie du journal ou tout son contenu et appuyez sur `GesteNDTT, A`.
 Le contenu du journal anonymisé sera placé dans le presse-papiers.
 Vous pouvez le coller sur la sélection actuelle pour la remplacer ou n'importe où ailleurs.
 
@@ -338,7 +342,7 @@ Cette extension fournit [une option](#settingsPreserveHistory), activée par dé
 ## Journaliser les appels de fonction
 
 Parfois, vous voulez savoir quelle partie du code est responsable de l'annonce de quelque chose.
-Pour cela, vous pouvez activer la journalisation des appels de fonction pour la fonction `speech.speech.speak` en appuyant sur `NVDA+X, S`.
+Pour cela, vous pouvez activer la journalisation des appels de fonction pour la fonction `speech.speech.speak` en appuyant sur `GesteNDTT, S`.
 Chaque fois que NVDA parle, un message correspondant sera journalisé, incluant la trace de la pile d'appel, vous permettant d'identifier le code qui a causé cette sortie de parole.
 Une fois que vous avez terminé, désactivez la journalisation des appels de fonction avec le même geste.
 
@@ -352,7 +356,7 @@ Les deux méthodes présentent des limitations qui peuvent empêcher la journali
 Par exemple, la méthode `settrace` peut ne pas fonctionner avec une version de NVDA inférieure à 2026.1, lorsque la fonction cible est exécutée à partir d'un thread non principal et que la journalisation des appels de fonction est activée après le démarrage du thread de la fonction cible.
 D'un autre côté, la méthode « Monkey Patching » peut ne pas fonctionner lorsque la fonction cible est importée via une instruction "from import" (par exemple `from Tones Import Beep`).
 
-Vous pouvez choisir la méthode utilisée pour enregistrer les appels de fonction dans [le paramètre dédié](#functionCallLogMethodSetting) ou en appuyant sur `NVDA+X, maj+S`.
+Vous pouvez choisir la méthode utilisée pour enregistrer les appels de fonction dans [le paramètre dédié](#functionCallLogMethodSetting) ou en appuyant sur `GesteNDTT, maj+S`.
 
 <a id="reverseTranslationCommand"></a>
 ## Commande de traduction inverse
@@ -363,8 +367,8 @@ C'est assez frustrant et long de devoir redémarrer NVDA en anglais pour vérifi
 
 Pour éviter cela, l'extension fournit deux commandes de traduction inverse permettant de traduire l'interface de NVDA telle que les messages, les labels des contrôle dans l'interface graphique, etc.
 
-* `NVDA+X, R` utilise la traduction gettext de NVDA pour essayer de fournir une traduction inverse de la dernière annonce vocale.
-* `NVDA+X, shift+R` utilise la traduction gettext de NVDA et de ses extensions pour essayer de fournir une traduction inverse de la dernière annonce vocale.
+* `GesteNDTT, R` utilise la traduction gettext de NVDA pour essayer de fournir une traduction inverse de la dernière annonce vocale.
+* `GesteNDTT, maj+R` utilise la traduction gettext de NVDA et de ses extensions pour essayer de fournir une traduction inverse de la dernière annonce vocale.
 
 Plus précisément, une traduction inverse de la première chaîne de la dernière séquence de parole est fournie.
 
@@ -465,7 +469,7 @@ Par exemple, utilisez `speech.speech.getCurrentLanguage` qui cible la fonction d
 ### Méthode de journalisation des appels de fonction
 
 Cette liste déroulante définit la méthode utilisée pour identifier les appels de fonction lorsque la [journalisation des appels de fonction](#loggingFunctionCall) est activé.
-Ce paramètre peut également être basculé en appuyant sur `NVDA+X, shift+S`.
+Ce paramètre peut également être basculé en appuyant sur `GesteNDTT, maj+S`.
 Lorsque cette méthode est modifiée, cela s'appliquera en premier lors de la prochaine activation du journal des appels de fonction ; c'est-à-dire qu'elle ne s'applique pas à la journalisation des appels de fonction courante si celle-ci est activée.
 
 ## Journal des modifications
