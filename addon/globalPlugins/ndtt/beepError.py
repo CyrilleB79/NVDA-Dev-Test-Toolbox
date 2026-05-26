@@ -21,7 +21,7 @@ addonHandler.initTranslation()
 
 ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
 
-# Check if NVDA has "Play error sound" feature.
+# Check if NVDA has "Play error sound" feature and which one
 try:
 	# Present in NVDA 2020.2+
 	config.conf.spec["featureFlag"]
@@ -32,13 +32,18 @@ try:
 	# OK for NVDA 2021.3+
 	config.conf.spec["featureFlag"]["playErrorSound"]
 	hasPlayErrorSoundFeature = True
+	hasThreeValuePlayErrorSoundFeature = zzz check config int max value (cf settings dialog)
 except KeyError:
 	# For NVDA < 2021.3
-	# 0:Only in test versions, 1:yes
-	config.conf.spec["featureFlag"]["playErrorSound"] = "integer(0, 1, default=0)"
 	hasPlayErrorSoundFeature = False
+	hasThreeValuePlayErrorSoundFeature = False
+if not hasThreeValuePlayErrorSoundFeature:
+	# Add (NVDA < 2021.3) or modify (NVDA < 2026.2) config spec value
+	# 0: Only in test versions, 1: yes, 2: No
+	config.conf.spec["featureFlag"]["playErrorSound"] = "integer(0, 2, default=0)"
 
 builtinHandle = logHandler.FileHandler.handle
+builtinShouldPlayErrorSound = logHandler.shouldPlayErrorSound
 
 
 def myHandle(fh, record, *args, **kwargs):
@@ -54,6 +59,28 @@ def myHandle(fh, record, *args, **kwargs):
 			# else it is probably not worth reporting that no exception is available but has been requested.
 		logHandler.ndttLastErrorInfo = " - ".join(errorInfo)
 		logHandler.ndttLastRecord = record
+	
+	if hasPlayErrorSoundFeature:
+		# We can use NVDA's built-in handle method since it calls shouldPlayErrorSound, that we have patched for
+		# our needs
+		return builtinHandle(fh, record, *args, **kwargs)
+	
+	# If NVDA has not the play error sound feature we copy its handle method (below), replacing
+	# shouldPlayErrorSound internal variable computation by a call to shouldPlayErrorSound() function.
+	if record.levelno>=logging.CRITICAL:
+		try:
+			winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
+		except Exception:
+			pass
+	elif record.levelno>=logging.ERROR and shouldPlayErrorSound():
+		import nvwave
+		try:
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "error.wav"))
+		except Exception:
+			pass
+	return logging.FileHandler.handle(record)
+	
+	# zzz To be removed
 	# The add-on only controls error sound playing when all of the following conditions are met:
 	if (
 		# 1. NVDA has not play error sound feature built in (else it is played directly by NVDA if needed).
@@ -78,8 +105,13 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def __init__(self, *args, **kwargs):
 		super(GlobalPlugin, self).__init__(*args, **kwargs)
 		logHandler.FileHandler.handle = myHandle
+		# Patch 
+		if hasPlayErrorSoundFeature:
+			logHandler.shouldPlayErrorSound = myShouldPlayErrorSound
 
 	def terminate(self):
+		if hasPlayErrorSoundFeature:
+			logHandler.shouldPlayErrorSound =  builtinShouldPlayErrorSound
 		logHandler.FileHandler.handle = builtinHandle
 		self.clearLastError()
 		super(GlobalPlugin, self).terminate()
@@ -91,19 +123,21 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			pass
 
 	@script(
-		# Translators: Input help mode message for a toggle command.
-		description=_("Toggles play a sound for logged error."),
+		# Translators: Input help mode message for a cycle command.
+		description=_("Cycles play a sound for logged error."),
 		category=ADDON_SUMMARY,
 	)
 	def script_togglePlayErrorSound(self, gesture):
+		config.conf["featureFlag"]["playErrorSound"] = (config.conf["featureFlag"]["playErrorSound"] + 1) % 3
 		if config.conf["featureFlag"]["playErrorSound"] == 0:
-			config.conf["featureFlag"]["playErrorSound"] = 1
+			# Translators: Message reported when calling the command to toggle play a sound for logged errors
+			msg = _("Only in NVDA test versions")
+		elif config.conf["featureFlag"]["playErrorSound"] == 1:
 			# Translators: Message reported when calling the command to toggle play a sound for logged errors
 			msg = _("Yes")
 		else:
-			config.conf["featureFlag"]["playErrorSound"] = 0
 			# Translators: Message reported when calling the command to toggle play a sound for logged errors
-			msg = _("Only in NVDA test versions")
+			msg = _("No")
 		ui.message(msg)
 
 	@script(
