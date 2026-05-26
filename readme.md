@@ -28,27 +28,27 @@ If needed, you may modify it in the Input gestures dialog.
 In the rest of this documentation, we will refer to this gesture as `NDTTGesture`.
 So, for example, `NDTTGesture, S` means `NVDA+Z, S`, unless you have modified the default gesture.
 
-You can list all the available layered commands pressing `NVDA+X, H`.
+You can list all the available layered commands pressing `NDTTGesture, H`.
 
 For the commands that you use more frequently, you can also define a direct gesture in the input gesture dialog.
 
 ## Enhanced restart dialog
 
-The `NVDA+X, Q` command opens a dialog to specify some extra options before restarting NVDA.
+The `NDTTGesture, Q` command opens a dialog to specify some extra options before restarting NVDA.
 The options that can be specified correspond to the [command line options][2] that can be used with `nvda.exe`, e.g. `-c` for config path, `--disable-addons` to disable add-ons, etc.
 
 ## Features related to logged errors
 
 ### Report last logged error
 
-Pressing `NVDA+X, E` allows to report the last error logged without needing to open the log.
+Pressing `NDTTGesture, E` allows to report the last error logged without needing to open the log.
 A second press clears the memorized last error.
 
 ### Play a sound for logged errors
 
 The ["Play a sound for logged errors" setting][4] has been introduced in NVDA 2021.3 and allows to specify if NVDA will play an error sound in case an error is logged.
 
-This add-on provides an additional command (`NVDA+X, shift+E`) to toggle this setting.
+This add-on provides an additional command (`NDTTGesture, shift+E`) to toggle this setting.
 You can choose:
 
 * "Only in test versions" (default) to make NVDA play error sounds only if the current NVDA version is a test version (alpha, beta or run from source).
@@ -63,16 +63,16 @@ This feature allows to report some properties of the current navigator object wi
 
 To list the properties of an object, move the navigator object to it and use the following commands:
 
-* `NVDA+X, upArrow`: Selects the previous property and reports it for the navigator object.
-* `NVDA+X, downArrow`: Selects the next property and reports it for the navigator object.
-* `NVDA+X, N`: Reports the currently selected property for the navigator object
-* `NVDA+X, shift+N`: Displays the currently selected property for the navigator object in a browseable message
+* `NDTTGesture, upArrow`: Selects the previous property and reports it for the navigator object.
+* `NDTTGesture, downArrow`: Selects the next property and reports it for the navigator object.
+* `NDTTGesture, N`: Reports the currently selected property for the navigator object
+* `NDTTGesture, shift+N`: Displays the currently selected property for the navigator object in a browseable message
 
 The list of the supported properties is the following:
 name, role, state, value, windowClassName, windowControlID, windowHandle, location, Python class, Python class mro.
 
 When using object navigation commands, you can also choose to have the currently selected property reported instead of NVDA usual object reporting.
-A toggle command, `NVDA+X, control+N`, allows to switch between this custom reporting of objects and NVDA usual reporting.
+A toggle command, `NDTTGesture, control+N`, allows to switch between this custom reporting of objects and NVDA usual reporting.
 
 For exemple, you may select "windowClassName" property and enable custom object reporting.
 Then when moving the navigator object to next or previous object, you will hear the object's windowClassName instead of usual reporting.
@@ -85,13 +85,13 @@ Then when moving the navigator object to next or previous object, you will hear 
 The add-on provides three commands allowing to open source code.
 
 The first command allows to open the source code of a script knowing its gesture.
-To use it press `NVDA+x, C` and then the gesture of the script which you want to see the code of.
-For example to see the code of the script that reports the title of the foreground window, press `NVDA+X, C` and then `NVDA+T`.
+To use it press `NDTTGesture, C` and then the gesture of the script which you want to see the code of.
+For example to see the code of the script that reports the title of the foreground window, press `NDTTGesture, C` and then `NVDA+T`.
 
 The two other commands allow to open the source code from its path:
 
-* `NVDA+x, shift+C`, opens the source code whose path is located under the system caret.
-* `NVDA+x, control+C`, opens the source code whose path is located under the review cursor.
+* `NDTTGesture, shift+C`, opens the source code whose path is located under the system caret.
+* `NDTTGesture, control+C`, opens the source code whose path is located under the review cursor.
 
 E.g. if the caret or the review cursor is located on the following line, the command will open the corresponding file in your editor:  
 `C:\Users\username\AppData\Roaming\nvda\addons\addonName\globalPlugins\addonName\__init__.py:48`
@@ -106,7 +106,7 @@ The extended script description mode allows to have reported information on scri
 When the Extended script description mode is active, the input help mode (NVDA+1) is modified as follows.
 If a script has no description, the script's name and class are reported.
 If a script has a description, its description is reported as usual.
-The gesture to activate or deactivate this feature is `NVDA+X, D`.
+The gesture to activate or deactivate this feature is `NDTTGesture, D`.
 
 Executing a gesture bound to a script without description in input help mode also create an entry for this script in the gesture management dialog.
 This entry is located in a dedicated category called "Scripts without description (modify at your own risk!)".
@@ -121,14 +121,14 @@ Control+shift+I also toggle italic in Word, even if it is not natively reported 
 To have the control+shift+I result reported by NVDA as control+I, you should perform the following steps:
 
 * Open a Word document.
-* Enable the extended script description mode with `NVDA+X, D`.
+* Enable the extended script description mode with `NDTTGesture, D`.
 * Enter input help mode with NVDA+1.
 * Press control+I to report the italic script and have it added in the gesture dialog.
 * Exit input help mode with NVDA+1.
 * Open the input gestures dialog.
 * In the category "Scripts without description (modify at your own risk!)", select the command "toggleItalic on NVDAObjects.window.winword.WordDocument".
 * Add the control+shift+I shortcut and validate.
-* If you want, exit the extended script description mode with `NVDA+X, D`.
+* If you want, exit the extended script description mode with `NDTTGesture, D`.
 
 Known bug: A script added for a specific class is visible even if gesture manager is opened in another context.
 
@@ -138,7 +138,7 @@ Known bug: A script added for a specific class is visible even if gesture manage
 ### Place markers in the log
 
 While testing or working, you may want to mark a specific moment in the log, so that you can turn to it easily later when reading the log.
-To add a marker message in the log, press `NVDA+X, K`.
+To add a marker message in the log, press `NDTTGesture, K`.
 A message as follows will be logged at INFO level:  
 `-- NDTT marker 0 --`  
 
@@ -149,8 +149,8 @@ The marker's number will be incremented each time you place a marker in the log;
 
 A log reader mode provides commands to ease log reading and analyzing.
 In the log viewer window and in the Pyton console output area, the log reader is enabled by default, thus log reading commands are available immediately.
-In another text reading area such as an editor (e.g. Notepad++) or a webpage (e.g. GitHub issue), you need to press `NVDA+X, L` to enable log reader mode and use its commands.
-When you are done with log reading and analyzing tasks, you can disable again `NVDA+X, L` to disable the log reader mode.
+In another text reading area such as an editor (e.g. Notepad++) or a webpage (e.g. GitHub issue), you need to press `NDTTGesture, L` to enable log reader mode and use its commands.
+When you are done with log reading and analyzing tasks, you can disable again `NDTTGesture, L` to disable the log reader mode.
 
 The commands available in log reader mode are described hereafter.
 In this mode, you can also press `control+H` to display all the commands available.
@@ -256,7 +256,7 @@ When reporting issues, you may have to provide a log.
 However, logs may contain sensitive information (user names, e-mails, etc.).
 This add-on provides a command to anonymize a log's content.
 
-Select a part of the log or its whole content and press `NVDA+X, A`.
+Select a part of the log or its whole content and press `NDTTGesture, A`.
 The anonymized log content will be put in the clipboard.
 You can paste it on the current selection to replace it or anywhere else you wish.
 
@@ -343,7 +343,7 @@ This add-on provide [an option](#settingsPreserveHistory), enabled by default, a
 ## Logging function calls
 
 Sometimes, you may want to see which part of the code is responsible for speaking something.
-For this, you can enable the function calls logging for the `speech.speech.speak` function pressing `NVDA+X, S`.
+For this, you can enable the function calls logging for the `speech.speech.speak` function pressing `NDTTGesture, S`.
 Each time NVDA speaks, a corresponding message will be logged, including the stack trace, allowing you to identify the code that has caused this speech output.
 Once you are done, disable function calls logging with the same gesture.
 
@@ -357,7 +357,7 @@ Both methods have limitations that may prevent function calls to be logged in sp
 For example, the "settrace" method may not work with NVDA version lower than 2026.1, when the target function is run from a non-main thread and the function calls logging is enabled after the target function's thread has been started.
 On the other hand, the "monkey patching" method may not work when the target function is imported through a "from import" statement (e.g. `from tones import beep`).
 
-You can toggle the method used to log function calls in [the dedicated setting](#functionCallLogMethodSetting) or pressing `NVDA+X, shift+S`.
+You can toggle the method used to log function calls in [the dedicated setting](#functionCallLogMethodSetting) or pressing `NDTTGesture, shift+S`.
 
 <a id="reverseTranslationCommand"></a>
 ## Reverse translation command
@@ -368,8 +368,8 @@ It's quite frustrating and time consuming to have to restart NVDA in English to 
 
 To avoid this, the add-on provides two reverse translation commands allowing to reverse translate NVDA's interface such as messages, control labels in the GUI, etc.
 
-* `NVDA+X, R` uses NVDA's gettext translation to try to reverse translate the last speech.
-* `NVDA+X, shift+R` uses gettext translations from NVDA and its add-ons to try to reverse translate the last speech.
+* `NDTTGesture, R` uses NVDA's gettext translation to try to reverse translate the last speech.
+* `NDTTGesture, shift+R` uses gettext translations from NVDA and its add-ons to try to reverse translate the last speech.
 
 More specifically, the first string of the last speech sequence is reverse translated.
 
@@ -470,7 +470,7 @@ For example, use `speech.speech.getCurrentLanguage` which targets the function d
 ### Function call log method
 
 This combobox defines the method used to identify function calls when [function call logging](#loggingFunctionCall) is enabled.
-This parameter can also be toggled pressing `NVDA+X, shift+S`.
+This parameter can also be toggled pressing `NDTTGesture, shift+S`.
 When this method is modified, it will first apply the next time the function call log is activated; that is, it does not apply to current function call logging if currently enabled.
 
 ## Change log
