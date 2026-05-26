@@ -77,7 +77,7 @@ if globalVars.appArgs.secure:
 	class MixedGlobalPlugin(
 		ScriptableObjectWithLayeredGestures(
 			scriptableObjectName=ADDON_SUMMARY,
-			entryPointGestures=["kb:NVDA+x"],
+			entryPointGestures=["kb:NVDA+z"],
 		),
 		ExtScriptDescGP,
 		RestartWithOptionsGP,
@@ -91,7 +91,7 @@ else:
 	class MixedGlobalPlugin(
 		ScriptableObjectWithLayeredGestures(
 			scriptableObjectName=ADDON_SUMMARY,
-			entryPointGestures=["kb:NVDA+x"],
+			entryPointGestures=["kb:NVDA+z"],
 		),
 		ExtScriptDescGP,
 		RestartWithOptionsGP,

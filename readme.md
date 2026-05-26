@@ -22,7 +22,12 @@ This add-on gathers various features for NVDA debugging and testing.
 ## Commands
 
 This add-on uses layered commands for all of the new commands it adds.
-The entry point for these commands is `NVDA+X`; thus all the commands should be executed by `NVDA+X` followed by another single letter or gesture.
+The entry point for these commands is `NVDA+Z`; therfore all the commands should be executed by `NVDA+Z` followed by another single letter or gesture.
+If needed, you may modify it in the Input gestures dialog.
+
+In the rest of this documentation, we will refer to this gesture as `NDTTGesture`.
+So, for example, `NDTTGesture, S` means `NVDA+Z, S`, unless you have modified the default gesture.
+
 You can list all the available layered commands pressing `NVDA+X, H`.
 
 For the commands that you use more frequently, you can also define a direct gesture in the input gesture dialog.
