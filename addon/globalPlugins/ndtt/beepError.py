@@ -32,12 +32,14 @@ try:
 	# OK for NVDA 2021.3+
 	config.conf.spec["featureFlag"]["playErrorSound"]
 	hasPlayErrorSoundFeature = True
-	hasThreeValuePlayErrorSoundFeature = zzz check config int max value (cf settings dialog)
 except KeyError:
 	# For NVDA < 2021.3
 	hasPlayErrorSoundFeature = False
-	hasThreeValuePlayErrorSoundFeature = False
-if not hasThreeValuePlayErrorSoundFeature:
+else:
+	playErrorSoundFeatureOptionsNumber = int(config.conf.getConfigValidation(("featureFlag", "playErrorSound")).args[1]) + 1
+	if not playErrorSoundFeatureOptionsNumber in [2, 3]:
+		raise ValueError('Unexpected number of options for "Play error sound feature": {}'.format(playErrorSoundFeatureOptionsNumber))
+if not hasPlayErrorSoundFeature or playErrorSoundFeatureOptionsNumber < 3:
 	# Add (NVDA < 2021.3) or modify (NVDA < 2026.2) config spec value
 	# 0: Only in test versions, 1: yes, 2: No
 	config.conf.spec["featureFlag"]["playErrorSound"] = "integer(0, 2, default=0)"
@@ -45,6 +47,18 @@ if not hasThreeValuePlayErrorSoundFeature:
 builtinHandle = logHandler.FileHandler.handle
 builtinShouldPlayErrorSound = logHandler.shouldPlayErrorSound
 
+
+def myShouldPlayErrorSound():
+	if not hasPlayErrorSoundFeature:
+		raise RuntimeError("This function should not be called in this version of NVDA.")
+	if (
+		playErrorSoundFeatureOptionsNumber == 3  # NVDA >= 2026.2
+		or config.conf["featureFlag"]["playErrorSound"] < 2  # Supported values for NVDA < 2026.2
+	):
+		# We let the native shouldPlayErrorSound function return the value.
+		return builtinShouldPlayErrorSound()
+	# If we get here, we have necessarily config.conf["featureFlag"]["playErrorSound"] == 2
+	return False
 
 def myHandle(fh, record, *args, **kwargs):
 	# Save the last error
@@ -79,26 +93,6 @@ def myHandle(fh, record, *args, **kwargs):
 		except Exception:
 			pass
 	return logging.FileHandler.handle(record)
-	
-	# zzz To be removed
-	# The add-on only controls error sound playing when all of the following conditions are met:
-	if (
-		# 1. NVDA has not play error sound feature built in (else it is played directly by NVDA if needed).
-		(not hasPlayErrorSoundFeature)
-		# 2. It is not a test version of NVDA (else it is played directly by NVDA if needed).
-		and (not buildVersion.isTestVersion)
-		# 3. Play error sound is enabled in config (else, no need to care of playing sound).
-		and (config.conf["featureFlag"]["playErrorSound"] == 1)
-		# 4. Log level is ERROR or higher
-		and record.levelno >= logging.ERROR
-	):
-		import nvwave
-
-		try:
-			nvwave.playWaveFile(os.path.join(appDir, "waves", "error.wav"))
-		except Exception:
-			pass
-	return builtinHandle(fh, record, *args, **kwargs)
 
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
