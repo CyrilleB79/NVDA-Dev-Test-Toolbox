@@ -4,11 +4,15 @@
 # See the file COPYING for more details.
 # Copyright (C) 2019-2026 Cyrille Bougot
 
+import logging
+
+from configobj.validate import VdtValueTooBigError
+
 import globalPluginHandler
 import addonHandler
 import scriptHandler
 import logHandler
-import logging
+from logHandler import log
 import buildVersion
 import ui
 import config
@@ -21,6 +25,11 @@ addonHandler.initTranslation()
 
 ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
 
+# Play error sound values
+PES_ONLY_IN_TEST_VERSIONS = 0
+PES_YES = 1
+PES_NO = 2
+
 # Check if NVDA has "Play error sound" feature and which one
 try:
 	# Present in NVDA 2020.2+
@@ -31,19 +40,19 @@ except KeyError:
 try:
 	# OK for NVDA 2021.3+
 	config.conf.spec["featureFlag"]["playErrorSound"]
-	hasPlayErrorSoundFeature = True
 except KeyError:
 	# For NVDA < 2021.3
 	hasPlayErrorSoundFeature = False
-else:
-	playErrorSoundFeatureOptionsNumber = int(config.conf.getConfigValidation(("featureFlag", "playErrorSound")).args[1]) + 1
-	if not playErrorSoundFeatureOptionsNumber in [2, 3]:
-		raise ValueError('Unexpected number of options for "Play error sound feature": {}'.format(playErrorSoundFeatureOptionsNumber))
-if not hasPlayErrorSoundFeature:
-	# Add (NVDA < 2021.3) config spec value with only 2 values (as before NVDA 2026.2)
+	# Add config spec value with only 2 values (as before NVDA 2026.2)
 	# 0: Only in test versions, 1: yes
 	config.conf.spec["featureFlag"]["playErrorSound"] = "integer(0, 1, default=0)"
-if playErrorSoundFeatureOptionsNumber < 3
+	playErrorSoundFeatureOptionsNumber = 2
+else:
+	hasPlayErrorSoundFeature = True
+	playErrorSoundFeatureOptionsNumber = int(config.conf.getConfigValidation(("featureFlag", "playErrorSound")).args[1]) + 1
+	if playErrorSoundFeatureOptionsNumber not in (2, 3):
+		log.error('Unexpected number of options for "Play error sound feature": {}'.format(playErrorSoundFeatureOptionsNumber))
+if playErrorSoundFeatureOptionsNumber < 3:
 	# Add (NVDA < 2026.2) config spec value to track disable all error sounds
 	config.conf.spec["ndtt"]["disableErrorSound"] = "boolean(default=False)"
 else:
@@ -60,14 +69,24 @@ builtinShouldPlayErrorSound = logHandler.shouldPlayErrorSound
 
 def myShouldPlayErrorSound():
 	if not hasPlayErrorSoundFeature:
-		raise RuntimeError("This function should not be called in this version of NVDA.")
+		# Adapted from shouldPlayErrorSound in 2026.2
+		if not config.conf:
+			playErrorSound = PES_ONLY_IN_TEST_VERSIONS
+		else:
+			playErrorSound = config.conf["featureFlag"]["playErrorSound"]
+			if config.conf["ndtt"]["disableErrorSound"]:
+				playErrorSound = PES_NO
+		return (
+			playErrorSound == PES_YES
+			or (playErrorSound == PES_ONLY_IN_TEST_VERSIONS and buildVersion.isTestVersion)
+		)
 	if (
 		playErrorSoundFeatureOptionsNumber == 3  # NVDA >= 2026.2
 		or config.conf["featureFlag"]["playErrorSound"] < 2  # Supported values for NVDA < 2026.2
 	):
 		# We let the native shouldPlayErrorSound function return the value.
 		return builtinShouldPlayErrorSound()
-	# If we get here, we have necessarily config.conf["featureFlag"]["playErrorSound"] == 2
+	# If we get here, we have necessarily config.conf["featureFlag"]["playErrorSound"] == PES_NO
 	return False
 
 def myHandle(fh, record, *args, **kwargs):
@@ -93,16 +112,18 @@ def myHandle(fh, record, *args, **kwargs):
 	# shouldPlayErrorSound internal variable computation by a call to shouldPlayErrorSound() function.
 	if record.levelno>=logging.CRITICAL:
 		try:
+			import winsound
 			winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
 		except Exception:
 			pass
-	elif record.levelno>=logging.ERROR and shouldPlayErrorSound():
+	elif record.levelno>=logging.ERROR and myShouldPlayErrorSound():
 		import nvwave
+		import globalVars
 		try:
 			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "error.wav"))
 		except Exception:
 			pass
-	return logging.FileHandler.handle(record)
+	return logging.FileHandler.handle(fh, record)
 
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
@@ -143,12 +164,12 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		try:
 			config.conf["featureFlag"]["playErrorSound"] = playErrorSound
 			config.conf["ndtt"]["disableErrorSound"] = False
-		except configobj.validate.VdtValueTooBigError:  # NVDA < 2026.2
+		except VdtValueTooBigError:  # NVDA < 2026.2
 			config.conf["ndtt"]["disableErrorSound"] = True
-		if playErrorSound == 0:
+		if playErrorSound == PES_ONLY_IN_TEST_VERSIONS:
 			# Translators: Message reported when calling the command to toggle play a sound for logged errors
 			msg = _("Only in NVDA test versions")
-		elif playErrorSound == 1:
+		elif playErrorSound == PES_YES:
 			# Translators: Message reported when calling the command to toggle play a sound for logged errors
 			msg = _("Yes")
 		else:
