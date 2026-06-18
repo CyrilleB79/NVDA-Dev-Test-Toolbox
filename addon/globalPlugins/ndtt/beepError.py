@@ -21,7 +21,12 @@ addonHandler.initTranslation()
 
 ADDON_SUMMARY = addonHandler.getCodeAddon().manifest["summary"]
 
-# Check if NVDA has "Play error sound" feature.
+# Play error sound values
+PES_ONLY_IN_TEST_VERSIONS = 0
+PES_YES = 1
+PES_NO = 2
+
+# Check if NVDA has "Play error sound" feature and which one
 try:
 	# Present in NVDA 2020.2+
 	config.conf.spec["featureFlag"]
@@ -34,9 +39,16 @@ try:
 	hasPlayErrorSoundFeature = True
 except KeyError:
 	# For NVDA < 2021.3
+	hasPlayErrorSoundFeature = False
+	# Add config spec value with only 2 values (as before NVDA 2026.2)
 	# 0:Only in test versions, 1:yes
 	config.conf.spec["featureFlag"]["playErrorSound"] = "integer(0, 1, default=0)"
-	hasPlayErrorSoundFeature = False
+	playErrorSoundFeatureOptionsNumber = 2
+else:
+	hasPlayErrorSoundFeature = True
+	playErrorSoundFeatureOptionsNumber = int(config.conf.getConfigValidation(("featureFlag", "playErrorSound")).args[1]) + 1
+if playErrorSoundFeatureOptionsNumber not in (2, 3):
+	log.error('Unexpected number of options for "Play error sound feature": {}'.format(playErrorSoundFeatureOptionsNumber))
 
 builtinHandle = logHandler.FileHandler.handle
 
@@ -96,12 +108,17 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		category=ADDON_SUMMARY,
 	)
 	def script_togglePlayErrorSound(self, gesture):
-		if config.conf["featureFlag"]["playErrorSound"] == 0:
-			config.conf["featureFlag"]["playErrorSound"] = 1
+		if config.conf["featureFlag"]["playErrorSound"] == PES_ONLY_IN_TEST_VERSIONS:
+			config.conf["featureFlag"]["playErrorSound"] = PES_YES
 			# Translators: Message reported when calling the command to toggle play a sound for logged errors
 			msg = _("Yes")
+		elif config.conf["featureFlag"]["playErrorSound"] == PES_YES and playErrorSoundFeatureOptionsNumber > 2:
+		# For NVDA 2026.2+ only
+			config.conf["featureFlag"]["playErrorSound"] = PES_NO
+			# Translators: Message reported when calling the command to toggle play a sound for logged errors
+			msg = _("No")
 		else:
-			config.conf["featureFlag"]["playErrorSound"] = 0
+			config.conf["featureFlag"]["playErrorSound"] = PES_ONLY_IN_TEST_VERSIONS
 			# Translators: Message reported when calling the command to toggle play a sound for logged errors
 			msg = _("Only in NVDA test versions")
 		ui.message(msg)

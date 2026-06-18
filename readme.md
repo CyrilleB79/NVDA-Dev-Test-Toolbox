@@ -53,9 +53,11 @@ You can choose:
 
 * "Only in test versions" (default) to make NVDA play error sounds only if the current NVDA version is a test version (alpha, beta or run from source).
 * "Yes" to enable error sounds no matter your current NVDA version.
+* "No" to disable error sounds no matter your current NVDA version, only available in recent NVDA versions.
 
 For NVDA prior to 2021.3, this add-on provides the backport of this feature and the possibility to control it with the keyboard command.
-The checkbox in the Advanced settings panel is not backported however.
+The combobox in the Advanced settings panel is not backported however.
+The possibility to disable error sounds for any NVDA version is not backported either for versions earlier to 2026.2.
 
 ## Object property explorer
 
