@@ -8,6 +8,7 @@ import globalPluginHandler
 import addonHandler
 import scriptHandler
 import logHandler
+from logHandler import log
 import logging
 import buildVersion
 import ui
