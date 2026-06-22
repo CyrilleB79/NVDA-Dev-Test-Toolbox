@@ -47,9 +47,15 @@ except KeyError:
 	playErrorSoundFeatureOptionsNumber = 2
 else:
 	hasPlayErrorSoundFeature = True
-	playErrorSoundFeatureOptionsNumber = int(config.conf.getConfigValidation(("featureFlag", "playErrorSound")).args[1]) + 1
+	playErrorSoundFeatureOptionsNumber = (
+		int(config.conf.getConfigValidation(("featureFlag", "playErrorSound")).args[1]) + 1
+	)
 if playErrorSoundFeatureOptionsNumber not in (2, 3):
-	log.error('Unexpected number of options for "Play error sound feature": {}'.format(playErrorSoundFeatureOptionsNumber))
+	log.error(
+		'Unexpected number of options for "Play error sound feature": {}'.format(
+			playErrorSoundFeatureOptionsNumber,
+		),
+	)
 
 builtinHandle = logHandler.FileHandler.handle
 
@@ -113,8 +119,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			config.conf["featureFlag"]["playErrorSound"] = PES_YES
 			# Translators: Message reported when calling the command to toggle play a sound for logged errors
 			msg = _("Yes")
-		elif config.conf["featureFlag"]["playErrorSound"] == PES_YES and playErrorSoundFeatureOptionsNumber > 2:
-		# For NVDA 2026.2+ only
+		elif (
+			config.conf["featureFlag"]["playErrorSound"] == PES_YES and playErrorSoundFeatureOptionsNumber > 2
+		):
+			# For NVDA 2026.2+ only
 			config.conf["featureFlag"]["playErrorSound"] = PES_NO
 			# Translators: Message reported when calling the command to toggle play a sound for logged errors
 			msg = _("No")
