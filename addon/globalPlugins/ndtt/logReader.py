@@ -797,11 +797,51 @@ class LogReader(object):
 			ti = position
 		else:
 			ti = self.caretTextInfo().copy()
-		while ti.move(textInfos.UNIT_LINE, direction):
-			tiLine = ti.copy()
-			tiLine.expand(textInfos.UNIT_LINE)
+		chunkTi = ti.copy()
+		if direction == -1:
+			chunkTi.end = ti.start
+		else:
+			chunkTi.start = ti.end
+		CHUNK_SIZE = 1000
+		MAX_CHUNKS = 1
+		nReadLines = chunkTi.move(textInfos.UNIT_LINE, CHUNK_SIZE * direction)
+		safety = 0
+		while nReadLines != 0 and safety < MAX_CHUNKS:
+			ti.end = ti2.start
+			msg = self._searchForMessageInChunk(
+				direction,
+				searchType,
+				filterFun,
+				ti,
+			)
+			if msg:
+				break
+			nReadLines = ti2.move(textInfos.UNIT_LINE, CHUNK_SIZE * direction)
+			ti.collapse(end=True)
+			safety += 1
+		else:
+			return None
+		if safety == MAX_CHUNKS:
+			ui.message("Log too big - Stopping the search.")
+			log.error("Log too big - Stopping the search.")
+		return msg
+
+	def _searchForMessageInChunk(
+		self,
+		direction,
+		searchType,
+		filterFun,
+		ti,
+	):
+		if direction == 1:
+			sorting = lambda x: x
+		elif direction == -1:
+			sorting = reversed
+		else:
+			raise ValueError("direction = {}".format(reversed))
+		for line in sorting(ti.text.splitlines()):
 			regexp = self.__class__.SEARCHERS[searchType]
-			if regexp.search(tiLine.text.rstrip()):
+			if regexp.search(line.rstrip()):
 				msg = LogMessage.makeFromTextInfo(
 					ti,
 					atStart=True,
