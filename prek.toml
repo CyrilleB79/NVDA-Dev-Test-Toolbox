@@ -41,7 +41,8 @@ hooks = [
       "c",
       "c++",
       "batch",
-      "markdown",
+      # Do not include markdown since double spaces at end of line is used in syntax.
+      # "markdown",
       "toml",
       "yaml",
       "powershell"
