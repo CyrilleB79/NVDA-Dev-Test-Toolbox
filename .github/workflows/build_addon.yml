@@ -39,7 +39,7 @@ jobs:
 
     - name: Code checks
       # Temporarily disable pyright in workflow until it is fully fixed
-      run: export SKIP=no-commit-to-branch,pyright; uv run pre-commit run --all-files
+      run: export PREK_SKIP=no-commit-to-branch,pyright; uv run prek run --all-files
 
     - name: building addon
       run: uv run scons && uv run scons pot
