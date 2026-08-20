@@ -20,7 +20,11 @@ addon_info = AddonInfo(
 	addon_summary=_("NVDA Dev & Test Toolbox"),
 	# Add-on description
 	# Translators: Long description to be shown for this add-on on add-on information from add-on store
-	addon_description=_("""A set of tools for NVDA developers and testers."""),
+	addon_description=_("""NVDA Dev & Test Toolbox provides tools for debugging and testing NVDA.
+Its log tools make it easier to navigate and analyze logs, inspect errors and tracebacks, save log backups, and anonymize logs before sharing them.
+Specific function calls and markers can also be logged.
+It is also possible to open the corresponding source code from a log items, console variables or even typing a command gesture.
+The add-on also extends the Python console and provides utilities such as reverse translation of NVDA's interface strings and an enhanced restart dialog."""),
 	# version
 	addon_version="10.0",
 	# Brief changelog for this version
