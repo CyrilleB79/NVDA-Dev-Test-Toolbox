@@ -481,6 +481,11 @@ When this method is modified, it will first apply the next time the function cal
 
 ## Change log
 
+### Version 10.1
+
+* The commands entry point gesture has been changed to `NVDA+Z` to avoid conflict with new repeat last speech command.
+* The command to cycle "Play a sound for logged errors" has been updated to support the "No" value introduced in NVDA 2026.2.
+
 ### Version 10.0
 
 * Log reader: when logging function calls, arguments and return values are now logged too. (with the contribution of hwf1324)
