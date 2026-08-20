@@ -26,15 +26,11 @@ Specific function calls and markers can also be logged.
 It is also possible to open the corresponding source code from a log items, console variables or even typing a command gesture.
 The add-on also extends the Python console and provides utilities such as reverse translation of NVDA's interface strings and an enhanced restart dialog."""),
 	# version
-	addon_version="10.0",
+	addon_version="10.1",
 	# Brief changelog for this version
 	# Translators: what's new content for the add-on version to be shown in the add-on store
-	addon_changelog=_("""* Log reader: when logging function calls, arguments and return values are now logged too. (with the contribution of hwf1324).
-* Log reader: when using navigation commands, some messages are no longer reported as truncated or empty.
-* When reporting last error, some messages are no longer reported uninterpolated (e.g. containing "%s").
-* Fixed some errors with NVDA 2019.2: first usage of Python console history, reporting of non-ASCII object names with Object property explorer.
-* Compatibility with NVDA 2026.1.
-"""),
+	addon_changelog=_("""* The commands entry point gesture has been changed to `NVDA+Z` to avoid conflict with new repeat last speech command.
+* The command to cycle "Play a sound for logged errors" has been updated to support the "No" value introduced in NVDA 2026.2."""),
 	# Author(s)
 	addon_author="Cyrille Bougot <cyrille.bougot2@laposte.net>",
 	# URL for the add-on documentation support
@@ -46,7 +42,7 @@ The add-on also extends the Python console and provides utilities such as revers
 	# Minimum NVDA version supported (e.g. "2019.3.0", minor version is optional)
 	addon_minimumNVDAVersion="2019.2",
 	# Last NVDA version supported/tested (e.g. "2024.4.0", ideally more recent than minimum version)
-	addon_lastTestedNVDAVersion="2026.1",
+	addon_lastTestedNVDAVersion="2026.2",
 	# Add-on update channel (default is None, denoting stable releases,
 	# and for development releases, use "dev".)
 	# Do not change unless you know what you are doing!
