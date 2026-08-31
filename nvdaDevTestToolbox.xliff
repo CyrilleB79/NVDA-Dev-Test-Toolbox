@@ -1,0 +1,4511 @@
+<?xml version="1.0"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en">
+<file id="readme.md" original="https://raw.githubusercontent.com/CyrilleB79/NVDA-Dev-Test-Toolbox/dd255709b530b31cb5707589aabfa3662a627f1e/readme.md">
+<skeleton>
+# $(ID:a315dad3-b9b7-4e63-b7c6-c5e3fd0883b4)
+
+* $(ID:26d9fdd7-3bb8-415b-94fc-2f7664f6fa03)
+* $(ID:f2838030-1d26-4dea-9be9-3016d7949c6a)
+
+$(ID:7f051e4c-9ef9-41b1-bc9e-e2079338ed3f)
+$(ID:5d640612-9b14-4784-93c4-1c787e7024e7)
+$(ID:25e2c944-ade8-4bc4-a5ac-d80fe7229422)
+$(ID:9bc3f0fe-fd23-466e-a64b-3beb33795bbc)
+$(ID:83fa13e9-659b-48e4-a300-baf3d2e6581e)
+
+## $(ID:c49eb2ba-60a9-42dd-92d5-d355dd48d6ab)
+
+* $(ID:05c3d504-d489-42e7-b363-3c4fd8e5f8e7)
+* $(ID:4cd8f9a9-2a47-44e0-9b81-3ebdc18522da)
+* $(ID:978eaf1a-663c-465e-96c2-5b9009d0dc27)
+* $(ID:dbd2866b-bf4e-4e21-81c6-258450031694)
+* $(ID:a58f19a3-71e5-4510-81ee-f59cfd637622)
+* $(ID:61088d60-07c4-49bd-bb51-235e016e0529)
+* $(ID:ba0cc94b-b14e-4685-a37f-320992849d00)
+* $(ID:25c9794e-07f4-45ae-9b18-c323e74703ab)
+* $(ID:7ce22827-b24c-4804-be8e-0969782749cd)
+* $(ID:18261ab6-89cb-417f-9ebf-4a3e2865608a)
+* $(ID:e244fc59-92bf-4bae-8114-c33c2e87971e)
+
+## $(ID:e29b2a6e-d70d-4ff6-9cb3-61239a7f2d19)
+
+$(ID:a8f24e18-51cc-4553-9550-26b33f907610)
+$(ID:59707ef1-d7af-4d8f-80f5-9cdfdf403f46)
+$(ID:9b845a46-78b6-4358-8e33-b9dbba3818d1)
+
+$(ID:ca85f291-e04c-4d12-aa37-d18485d6dc3d)
+$(ID:980368c0-12bc-4c5b-9f46-bf01b02940fc)
+
+$(ID:6a78f501-a013-4672-9a77-294bf723c54b)
+
+$(ID:a325b3a6-0c5b-42a6-8762-cc670419584d)
+
+## $(ID:f2862eeb-c79d-4ffa-8737-780a2e7803f4)
+
+$(ID:713a57f2-521a-4645-8a37-5bb365495fa5)
+$(ID:d3d78c37-dfb4-424d-b85b-f10a74cd161f)
+
+## $(ID:99fe49bd-8de4-4885-9198-948015359ee5)
+
+### $(ID:0e274f37-b6b3-4765-9d3f-3efc4d233224)
+
+$(ID:da7b79d6-0fa1-4312-86b2-e1c89a71c388)
+$(ID:8fee6fb7-ec22-41ca-a6b2-ed41851fcf3c)
+
+### $(ID:2fc12580-bfa9-490c-9769-95cec7fbe061)
+
+$(ID:be70e95c-6163-4263-814c-c51efe82edcd)
+
+$(ID:b09ed502-ecc1-4f73-8bb6-d4a854f0370e)
+$(ID:737853d5-0328-46f5-9d17-a9ae44d8063e)
+
+* $(ID:c6bf375d-91a7-4b1b-a2c7-65a86970e94d)
+* $(ID:1b45bdbc-4bce-46b8-99ba-4ea856ff7a59)
+* $(ID:3df47228-6ec8-49ad-a3cb-9e3e118efc58)
+
+$(ID:5daffe8b-4cb5-4a1b-b169-19a1d53ec69b)
+$(ID:1195c983-2a86-4012-80bd-1ddef9d252a7)
+$(ID:c5f71743-18ba-4b72-8a40-b9d9b5f49fef)
+
+## $(ID:e4c29cb6-c91a-4596-80e0-40b2c9f6a731)
+
+$(ID:65a60ea8-4dc8-4595-9546-5d70bf0e3d53)
+
+$(ID:8fa91c3c-e7a5-4223-8e88-3f9ea0cb02f4)
+
+* $(ID:d1d84589-1f75-41ed-8e30-fe29c1f6280b)
+* $(ID:d95bcc8a-a4a5-471a-a2c9-0050ab28d867)
+* $(ID:c0e95c5c-2d1e-4adc-812e-1400d53ec783)
+* $(ID:18d875c2-a6c5-4358-ad3c-69d5267abb4b)
+
+$(ID:63de9d47-2bcb-4dd4-95a8-6f1a4f9c2f59)
+$(ID:b925f0c7-d526-4c05-9db4-34a7f8a12135)
+
+$(ID:f2e526b3-bec0-4df8-95f9-1b3e993600f8)
+$(ID:70ad7a0d-71ed-4bbf-80e9-6fd693bed1b2)
+
+$(ID:fd7be251-a3df-4840-b0af-547bc365654a)
+$(ID:9e4ce801-3129-4ff9-aefa-c96860bf79b5)
+
+## $(ID:bc9bbb35-b046-4df7-a5f8-972d1e414d5a)
+
+$(ID:a1a797f5-ecc0-40d0-a9c7-1fe598bb50e5)
+### $(ID:917ddb41-4fd5-4218-8225-8c940258dd6f)
+
+$(ID:d0307f40-6135-4da2-b132-0f19cf8e4997)
+
+$(ID:72d5a29a-1581-402e-81b0-7a3bef5b74ea)
+$(ID:b093d5cb-05f1-4bce-bb2e-55c2ecab7b9b)
+$(ID:8d4e08c3-24e3-4548-bbdd-6d6c76ac8c2c)
+
+$(ID:85f232c2-7b02-469b-ae8f-395f81a8dd37)
+
+* $(ID:9d356eb9-0af1-4d20-a7c6-b168315f7496)
+* $(ID:3c4573a0-d872-4b58-86bd-da70af354571)
+
+$(ID:54d09e9f-c32f-4fdf-a874-f6c2202ac838)
+$(ID:5d3ff064-061d-4dbd-8223-8f85fb4e90e0)
+
+$(ID:26d11335-4247-4314-b19e-36790136a801)
+$(ID:aa3ee8ef-ce26-4ee8-8b1b-0465c2dc8855)
+
+### $(ID:0466d44f-784d-4cf0-97a7-04c3c6e574d3)
+
+$(ID:31cf722d-1825-4bf3-8648-df53b746dfe6)
+
+$(ID:5021f105-141d-4d53-b9fd-583b6a74b3bf)
+$(ID:3b3596de-0079-40da-ba29-a7724453e401)
+$(ID:4c619c4a-3486-4509-8b7b-6e99f8742dc8)
+$(ID:6f85e009-89b0-4c6f-ae8e-71fcfb32b075)
+
+$(ID:63333632-f38b-4c72-83c1-6e1a186683be)
+$(ID:17c2a63a-faab-4675-a93d-9d657d353639)
+$(ID:e21f8250-a977-4370-8e33-894f358280e4)
+$(ID:020016ab-ce93-4d35-bf87-96adf6059300)
+$(ID:801077a8-a831-4349-b8e5-cb755f60554c)
+$(ID:8bd3bf1d-ed40-4f69-957e-a4fb25639b14)
+
+#### $(ID:4d6602e9-d15f-4ee7-a9fb-90009724ae3a)
+
+$(ID:b8f7718e-324f-4438-84b0-0cc120f5bf2c)
+$(ID:6bbbce15-44b9-445c-9f8a-e3375ffb77ce)
+
+* $(ID:5e029aa3-0161-4f1b-8377-89de72a96786)
+* $(ID:07a99200-62a4-4aef-ae60-13d8d90b2774)
+* $(ID:614179aa-806f-47c4-8664-d9c795e7fa59)
+* $(ID:71df686e-ce2d-486f-b213-3327d0770280)
+* $(ID:8532ad8f-e4ae-4526-8bd5-23c4080ffc30)
+* $(ID:74d8e732-d2bd-4ce4-baf5-e07aba1e8097)
+* $(ID:82e438c4-791f-4482-b80f-81fa672cb009)
+* $(ID:c8b971ed-4d5c-4f66-9957-a69a3c1cf50a)
+* $(ID:a81f7b27-50b6-4657-ac17-e919340bc0ca)
+
+$(ID:3f62622a-aff9-4022-9036-81c5bc617c81)
+
+## $(ID:cb16e075-a408-4916-8e8a-bf281395f354)
+
+$(ID:96dfbf56-abf0-4309-955a-f5c667507956)
+### $(ID:56ce17b2-7ead-4775-a1a3-a5cdcc1de717)
+
+$(ID:18eae3b3-22d3-4ecc-80f7-be840a79028e)
+$(ID:3281840f-e1fb-464b-a999-64cb1d16a30f)
+$(ID:6775944b-3742-4b00-be88-f1f104247173)
+$(ID:cd6dba43-1c52-47fa-9b8b-8ab30fa4d7e8)
+
+$(ID:7a3c1136-6609-4ca8-8235-78d12fcb15e7)
+$(ID:b71ff57e-dfd3-4430-b4af-9b09a4eee73e)
+
+### $(ID:01a012d0-2966-4c4a-ac1d-2ea9367915bb)
+
+$(ID:c811f611-eded-4183-98a5-e005f4c74c56)
+$(ID:cd54b2a6-30e2-40af-a70a-775f74480c13)
+$(ID:84afbf6e-fc1c-47c9-a1aa-941b0798a111)
+$(ID:9569be66-9b5a-4df6-b9be-e3e8e55e37ce)
+
+$(ID:06e6c144-53cc-4a63-9d29-bbba4edb0d7a)
+$(ID:bd171856-5f07-48ab-80ea-7443dfd1ea80)
+
+$(ID:b0f9f62f-057f-4a5c-a4cd-4e662321bbc0)
+#### $(ID:6e4d44b0-7105-4790-ba73-e0f9746fa4cb)
+
+$(ID:a3184a3c-d5e4-4021-954e-e4b08354196a)
+
+* $(ID:374daf59-b71c-4d41-8598-d7f88f6af637)
+* $(ID:ed3a00d2-3a88-45a1-937e-f5564f143a6a)
+* $(ID:0ef84d0a-3f24-4103-b4fc-78d3f17d1ee3)
+* $(ID:c0a18d0d-7684-40e2-ba0f-d4514e38988b)
+* $(ID:17cb3d5c-58d0-4042-a9be-4c9205ebe58b)
+* $(ID:2486a59e-c118-4e1a-b110-1df8f929bcb0)
+* $(ID:c0ddb99b-abbd-4d2b-906e-f923985d145a)
+* $(ID:e2ea3967-00cc-428b-a06a-021897452ea0)
+* $(ID:bbe5c67a-c178-40e7-8f25-63c55951ffd1)
+* $(ID:c2b7005a-dd1a-4d7b-b5e0-c26488d209e9)
+* $(ID:4a6a8fb7-803c-4c31-a87b-21fa72b23d4c)
+
+$(ID:621ce5c8-8b17-4340-9f8e-90da3bc5ff3c)
+$(ID:58584187-2231-4866-a67e-aaf59cddb719)
+
+$(ID:58a89b00-a638-4e63-9c7a-1090f45fc4c7)
+$(ID:ef0b5370-7841-44eb-ab7e-bae1bf474529)
+
+* $(ID:170d4c97-4975-4def-92bc-6acd96b0bbda)
+$(ID:f4ba6bea-8aa9-473f-9d46-f5207f57bfc9)
+* $(ID:712dcd73-62f6-438d-bcfa-5a0110d4e1af)
+* $(ID:0b98e62b-dca9-4cbc-8c10-e6bc7ac7b33f)
+$(ID:4608cd52-5277-4ca3-a818-34a3ff06e300)
+
+$(ID:9253ecb4-9625-4d6e-af91-7321cb49e0bf)
+$(ID:8a1a26a6-512d-4e7c-b875-697f9a29aa44)
+$(ID:aace7e14-4ef1-49ec-96c7-46a26f4bbe58)
+
+#### $(ID:55e9b21a-5578-40f3-85e1-f923ca34efd1)
+
+$(ID:1cdd94d7-70ab-4c5d-8dc5-a811ce31fd6b)
+$(ID:3cdee677-886e-49d2-8638-56a7af5f6e03)
+$(ID:8d72dc0f-cca8-4fc7-8854-047fa9f6b64f)
+
+* $(ID:991d2fd8-0098-4667-b74c-e9b67dd008d5)
+$(ID:75a2cee2-d2d7-48f2-a546-ca1af7e3299b)
+$(ID:7ae362c8-3e8f-44ee-9462-0bfb3db4d87e)
+* $(ID:8e1b90f5-f6a5-480e-b3b8-46f7190f73f1)
+* $(ID:424247f1-4521-43aa-a4ff-dd95608d0a38)
+* $(ID:96f88ee5-11f4-465d-a2b4-ae6b04dfcbbe)
+
+$(ID:06ee9a73-e926-4719-ac3a-9b0bc53c7243)
+
+$(ID:40f873a1-6367-4b0e-816d-f160614bc642)
+#### $(ID:1bb4f346-852f-4673-92c9-f3c1ac921ad4)
+
+$(ID:6d4b1575-4840-4615-9915-ac9818ba9549)
+
+* $(ID:f9f54b63-1434-4a41-9dac-f6b09591ed4a)
+$(ID:a32300c8-509c-4529-b60c-9f2c374e8831)
+* $(ID:167cfbf8-cf98-4390-8f02-52b83b4259bf)
+$(ID:4a03d025-611a-49d7-8127-227919e10800)
+* $(ID:d48e20d1-a028-4784-b540-efa2acfed5d3)
+$(ID:89d6aae2-01a2-4af6-838f-9808d680c760)
+
+$(ID:993933cf-2f12-44d9-b429-a1b7bdaa983b)
+$(ID:edf71b6a-4900-4540-afcc-baa6a0697d39)
+
+$(ID:f1366209-60fd-4557-8129-101fa5794016)
+$(ID:2e0c87a3-17e6-4068-86cc-55f76afbb8fe)
+
+#### $(ID:5c393157-b805-48be-80b4-3fb9aa6ff15c)
+
+$(ID:bc52631c-1571-4032-a9a0-8c112dd50ca9)
+
+$(ID:ff78c39b-b5ea-4dbb-b834-7c7ee0732de2)
+$(ID:b41bcf3f-5b2b-4b0c-82e6-826cb4231b55)
+$(ID:6aa804ec-5c2a-42da-9658-794174903736)
+$(ID:30af72aa-0df6-4271-b426-a734a4eb7e4f)
+$(ID:1f09c070-70b9-488b-95e3-542fcc17091e)
+$(ID:76bb975a-28f6-4b43-aa17-53d6e494cbd7)
+$(ID:825ca7ff-c63a-4605-a39f-be1efdcc071b)
+$(ID:561ba502-1edf-4360-9b53-6eb262e51826)
+$(ID:cc99c6c5-072b-4f45-bd32-39abcc26986a)
+$(ID:b2ec74f4-9f92-4546-83c9-71ac6aee38a7)
+$(ID:78791eef-ce61-4023-9d69-597e2671d5fc)
+
+$(ID:2f34220b-451f-45e9-bd5a-3b54d74ed2bf)
+$(ID:d9c2003b-19a9-44e0-abc1-82c5eb2cce3e)
+$(ID:5aea5c08-bd9a-4009-abbe-ec05fff3c2ea)
+$(ID:669727a2-3b0f-408d-a179-10b962d4b11a)
+$(ID:63d72232-fd03-4287-ba1e-3a0c23f22360)
+
+$(ID:50a88338-30db-49f1-b61b-664d305b9573)
+$(ID:2073fb61-6768-4281-8a39-7e670dce6518)
+
+#### $(ID:8fa18b24-6b00-416f-a532-bfa6b61f8dc1)
+
+$(ID:6dbbef8d-d36d-45ee-ac81-391383cdfff8)
+
+## $(ID:6b04de26-ef82-4b2e-8ac7-2a144fe571d6)
+
+$(ID:cadcf695-3cf3-437b-9b48-27e7e85cbf84)
+$(ID:c880085f-a2e8-4b9e-b575-039c3224f66e)
+$(ID:dd986044-5ca5-45ab-a6ed-7ffc5832765f)
+
+$(ID:b85150a9-a8bc-4b05-b26e-9f33c9fff1f4)
+$(ID:0f5e6eb8-4ff2-41fd-bebc-7d5f9a59ce6c)
+$(ID:b4d714bc-0b3f-40f4-8e24-473d5ebbdff5)
+
+$(ID:0a80b501-264d-4d93-8d1c-7e89b0921d1c)
+$(ID:52069276-956a-477e-93a0-8f6ad1540e49)
+$(ID:46c1d0d5-f7c6-465b-b0db-00b0bb15f0c3)
+$(ID:bc39c689-dd30-4b9a-a258-d8486be496ff)
+
+$(ID:31659793-7f6a-4fb2-b86d-366cc3dfc1e7)
+## $(ID:0c561c38-e202-4f06-bf00-3f2c1fb0bfbe)
+
+$(ID:378bb031-bde7-4da1-97f1-3043818d3b5c)
+$(ID:0f01e556-3e6d-496e-b516-8c7a50d0b5c6)
+$(ID:bd96dee1-99a7-4382-b6da-e767a589f043)
+
+$(ID:718ff3ed-e2ee-4176-ba43-9c449c46fb48)
+$(ID:4b962851-6cdd-4e9d-ae85-950eff58ad93)
+$(ID:4d788d4b-37c6-4237-bf0e-2d40f685a453)
+
+* $(ID:857b89a9-c136-44a0-ab20-cd2b28b9ef0b)
+* $(ID:38baa3da-8c07-4f93-8a58-af8ae521dbc4)
+* $(ID:5a951a2b-cccf-4696-a226-e599838107e0)
+
+$(ID:25536094-577b-46f2-bc3d-089406e8041b)
+
+$(ID:a8241871-3c24-4734-a19d-c5e35e2a35e3)
+
+## $(ID:2203d285-e337-4826-ad58-59cfb17c0cad)
+
+$(ID:e738029e-e56a-4380-bdc5-273394713de9)
+### $(ID:1b2e3b5a-c71d-4d90-af68-6c717e1d7153)
+
+$(ID:62406fbf-1c03-4f30-b4b0-675bfa7c1665)
+$(ID:cc7b581f-8a7d-4fa0-9338-35b43e8d7a2c)
+
+$(ID:fd8d9324-304d-45d3-a9a2-3d13b3194ca5)
+$(ID:99fa1422-20b5-481f-8306-f26e7e37e932)
+
+$(ID:07d24f16-9fb0-4668-b19c-864055d5bfee)
+$(ID:be669b39-812a-443f-98d1-19312ed67f89)
+
+$(ID:22c2528a-d8e7-48f2-9bc3-00e955aaa61a)
+
+$(ID:174c5351-ee59-41df-8cd4-b6140748bfb9)
+
+* $(ID:e899eab1-68b0-469d-8747-9226d4fcbd2f)
+$(ID:99349fb7-5ee5-447c-84ee-7d9613391b7d)
+$(ID:e010c60f-464a-4b7f-b42f-ebaed0fe830a)
+$(ID:f2d56203-b2c2-4b92-ac55-a03ce2668445)
+* $(ID:2087da03-a02a-42a6-8ada-96ba345ab3cd)
+$(ID:f385553c-6e75-47c4-97aa-0c37bb9c9d84)
+* $(ID:1f318970-d596-4e17-bb99-fb12f245a70f)
+$(ID:00405d71-6c23-4658-abab-69a127cdf773)
+* $(ID:fd79d30d-16ef-4168-a480-374c7e37f0e2)
+$(ID:c85495d3-d5f8-443d-9fe3-69a7fbe5da42)
+* $(ID:15dfbd3f-0203-4ee7-820e-0d7e6c151bb4)
+$(ID:70c02dd0-ee35-4d5a-858b-55f00fcfba18)
+
+### $(ID:b2af69e9-fc6e-44df-a8af-b7a7ecdcdb31)
+
+$(ID:96145ed5-5de0-4ee6-bd9a-07a11fb89f47)
+
+$(ID:98e2eb2c-a4be-492a-8016-11da1b16bcb1)
+
+$(ID:4ec543e0-ece0-40f8-a3ea-0d9cd7a080fb)
+$(ID:d23d8db3-fdb2-4b04-9315-74c9504ac39b)
+$(ID:9a4387c8-c8a3-43bd-9c02-a380a69ffedb)
+$(ID:59c789b4-c48b-4920-b7fc-1e4e3e7db0e1)
+$(ID:21282316-0064-42f2-ad25-57b22b82d0e8)
+$(ID:a85ec2e7-c58b-4a26-a7a0-701d5c8261a2)
+
+$(ID:7e2b1479-be3a-4842-99da-4049338ba118)
+$(ID:39b3b900-07af-461a-bd7b-fb5ad8ad6d41)
+
+$(ID:fb89341e-c40d-4e8e-b81b-743b44dc4051)
+
+### $(ID:79e7b9e5-b74b-4fe7-99f9-c6730ecfa1cd)
+
+$(ID:f222aef9-9882-4877-95f6-bc26c04593e7)
+$(ID:de3c1e66-580a-426d-a702-1430480ec97f)
+$(ID:430df33f-2c8c-4329-85d1-eff682a42171)
+
+$(ID:be199f9d-35a6-4c02-9e11-04adc6e9a86f)
+## $(ID:a698986a-dbb0-46d8-89b8-0ee139bf2226)
+
+$(ID:cf5dc710-8290-41e2-bc73-2fa08629ab26)
+$(ID:0c2d28ea-a2dc-44a6-baea-8e0aac67a844)
+$(ID:25a96238-803c-44e6-8477-fbe387c9a4b3)
+$(ID:8cb91993-9d2e-4c89-a896-81534c2ba29c)
+
+$(ID:24892608-8a15-47ff-a993-3a1bb0b917c0)
+$(ID:0fc11149-be07-47ca-8017-e69a40738aad)
+$(ID:a3716508-cf17-46a7-a676-4b7f0793ae18)
+
+$(ID:5f4014b8-8446-434b-9127-4c4a3d04c938)
+$(ID:6664c651-67b3-4875-bbaf-a0cfb2dc779f)
+$(ID:57e268f1-d7ff-4275-922f-ec7b5095b5fb)
+$(ID:72d75c14-9794-483b-b8b9-592b6faa8db0)
+$(ID:d9e68b94-3e5a-4947-8283-796612054226)
+
+$(ID:6e64dd60-7db2-4636-b5bb-284e19731e3d)
+
+$(ID:54b20c36-00eb-4141-83fe-1e04f127e447)
+## $(ID:f1313f89-addb-41fc-ac14-8171139754cd)
+
+$(ID:f9a9a636-bc7f-41cf-99a2-d8684e1e0e6a)
+$(ID:d6cbc71c-b693-4588-b0d5-9601f54e37ae)
+$(ID:905f29a0-f19a-4a26-9978-f7e35d1e5f87)
+
+$(ID:71131e63-7ef8-4bdc-a4b5-462a2720dec8)
+
+* $(ID:b1225239-3d5c-49eb-8a1a-dcc2abbefcf0)
+* $(ID:eafd2124-c0b1-49ae-bb5c-6d466087dacb)
+
+$(ID:e2ecb0d4-6d53-4b72-8817-67e5071f93dc)
+
+$(ID:0df6cc07-75b9-44ec-a2cb-26af4195f19e)
+$(ID:199a6f02-97d9-481b-ad88-e6e01f2eb2db)
+
+$(ID:10eec62d-7aa0-4f5c-828e-df0755fb932c)
+
+$(ID:e47b0a95-34ed-4e13-bd7e-1084394792ea)
+$(ID:8e215902-adc6-4d6c-b746-556403dd2ff9)
+
+$(ID:6fc1d8d0-09af-4f79-a49c-ca76f4f0751d)
+
+$(ID:1ac403da-dabb-4c3f-80e0-4e9e192e17e3)
+
+$(ID:b78cd044-737e-46bc-b452-3d7eb37b7687)
+
+$(ID:88db8bcd-7ec6-4b0b-8ed8-5bc76c4ec273)
+$(ID:3a4382f8-d711-4ff6-a093-5a78fd74d511)
+
+$(ID:c1571a70-3c01-486b-96c7-a1640b28a031)
+$(ID:a763b18b-6add-49ed-bcc9-c9ffae654e9d)
+
+$(ID:f8593c2c-0afb-475c-8ec5-12c329c03d0b)
+$(ID:19991972-ccd1-43f0-9278-3d7a0e13a90e)
+
+$(ID:8ce82333-6c06-4ef2-a17f-1faa2266f7c8)
+$(ID:0b445f0f-3e0d-43e9-9bf1-f7a2e38f56d1)
+$(ID:151792b3-650b-4903-bcbe-55381376c012)
+
+$(ID:1f5e3cf9-9429-4748-a87b-bdda49c2ee2f)
+## $(ID:24d9d8e7-2c13-444b-8268-c54c68aa0b29)
+
+$(ID:1c0e5c4a-d8d2-4c23-8e53-950789513ed3)
+$(ID:d2c83c7d-9c55-4d9d-a265-370a6db8f5e7)
+$(ID:00ee2152-4396-4473-8dc0-50578736f1e2)
+$(ID:14230cd5-3722-4ad8-823b-90a3a7c783ef)
+
+$(ID:b70cf64e-272b-43f7-b00e-7f55eaaee136)
+
+$(ID:3fe08373-0682-4295-945a-7dfab0f603d7)
+### $(ID:2b082b74-4870-467d-99fe-359c1a7fc5d5)
+
+$(ID:abb3e300-e0d8-4f64-94f1-3ad1316ec8da)
+$(ID:f426c5e5-074f-46fc-af62-5ddf087ff145)
+
+$(ID:47b039cf-ee25-47dc-a4f7-2774dc152ee2)
+$(ID:37b899ce-2f3b-40da-a451-b824e0f2cae9)
+$(ID:884ca78e-9953-4c05-bf9b-8b96a161e08b)
+$(ID:b9847f04-e107-4fa7-a0a8-871ab1e9424d)
+$(ID:c89b71cc-c221-4760-8e00-bc473763f5f0)
+$(ID:afed91d7-7691-4e68-92df-104faad12e60)
+$(ID:08488e4a-ea12-456e-9172-923a48325e67)
+
+$(ID:86d58b94-a608-45bd-84a9-8b01bd9a43a4)
+### $(ID:91150ef6-0286-4490-ac08-47746f5652c5)
+
+$(ID:284d7c01-e016-4ab2-9ba4-81d9ae2b058a)
+$(ID:881bf5fc-dcb3-44d6-b941-660f5eda8a2e)
+$(ID:3996894c-512f-41bd-a892-c11a26a4d7f7)
+$(ID:7a3c8f72-6f55-4080-9aea-080d2743265e)
+$(ID:122e7b59-0a3f-4bd6-a341-f555879a3276)
+$(ID:6e60d402-bc0f-4238-a952-64ddcfe31ef9)
+
+$(ID:86f8c200-274e-4aac-8e68-27b8f0468114)
+
+$(ID:26f528bb-54d6-4d70-9a31-a8310e9d92b7)
+### $(ID:84a10ec7-8139-4366-ae78-82de3efafb1e)
+
+$(ID:9e115d68-bfce-4f92-9477-00a82054542e)
+$(ID:5bcc0a30-d118-40a8-84a3-644027ddd490)
+$(ID:2d6a78b3-fc2c-4ebf-a49b-f0f8046c4fec)
+
+$(ID:4adec43f-82f7-4e48-85c8-3f6af3793519)
+### $(ID:ad2caf9c-5ec4-4281-a077-22dad8b4b51c)
+
+$(ID:db725659-2a9f-4ed1-b16b-cde732642aac)
+
+$(ID:1f864125-66f9-44b1-b807-5105c2991dd2)
+### $(ID:bc72af99-e6af-417d-bfa3-9c97b7d2a810)
+
+$(ID:a66dd27c-5025-4c51-a125-9a20cd81602f)
+$(ID:82767b7b-05bd-46be-b193-995cc1118ee0)
+$(ID:a86bfc02-0ffa-46bf-9794-d026949449bb)
+
+$(ID:de181eee-496f-4bdc-b4e9-b6b8c64104a0)
+### $(ID:72002676-6773-49b1-b302-208113140843)
+
+$(ID:11ad65bc-e501-4a12-90e0-b6aa5d8c6aff)
+$(ID:a485dd6b-3320-4795-9b2c-5c9c0634e95d)
+
+$(ID:51f370eb-3594-4df5-a559-8e7507e1874e)
+$(ID:f2169b1a-0599-4025-bdcb-06f8ca396dd9)
+$(ID:13688c30-dabe-4fd9-9cf3-229761b56202)
+$(ID:482b09d3-e782-49e4-b3d0-1002433cfad7)
+
+$(ID:e9debac0-6b9c-422d-b85a-53dbacc60878)
+### $(ID:7f18c895-47b8-4e31-8138-fd126d148692)
+
+$(ID:34cbf984-063c-488a-9e62-8f4e3f99efb9)
+$(ID:97366df6-e613-4fe4-a2a4-5290b8da4b10)
+$(ID:7dbf51d7-991f-41fa-956f-ebb6beca75aa)
+
+## $(ID:de900122-d0cf-4cd4-8add-5cb6a9a44841)
+
+### $(ID:8b1d1d24-4a08-4923-b6fd-13444abe9fef)
+
+* $(ID:7884e3f6-e065-4bcf-962c-32cbb72ce038)
+* $(ID:a86d0b9b-ef48-48ff-8808-8ab97b680328)
+
+### $(ID:466a05ab-4ed9-48f4-a317-8a2367e2415c)
+
+* $(ID:6cc79b21-cc23-473d-ab51-6ebe1891d935)
+* $(ID:f874b866-2b07-4ee2-8e85-54ddf89a5d2a)
+* $(ID:345c60c5-0113-4497-a101-ed8778e63925)
+* $(ID:944f2c46-7adb-4e36-8675-083ff761cbad)
+* $(ID:45b3a527-a3f2-4c4e-a5cc-8079035fc079)
+
+### $(ID:e2d9df84-d292-4bc7-b610-3baa95b2f7ad)
+
+* $(ID:08bd88a4-bb15-474f-bc9d-7b062caf3aeb)
+* $(ID:3575eb07-f74a-463f-930b-b53ad9a1a6f2)
+* $(ID:2b46b6a2-f024-417b-bd44-a7167970303e)
+* $(ID:236df143-2cfb-44c7-a1c2-ceab42947e1a)
+* $(ID:4bade463-91e2-4915-a4f7-6535ec748513)
+* $(ID:03139d70-a7ee-446b-9285-c4eb1cad204b)
+* $(ID:0627b0f5-4021-4e81-bb31-5259c22b126a)
+
+### $(ID:aa30103d-e44a-476f-bab9-cebf8513de53)
+
+* $(ID:6148fb51-3434-419f-8751-041c028b6749)
+* $(ID:06c8d2d3-1493-44d4-a7df-f1a0f79e809e)
+* $(ID:0dfb1270-0358-4d62-9771-e13b17b3be17)
+* $(ID:a0ee8d85-82a3-410a-80d2-0f1c203e2ff7)
+* $(ID:57831031-ca43-48e4-bdaf-840e022b9ec3)
+* $(ID:6d5bf0ec-1082-4b19-b791-1dc77a155256)
+* $(ID:c124959e-18e9-48d7-8679-2f4b5cf36e36)
+* $(ID:22c52094-b8b5-4e31-b392-4f3353d18e28)
+* $(ID:a618e5ce-363b-4ae5-8a2e-2575a3ccebbe)
+* $(ID:4f9b888e-e0a7-485d-ad76-a3412bd3def3)
+* $(ID:e43a66b6-3244-4994-b873-54b21c652f6b)
+$(ID:18cbacc4-ec79-4fd5-a7b7-6c38becaad31)
+* $(ID:cb078995-4ebb-4f55-a8b7-fef36df826f6)
+* $(ID:99d60ab0-d625-4aad-83f2-c7980a18025a)
+* $(ID:ffc078a0-d358-43dc-9a4e-8e2371df9f7e)
+* $(ID:ebe78697-66ac-49c3-ae62-04d87b5aa261)
+
+### $(ID:a418bcbc-adc0-4fb1-9263-7d9bd77bab1f)
+
+* $(ID:d38846c6-d678-430e-92f6-c557699c9d93)
+
+### $(ID:2422c2e9-097c-4082-aef4-ffe3b93e08ab)
+
+* $(ID:2e62c262-498a-4998-ae15-3a79175e2f7f)
+
+### $(ID:6fb089aa-66ef-4595-8d40-9fb4eba0a3ac)
+
+* $(ID:9fba20af-7b91-422c-98eb-23f2b40d56b8)
+$(ID:74d2ae1f-d66b-4d39-aeaa-13cf45680124)
+* $(ID:9dbf5bae-e073-4f0a-b017-d899b55aa35e)
+* $(ID:8ee8e193-e3fb-4acb-8836-7330a5e3dcc3)
+* $(ID:a3ff971f-0e99-47ec-8a81-8e94d252874e)
+* $(ID:8867191e-53fe-4b9c-b97f-421f1286369c)
+* $(ID:be58ecf7-1306-461f-8ca1-c8f741bc3165)
+* $(ID:64425d84-3456-4dc0-b326-5c66abecddc3)
+
+### $(ID:2c50ec26-ec2b-4851-b602-f016048f0d99)
+
+* $(ID:b377361a-8313-4df5-839b-3754fc1c3343)
+
+### $(ID:d8d9983f-9daa-43f0-8fae-0e351d9fc0fd)
+
+* $(ID:ddfef7ff-2271-4eeb-aa11-dc1d39deba79)
+* $(ID:cbf1c067-78f4-4a1b-b875-fb2445f922dd)
+$(ID:3536c2c2-da56-42cf-9a06-c7198242df41)
+
+### $(ID:2f540cf0-75c8-44cc-aec6-d2e006fa4e27)
+
+* $(ID:fb58d84f-fa80-46c1-9c2d-c12457079dca)
+* $(ID:ae8a6f56-9cb6-49a1-a4ac-e545b60b6fe6)
+
+### $(ID:16c13da2-cc51-4168-ad0b-3fb820eb1297)
+
+* $(ID:2f287b50-55f0-43c8-b184-942cd450a19b)
+* $(ID:cc98c396-e214-454d-8ef4-7ae216ddb625)
+* $(ID:569dcd82-c838-4c37-9815-1d7665c5cb6d)
+* $(ID:89d56807-e646-4e1e-86e3-12345f052297)
+* $(ID:d2e9059b-1055-4dd5-846a-366de446aa99)
+
+### $(ID:33bb4601-aef5-4f7c-87c9-b51b9f8a2772)
+
+* $(ID:ca8bcb55-21cd-44e3-92f0-94e7aee51af7)
+* $(ID:855df6a3-cafd-475d-88f7-63809b8d6254)
+* $(ID:d4f1be80-647a-4903-b2b1-c0efdfab55db)
+* $(ID:87b58da3-bfec-42db-8c09-8fac61f39c34)
+$(ID:6d957e7e-29fd-4eb1-b0a5-9d45df78b2f1)
+* $(ID:adfadff1-f010-4275-ab82-d5b0c80d8b11)
+* $(ID:801c2316-5045-4913-a355-b030d086759b)
+* $(ID:1064c551-0701-4ebe-9bae-9d2ce989a2d3)
+
+### $(ID:df8bf683-e800-4b19-bb19-cdae988bc0fa)
+
+* $(ID:6b74ef00-b8bd-4ff2-9a15-8340bf4b557c)
+* $(ID:bffa4e72-af87-4c52-b950-8f71d909bc65)
+* $(ID:92930aca-4e83-4489-bfd2-446f80375df2)
+
+### $(ID:58a4d78d-d035-4ffe-bbc7-aa175dac5ee5)
+
+* $(ID:f7d6ab72-ae54-47e4-a56e-917a637bb886)
+* $(ID:734c8cea-598e-445d-987f-90a512ff4e59)
+
+### $(ID:ce94a987-5a25-43bd-a65d-fd5e225624e7)
+
+* $(ID:c209b3c7-8923-43de-bdae-755347637a0d)
+* $(ID:8e54ee6a-cda5-48cb-b4ea-3924f5ce1ad7)
+* $(ID:c7161b26-2502-4b7d-9646-e152087394c5)
+
+### $(ID:93b60390-74ab-4569-826d-ca8fc4eb6594)
+
+* $(ID:f521ac22-cc7b-4566-907a-9659d5c7aa81)
+
+### $(ID:a72168e6-3485-4d93-8f4b-fda0ac8b25a0)
+
+* $(ID:e4c8c65d-7255-469d-b9b3-f89fafe69c0a)
+
+### $(ID:4ec6727e-368c-43dd-8f9f-96ed2a2a8906)
+
+* $(ID:beac70c3-8af3-4262-b8a7-f8727e030da1)
+* $(ID:3484ab6f-5ba0-4cef-9311-51a84d83697f)
+* $(ID:0527643e-71ce-4d68-a387-c71a48944a13)
+* $(ID:e8d13f6e-0931-4781-bd9c-a13b5e58d95e)
+* $(ID:6e5aaece-7e84-493e-a10f-c5351fe2d6df)
+* $(ID:2d47ce86-83e7-4355-9d1d-77dc531c3e37)
+
+### $(ID:4c7d1bc5-db58-4d7e-8148-da82a838d19e)
+
+* $(ID:814dce86-2cad-4e43-a824-bd38e05d7d52)
+* $(ID:5372e248-5aca-426e-9e46-61d892c55f2c)
+* $(ID:9b27c3e9-73d9-4021-83b3-626c10dba37e)
+* $(ID:44a98056-1df0-4ffa-b675-85cf26ab3c9d)
+* $(ID:df31b60e-686b-4b59-b88c-042fa16cb022)
+
+### $(ID:8a50ff69-08a4-4a76-90bb-2182d83d9399)
+
+* $(ID:d17cec54-9202-40ec-af1b-d786fd44bb07)
+* $(ID:b88eeba7-93f6-42d8-96ce-43de9ad6a4ce)
+* $(ID:0bf7b062-ae94-42bd-a836-17e4e70efad8)
+* $(ID:f8e478f3-ebc8-4aaa-9d5f-f8f47dfa3224)
+* $(ID:cba9ec27-060d-423c-b7b9-eb8f9a11f529)
+* $(ID:b32630e6-8355-4edb-9873-729d8431e0f3)
+* $(ID:15b8c83b-be1c-4b8e-a557-ad0cb4d33e5a)
+* $(ID:75e55dd8-25ff-442d-9454-015343e871e6)
+
+### $(ID:bbb5035a-4bd8-4bd8-bce0-f1b391d2426a)
+
+* $(ID:b0b2a2d5-6426-4c59-8c19-55f543ff6c03)
+
+$(ID:503df863-ec3e-4b24-9dfe-1998f6de37ee)
+
+$(ID:79edae95-61a3-4227-8aa5-f63db872e99d)
+
+$(ID:74116cb6-99e4-4304-8457-9341376bd488)
+
+$(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
+
+</skeleton>
+<unit id="a315dad3-b9b7-4e63-b7c6-c5e3fd0883b4">
+<notes>
+<note appliesTo="source">line: 2</note>
+<note appliesTo="source">prefix: # </note>
+</notes>
+<segment>
+<source>NVDA Dev &amp; Test Toolbox</source>
+</segment>
+</unit>
+<unit id="26d9fdd7-3bb8-415b-94fc-2f7664f6fa03">
+<notes>
+<note appliesTo="source">line: 4</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Author: Cyrille Bougot</source>
+</segment>
+</unit>
+<unit id="f2838030-1d26-4dea-9be9-3016d7949c6a">
+<notes>
+<note appliesTo="source">line: 5</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>NVDA compatibility: 2019.2 and beyond</source>
+</segment>
+</unit>
+<unit id="7f051e4c-9ef9-41b1-bc9e-e2079338ed3f">
+<notes>
+<note appliesTo="source">line: 7</note>
+</notes>
+<segment>
+<source>NVDA Dev &amp; Test Toolbox provides tools for debugging and testing NVDA.</source>
+</segment>
+</unit>
+<unit id="5d640612-9b14-4784-93c4-1c787e7024e7">
+<notes>
+<note appliesTo="source">line: 8</note>
+</notes>
+<segment>
+<source>Its log tools make it easier to navigate and analyze logs, inspect errors and tracebacks, save log backups, and anonymize logs before sharing them.</source>
+</segment>
+</unit>
+<unit id="25e2c944-ade8-4bc4-a5ac-d80fe7229422">
+<notes>
+<note appliesTo="source">line: 9</note>
+</notes>
+<segment>
+<source>Specific function calls and markers can also be logged.</source>
+</segment>
+</unit>
+<unit id="9bc3f0fe-fd23-466e-a64b-3beb33795bbc">
+<notes>
+<note appliesTo="source">line: 10</note>
+</notes>
+<segment>
+<source>It is also possible to open the corresponding source code from a log items, console variables or even typing a command gesture.</source>
+</segment>
+</unit>
+<unit id="83fa13e9-659b-48e4-a300-baf3d2e6581e">
+<notes>
+<note appliesTo="source">line: 11</note>
+</notes>
+<segment>
+<source>The add-on also extends the Python console and provides utilities such as reverse translation of NVDA's interface strings and an enhanced restart dialog.</source>
+</segment>
+</unit>
+<unit id="c49eb2ba-60a9-42dd-92d5-d355dd48d6ab">
+<notes>
+<note appliesTo="source">line: 13</note>
+<note appliesTo="source">prefix: ## </note>
+</notes>
+<segment>
+<source>Features</source>
+</segment>
+</unit>
+<unit id="05c3d504-d489-42e7-b363-3c4fd8e5f8e7">
+<notes>
+<note appliesTo="source">line: 15</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>An enhanced restart dialog to specify some extra options when restarting NVDA.</source>
+</segment>
+</unit>
+<unit id="4cd8f9a9-2a47-44e0-9b81-3ebdc18522da">
+<notes>
+<note appliesTo="source">line: 16</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Various features related to logged errors.</source>
+</segment>
+</unit>
+<unit id="978eaf1a-663c-465e-96c2-5b9009d0dc27">
+<notes>
+<note appliesTo="source">line: 17</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>An object property explorer.</source>
+</segment>
+</unit>
+<unit id="dbd2866b-bf4e-4e21-81c6-258450031694">
+<notes>
+<note appliesTo="source">line: 18</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Script and source code tools: an extended script description mode and source code opening commands.</source>
+</segment>
+</unit>
+<unit id="a58f19a3-71e5-4510-81ee-f59cfd637622">
+<notes>
+<note appliesTo="source">line: 19</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Commands to help log reading and analyzing.</source>
+</segment>
+</unit>
+<unit id="61088d60-07c4-49bd-bb51-235e016e0529">
+<notes>
+<note appliesTo="source">line: 20</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Backups of old logs</source>
+</segment>
+</unit>
+<unit id="ba0cc94b-b14e-4685-a37f-320992849d00">
+<notes>
+<note appliesTo="source">line: 21</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>A command to anonymize a log</source>
+</segment>
+</unit>
+<unit id="25c9794e-07f4-45ae-9b18-c323e74703ab">
+<notes>
+<note appliesTo="source">line: 22</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Python console enhancements such as a custom startup script and the possibility to preserve input history in memory after NVDA restarts.</source>
+</segment>
+</unit>
+<unit id="7ce22827-b24c-4804-be8e-0969782749cd">
+<notes>
+<note appliesTo="source">line: 23</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>In the Python console workspace, a function to open the source code of an object.</source>
+</segment>
+</unit>
+<unit id="18261ab6-89cb-417f-9ebf-4a3e2865608a">
+<notes>
+<note appliesTo="source">line: 24</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>A command to log the calls of a specific function (e.g. speech.speech.speak`), including its stack trace.</source>
+</segment>
+</unit>
+<unit id="e244fc59-92bf-4bae-8114-c33c2e87971e">
+<notes>
+<note appliesTo="source">line: 25</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>A command to reverse translate the items of the interface.</source>
+</segment>
+</unit>
+<unit id="e29b2a6e-d70d-4ff6-9cb3-61239a7f2d19">
+<notes>
+<note appliesTo="source">line: 27</note>
+<note appliesTo="source">prefix: ## </note>
+</notes>
+<segment>
+<source>Commands</source>
+</segment>
+</unit>
+<unit id="a8f24e18-51cc-4553-9550-26b33f907610">
+<notes>
+<note appliesTo="source">line: 29</note>
+</notes>
+<segment>
+<source>This add-on uses layered commands for all of the new commands it adds.</source>
+</segment>
+</unit>
+<unit id="59707ef1-d7af-4d8f-80f5-9cdfdf403f46">
+<notes>
+<note appliesTo="source">line: 30</note>
+</notes>
+<segment>
+<source>The entry point for these commands is `NVDA+Z`; therfore all the commands should be executed by `NVDA+Z` followed by another single letter or gesture.</source>
+</segment>
+</unit>
+<unit id="9b845a46-78b6-4358-8e33-b9dbba3818d1">
+<notes>
+<note appliesTo="source">line: 31</note>
+</notes>
+<segment>
+<source>If needed, you may modify it in the Input gestures dialog.</source>
+</segment>
+</unit>
+<unit id="ca85f291-e04c-4d12-aa37-d18485d6dc3d">
+<notes>
+<note appliesTo="source">line: 33</note>
+</notes>
+<segment>
+<source>In the rest of this documentation, we will refer to this gesture as `NDTTGesture`.</source>
+</segment>
+</unit>
+<unit id="980368c0-12bc-4c5b-9f46-bf01b02940fc">
+<notes>
+<note appliesTo="source">line: 34</note>
+</notes>
+<segment>
+<source>So, for example, `NDTTGesture, S` means `NVDA+Z, S`, unless you have modified the default gesture.</source>
+</segment>
+</unit>
+<unit id="6a78f501-a013-4672-9a77-294bf723c54b">
+<notes>
+<note appliesTo="source">line: 36</note>
+</notes>
+<segment>
+<source>You can list all the available layered commands pressing `NDTTGesture, H`.</source>
+</segment>
+</unit>
+<unit id="a325b3a6-0c5b-42a6-8762-cc670419584d">
+<notes>
+<note appliesTo="source">line: 38</note>
+</notes>
+<segment>
+<source>For the commands that you use more frequently, you can also define a direct gesture in the input gesture dialog.</source>
+</segment>
+</unit>
+<unit id="f2862eeb-c79d-4ffa-8737-780a2e7803f4">
+<notes>
+<note appliesTo="source">line: 40</note>
+<note appliesTo="source">prefix: ## </note>
+</notes>
+<segment>
+<source>Enhanced restart dialog</source>
+</segment>
+</unit>
+<unit id="713a57f2-521a-4645-8a37-5bb365495fa5">
+<notes>
+<note appliesTo="source">line: 42</note>
+</notes>
+<segment>
+<source>The `NDTTGesture, Q` command opens a dialog to specify some extra options before restarting NVDA.</source>
+</segment>
+</unit>
+<unit id="d3d78c37-dfb4-424d-b85b-f10a74cd161f">
+<notes>
+<note appliesTo="source">line: 43</note>
+</notes>
+<segment>
+<source>The options that can be specified correspond to the [command line options][2] that can be used with `nvda.exe`, e.g. `-c` for config path, `--disable-addons` to disable add-ons, etc.</source>
+</segment>
+</unit>
+<unit id="99fe49bd-8de4-4885-9198-948015359ee5">
+<notes>
+<note appliesTo="source">line: 45</note>
+<note appliesTo="source">prefix: ## </note>
+</notes>
+<segment>
+<source>Features related to logged errors</source>
+</segment>
+</unit>
+<unit id="0e274f37-b6b3-4765-9d3f-3efc4d233224">
+<notes>
+<note appliesTo="source">line: 47</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Report last logged error</source>
+</segment>
+</unit>
+<unit id="da7b79d6-0fa1-4312-86b2-e1c89a71c388">
+<notes>
+<note appliesTo="source">line: 49</note>
+</notes>
+<segment>
+<source>Pressing `NDTTGesture, E` allows to report the last error logged without needing to open the log.</source>
+</segment>
+</unit>
+<unit id="8fee6fb7-ec22-41ca-a6b2-ed41851fcf3c">
+<notes>
+<note appliesTo="source">line: 50</note>
+</notes>
+<segment>
+<source>A second press clears the memorized last error.</source>
+</segment>
+</unit>
+<unit id="2fc12580-bfa9-490c-9769-95cec7fbe061">
+<notes>
+<note appliesTo="source">line: 52</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Play a sound for logged errors</source>
+</segment>
+</unit>
+<unit id="be70e95c-6163-4263-814c-c51efe82edcd">
+<notes>
+<note appliesTo="source">line: 54</note>
+</notes>
+<segment>
+<source>The ["Play a sound for logged errors" setting][4] has been introduced in NVDA 2021.3 and allows to specify if NVDA will play an error sound in case an error is logged.</source>
+</segment>
+</unit>
+<unit id="b09ed502-ecc1-4f73-8bb6-d4a854f0370e">
+<notes>
+<note appliesTo="source">line: 56</note>
+</notes>
+<segment>
+<source>This add-on provides an additional command (`NDTTGesture, shift+E`) to toggle this setting.</source>
+</segment>
+</unit>
+<unit id="737853d5-0328-46f5-9d17-a9ae44d8063e">
+<notes>
+<note appliesTo="source">line: 57</note>
+</notes>
+<segment>
+<source>You can choose:</source>
+</segment>
+</unit>
+<unit id="c6bf375d-91a7-4b1b-a2c7-65a86970e94d">
+<notes>
+<note appliesTo="source">line: 59</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>"Only in test versions" (default) to make NVDA play error sounds only if the current NVDA version is a test version (alpha, beta or run from source).</source>
+</segment>
+</unit>
+<unit id="1b45bdbc-4bce-46b8-99ba-4ea856ff7a59">
+<notes>
+<note appliesTo="source">line: 60</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>"Yes" to enable error sounds no matter your current NVDA version.</source>
+</segment>
+</unit>
+<unit id="3df47228-6ec8-49ad-a3cb-9e3e118efc58">
+<notes>
+<note appliesTo="source">line: 61</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>"No" to disable error sounds no matter your current NVDA version, only available in recent NVDA versions.</source>
+</segment>
+</unit>
+<unit id="5daffe8b-4cb5-4a1b-b169-19a1d53ec69b">
+<notes>
+<note appliesTo="source">line: 63</note>
+</notes>
+<segment>
+<source>For NVDA prior to 2021.3, this add-on provides the backport of this feature and the possibility to control it with the keyboard command.</source>
+</segment>
+</unit>
+<unit id="1195c983-2a86-4012-80bd-1ddef9d252a7">
+<notes>
+<note appliesTo="source">line: 64</note>
+</notes>
+<segment>
+<source>The combobox in the Advanced settings panel is not backported however.</source>
+</segment>
+</unit>
+<unit id="c5f71743-18ba-4b72-8a40-b9d9b5f49fef">
+<notes>
+<note appliesTo="source">line: 65</note>
+</notes>
+<segment>
+<source>The possibility to disable error sounds for any NVDA version is not backported either for versions earlier to 2026.2.</source>
+</segment>
+</unit>
+<unit id="e4c29cb6-c91a-4596-80e0-40b2c9f6a731">
+<notes>
+<note appliesTo="source">line: 67</note>
+<note appliesTo="source">prefix: ## </note>
+</notes>
+<segment>
+<source>Object property explorer</source>
+</segment>
+</unit>
+<unit id="65a60ea8-4dc8-4595-9546-5d70bf0e3d53">
+<notes>
+<note appliesTo="source">line: 69</note>
+</notes>
+<segment>
+<source>This feature allows to report some properties of the current navigator object without opening the log viewer.</source>
+</segment>
+</unit>
+<unit id="8fa91c3c-e7a5-4223-8e88-3f9ea0cb02f4">
+<notes>
+<note appliesTo="source">line: 71</note>
+</notes>
+<segment>
+<source>To list the properties of an object, move the navigator object to it and use the following commands:</source>
+</segment>
+</unit>
+<unit id="d1d84589-1f75-41ed-8e30-fe29c1f6280b">
+<notes>
+<note appliesTo="source">line: 73</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>`NDTTGesture, upArrow`: Selects the previous property and reports it for the navigator object.</source>
+</segment>
+</unit>
+<unit id="d95bcc8a-a4a5-471a-a2c9-0050ab28d867">
+<notes>
+<note appliesTo="source">line: 74</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>`NDTTGesture, downArrow`: Selects the next property and reports it for the navigator object.</source>
+</segment>
+</unit>
+<unit id="c0e95c5c-2d1e-4adc-812e-1400d53ec783">
+<notes>
+<note appliesTo="source">line: 75</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>`NDTTGesture, N`: Reports the currently selected property for the navigator object</source>
+</segment>
+</unit>
+<unit id="18d875c2-a6c5-4358-ad3c-69d5267abb4b">
+<notes>
+<note appliesTo="source">line: 76</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>`NDTTGesture, shift+N`: Displays the currently selected property for the navigator object in a browseable message</source>
+</segment>
+</unit>
+<unit id="63de9d47-2bcb-4dd4-95a8-6f1a4f9c2f59">
+<notes>
+<note appliesTo="source">line: 78</note>
+</notes>
+<segment>
+<source>The list of the supported properties is the following:</source>
+</segment>
+</unit>
+<unit id="b925f0c7-d526-4c05-9db4-34a7f8a12135">
+<notes>
+<note appliesTo="source">line: 79</note>
+</notes>
+<segment>
+<source>name, role, state, value, windowClassName, windowControlID, windowHandle, location, Python class, Python class mro.</source>
+</segment>
+</unit>
+<unit id="f2e526b3-bec0-4df8-95f9-1b3e993600f8">
+<notes>
+<note appliesTo="source">line: 81</note>
+</notes>
+<segment>
+<source>When using object navigation commands, you can also choose to have the currently selected property reported instead of NVDA usual object reporting.</source>
+</segment>
+</unit>
+<unit id="70ad7a0d-71ed-4bbf-80e9-6fd693bed1b2">
+<notes>
+<note appliesTo="source">line: 82</note>
+</notes>
+<segment>
+<source>A toggle command, `NDTTGesture, control+N`, allows to switch between this custom reporting of objects and NVDA usual reporting.</source>
+</segment>
+</unit>
+<unit id="fd7be251-a3df-4840-b0af-547bc365654a">
+<notes>
+<note appliesTo="source">line: 84</note>
+</notes>
+<segment>
+<source>For exemple, you may select "windowClassName" property and enable custom object reporting.</source>
+</segment>
+</unit>
+<unit id="9e4ce801-3129-4ff9-aefa-c96860bf79b5">
+<notes>
+<note appliesTo="source">line: 85</note>
+</notes>
+<segment>
+<source>Then when moving the navigator object to next or previous object, you will hear the object's windowClassName instead of usual reporting.</source>
+</segment>
+</unit>
+<unit id="bc9bbb35-b046-4df7-a5f8-972d1e414d5a">
+<notes>
+<note appliesTo="source">line: 87</note>
+<note appliesTo="source">prefix: ## </note>
+</notes>
+<segment>
+<source>Script and source code tools</source>
+</segment>
+</unit>
+<unit id="a1a797f5-ecc0-40d0-a9c7-1fe598bb50e5">
+<notes>
+<note appliesTo="source">line: 89</note>
+</notes>
+<segment>
+<source>&lt;a id="sourceCodeOpeningCommands"&gt;&lt;/a&gt;</source>
+</segment>
+</unit>
+<unit id="917ddb41-4fd5-4218-8225-8c940258dd6f">
+<notes>
+<note appliesTo="source">line: 90</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>The source code opening commands</source>
+</segment>
+</unit>
+<unit id="d0307f40-6135-4da2-b132-0f19cf8e4997">
+<notes>
+<note appliesTo="source">line: 92</note>
+</notes>
+<segment>
+<source>The add-on provides three commands allowing to open source code.</source>
+</segment>
+</unit>
+<unit id="72d5a29a-1581-402e-81b0-7a3bef5b74ea">
+<notes>
+<note appliesTo="source">line: 94</note>
+</notes>
+<segment>
+<source>The first command allows to open the source code of a script knowing its gesture.</source>
+</segment>
+</unit>
+<unit id="b093d5cb-05f1-4bce-bb2e-55c2ecab7b9b">
+<notes>
+<note appliesTo="source">line: 95</note>
+</notes>
+<segment>
+<source>To use it press `NDTTGesture, C` and then the gesture of the script which you want to see the code of.</source>
+</segment>
+</unit>
+<unit id="8d4e08c3-24e3-4548-bbdd-6d6c76ac8c2c">
+<notes>
+<note appliesTo="source">line: 96</note>
+</notes>
+<segment>
+<source>For example to see the code of the script that reports the title of the foreground window, press `NDTTGesture, C` and then `NVDA+T`.</source>
+</segment>
+</unit>
+<unit id="85f232c2-7b02-469b-ae8f-395f81a8dd37">
+<notes>
+<note appliesTo="source">line: 98</note>
+</notes>
+<segment>
+<source>The two other commands allow to open the source code from its path:</source>
+</segment>
+</unit>
+<unit id="9d356eb9-0af1-4d20-a7c6-b168315f7496">
+<notes>
+<note appliesTo="source">line: 100</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>`NDTTGesture, shift+C`, opens the source code whose path is located under the system caret.</source>
+</segment>
+</unit>
+<unit id="3c4573a0-d872-4b58-86bd-da70af354571">
+<notes>
+<note appliesTo="source">line: 101</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>`NDTTGesture, control+C`, opens the source code whose path is located under the review cursor.</source>
+</segment>
+</unit>
+<unit id="54d09e9f-c32f-4fdf-a874-f6c2202ac838">
+<notes>
+<note appliesTo="source">line: 103</note>
+</notes>
+<segment>
+<source>E.g. if the caret or the review cursor is located on the following line, the command will open the corresponding file in your editor:</source>
+</segment>
+</unit>
+<unit id="5d3ff064-061d-4dbd-8223-8f85fb4e90e0">
+<notes>
+<note appliesTo="source">line: 104</note>
+</notes>
+<segment>
+<source>`C:\Users\username\AppData\Roaming\nvda\addons\addonName\globalPlugins\addonName\__init__.py:48`</source>
+</segment>
+</unit>
+<unit id="26d11335-4247-4314-b19e-36790136a801">
+<notes>
+<note appliesTo="source">line: 106</note>
+</notes>
+<segment>
+<source>To use those commands, you need to have configured your [favorite editor's command](#settingsOpenCommand) in the add-on's settings.</source>
+</segment>
+</unit>
+<unit id="aa3ee8ef-ce26-4ee8-8b1b-0465c2dc8855">
+<notes>
+<note appliesTo="source">line: 107</note>
+</notes>
+<segment>
+<source>If you are not running NVDA from source, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.</source>
+</segment>
+</unit>
+<unit id="0466d44f-784d-4cf0-97a7-04c3c6e574d3">
+<notes>
+<note appliesTo="source">line: 109</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Extended script description mode</source>
+</segment>
+</unit>
+<unit id="31cf722d-1825-4bf3-8648-df53b746dfe6">
+<notes>
+<note appliesTo="source">line: 111</note>
+</notes>
+<segment>
+<source>The extended script description mode allows to have reported information on scripts without description in input help mode.</source>
+</segment>
+</unit>
+<unit id="5021f105-141d-4d53-b9fd-583b6a74b3bf">
+<notes>
+<note appliesTo="source">line: 113</note>
+</notes>
+<segment>
+<source>When the Extended script description mode is active, the input help mode (NVDA+1) is modified as follows.</source>
+</segment>
+</unit>
+<unit id="3b3596de-0079-40da-ba29-a7724453e401">
+<notes>
+<note appliesTo="source">line: 114</note>
+</notes>
+<segment>
+<source>If a script has no description, the script's name and class are reported.</source>
+</segment>
+</unit>
+<unit id="4c619c4a-3486-4509-8b7b-6e99f8742dc8">
+<notes>
+<note appliesTo="source">line: 115</note>
+</notes>
+<segment>
+<source>If a script has a description, its description is reported as usual.</source>
+</segment>
+</unit>
+<unit id="6f85e009-89b0-4c6f-ae8e-71fcfb32b075">
+<notes>
+<note appliesTo="source">line: 116</note>
+</notes>
+<segment>
+<source>The gesture to activate or deactivate this feature is `NDTTGesture, D`.</source>
+</segment>
+</unit>
+<unit id="63333632-f38b-4c72-83c1-6e1a186683be">
+<notes>
+<note appliesTo="source">line: 118</note>
+</notes>
+<segment>
+<source>Executing a gesture bound to a script without description in input help mode also create an entry for this script in the gesture management dialog.</source>
+</segment>
+</unit>
+<unit id="17c2a63a-faab-4675-a93d-9d657d353639">
+<notes>
+<note appliesTo="source">line: 119</note>
+</notes>
+<segment>
+<source>This entry is located in a dedicated category called "Scripts without description (modify at your own risk!)".</source>
+</segment>
+</unit>
+<unit id="e21f8250-a977-4370-8e33-894f358280e4">
+<notes>
+<note appliesTo="source">line: 120</note>
+</notes>
+<segment>
+<source>This allow to easily add, delete or change the native NVDA gestures for these script.</source>
+</segment>
+</unit>
+<unit id="020016ab-ce93-4d35-bf87-96adf6059300">
+<notes>
+<note appliesTo="source">line: 121</note>
+</notes>
+<segment>
+<source>Be aware however that it is often intended that such script do not have any description to prevent the user to modify the associated gesture.</source>
+</segment>
+</unit>
+<unit id="801077a8-a831-4349-b8e5-cb755f60554c">
+<notes>
+<note appliesTo="source">line: 122</note>
+</notes>
+<segment>
+<source>Indeed, the gesture may be defined to match an application shortcut key.</source>
+</segment>
+</unit>
+<unit id="8bd3bf1d-ed40-4f69-957e-a4fb25639b14">
+<notes>
+<note appliesTo="source">line: 123</note>
+</notes>
+<segment>
+<source>For example the script script_toggleItalic on NVDAObjects.window.winword.WordDocument is bound to control+I and this should not be modified since the gesture is passed to the application to actually execute the shortcut key.</source>
+</segment>
+</unit>
+<unit id="4d6602e9-d15f-4ee7-a9fb-90009724ae3a">
+<notes>
+<note appliesTo="source">line: 125</note>
+<note appliesTo="source">prefix: #### </note>
+</notes>
+<segment>
+<source>Usage example</source>
+</segment>
+</unit>
+<unit id="b8f7718e-324f-4438-84b0-0cc120f5bf2c">
+<notes>
+<note appliesTo="source">line: 127</note>
+</notes>
+<segment>
+<source>Control+shift+I also toggle italic in Word, even if it is not natively reported by NVDA.</source>
+</segment>
+</unit>
+<unit id="6bbbce15-44b9-445c-9f8a-e3375ffb77ce">
+<notes>
+<note appliesTo="source">line: 128</note>
+</notes>
+<segment>
+<source>To have the control+shift+I result reported by NVDA as control+I, you should perform the following steps:</source>
+</segment>
+</unit>
+<unit id="5e029aa3-0161-4f1b-8377-89de72a96786">
+<notes>
+<note appliesTo="source">line: 130</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Open a Word document.</source>
+</segment>
+</unit>
+<unit id="07a99200-62a4-4aef-ae60-13d8d90b2774">
+<notes>
+<note appliesTo="source">line: 131</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Enable the extended script description mode with `NDTTGesture, D`.</source>
+</segment>
+</unit>
+<unit id="614179aa-806f-47c4-8664-d9c795e7fa59">
+<notes>
+<note appliesTo="source">line: 132</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Enter input help mode with NVDA+1.</source>
+</segment>
+</unit>
+<unit id="71df686e-ce2d-486f-b213-3327d0770280">
+<notes>
+<note appliesTo="source">line: 133</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Press control+I to report the italic script and have it added in the gesture dialog.</source>
+</segment>
+</unit>
+<unit id="8532ad8f-e4ae-4526-8bd5-23c4080ffc30">
+<notes>
+<note appliesTo="source">line: 134</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Exit input help mode with NVDA+1.</source>
+</segment>
+</unit>
+<unit id="74d8e732-d2bd-4ce4-baf5-e07aba1e8097">
+<notes>
+<note appliesTo="source">line: 135</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Open the input gestures dialog.</source>
+</segment>
+</unit>
+<unit id="82e438c4-791f-4482-b80f-81fa672cb009">
+<notes>
+<note appliesTo="source">line: 136</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>In the category "Scripts without description (modify at your own risk!)", select the command "toggleItalic on NVDAObjects.window.winword.WordDocument".</source>
+</segment>
+</unit>
+<unit id="c8b971ed-4d5c-4f66-9957-a69a3c1cf50a">
+<notes>
+<note appliesTo="source">line: 137</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Add the control+shift+I shortcut and validate.</source>
+</segment>
+</unit>
+<unit id="a81f7b27-50b6-4657-ac17-e919340bc0ca">
+<notes>
+<note appliesTo="source">line: 138</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>If you want, exit the extended script description mode with `NDTTGesture, D`.</source>
+</segment>
+</unit>
+<unit id="3f62622a-aff9-4022-9036-81c5bc617c81">
+<notes>
+<note appliesTo="source">line: 140</note>
+</notes>
+<segment>
+<source>Known bug: A script added for a specific class is visible even if gesture manager is opened in another context.</source>
+</segment>
+</unit>
+<unit id="cb16e075-a408-4916-8e8a-bf281395f354">
+<notes>
+<note appliesTo="source">line: 142</note>
+<note appliesTo="source">prefix: ## </note>
+</notes>
+<segment>
+<source>Log reading and analyzing features</source>
+</segment>
+</unit>
+<unit id="96dfbf56-abf0-4309-955a-f5c667507956">
+<notes>
+<note appliesTo="source">line: 144</note>
+</notes>
+<segment>
+<source>&lt;a id="logPlaceMarkers"&gt;&lt;/a&gt;</source>
+</segment>
+</unit>
+<unit id="56ce17b2-7ead-4775-a1a3-a5cdcc1de717">
+<notes>
+<note appliesTo="source">line: 145</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Place markers in the log</source>
+</segment>
+</unit>
+<unit id="18eae3b3-22d3-4ecc-80f7-be840a79028e">
+<notes>
+<note appliesTo="source">line: 147</note>
+</notes>
+<segment>
+<source>While testing or working, you may want to mark a specific moment in the log, so that you can turn to it easily later when reading the log.</source>
+</segment>
+</unit>
+<unit id="3281840f-e1fb-464b-a999-64cb1d16a30f">
+<notes>
+<note appliesTo="source">line: 148</note>
+</notes>
+<segment>
+<source>To add a marker message in the log, press `NDTTGesture, K`.</source>
+</segment>
+</unit>
+<unit id="6775944b-3742-4b00-be88-f1f104247173">
+<notes>
+<note appliesTo="source">line: 149</note>
+</notes>
+<segment>
+<source>A message as follows will be logged at INFO level:</source>
+</segment>
+</unit>
+<unit id="cd6dba43-1c52-47fa-9b8b-8ab30fa4d7e8">
+<notes>
+<note appliesTo="source">line: 150</note>
+</notes>
+<segment>
+<source>`-- NDTT marker 0 --`</source>
+</segment>
+</unit>
+<unit id="7a3c1136-6609-4ca8-8235-78d12fcb15e7">
+<notes>
+<note appliesTo="source">line: 152</note>
+</notes>
+<segment>
+<source>You can add as many markers as you want in the log.</source>
+</segment>
+</unit>
+<unit id="b71ff57e-dfd3-4430-b4af-9b09a4eee73e">
+<notes>
+<note appliesTo="source">line: 153</note>
+</notes>
+<segment>
+<source>The marker's number will be incremented each time you place a marker in the log; it will only be reset when NVDA is restarted.</source>
+</segment>
+</unit>
+<unit id="01a012d0-2966-4c4a-ac1d-2ea9367915bb">
+<notes>
+<note appliesTo="source">line: 155</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Log reader mode</source>
+</segment>
+</unit>
+<unit id="c811f611-eded-4183-98a5-e005f4c74c56">
+<notes>
+<note appliesTo="source">line: 157</note>
+</notes>
+<segment>
+<source>A log reader mode provides commands to ease log reading and analyzing.</source>
+</segment>
+</unit>
+<unit id="cd54b2a6-30e2-40af-a70a-775f74480c13">
+<notes>
+<note appliesTo="source">line: 158</note>
+</notes>
+<segment>
+<source>In the log viewer window and in the Pyton console output area, the log reader is enabled by default, thus log reading commands are available immediately.</source>
+</segment>
+</unit>
+<unit id="84afbf6e-fc1c-47c9-a1aa-941b0798a111">
+<notes>
+<note appliesTo="source">line: 159</note>
+</notes>
+<segment>
+<source>In another text reading area such as an editor (e.g. Notepad++) or a webpage (e.g. GitHub issue), you need to press `NDTTGesture, L` to enable log reader mode and use its commands.</source>
+</segment>
+</unit>
+<unit id="9569be66-9b5a-4df6-b9be-e3e8e55e37ce">
+<notes>
+<note appliesTo="source">line: 160</note>
+</notes>
+<segment>
+<source>When you are done with log reading and analyzing tasks, you can disable again `NDTTGesture, L` to disable the log reader mode.</source>
+</segment>
+</unit>
+<unit id="06e6c144-53cc-4a63-9d29-bbba4edb0d7a">
+<notes>
+<note appliesTo="source">line: 162</note>
+</notes>
+<segment>
+<source>The commands available in log reader mode are described hereafter.</source>
+</segment>
+</unit>
+<unit id="bd171856-5f07-48ab-80ea-7443dfd1ea80">
+<notes>
+<note appliesTo="source">line: 163</note>
+</notes>
+<segment>
+<source>In this mode, you can also press `control+H` to display all the commands available.</source>
+</segment>
+</unit>
+<unit id="b0f9f62f-057f-4a5c-a4cd-4e662321bbc0">
+<notes>
+<note appliesTo="source">line: 165</note>
+</notes>
+<segment>
+<source>&lt;a id="logReaderQuickNavigationCommands"&gt;&lt;/a&gt;</source>
+</segment>
+</unit>
+<unit id="6e4d44b0-7105-4790-ba73-e0f9746fa4cb">
+<notes>
+<note appliesTo="source">line: 166</note>
+<note appliesTo="source">prefix: #### </note>
+</notes>
+<segment>
+<source>Quick navigation commands</source>
+</segment>
+</unit>
+<unit id="a3184a3c-d5e4-4021-954e-e4b08354196a">
+<notes>
+<note appliesTo="source">line: 168</note>
+</notes>
+<segment>
+<source>Single letter command similar to browse mode quick navigation keys allow to move to various type of log messages:</source>
+</segment>
+</unit>
+<unit id="374daf59-b71c-4d41-8598-d7f88f6af637">
+<notes>
+<note appliesTo="source">line: 170</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>m: any message</source>
+</segment>
+</unit>
+<unit id="ed3a00d2-3a88-45a1-937e-f5564f143a6a">
+<notes>
+<note appliesTo="source">line: 171</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>e: error messages (`ERROR` and `CRITICAL`)</source>
+</segment>
+</unit>
+<unit id="0ef84d0a-3f24-4103-b4fc-78d3f17d1ee3">
+<notes>
+<note appliesTo="source">line: 172</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>w: warning messages (`WARNING`)</source>
+</segment>
+</unit>
+<unit id="c0a18d0d-7684-40e2-ba0f-d4514e38988b">
+<notes>
+<note appliesTo="source">line: 173</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>f: info messages (`INFO`)</source>
+</segment>
+</unit>
+<unit id="17cb3d5c-58d0-4042-a9be-4c9205ebe58b">
+<notes>
+<note appliesTo="source">line: 174</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>k: markers previously [placed in the log](#logPlaceMarkers)</source>
+</segment>
+</unit>
+<unit id="2486a59e-c118-4e1a-b110-1df8f929bcb0">
+<notes>
+<note appliesTo="source">line: 175</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>g: debug warning messages (`DEBUGWARNING`)</source>
+</segment>
+</unit>
+<unit id="c0ddb99b-abbd-4d2b-906e-f923985d145a">
+<notes>
+<note appliesTo="source">line: 176</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>i: input/output messages (`IO`)</source>
+</segment>
+</unit>
+<unit id="e2ea3967-00cc-428b-a06a-021897452ea0">
+<notes>
+<note appliesTo="source">line: 177</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>n: input messages</source>
+</segment>
+</unit>
+<unit id="bbe5c67a-c178-40e7-8f25-63c55951ffd1">
+<notes>
+<note appliesTo="source">line: 178</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>s: speech messages</source>
+</segment>
+</unit>
+<unit id="c2b7005a-dd1a-4d7b-b5e0-c26488d209e9">
+<notes>
+<note appliesTo="source">line: 179</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>b: braille messages</source>
+</segment>
+</unit>
+<unit id="4a6a8fb7-803c-4c31-a87b-21fa72b23d4c">
+<notes>
+<note appliesTo="source">line: 180</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>d: debug messages (`DEBUG`)</source>
+</segment>
+</unit>
+<unit id="621ce5c8-8b17-4340-9f8e-90da3bc5ff3c">
+<notes>
+<note appliesTo="source">line: 182</note>
+</notes>
+<segment>
+<source>Pressing the single letter moves to the next occurrence of this message.</source>
+</segment>
+</unit>
+<unit id="58584187-2231-4866-a67e-aaf59cddb719">
+<notes>
+<note appliesTo="source">line: 183</note>
+</notes>
+<segment>
+<source>Combining the letter with the shift key moves to the previous occurrence of this message.</source>
+</segment>
+</unit>
+<unit id="58a89b00-a638-4e63-9c7a-1090f45fc4c7">
+<notes>
+<note appliesTo="source">line: 185</note>
+</notes>
+<segment>
+<source>In addition, inside certain types of messages, you can jump block by block pressing `O` or `shift+O`.</source>
+</segment>
+</unit>
+<unit id="ef0b5370-7841-44eb-ab7e-bae1bf474529">
+<notes>
+<note appliesTo="source">line: 186</note>
+</notes>
+<segment>
+<source>The following message types and associated blocks are supported:</source>
+</segment>
+</unit>
+<unit id="170d4c97-4975-4def-92bc-6acd96b0bbda">
+<notes>
+<note appliesTo="source">line: 188</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>In messages containing tracebacks, e.g. error messages, block navigation allows you to jump between tracebacks</source>
+</segment>
+</unit>
+<unit id="f4ba6bea-8aa9-473f-9d46-f5207f57bfc9">
+<notes>
+<note appliesTo="source">line: 189</note>
+</notes>
+<segment>
+<source>  This is specifically useful when more than one traceback is present, e.g. when an error is raised in the "except" part of a try/except clause.</source>
+</segment>
+</unit>
+<unit id="712dcd73-62f6-438d-bcfa-5a0110d4e1af">
+<notes>
+<note appliesTo="source">line: 190</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>In the message listing the stacks for Python threads logged when a freeze occurs, block navigation allows you to jump between thread stacks.</source>
+</segment>
+</unit>
+<unit id="0b98e62b-dca9-4cbc-8c10-e6bc7ac7b33f">
+<notes>
+<note appliesTo="source">line: 191</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>In the message providing developer info for the navigator object logged when you press `NVDA+F1`, block navigation allows you to jump between groups of properties.</source>
+</segment>
+</unit>
+<unit id="4608cd52-5277-4ca3-a818-34a3ff06e300">
+<notes>
+<note appliesTo="source">line: 192</note>
+</notes>
+<segment>
+<source>  There are four groups of properties: general properties, appModule properties, window properties and interface-specific (IAccessible, UIA) properties.</source>
+</segment>
+</unit>
+<unit id="9253ecb4-9625-4d6e-af91-7321cb49e0bf">
+<notes>
+<note appliesTo="source">line: 194</note>
+</notes>
+<segment>
+<source>At last, inside a block, you may want to jump quickly to first or last line of interest of the block.</source>
+</segment>
+</unit>
+<unit id="8a1a26a6-512d-4e7c-b875-697f9a29aa44">
+<notes>
+<note appliesTo="source">line: 195</note>
+</notes>
+<segment>
+<source>Use `shift+L` to jump to the first line of interest of the current block's content, e.g. the first frame of a traceback.</source>
+</segment>
+</unit>
+<unit id="aace7e14-4ef1-49ec-96c7-46a26f4bbe58">
+<notes>
+<note appliesTo="source">line: 196</note>
+</notes>
+<segment>
+<source>And `L` to jump to the last line of interest of the block's content, e.g. last frame of a thread stack or error below a traceback.</source>
+</segment>
+</unit>
+<unit id="55e9b21a-5578-40f3-85e1-f923ca34efd1">
+<notes>
+<note appliesTo="source">line: 198</note>
+<note appliesTo="source">prefix: #### </note>
+</notes>
+<segment>
+<source>Translation of speech message</source>
+</segment>
+</unit>
+<unit id="1cdd94d7-70ab-4c5d-8dc5-a811ce31fd6b">
+<notes>
+<note appliesTo="source">line: 200</note>
+</notes>
+<segment>
+<source>Sometimes, you may have to look at a log taken on a system in a foreignh language that you do not understand.</source>
+</segment>
+</unit>
+<unit id="3cdee677-886e-49d2-8638-56a7af5f6e03">
+<notes>
+<note appliesTo="source">line: 201</note>
+</notes>
+<segment>
+<source>E.g. the log was taken on a Chinese system / NVDA, whereas you only understand French.</source>
+</segment>
+</unit>
+<unit id="8d72dc0f-cca8-4fc7-8854-047fa9f6b64f">
+<notes>
+<note appliesTo="source">line: 202</note>
+</notes>
+<segment>
+<source>If you have [Instant Translate][3] add-on installed, you may use it in conjonction with [quick log navigation commands](#logReaderQuickNavigationCommands) to have speech messages translated.</source>
+</segment>
+</unit>
+<unit id="991d2fd8-0098-4667-b74c-e9b67dd008d5">
+<notes>
+<note appliesTo="source">line: 204</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>First configure Instant Translate's languages.</source>
+</segment>
+</unit>
+<unit id="75a2cee2-d2d7-48f2-a546-ca1af7e3299b">
+<notes>
+<note appliesTo="source">line: 205</note>
+</notes>
+<segment>
+<source>  The source language should be the language of the system where the log has been taken (e.g. Chinese).</source>
+</segment>
+</unit>
+<unit id="7ae362c8-3e8f-44ee-9462-0bfb3db4d87e">
+<notes>
+<note appliesTo="source">line: 206</note>
+</notes>
+<segment>
+<source>  The target language should be your language (e.g. French).</source>
+</segment>
+</unit>
+<unit id="8e1b90f5-f6a5-480e-b3b8-46f7190f73f1">
+<notes>
+<note appliesTo="source">line: 207</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Open the log</source>
+</segment>
+</unit>
+<unit id="424247f1-4521-43aa-a4ff-dd95608d0a38">
+<notes>
+<note appliesTo="source">line: 208</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Press `control+T` to enable automatic speech translation in the log</source>
+</segment>
+</unit>
+<unit id="96f88ee5-11f4-465d-a2b4-ae6b04dfcbbe">
+<notes>
+<note appliesTo="source">line: 209</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Use Quick navigation commands in the log, e.g. S, I, etc. Whenever a speech message is encountered, it will be spoken in your language (French in our previous example)</source>
+</segment>
+</unit>
+<unit id="06ee9a73-e926-4719-ac3a-9b0bc53c7243">
+<notes>
+<note appliesTo="source">line: 211</note>
+</notes>
+<segment>
+<source>If you want to disable speech translation, press `control+T` again.</source>
+</segment>
+</unit>
+<unit id="40f873a1-6367-4b0e-816d-f160614bc642">
+<notes>
+<note appliesTo="source">line: 213</note>
+</notes>
+<segment>
+<source>&lt;a id="logReaderOpenSourceFile"&gt;&lt;/a&gt;</source>
+</segment>
+</unit>
+<unit id="1bb4f346-852f-4673-92c9-f3c1ac921ad4">
+<notes>
+<note appliesTo="source">line: 214</note>
+<note appliesTo="source">prefix: #### </note>
+</notes>
+<segment>
+<source>Open the file of the source code in your editor</source>
+</segment>
+</unit>
+<unit id="6d4b1575-4840-4615-9915-ac9818ba9549">
+<notes>
+<note appliesTo="source">line: 216</note>
+</notes>
+<segment>
+<source>In the log some line may refer to the source code:</source>
+</segment>
+</unit>
+<unit id="f9f54b63-1434-4a41-9dac-f6b09591ed4a">
+<notes>
+<note appliesTo="source">line: 218</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>A line belonging to a traceback contains the path and the line in a file, e.g.:</source>
+</segment>
+</unit>
+<unit id="a32300c8-509c-4529-b60c-9f2c374e8831">
+<notes>
+<note appliesTo="source">line: 219</note>
+</notes>
+<segment>
+<source>  `  File "virtualBuffers\__init__.pyc", line 226, in _getStoryLength`</source>
+</segment>
+</unit>
+<unit id="167cfbf8-cf98-4390-8f02-52b83b4259bf">
+<notes>
+<note appliesTo="source">line: 220</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>The header line of a logged message contains the function which has logged this message, e.g.:</source>
+</segment>
+</unit>
+<unit id="4a03d025-611a-49d7-8127-227919e10800">
+<notes>
+<note appliesTo="source">line: 221</note>
+</notes>
+<segment>
+<source>  `INFO - config.ConfigManager._loadConfig (22:45:26.145) - MainThread (16580):`</source>
+</segment>
+</unit>
+<unit id="d48e20d1-a028-4784-b540-efa2acfed5d3">
+<notes>
+<note appliesTo="source">line: 222</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>The content of a message logged in input help mode (logged at info level):</source>
+</segment>
+</unit>
+<unit id="89d6aae2-01a2-4af6-838f-9808d680c760">
+<notes>
+<note appliesTo="source">line: 223</note>
+</notes>
+<segment>
+<source>  `Input help: gesture kb(desktop):NVDA+t, bound to script title on globalCommands.GlobalCommands`</source>
+</segment>
+</unit>
+<unit id="993933cf-2f12-44d9-b429-a1b7bdaa983b">
+<notes>
+<note appliesTo="source">line: 225</note>
+</notes>
+<segment>
+<source>You may want to open the file containing this code to understand the context of the traceback or the logged message.</source>
+</segment>
+</unit>
+<unit id="edf71b6a-4900-4540-afcc-baa6a0697d39">
+<notes>
+<note appliesTo="source">line: 226</note>
+</notes>
+<segment>
+<source>Just press C to open this file.</source>
+</segment>
+</unit>
+<unit id="f1366209-60fd-4557-8129-101fa5794016">
+<notes>
+<note appliesTo="source">line: 228</note>
+</notes>
+<segment>
+<source>To use this feature, you need to have configured your [favorite editor's command](#settingsOpenCommand) in the add-on's settings.</source>
+</segment>
+</unit>
+<unit id="2e0c87a3-17e6-4068-86cc-55f76afbb8fe">
+<notes>
+<note appliesTo="source">line: 229</note>
+</notes>
+<segment>
+<source>If you are not running NVDA from source, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.</source>
+</segment>
+</unit>
+<unit id="5c393157-b805-48be-80b4-3fb9aa6ff15c">
+<notes>
+<note appliesTo="source">line: 231</note>
+<note appliesTo="source">prefix: #### </note>
+</notes>
+<segment>
+<source>Analysing a traceback</source>
+</segment>
+</unit>
+<unit id="bc52631c-1571-4032-a9a0-8c112dd50ca9">
+<notes>
+<note appliesTo="source">line: 233</note>
+</notes>
+<segment>
+<source>Sometimes you may have error tracebacks in the log, as in the following example:</source>
+</segment>
+</unit>
+<unit id="ff78c39b-b5ea-4dbb-b834-7c7ee0732de2">
+<notes>
+<note appliesTo="source">line: 235</note>
+</notes>
+<segment>
+<source>    ERROR - scriptHandler.executeScript (14:47:43.426) - MainThread (15492):</source>
+</segment>
+</unit>
+<unit id="b41bcf3f-5b2b-4b0c-82e6-826cb4231b55">
+<notes>
+<note appliesTo="source">line: 236</note>
+</notes>
+<segment>
+<source>    error executing script: &lt;bound method LogContainer.script_openSourceFile of &lt;NVDAObjects.Dynamic_LogViewerLogContainerIAccessibleRichEdit50WindowNVDAObject object at 0x34C1E510&gt;&gt; with gesture 'c'</source>
+</segment>
+</unit>
+<unit id="6aa804ec-5c2a-42da-9658-794174903736">
+<notes>
+<note appliesTo="source">line: 237</note>
+</notes>
+<segment>
+<source>    Traceback (most recent call last):</source>
+</segment>
+</unit>
+<unit id="30af72aa-0df6-4271-b426-a734a4eb7e4f">
+<notes>
+<note appliesTo="source">line: 238</note>
+</notes>
+<segment>
+<source>      File "scriptHandler.pyc", line 300, in executeScript</source>
+</segment>
+</unit>
+<unit id="1f09c070-70b9-488b-95e3-542fcc17091e">
+<notes>
+<note appliesTo="source">line: 239</note>
+</notes>
+<segment>
+<source>      File "C:\Users\myUserName\AppData\Roaming\nvda\addons\nvdaDevTestToolbox\globalPlugins\ndtt\logReader.py", line 603, in script_openSourceFile</source>
+</segment>
+</unit>
+<unit id="76bb975a-28f6-4b43-aa17-53d6e494cbd7">
+<notes>
+<note appliesTo="source">line: 240</note>
+</notes>
+<segment>
+<source>        if self.openStackTraceLine(line):</source>
+</segment>
+</unit>
+<unit id="825ca7ff-c63a-4605-a39f-be1efdcc071b">
+<notes>
+<note appliesTo="source">line: 241</note>
+</notes>
+<segment>
+<source>           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</source>
+</segment>
+</unit>
+<unit id="561ba502-1edf-4360-9b53-6eb262e51826">
+<notes>
+<note appliesTo="source">line: 242</note>
+</notes>
+<segment>
+<source>      File "C:\Users\myUserName\AppData\Roaming\nvda\addons\nvdaDevTestToolbox\globalPlugins\ndtt\logReader.py", line 667, in openStackTraceLine</source>
+</segment>
+</unit>
+<unit id="cc99c6c5-072b-4f45-bd32-39abcc26986a">
+<notes>
+<note appliesTo="source">line: 243</note>
+</notes>
+<segment>
+<source>        0 / 0  # An erroneaous code line</source>
+</segment>
+</unit>
+<unit id="b2ec74f4-9f92-4546-83c9-71ac6aee38a7">
+<notes>
+<note appliesTo="source">line: 244</note>
+</notes>
+<segment>
+<source>        ~~^~~</source>
+</segment>
+</unit>
+<unit id="78791eef-ce61-4023-9d69-597e2671d5fc">
+<notes>
+<note appliesTo="source">line: 245</note>
+</notes>
+<segment>
+<source>    ZeroDivisionError: division by zero</source>
+</segment>
+</unit>
+<unit id="2f34220b-451f-45e9-bd5a-3b54d74ed2bf">
+<notes>
+<note appliesTo="source">line: 247</note>
+</notes>
+<segment>
+<source>For frames where the source code is available, you may have noticed markers with `^` (caret) and `~` (tilde) characters.</source>
+</segment>
+</unit>
+<unit id="d9c2003b-19a9-44e0-abc1-82c5eb2cce3e">
+<notes>
+<note appliesTo="source">line: 248</note>
+</notes>
+<segment>
+<source>That's the way Python visually indicates the error's location as well as its context in a traceback frame.</source>
+</segment>
+</unit>
+<unit id="5aea5c08-bd9a-4009-abbe-ec05fff3c2ea">
+<notes>
+<note appliesTo="source">line: 249</note>
+</notes>
+<segment>
+<source>Pressing `control+E` moves the cursor at the beginning of the error in the source code line, i.e. the text marked by `^` (caret) character.</source>
+</segment>
+</unit>
+<unit id="669727a2-3b0f-408d-a179-10b962d4b11a">
+<notes>
+<note appliesTo="source">line: 250</note>
+</notes>
+<segment>
+<source>A double press select this text.</source>
+</segment>
+</unit>
+<unit id="63d72232-fd03-4287-ba1e-3a0c23f22360">
+<notes>
+<note appliesTo="source">line: 251</note>
+</notes>
+<segment>
+<source>A triple press selects the error with its context, i.e. the text of the source code line marked by `^` (caret) and `~` (tilde) characters.</source>
+</segment>
+</unit>
+<unit id="50a88338-30db-49f1-b61b-664d305b9573">
+<notes>
+<note appliesTo="source">line: 253</note>
+</notes>
+<segment>
+<source>Please note that for logs taken with an NVDA version before 2024.1, thus with Python 3.7 or older, Python only indicates the error with one `^` (caret) character.</source>
+</segment>
+</unit>
+<unit id="2073fb61-6768-4281-8a39-7e670dce6518">
+<notes>
+<note appliesTo="source">line: 254</note>
+</notes>
+<segment>
+<source>Thus the double or triple press actions of this command becomes rather useless.</source>
+</segment>
+</unit>
+<unit id="8fa18b24-6b00-416f-a532-bfa6b61f8dc1">
+<notes>
+<note appliesTo="source">line: 256</note>
+<note appliesTo="source">prefix: #### </note>
+</notes>
+<segment>
+<source>Getting a summary of the available commands</source>
+</segment>
+</unit>
+<unit id="6dbbef8d-d36d-45ee-ac81-391383cdfff8">
+<notes>
+<note appliesTo="source">line: 258</note>
+</notes>
+<segment>
+<source>To display a list of all the available commands in log reading mode, press `control+H`.</source>
+</segment>
+</unit>
+<unit id="6b04de26-ef82-4b2e-8ac7-2a144fe571d6">
+<notes>
+<note appliesTo="source">line: 260</note>
+<note appliesTo="source">prefix: ## </note>
+</notes>
+<segment>
+<source>Anonymize a log</source>
+</segment>
+</unit>
+<unit id="cadcf695-3cf3-437b-9b48-27e7e85cbf84">
+<notes>
+<note appliesTo="source">line: 262</note>
+</notes>
+<segment>
+<source>When reporting issues, you may have to provide a log.</source>
+</segment>
+</unit>
+<unit id="c880085f-a2e8-4b9e-b575-039c3224f66e">
+<notes>
+<note appliesTo="source">line: 263</note>
+</notes>
+<segment>
+<source>However, logs may contain sensitive information (user names, e-mails, etc.).</source>
+</segment>
+</unit>
+<unit id="dd986044-5ca5-45ab-a6ed-7ffc5832765f">
+<notes>
+<note appliesTo="source">line: 264</note>
+</notes>
+<segment>
+<source>This add-on provides a command to anonymize a log's content.</source>
+</segment>
+</unit>
+<unit id="b85150a9-a8bc-4b05-b26e-9f33c9fff1f4">
+<notes>
+<note appliesTo="source">line: 266</note>
+</notes>
+<segment>
+<source>Select a part of the log or its whole content and press `NDTTGesture, A`.</source>
+</segment>
+</unit>
+<unit id="0f5e6eb8-4ff2-41fd-bebc-7d5f9a59ce6c">
+<notes>
+<note appliesTo="source">line: 267</note>
+</notes>
+<segment>
+<source>The anonymized log content will be put in the clipboard.</source>
+</segment>
+</unit>
+<unit id="b4d714bc-0b3f-40f4-8e24-473d5ebbdff5">
+<notes>
+<note appliesTo="source">line: 268</note>
+</notes>
+<segment>
+<source>You can paste it on the current selection to replace it or anywhere else you wish.</source>
+</segment>
+</unit>
+<unit id="0a80b501-264d-4d93-8d1c-7e89b0921d1c">
+<notes>
+<note appliesTo="source">line: 270</note>
+</notes>
+<segment>
+<source>To use this feature, you need to customize the anonymization rules used by this command.</source>
+</segment>
+</unit>
+<unit id="52069276-956a-477e-93a0-8f6ad1540e49">
+<notes>
+<note appliesTo="source">line: 271</note>
+</notes>
+<segment>
+<source>The file to configure these rules is located at: `pathToNVDAConfig\ndtt\anonymizationRules.dic` (e.g. `C:\Users\myUserName\AppData\Roaming\nvda\ndtt\anonymizationRules.dic`).</source>
+</segment>
+</unit>
+<unit id="46c1d0d5-f7c6-465b-b0db-00b0bb15f0c3">
+<notes>
+<note appliesTo="source">line: 272</note>
+</notes>
+<segment>
+<source>You will find all the instructions to write this file in its header.</source>
+</segment>
+</unit>
+<unit id="bc39c689-dd30-4b9a-a258-d8486be496ff">
+<notes>
+<note appliesTo="source">line: 273</note>
+</notes>
+<segment>
+<source>In case you have corrupted your anonymization rules file or if you have deleted the header's instructions, just delete or rename this file and a new version of this file will be generated at next startup.</source>
+</segment>
+</unit>
+<unit id="31659793-7f6a-4fb2-b86d-366cc3dfc1e7">
+<notes>
+<note appliesTo="source">line: 275</note>
+</notes>
+<segment>
+<source>&lt;a id="oldLogsBackup"&gt;&lt;/a&gt;</source>
+</segment>
+</unit>
+<unit id="0c561c38-e202-4f06-bf00-3f2c1fb0bfbe">
+<notes>
+<note appliesTo="source">line: 276</note>
+<note appliesTo="source">prefix: ## </note>
+</notes>
+<segment>
+<source>Backup of old logs</source>
+</segment>
+</unit>
+<unit id="378bb031-bde7-4da1-97f1-3043818d3b5c">
+<notes>
+<note appliesTo="source">line: 278</note>
+</notes>
+<segment>
+<source>NVDA already provides a backup of the log of the previous session of NVDA; the file is called `nvda-old.log`.</source>
+</segment>
+</unit>
+<unit id="0f01e556-3e6d-496e-b516-8c7a50d0b5c6">
+<notes>
+<note appliesTo="source">line: 279</note>
+</notes>
+<segment>
+<source>Sometimes however you may want to access older logs, e.g. because you have had to restart NVDA again before looking at `nvda-old.log`.</source>
+</segment>
+</unit>
+<unit id="bd96dee1-99a7-4382-b6da-e767a589f043">
+<notes>
+<note appliesTo="source">line: 280</note>
+</notes>
+<segment>
+<source>This add-on allows you to configure if you want to backup old logs and how many of them; this is done in the [add-on's settings](#settingsLogsBackup).</source>
+</segment>
+</unit>
+<unit id="718ff3ed-e2ee-4176-ba43-9c449c46fb48">
+<notes>
+<note appliesTo="source">line: 282</note>
+</notes>
+<segment>
+<source>A log manager dialog allows to view the backed up logs.</source>
+</segment>
+</unit>
+<unit id="4b962851-6cdd-4e9d-ae85-950eff58ad93">
+<notes>
+<note appliesTo="source">line: 283</note>
+</notes>
+<segment>
+<source>It can be opened going to NVDA menu -&gt; Tools -&gt; Logs manager</source>
+</segment>
+</unit>
+<unit id="4d788d4b-37c6-4237-bf0e-2d40f685a453">
+<notes>
+<note appliesTo="source">line: 284</note>
+</notes>
+<segment>
+<source>In this dialog, you can see the list of all the backup logs and perform various actions on the selected log:</source>
+</segment>
+</unit>
+<unit id="857b89a9-c136-44a0-ab20-cd2b28b9ef0b">
+<notes>
+<note appliesTo="source">line: 286</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>open it (press `Enter`)</source>
+</segment>
+</unit>
+<unit id="38baa3da-8c07-4f93-8a58-af8ae521dbc4">
+<notes>
+<note appliesTo="source">line: 287</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>delete it (press `Delete`)</source>
+</segment>
+</unit>
+<unit id="5a951a2b-cccf-4696-a226-e599838107e0">
+<notes>
+<note appliesTo="source">line: 288</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>copy the log file (press `control+C`)</source>
+</segment>
+</unit>
+<unit id="25536094-577b-46f2-bc3d-089406e8041b">
+<notes>
+<note appliesTo="source">line: 290</note>
+</notes>
+<segment>
+<source>You can also select multiple logs to perform an actions on all of them.</source>
+</segment>
+</unit>
+<unit id="a8241871-3c24-4734-a19d-c5e35e2a35e3">
+<notes>
+<note appliesTo="source">line: 292</note>
+</notes>
+<segment>
+<source>To be able to open a log, you should first have configured the [Command to open a file in your favorite editor](#settingsOpenCommand).</source>
+</segment>
+</unit>
+<unit id="2203d285-e337-4826-ad58-59cfb17c0cad">
+<notes>
+<note appliesTo="source">line: 294</note>
+<note appliesTo="source">prefix: ## </note>
+</notes>
+<segment>
+<source>Python console extension</source>
+</segment>
+</unit>
+<unit id="e738029e-e56a-4380-bdc5-273394713de9">
+<notes>
+<note appliesTo="source">line: 296</note>
+</notes>
+<segment>
+<source>&lt;a id="pythonConsoleOpenCodeFile"&gt;&lt;/a&gt;</source>
+</segment>
+</unit>
+<unit id="1b2e3b5a-c71d-4d90-af68-6c717e1d7153">
+<notes>
+<note appliesTo="source">line: 297</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>`openCodeFile` function</source>
+</segment>
+</unit>
+<unit id="62406fbf-1c03-4f30-b4b0-675bfa7c1665">
+<notes>
+<note appliesTo="source">line: 299</note>
+</notes>
+<segment>
+<source>In the console, you can call the following function to view the source code that defines the variable `myVar`:</source>
+</segment>
+</unit>
+<unit id="cc7b581f-8a7d-4fa0-9338-35b43e8d7a2c">
+<notes>
+<note appliesTo="source">line: 300</note>
+</notes>
+<segment>
+<source>`openCodeFile(myVar)`</source>
+</segment>
+</unit>
+<unit id="fd8d9324-304d-45d3-a9a2-3d13b3194ca5">
+<notes>
+<note appliesTo="source">line: 302</note>
+</notes>
+<segment>
+<source>For this feature to work, you need to have configured your [favorite editor's command](#settingsOpenCommand) in the add-on's settings.</source>
+</segment>
+</unit>
+<unit id="99fa1422-20b5-481f-8306-f26e7e37e932">
+<notes>
+<note appliesTo="source">line: 303</note>
+</notes>
+<segment>
+<source>If you are not running NVDA from source, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.</source>
+</segment>
+</unit>
+<unit id="07d24f16-9fb0-4668-b19c-864055d5bfee">
+<notes>
+<note appliesTo="source">line: 305</note>
+</notes>
+<segment>
+<source>The `openCodeFile` functions can be called on objects defined in NVDA's code or on objects defined by add-ons.</source>
+</segment>
+</unit>
+<unit id="be669b39-812a-443f-98d1-19312ed67f89">
+<notes>
+<note appliesTo="source">line: 306</note>
+</notes>
+<segment>
+<source>It cannot be called on objects whose source code is not available such as python builtins.</source>
+</segment>
+</unit>
+<unit id="22c2528a-d8e7-48f2-9bc3-00e955aaa61a">
+<notes>
+<note appliesTo="source">line: 308</note>
+</notes>
+<segment>
+<source>If you have not yet imported the object in the console, you can also pass its name as parameter to the `openCodeFile` function.</source>
+</segment>
+</unit>
+<unit id="174c5351-ee59-41df-8cd4-b6140748bfb9">
+<notes>
+<note appliesTo="source">line: 310</note>
+</notes>
+<segment>
+<source>Below are examples of call in NVDA's code:</source>
+</segment>
+</unit>
+<unit id="e899eab1-68b0-469d-8747-9226d4fcbd2f">
+<notes>
+<note appliesTo="source">line: 312</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>View the definition of the function `speech.speech.speak`:</source>
+</segment>
+</unit>
+<unit id="99349fb7-5ee5-447c-84ee-7d9613391b7d">
+<notes>
+<note appliesTo="source">line: 313</note>
+</notes>
+<segment>
+<source>  `openCodeFile(speech.speech.speak)`</source>
+</segment>
+</unit>
+<unit id="e010c60f-464a-4b7f-b42f-ebaed0fe830a">
+<notes>
+<note appliesTo="source">line: 314</note>
+</notes>
+<segment>
+<source>  or with the name passed as parameter:</source>
+</segment>
+</unit>
+<unit id="f2d56203-b2c2-4b92-ac55-a03ce2668445">
+<notes>
+<note appliesTo="source">line: 315</note>
+</notes>
+<segment>
+<source>  `openCodeFile("speech.speech.speak")`</source>
+</segment>
+</unit>
+<unit id="2087da03-a02a-42a6-8ada-96ba345ab3cd">
+<notes>
+<note appliesTo="source">line: 316</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>View the definition of the class `TextInfo`:</source>
+</segment>
+</unit>
+<unit id="f385553c-6e75-47c4-97aa-0c37bb9c9d84">
+<notes>
+<note appliesTo="source">line: 317</note>
+</notes>
+<segment>
+<source>  `openCodeFile(textInfos.TextInfo)`</source>
+</segment>
+</unit>
+<unit id="1f318970-d596-4e17-bb99-fb12f245a70f">
+<notes>
+<note appliesTo="source">line: 318</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>View the definition of the method `copyToClipboard` of the class `TextInfo`:</source>
+</segment>
+</unit>
+<unit id="00405d71-6c23-4658-abab-69a127cdf773">
+<notes>
+<note appliesTo="source">line: 319</note>
+</notes>
+<segment>
+<source>  `openCodeFile(textInfos.TextInfo.copyToClipboard)`</source>
+</segment>
+</unit>
+<unit id="fd79d30d-16ef-4168-a480-374c7e37f0e2">
+<notes>
+<note appliesTo="source">line: 320</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>View the definition of the class of the focused object:</source>
+</segment>
+</unit>
+<unit id="c85495d3-d5f8-443d-9fe3-69a7fbe5da42">
+<notes>
+<note appliesTo="source">line: 321</note>
+</notes>
+<segment>
+<source>  `openCodeFile(focus)`</source>
+</segment>
+</unit>
+<unit id="15dfbd3f-0203-4ee7-820e-0d7e6c151bb4">
+<notes>
+<note appliesTo="source">line: 322</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Open the file `api.py` defining the module `api`:</source>
+</segment>
+</unit>
+<unit id="70c02dd0-ee35-4d5a-858b-55f00fcfba18">
+<notes>
+<note appliesTo="source">line: 323</note>
+</notes>
+<segment>
+<source>  `openCodeFile(api)`</source>
+</segment>
+</unit>
+<unit id="b2af69e9-fc6e-44df-a8af-b7a7ecdcdb31">
+<notes>
+<note appliesTo="source">line: 325</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Python console startup script</source>
+</segment>
+</unit>
+<unit id="96145ed5-5de0-4ee6-bd9a-07a11fb89f47">
+<notes>
+<note appliesTo="source">line: 327</note>
+</notes>
+<segment>
+<source>You can define a custom script which will be executed in the Python console's namespace when it is first opened.</source>
+</segment>
+</unit>
+<unit id="98e2eb2c-a4be-492a-8016-11da1b16bcb1">
+<notes>
+<note appliesTo="source">line: 329</note>
+</notes>
+<segment>
+<source>For example, the script allows you to execute new imports and define aliases that you will be able to use directly in the console, as shown below:</source>
+</segment>
+</unit>
+<unit id="4ec543e0-ece0-40f8-a3ea-0d9cd7a080fb">
+<notes>
+<note appliesTo="source">line: 331</note>
+</notes>
+<segment>
+<source>    # Various import that I want in the console.</source>
+</segment>
+</unit>
+<unit id="d23d8db3-fdb2-4b04-9315-74c9504ac39b">
+<notes>
+<note appliesTo="source">line: 332</note>
+</notes>
+<segment>
+<source>    import globalVars as gv</source>
+</segment>
+</unit>
+<unit id="9a4387c8-c8a3-43bd-9c02-a380a69ffedb">
+<notes>
+<note appliesTo="source">line: 333</note>
+</notes>
+<segment>
+<source>    import core</source>
+</segment>
+</unit>
+<unit id="59c789b4-c48b-4920-b7fc-1e4e3e7db0e1">
+<notes>
+<note appliesTo="source">line: 334</note>
+</notes>
+<segment>
+<source>    import ui</source>
+</segment>
+</unit>
+<unit id="21282316-0064-42f2-ad25-57b22b82d0e8">
+<notes>
+<note appliesTo="source">line: 335</note>
+</notes>
+<segment>
+<source>    # Aliases</source>
+</segment>
+</unit>
+<unit id="a85ec2e7-c58b-4a26-a7a0-701d5c8261a2">
+<notes>
+<note appliesTo="source">line: 336</note>
+</notes>
+<segment>
+<source>    ocf = openCodeFile</source>
+</segment>
+</unit>
+<unit id="7e2b1479-be3a-4842-99da-4049338ba118">
+<notes>
+<note appliesTo="source">line: 338</note>
+</notes>
+<segment>
+<source>The Python console script should be placed in the following location: `pathToNVDAConfig\ndtt\consoleStartup.py`</source>
+</segment>
+</unit>
+<unit id="39b3b900-07af-461a-bd7b-fb5ad8ad6d41">
+<notes>
+<note appliesTo="source">line: 339</note>
+</notes>
+<segment>
+<source>For example: `C:\Users\myUserName\AppData\Roaming\nvda\ndtt\consoleStartup.py`</source>
+</segment>
+</unit>
+<unit id="fb89341e-c40d-4e8e-b81b-743b44dc4051">
+<notes>
+<note appliesTo="source">line: 341</note>
+</notes>
+<segment>
+<source>Note: In Python 2, i.e. with NVDA 2019.2.1 or earlier, only pure ASCII scripts are supported; any other encoding such as Unicode is not supported.</source>
+</segment>
+</unit>
+<unit id="79e7b9e5-b74b-4fe7-99f9-c6730ecfa1cd">
+<notes>
+<note appliesTo="source">line: 343</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Preserving Python console input history</source>
+</segment>
+</unit>
+<unit id="f222aef9-9882-4877-95f6-bc26c04593e7">
+<notes>
+<note appliesTo="source">line: 345</note>
+</notes>
+<segment>
+<source>In Python console history, you can use up and down arrows to review and modify previous inputs.</source>
+</segment>
+</unit>
+<unit id="de3c1e66-580a-426d-a702-1430480ec97f">
+<notes>
+<note appliesTo="source">line: 346</note>
+</notes>
+<segment>
+<source>Though, the list of previous inputs is cleared when exiting NVDA.</source>
+</segment>
+</unit>
+<unit id="430df33f-2c8c-4329-85d1-eff682a42171">
+<notes>
+<note appliesTo="source">line: 347</note>
+</notes>
+<segment>
+<source>This add-on provide [an option](#settingsPreserveHistory), enabled by default, allowing to preserve Python console input history even when NVDA is restarted.</source>
+</segment>
+</unit>
+<unit id="be199f9d-35a6-4c02-9e11-04adc6e9a86f">
+<notes>
+<note appliesTo="source">line: 349</note>
+</notes>
+<segment>
+<source>&lt;a id="loggingFunctionCall"&gt;&lt;/a&gt;</source>
+</segment>
+</unit>
+<unit id="a698986a-dbb0-46d8-89b8-0ee139bf2226">
+<notes>
+<note appliesTo="source">line: 350</note>
+<note appliesTo="source">prefix: ## </note>
+</notes>
+<segment>
+<source>Logging function calls</source>
+</segment>
+</unit>
+<unit id="cf5dc710-8290-41e2-bc73-2fa08629ab26">
+<notes>
+<note appliesTo="source">line: 352</note>
+</notes>
+<segment>
+<source>Sometimes, you may want to see which part of the code is responsible for speaking something.</source>
+</segment>
+</unit>
+<unit id="0c2d28ea-a2dc-44a6-baea-8e0aac67a844">
+<notes>
+<note appliesTo="source">line: 353</note>
+</notes>
+<segment>
+<source>For this, you can enable the function calls logging for the `speech.speech.speak` function pressing `NDTTGesture, S`.</source>
+</segment>
+</unit>
+<unit id="25a96238-803c-44e6-8477-fbe387c9a4b3">
+<notes>
+<note appliesTo="source">line: 354</note>
+</notes>
+<segment>
+<source>Each time NVDA speaks, a corresponding message will be logged, including the stack trace, allowing you to identify the code that has caused this speech output.</source>
+</segment>
+</unit>
+<unit id="8cb91993-9d2e-4c89-a896-81534c2ba29c">
+<notes>
+<note appliesTo="source">line: 355</note>
+</notes>
+<segment>
+<source>Once you are done, disable function calls logging with the same gesture.</source>
+</segment>
+</unit>
+<unit id="24892608-8a15-47ff-a993-3a1bb0b917c0">
+<notes>
+<note appliesTo="source">line: 357</note>
+</notes>
+<segment>
+<source>The same way, you can choose to log the calls of output functions `tones.beep`, `braille.BrailleBuffer.update` or `nvwave.playWaveFile` to track the origin of a beep, braille output or a sound (e.g. spelling error sound).</source>
+</segment>
+</unit>
+<unit id="0fc11149-be07-47ca-8017-e69a40738aad">
+<notes>
+<note appliesTo="source">line: 358</note>
+</notes>
+<segment>
+<source>The [target function](#targetFunctionForCallLogSetting) can be chosen in the add-on's parameters.</source>
+</segment>
+</unit>
+<unit id="a3716508-cf17-46a7-a676-4b7f0793ae18">
+<notes>
+<note appliesTo="source">line: 359</note>
+</notes>
+<segment>
+<source>You can even log the calls stack of a custom function.</source>
+</segment>
+</unit>
+<unit id="5f4014b8-8446-434b-9127-4c4a3d04c938">
+<notes>
+<note appliesTo="source">line: 361</note>
+</notes>
+<segment>
+<source>By default, the log of the function calls is performed using the "settrace" method: it uses `sys.settrace`, `threading.settrace` and/or `threading.settrace_all_threads` to install a tracing callback that is invoked on target function return event.</source>
+</segment>
+</unit>
+<unit id="6664c651-67b3-4875-bbaf-a0cfb2dc779f">
+<notes>
+<note appliesTo="source">line: 362</note>
+</notes>
+<segment>
+<source>Alternatively, if you do not get satisfying results, you may opt for the "monkey patching" method where the target function (e.g. `speech.speech.speak`) is patched.</source>
+</segment>
+</unit>
+<unit id="57e268f1-d7ff-4275-922f-ec7b5095b5fb">
+<notes>
+<note appliesTo="source">line: 363</note>
+</notes>
+<segment>
+<source>Both methods have limitations that may prevent function calls to be logged in specific combined conditions.</source>
+</segment>
+</unit>
+<unit id="72d75c14-9794-483b-b8b9-592b6faa8db0">
+<notes>
+<note appliesTo="source">line: 364</note>
+</notes>
+<segment>
+<source>For example, the "settrace" method may not work with NVDA version lower than 2026.1, when the target function is run from a non-main thread and the function calls logging is enabled after the target function's thread has been started.</source>
+</segment>
+</unit>
+<unit id="d9e68b94-3e5a-4947-8283-796612054226">
+<notes>
+<note appliesTo="source">line: 365</note>
+</notes>
+<segment>
+<source>On the other hand, the "monkey patching" method may not work when the target function is imported through a "from import" statement (e.g. `from tones import beep`).</source>
+</segment>
+</unit>
+<unit id="6e64dd60-7db2-4636-b5bb-284e19731e3d">
+<notes>
+<note appliesTo="source">line: 367</note>
+</notes>
+<segment>
+<source>You can toggle the method used to log function calls in [the dedicated setting](#functionCallLogMethodSetting) or pressing `NDTTGesture, shift+S`.</source>
+</segment>
+</unit>
+<unit id="54b20c36-00eb-4141-83fe-1e04f127e447">
+<notes>
+<note appliesTo="source">line: 369</note>
+</notes>
+<segment>
+<source>&lt;a id="reverseTranslationCommand"&gt;&lt;/a&gt;</source>
+</segment>
+</unit>
+<unit id="f1313f89-addb-41fc-ac14-8171139754cd">
+<notes>
+<note appliesTo="source">line: 370</note>
+<note appliesTo="source">prefix: ## </note>
+</notes>
+<segment>
+<source>Reverse translation command</source>
+</segment>
+</unit>
+<unit id="f9a9a636-bc7f-41cf-99a2-d8684e1e0e6a">
+<notes>
+<note appliesTo="source">line: 372</note>
+</notes>
+<segment>
+<source>Many testers use NVDA in another language than English.</source>
+</segment>
+</unit>
+<unit id="d6cbc71c-b693-4588-b0d5-9601f54e37ae">
+<notes>
+<note appliesTo="source">line: 373</note>
+</notes>
+<segment>
+<source>But when reporting test results on GitHub, the description of the modified options or the messages reported by NVDA should be written in English.</source>
+</segment>
+</unit>
+<unit id="905f29a0-f19a-4a26-9978-f7e35d1e5f87">
+<notes>
+<note appliesTo="source">line: 374</note>
+</notes>
+<segment>
+<source>It's quite frustrating and time consuming to have to restart NVDA in English to check the exact wording of the options or messages.</source>
+</segment>
+</unit>
+<unit id="71131e63-7ef8-4bdc-a4b5-462a2720dec8">
+<notes>
+<note appliesTo="source">line: 376</note>
+</notes>
+<segment>
+<source>To avoid this, the add-on provides two reverse translation commands allowing to reverse translate NVDA's interface such as messages, control labels in the GUI, etc.</source>
+</segment>
+</unit>
+<unit id="b1225239-3d5c-49eb-8a1a-dcc2abbefcf0">
+<notes>
+<note appliesTo="source">line: 378</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>`NDTTGesture, R` uses NVDA's gettext translation to try to reverse translate the last speech.</source>
+</segment>
+</unit>
+<unit id="eafd2124-c0b1-49ae-bb5c-6d466087dacb">
+<notes>
+<note appliesTo="source">line: 379</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>`NDTTGesture, shift+R` uses gettext translations from NVDA and its add-ons to try to reverse translate the last speech.</source>
+</segment>
+</unit>
+<unit id="e2ecb0d4-6d53-4b72-8817-67e5071f93dc">
+<notes>
+<note appliesTo="source">line: 381</note>
+</notes>
+<segment>
+<source>More specifically, the first string of the last speech sequence is reverse translated.</source>
+</segment>
+</unit>
+<unit id="0df6cc07-75b9-44ec-a2cb-26af4195f19e">
+<notes>
+<note appliesTo="source">line: 383</note>
+</notes>
+<segment>
+<source>For example, in French NVDA, if I arrow down to the Tools menu named "Outils", NVDA will say "Outils  sous-Menu  o" which stands for "Tools  subMenu  o".</source>
+</segment>
+</unit>
+<unit id="199a6f02-97d9-481b-ad88-e6e01f2eb2db">
+<notes>
+<note appliesTo="source">line: 384</note>
+</notes>
+<segment>
+<source>If I press the reverse translation command just after that, NVDA will reverse translate "Outils" to "Tools".</source>
+</segment>
+</unit>
+<unit id="10eec62d-7aa0-4f5c-828e-df0755fb932c">
+<notes>
+<note appliesTo="source">line: 386</note>
+</notes>
+<segment>
+<source>Looking at the log afterwards, we can find the following lines:</source>
+</segment>
+</unit>
+<unit id="e47b0a95-34ed-4e13-bd7e-1084394792ea">
+<notes>
+<note appliesTo="source">line: 388</note>
+</notes>
+<segment>
+<source>    IO - speech.speech.speak (23:38:24.450) - MainThread (2044):</source>
+</segment>
+</unit>
+<unit id="8e215902-adc6-4d6c-b746-556403dd2ff9">
+<notes>
+<note appliesTo="source">line: 389</note>
+</notes>
+<segment>
+<source>    Speaking ['Outils', 'sous-Menu', CharacterModeCommand(True), 'o', CharacterModeCommand(False), CancellableSpeech (still valid)]</source>
+</segment>
+</unit>
+<unit id="6fc1d8d0-09af-4f79-a49c-ca76f4f0751d">
+<notes>
+<note appliesTo="source">line: 391</note>
+</notes>
+<segment>
+<source>This confirms that "Outils was the first string in the speech sequence.</source>
+</segment>
+</unit>
+<unit id="1ac403da-dabb-4c3f-80e0-4e9e192e17e3">
+<notes>
+<note appliesTo="source">line: 393</note>
+</notes>
+<segment>
+<source>In case the reverse translation leads to two or more possible results, a context menu is opened listing all the possibilities.</source>
+</segment>
+</unit>
+<unit id="b78cd044-737e-46bc-b452-3d7eb37b7687">
+<notes>
+<note appliesTo="source">line: 395</note>
+</notes>
+<segment>
+<source>The result of the reverse translation is also copied to the clipboard if the corresponding [option](#settingsCopyReverseTranslation) is enabled, which is the default value.</source>
+</segment>
+</unit>
+<unit id="88db8bcd-7ec6-4b0b-8ed8-5bc76c4ec273">
+<notes>
+<note appliesTo="source">line: 397</note>
+</notes>
+<segment>
+<source>Reverse translation of NVDA strings is only available for NVDA version 2022.1 or above.</source>
+</segment>
+</unit>
+<unit id="3a4382f8-d711-4ff6-a093-5a78fd74d511">
+<notes>
+<note appliesTo="source">line: 398</note>
+</notes>
+<segment>
+<source>For earlier versions of NVDA, only the add-ons strings are available for reverse translation.</source>
+</segment>
+</unit>
+<unit id="c1571a70-3c01-486b-96c7-a1640b28a031">
+<notes>
+<note appliesTo="source">line: 400</note>
+</notes>
+<segment>
+<source>Besides, in NVDA version 2019.2.1 or earlier, in case no reverse translation is found, a second attempt is made in the first part of the string.</source>
+</segment>
+</unit>
+<unit id="a763b18b-6add-49ed-bcc9-c9ffae654e9d">
+<notes>
+<note appliesTo="source">line: 401</note>
+</notes>
+<segment>
+<source>Indeed, in these NVDA version, the speech sequence looks like this:</source>
+</segment>
+</unit>
+<unit id="f8593c2c-0afb-475c-8ec5-12c329c03d0b">
+<notes>
+<note appliesTo="source">line: 403</note>
+</notes>
+<segment>
+<source>    IO - speech.speak (12:39:12.684):</source>
+</segment>
+</unit>
+<unit id="19991972-ccd1-43f0-9278-3d7a0e13a90e">
+<notes>
+<note appliesTo="source">line: 404</note>
+</notes>
+<segment>
+<source>    Speaking [u'Outils  sous-Menu  o']</source>
+</segment>
+</unit>
+<unit id="8ce82333-6c06-4ef2-a17f-1faa2266f7c8">
+<notes>
+<note appliesTo="source">line: 406</note>
+</notes>
+<segment>
+<source>We can see that an object label may be concatenated with role, state, shortcut, etc.</source>
+</segment>
+</unit>
+<unit id="0b445f0f-3e0d-43e9-9bf1-f7a2e38f56d1">
+<notes>
+<note appliesTo="source">line: 407</note>
+</notes>
+<segment>
+<source>So if the reverse translation gives no result with the whole string, a second attempt is made on the part of the string before the double space ("  ").</source>
+</segment>
+</unit>
+<unit id="151792b3-650b-4903-bcbe-55381376c012">
+<notes>
+<note appliesTo="source">line: 408</note>
+</notes>
+<segment>
+<source>Though, this is not bullet-proof since we cannot exclude that a string actually natively contains a double space.</source>
+</segment>
+</unit>
+<unit id="1f5e3cf9-9429-4748-a87b-bdda49c2ee2f">
+<notes>
+<note appliesTo="source">line: 410</note>
+</notes>
+<segment>
+<source>&lt;a id="settings"&gt;&lt;/a&gt;</source>
+</segment>
+</unit>
+<unit id="24d9d8e7-2c13-444b-8268-c54c68aa0b29">
+<notes>
+<note appliesTo="source">line: 411</note>
+<note appliesTo="source">prefix: ## </note>
+</notes>
+<segment>
+<source>Settings</source>
+</segment>
+</unit>
+<unit id="1c0e5c4a-d8d2-4c23-8e53-950789513ed3">
+<notes>
+<note appliesTo="source">line: 413</note>
+</notes>
+<segment>
+<source>Some features of the add-on may require a specific configuration.</source>
+</segment>
+</unit>
+<unit id="d2c83c7d-9c55-4d9d-a265-370a6db8f5e7">
+<notes>
+<note appliesTo="source">line: 414</note>
+</notes>
+<segment>
+<source>A settings panel allows to enable them or to control how they work.</source>
+</segment>
+</unit>
+<unit id="00ee2152-4396-4473-8dc0-50578736f1e2">
+<notes>
+<note appliesTo="source">line: 415</note>
+</notes>
+<segment>
+<source>To view and modify these settings, go to NVDA menu -&gt; Preferences and select the category NVDA Dev &amp; Test Toolbox.</source>
+</segment>
+</unit>
+<unit id="14230cd5-3722-4ad8-823b-90a3a7c783ef">
+<notes>
+<note appliesTo="source">line: 416</note>
+</notes>
+<segment>
+<source>This settings dialog can also be accessed directly from the Logs Manager dialog.</source>
+</segment>
+</unit>
+<unit id="b70cf64e-272b-43f7-b00e-7f55eaaee136">
+<notes>
+<note appliesTo="source">line: 418</note>
+</notes>
+<segment>
+<source>These settings are global and can only be configured when the default profile is active.</source>
+</segment>
+</unit>
+<unit id="3fe08373-0682-4295-945a-7dfab0f603d7">
+<notes>
+<note appliesTo="source">line: 420</note>
+</notes>
+<segment>
+<source>&lt;a id="settingsOpenCommand"&gt;&lt;/a&gt;</source>
+</segment>
+</unit>
+<unit id="2b082b74-4870-467d-99fe-359c1a7fc5d5">
+<notes>
+<note appliesTo="source">line: 421</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Command to open a file in your favorite editor</source>
+</segment>
+</unit>
+<unit id="abb3e300-e0d8-4f64-94f1-3ad1316ec8da">
+<notes>
+<note appliesTo="source">line: 423</note>
+</notes>
+<segment>
+<source>Some features allow to see content in your favorite editor.</source>
+</segment>
+</unit>
+<unit id="f426c5e5-074f-46fc-af62-5ddf087ff145">
+<notes>
+<note appliesTo="source">line: 424</note>
+</notes>
+<segment>
+<source>This includes the commands to view the source file [from a log](#logReaderOpenSourceFile), [from an object in the console](#pythonConsoleOpenCodeFile) or [from a typed gesture](#sourceCodeOpeningCommands), as well as the [log manager](#oldLogsBackup)'s Open button.</source>
+</segment>
+</unit>
+<unit id="47b039cf-ee25-47dc-a4f7-2774dc152ee2">
+<notes>
+<note appliesTo="source">line: 426</note>
+</notes>
+<segment>
+<source>To use them, you first need to configure the command that will be called to open the file in your favorite editor.</source>
+</segment>
+</unit>
+<unit id="37b899ce-2f3b-40da-a451-b824e0f2cae9">
+<notes>
+<note appliesTo="source">line: 427</note>
+</notes>
+<segment>
+<source>The command should be of the form:</source>
+</segment>
+</unit>
+<unit id="884ca78e-9953-4c05-bf9b-8b96a161e08b">
+<notes>
+<note appliesTo="source">line: 428</note>
+</notes>
+<segment>
+<source>`"C:\path\to\my\editor\editor.exe" "{path}":{line}`</source>
+</segment>
+</unit>
+<unit id="b9847f04-e107-4fa7-a0a8-871ab1e9424d">
+<notes>
+<note appliesTo="source">line: 429</note>
+</notes>
+<segment>
+<source>You should of course modify this line according to the real name and location of your editor and the syntax used by it to open files.</source>
+</segment>
+</unit>
+<unit id="c89b71cc-c221-4760-8e00-bc473763f5f0">
+<notes>
+<note appliesTo="source">line: 430</note>
+</notes>
+<segment>
+<source>`{path}` will be replaced by the full path of the file to open and `{line}` by the line number where you want the cursor to be set.</source>
+</segment>
+</unit>
+<unit id="afed91d7-7691-4e68-92df-104faad12e60">
+<notes>
+<note appliesTo="source">line: 431</note>
+</notes>
+<segment>
+<source>For Notepad++ for example the command to type in the console would be:</source>
+</segment>
+</unit>
+<unit id="08488e4a-ea12-456e-9172-923a48325e67">
+<notes>
+<note appliesTo="source">line: 432</note>
+</notes>
+<segment>
+<source>`"C:\Program Files\Notepad++\notepad++.exe" "{path}" -n{line}`</source>
+</segment>
+</unit>
+<unit id="86d58b94-a608-45bd-84a9-8b01bd9a43a4">
+<notes>
+<note appliesTo="source">line: 434</note>
+</notes>
+<segment>
+<source>&lt;a id="settingsNvdaSourcePath"&gt;&lt;/a&gt;</source>
+</segment>
+</unit>
+<unit id="91150ef6-0286-4490-ac08-47746f5652c5">
+<notes>
+<note appliesTo="source">line: 435</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>NVDA source code path</source>
+</segment>
+</unit>
+<unit id="284d7c01-e016-4ab2-9ba4-81d9ae2b058a">
+<notes>
+<note appliesTo="source">line: 437</note>
+</notes>
+<segment>
+<source>When using a command to view the source file [from a log](#logReaderOpenSourceFile), [from an object in the console](#pythonConsoleOpenCodeFile) or [from a typed gesture or a path](#sourceCodeOpeningCommands), the file may belong to NVDA itself.</source>
+</segment>
+</unit>
+<unit id="881bf5fc-dcb3-44d6-b941-660f5eda8a2e">
+<notes>
+<note appliesTo="source">line: 438</note>
+</notes>
+<segment>
+<source>If you are not running NVDA from source, your NVDA only contains compiled files.</source>
+</segment>
+</unit>
+<unit id="3996894c-512f-41bd-a892-c11a26a4d7f7">
+<notes>
+<note appliesTo="source">line: 439</note>
+</notes>
+<segment>
+<source>Thus you may specify here an alternate location where the corresponding source file will be found, e.g. the place where you have cloned NVDA source files, so that a source file can be opened anyway.</source>
+</segment>
+</unit>
+<unit id="7a3c8f72-6f55-4080-9aea-080d2743265e">
+<notes>
+<note appliesTo="source">line: 440</note>
+</notes>
+<segment>
+<source>The path should be such as:</source>
+</segment>
+</unit>
+<unit id="122e7b59-0a3f-4bd6-a341-f555879a3276">
+<notes>
+<note appliesTo="source">line: 441</note>
+</notes>
+<segment>
+<source>`C:\pathExample\GIT\nvda\source`</source>
+</segment>
+</unit>
+<unit id="6e60d402-bc0f-4238-a952-64ddcfe31ef9">
+<notes>
+<note appliesTo="source">line: 442</note>
+</notes>
+<segment>
+<source>Of course, replace the path of NVDA source with the correct one.</source>
+</segment>
+</unit>
+<unit id="86f8c200-274e-4aac-8e68-27b8f0468114">
+<notes>
+<note appliesTo="source">line: 444</note>
+</notes>
+<segment>
+<source>Be sure however that the version of your source file (e.g. GIT commit) is the same as the one of the running instance of NVDA.</source>
+</segment>
+</unit>
+<unit id="26f528bb-54d6-4d70-9a31-a8310e9d92b7">
+<notes>
+<note appliesTo="source">line: 446</note>
+</notes>
+<segment>
+<source>&lt;a id="settingsLogsBackup"&gt;&lt;/a&gt;</source>
+</segment>
+</unit>
+<unit id="84a10ec7-8139-4366-ae78-82de3efafb1e">
+<notes>
+<note appliesTo="source">line: 447</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Backup of old logs</source>
+</segment>
+</unit>
+<unit id="9e115d68-bfce-4f92-9477-00a82054542e">
+<notes>
+<note appliesTo="source">line: 449</note>
+</notes>
+<segment>
+<source>The combobox Backup of old logs allows to enable or disable the [feature](#oldLogsBackup).</source>
+</segment>
+</unit>
+<unit id="5bcc0a30-d118-40a8-84a3-644027ddd490">
+<notes>
+<note appliesTo="source">line: 450</note>
+</notes>
+<segment>
+<source>If it is enabled, you can also specify below in "Limit the number of backups" the maximum number of backups you want to keep.</source>
+</segment>
+</unit>
+<unit id="2d6a78b3-fc2c-4ebf-a49b-f0f8046c4fec">
+<notes>
+<note appliesTo="source">line: 451</note>
+</notes>
+<segment>
+<source>These settings only take effect at next NVDA startup when the backup takes place.</source>
+</segment>
+</unit>
+<unit id="4adec43f-82f7-4e48-85c8-3f6af3793519">
+<notes>
+<note appliesTo="source">line: 453</note>
+</notes>
+<segment>
+<source>&lt;a id="settingsCopyReverseTranslation"&gt;&lt;/a&gt;</source>
+</segment>
+</unit>
+<unit id="ad2caf9c-5ec4-4281-a077-22dad8b4b51c">
+<notes>
+<note appliesTo="source">line: 454</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Copy reverse translation to clipboard</source>
+</segment>
+</unit>
+<unit id="db725659-2a9f-4ed1-b16b-cde732642aac">
+<notes>
+<note appliesTo="source">line: 456</note>
+</notes>
+<segment>
+<source>This option allows to choose if the [reverse translation command](#reverseTranslationCommand) also copies its result to the clipboard.</source>
+</segment>
+</unit>
+<unit id="1f864125-66f9-44b1-b807-5105c2991dd2">
+<notes>
+<note appliesTo="source">line: 458</note>
+</notes>
+<segment>
+<source>&lt;a id="settingsPreserveHistory"&gt;&lt;/a&gt;</source>
+</segment>
+</unit>
+<unit id="bc72af99-e6af-417d-bfa3-9c97b7d2a810">
+<notes>
+<note appliesTo="source">line: 459</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Preserve console input history after restart</source>
+</segment>
+</unit>
+<unit id="a66dd27c-5025-4c51-a125-9a20cd81602f">
+<notes>
+<note appliesTo="source">line: 461</note>
+</notes>
+<segment>
+<source>If this checkbox is checked, Python console input history will be preserved when NVDA is restarted.</source>
+</segment>
+</unit>
+<unit id="82767b7b-05bd-46be-b193-995cc1118ee0">
+<notes>
+<note appliesTo="source">line: 462</note>
+</notes>
+<segment>
+<source>If it is checked, you can also specify below the maximum number of inputs that will be saved.</source>
+</segment>
+</unit>
+<unit id="a86bfc02-0ffa-46bf-9794-d026949449bb">
+<notes>
+<note appliesTo="source">line: 463</note>
+</notes>
+<segment>
+<source>If it is unchecked, NVDA will behave as usual, i.e. the console history will be empty after restart.</source>
+</segment>
+</unit>
+<unit id="de181eee-496f-4bdc-b4e9-b6b8c64104a0">
+<notes>
+<note appliesTo="source">line: 465</note>
+</notes>
+<segment>
+<source>&lt;a id="targetFunctionForCallLogSetting"&gt;&lt;/a&gt;</source>
+</segment>
+</unit>
+<unit id="72002676-6773-49b1-b302-208113140843">
+<notes>
+<note appliesTo="source">line: 466</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Target function for function call logging</source>
+</segment>
+</unit>
+<unit id="11ad65bc-e501-4a12-90e0-b6aa5d8c6aff">
+<notes>
+<note appliesTo="source">line: 468</note>
+</notes>
+<segment>
+<source>This combobox defines the function whose calls will be logged when enabling [function call logging](#loggingFunctionCall).</source>
+</segment>
+</unit>
+<unit id="a485dd6b-3320-4795-9b2c-5c9c0634e95d">
+<notes>
+<note appliesTo="source">line: 469</note>
+</notes>
+<segment>
+<source>You can select the function among various output functions or opt for the custom function choice.</source>
+</segment>
+</unit>
+<unit id="51f370eb-3594-4df5-a559-8e7507e1874e">
+<notes>
+<note appliesTo="source">line: 471</note>
+</notes>
+<segment>
+<source>If you select the custom function choice, you will need to enter the complete name of the function you want log calls for.</source>
+</segment>
+</unit>
+<unit id="f2169b1a-0599-4025-bdcb-06f8ca396dd9">
+<notes>
+<note appliesTo="source">line: 472</note>
+</notes>
+<segment>
+<source>This complete name should include its location (package, module, class, etc.).</source>
+</segment>
+</unit>
+<unit id="13688c30-dabe-4fd9-9cf3-229761b56202">
+<notes>
+<note appliesTo="source">line: 473</note>
+</notes>
+<segment>
+<source>Be careful to define the function with its original location, i.e. where it was actually defined, else, call logging is less likely to work.</source>
+</segment>
+</unit>
+<unit id="482b09d3-e782-49e4-b3d0-1002433cfad7">
+<notes>
+<note appliesTo="source">line: 474</note>
+</notes>
+<segment>
+<source>For example, use `speech.speech.getCurrentLanguage` which targets the function defined in `speech\speech.py`, not `speech.getCurrentLanguage` witch target the symbol imported in `speech\__init__.py`.</source>
+</segment>
+</unit>
+<unit id="e9debac0-6b9c-422d-b85a-53dbacc60878">
+<notes>
+<note appliesTo="source">line: 476</note>
+</notes>
+<segment>
+<source>&lt;a id="functionCallLogMethodSetting"&gt;&lt;/a&gt;</source>
+</segment>
+</unit>
+<unit id="7f18c895-47b8-4e31-8138-fd126d148692">
+<notes>
+<note appliesTo="source">line: 477</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Function call log method</source>
+</segment>
+</unit>
+<unit id="34cbf984-063c-488a-9e62-8f4e3f99efb9">
+<notes>
+<note appliesTo="source">line: 479</note>
+</notes>
+<segment>
+<source>This combobox defines the method used to identify function calls when [function call logging](#loggingFunctionCall) is enabled.</source>
+</segment>
+</unit>
+<unit id="97366df6-e613-4fe4-a2a4-5290b8da4b10">
+<notes>
+<note appliesTo="source">line: 480</note>
+</notes>
+<segment>
+<source>This parameter can also be toggled pressing `NDTTGesture, shift+S`.</source>
+</segment>
+</unit>
+<unit id="7dbf51d7-991f-41fa-956f-ebb6beca75aa">
+<notes>
+<note appliesTo="source">line: 481</note>
+</notes>
+<segment>
+<source>When this method is modified, it will first apply the next time the function call log is activated; that is, it does not apply to current function call logging if currently enabled.</source>
+</segment>
+</unit>
+<unit id="de900122-d0cf-4cd4-8add-5cb6a9a44841">
+<notes>
+<note appliesTo="source">line: 483</note>
+<note appliesTo="source">prefix: ## </note>
+</notes>
+<segment>
+<source>Change log</source>
+</segment>
+</unit>
+<unit id="8b1d1d24-4a08-4923-b6fd-13444abe9fef">
+<notes>
+<note appliesTo="source">line: 485</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Version 10.1</source>
+</segment>
+</unit>
+<unit id="7884e3f6-e065-4bcf-962c-32cbb72ce038">
+<notes>
+<note appliesTo="source">line: 487</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>The commands entry point gesture has been changed to `NVDA+Z` to avoid conflict with new repeat last speech command.</source>
+</segment>
+</unit>
+<unit id="a86d0b9b-ef48-48ff-8808-8ab97b680328">
+<notes>
+<note appliesTo="source">line: 488</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>The command to cycle "Play a sound for logged errors" has been updated to support the "No" value introduced in NVDA 2026.2.</source>
+</segment>
+</unit>
+<unit id="466a05ab-4ed9-48f4-a317-8a2367e2415c">
+<notes>
+<note appliesTo="source">line: 490</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Version 10.0</source>
+</segment>
+</unit>
+<unit id="6cc79b21-cc23-473d-ab51-6ebe1891d935">
+<notes>
+<note appliesTo="source">line: 492</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Log reader: when logging function calls, arguments and return values are now logged too. (with the contribution of hwf1324)</source>
+</segment>
+</unit>
+<unit id="f874b866-2b07-4ee2-8e85-54ddf89a5d2a">
+<notes>
+<note appliesTo="source">line: 493</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Log reader: when using navigation commands, some messages are no longer reported as truncated or empty.</source>
+</segment>
+</unit>
+<unit id="345c60c5-0113-4497-a101-ed8778e63925">
+<notes>
+<note appliesTo="source">line: 494</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>When reporting last error, some messages are no longer reported uninterpolated (e.g. containing "%s").</source>
+</segment>
+</unit>
+<unit id="944f2c46-7adb-4e36-8675-083ff761cbad">
+<notes>
+<note appliesTo="source">line: 495</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Fixed some errors with NVDA 2019.2: first usage of Python console history, reporting of non-ASCII object names with Object property explorer.</source>
+</segment>
+</unit>
+<unit id="45b3a527-a3f2-4c4e-a5cc-8079035fc079">
+<notes>
+<note appliesTo="source">line: 496</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Compatibility with NVDA 2026.1.</source>
+</segment>
+</unit>
+<unit id="e2d9df84-d292-4bc7-b610-3baa95b2f7ad">
+<notes>
+<note appliesTo="source">line: 498</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Version 9.0</source>
+</segment>
+</unit>
+<unit id="08bd88a4-bb15-474f-bc9d-7b062caf3aeb">
+<notes>
+<note appliesTo="source">line: 500</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>A new command to open a code file when the caret is on a file path/line has been added.</source>
+</segment>
+</unit>
+<unit id="3575eb07-f74a-463f-930b-b53ad9a1a6f2">
+<notes>
+<note appliesTo="source">line: 501</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Function calls logging (previously known as stack logging) has been improved offering the possibility to log the call of any function and providing a more reliable method to identify function calls.</source>
+</segment>
+</unit>
+<unit id="2b46b6a2-f024-417b-bd44-a7167970303e">
+<notes>
+<note appliesTo="source">line: 502</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Fixed a security issue with the log reader ([GHSA-39pg-6xpm-mjgf](https://github.com/CyrilleB79/NVDA-Dev-Test-Toolbox/security/advisories/GHSA-39pg-6xpm-mjgf)).</source>
+</segment>
+</unit>
+<unit id="236df143-2cfb-44c7-a1c2-ceab42947e1a">
+<notes>
+<note appliesTo="source">line: 503</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>IO beep messages are now correctly reported with NVDA 2019.2.1.</source>
+</segment>
+</unit>
+<unit id="4bade463-91e2-4915-a4f7-6535ec748513">
+<notes>
+<note appliesTo="source">line: 504</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Log reading commands no longer fail to read some speech commands (e.g. when using Console Toolkit add-on)</source>
+</segment>
+</unit>
+<unit id="03139d70-a7ee-446b-9285-c4eb1cad204b">
+<notes>
+<note appliesTo="source">line: 505</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Addressed an issues where, in case of multiple possible reverse translations, the last menu item was copied to clipboard, no matter the item actually clicked.</source>
+</segment>
+</unit>
+<unit id="0627b0f5-4021-4e81-bb31-5259c22b126a">
+<notes>
+<note appliesTo="source">line: 506</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Prepared compatibility for NVDA 2026.1</source>
+</segment>
+</unit>
+<unit id="aa30103d-e44a-476f-bab9-cebf8513de53">
+<notes>
+<note appliesTo="source">line: 508</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Version 8.0</source>
+</segment>
+</unit>
+<unit id="6148fb51-3434-419f-8751-041c028b6749">
+<notes>
+<note appliesTo="source">line: 510</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Python console history can now be preserved accross restarts.</source>
+</segment>
+</unit>
+<unit id="06c8d2d3-1493-44d4-a7df-f1a0f79e809e">
+<notes>
+<note appliesTo="source">line: 511</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Reverse translation: Added a second command to reverse translate a string using both NVDA and its add-ons translations.</source>
+</segment>
+</unit>
+<unit id="0dfb1270-0358-4d62-9771-e13b17b3be17">
+<notes>
+<note appliesTo="source">line: 512</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>New log reader commans to jump to previous or next braille output message</source>
+</segment>
+</unit>
+<unit id="a0ee8d85-82a3-410a-80d2-0f1c203e2ff7">
+<notes>
+<note appliesTo="source">line: 513</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>New log reader commans to jump to previous or next block in a message, e.g. previous or next thread stack in a watchdog freeze report, previous or next block of properties in the developer info for navigator object, etc.</source>
+</segment>
+</unit>
+<unit id="57831031-ca43-48e4-bdaf-840e022b9ec3">
+<notes>
+<note appliesTo="source">line: 514</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>New log reader commands to jump to the first or last interesting line of a block, e.g. first or last frame of a traceback</source>
+</segment>
+</unit>
+<unit id="6d5bf0ec-1082-4b19-b791-1dc77a155256">
+<notes>
+<note appliesTo="source">line: 515</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>A new log reader "Go to error" command to jump to the error in a traceback frame.</source>
+</segment>
+</unit>
+<unit id="c124959e-18e9-48d7-8679-2f4b5cf36e36">
+<notes>
+<note appliesTo="source">line: 516</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>A new log reader command to display an help message listing all the available commands while reading a log.</source>
+</segment>
+</unit>
+<unit id="22c52094-b8b5-4e31-b392-4f3353d18e28">
+<notes>
+<note appliesTo="source">line: 517</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>The log reading mode is now enabled by default in the Python console output pane.</source>
+</segment>
+</unit>
+<unit id="a618e5ce-363b-4ae5-8a2e-2575a3ccebbe">
+<notes>
+<note appliesTo="source">line: 518</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>A new command to anonymize a log</source>
+</segment>
+</unit>
+<unit id="4f9b888e-e0a7-485d-ad76-a3412bd3def3">
+<notes>
+<note appliesTo="source">line: 519</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>The console startup script now supports unicode strings (for Python 3 only); full unicode file may not be supported though.</source>
+</segment>
+</unit>
+<unit id="e43a66b6-3244-4994-b873-54b21c652f6b">
+<notes>
+<note appliesTo="source">line: 520</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>The Python console startup script will now only be executed once and only once when the console opens.</source>
+</segment>
+</unit>
+<unit id="18cbacc4-ec79-4fd5-a7b7-6c38becaad31">
+<notes>
+<note appliesTo="source">line: 521</note>
+</notes>
+<segment>
+<source>A bug where this script could be executed many times when reloading the add-ons has been fixed.</source>
+</segment>
+</unit>
+<unit id="cb078995-4ebb-4f55-a8b7-fef36df826f6">
+<notes>
+<note appliesTo="source">line: 522</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Improved error handling in the console startup script.</source>
+</segment>
+</unit>
+<unit id="99d60ab0-d625-4aad-83f2-c7980a18025a">
+<notes>
+<note appliesTo="source">line: 523</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Bugfix: An empty log files created when log is disabled do not fail anymore to be saved as old log.</source>
+</segment>
+</unit>
+<unit id="ffc078a0-d358-43dc-9a4e-8e2371df9f7e">
+<notes>
+<note appliesTo="source">line: 524</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Speech on demand is now supported in layered commands</source>
+</segment>
+</unit>
+<unit id="ebe78697-66ac-49c3-ae62-04d87b5aa261">
+<notes>
+<note appliesTo="source">line: 525</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Improved error handling of the script opener command (in case of wrong or missing configuration, or when a braille display is in use).</source>
+</segment>
+</unit>
+<unit id="a418bcbc-adc0-4fb1-9263-7d9bd77bab1f">
+<notes>
+<note appliesTo="source">line: 527</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Version 7.3</source>
+</segment>
+</unit>
+<unit id="d38846c6-d678-430e-92f6-c557699c9d93">
+<notes>
+<note appliesTo="source">line: 529</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Bugfix: The command to activate layered commands of the add-on can now be assigned another gesture.</source>
+</segment>
+</unit>
+<unit id="2422c2e9-097c-4082-aef4-ffe3b93e08ab">
+<notes>
+<note appliesTo="source">line: 531</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Version 7.1</source>
+</segment>
+</unit>
+<unit id="2e62c262-498a-4998-ae15-3a79175e2f7f">
+<notes>
+<note appliesTo="source">line: 533</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Compatibility with NVDA 2025.1.</source>
+</segment>
+</unit>
+<unit id="6fb089aa-66ef-4595-8d40-9fb4eba0a3ac">
+<notes>
+<note appliesTo="source">line: 535</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Version 7.0</source>
+</segment>
+</unit>
+<unit id="9fba20af-7b91-422c-98eb-23f2b40d56b8">
+<notes>
+<note appliesTo="source">line: 537</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Layered commands have been introduced; the entry point is `NVDA+X`.</source>
+</segment>
+</unit>
+<unit id="74d2ae1f-d66b-4d39-aeaa-13cf45680124">
+<notes>
+<note appliesTo="source">line: 538</note>
+</notes>
+<segment>
+<source>  The existing commands have been modified accordingly.</source>
+</segment>
+</unit>
+<unit id="9dbf5bae-e073-4f0a-b017-d899b55aa35e">
+<notes>
+<note appliesTo="source">line: 539</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>A new command (`NVDA+X, R`) to reverse translate the last spoken message.</source>
+</segment>
+</unit>
+<unit id="8ee8e193-e3fb-4acb-8836-7330a5e3dcc3">
+<notes>
+<note appliesTo="source">line: 540</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>A new command (`NVDA+X, C`) to open the source code of the script associated to the next pressed gesture.</source>
+</segment>
+</unit>
+<unit id="a3ff971f-0e99-47ec-8a81-8e94d252874e">
+<notes>
+<note appliesTo="source">line: 541</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Added speech on demand support.</source>
+</segment>
+</unit>
+<unit id="8867191e-53fe-4b9c-b97f-421f1286369c">
+<notes>
+<note appliesTo="source">line: 542</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>The log manager now allows more actions, either with the dedicated buttons in the dialogs or using keyboard shortcuts in the list: `enter` to open the log, `control+C` to copy the log file and `delete` to delete a log file.</source>
+</segment>
+</unit>
+<unit id="be58ecf7-1306-461f-8ca1-c8f741bc3165">
+<notes>
+<note appliesTo="source">line: 543</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>The sorting order in the log manager has been reversed (most recent log on top).</source>
+</segment>
+</unit>
+<unit id="64425d84-3456-4dc0-b326-5c66abecddc3">
+<notes>
+<note appliesTo="source">line: 544</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Fixed an issue when trying to open a Python module with openCodeFile function.</source>
+</segment>
+</unit>
+<unit id="2c50ec26-ec2b-4851-b602-f016048f0d99">
+<notes>
+<note appliesTo="source">line: 546</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Version 6.3</source>
+</segment>
+</unit>
+<unit id="b377361a-8313-4df5-839b-3754fc1c3343">
+<notes>
+<note appliesTo="source">line: 548</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Compatibility with NVDA 2024.1.</source>
+</segment>
+</unit>
+<unit id="d8d9983f-9daa-43f0-8fae-0e351d9fc0fd">
+<notes>
+<note appliesTo="source">line: 550</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Version 6.2</source>
+</segment>
+</unit>
+<unit id="ddfef7ff-2271-4eeb-aa11-dc1d39deba79">
+<notes>
+<note appliesTo="source">line: 552</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Restores console opening for NVDA &lt; 2021.1.</source>
+</segment>
+</unit>
+<unit id="cbf1c067-78f4-4a1b-b875-fb2445f922dd">
+<notes>
+<note appliesTo="source">line: 553</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Addresses potential security issues related to [GHSA-xg6w-23rw-39r8][5] when using the add-on with older versions of NVDA.</source>
+</segment>
+</unit>
+<unit id="3536c2c2-da56-42cf-9a06-c7198242df41">
+<notes>
+<note appliesTo="source">line: 554</note>
+</notes>
+<segment>
+<source>However, it is recommended to use NVDA 2023.3.3 or higher.</source>
+</segment>
+</unit>
+<unit id="2f540cf0-75c8-44cc-aec6-d2e006fa4e27">
+<notes>
+<note appliesTo="source">line: 556</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Version 6.1</source>
+</segment>
+</unit>
+<unit id="fb58d84f-fa80-46c1-9c2d-c12457079dca">
+<notes>
+<note appliesTo="source">line: 558</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Opening the source file of an object located in the submodule of a package is now working.</source>
+</segment>
+</unit>
+<unit id="ae8a6f56-9cb6-49a1-a4ac-e545b60b6fe6">
+<notes>
+<note appliesTo="source">line: 559</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Bugfix: The enhanced exit dialog can now be reopened and used as expected after having been closed. (contribution from Łukasz Golonka)</source>
+</segment>
+</unit>
+<unit id="16c13da2-cc51-4168-ad0b-3fb820eb1297">
+<notes>
+<note appliesTo="source">line: 561</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Version 6.0</source>
+</segment>
+</unit>
+<unit id="2f287b50-55f0-43c8-b184-942cd450a19b">
+<notes>
+<note appliesTo="source">line: 563</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>While using object navigation commands, a specific object property can be reported instead of NVDA usual object reporting.</source>
+</segment>
+</unit>
+<unit id="cc98c396-e214-454d-8ef4-7ae216ddb625">
+<notes>
+<note appliesTo="source">line: 564</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>In log reading mode, the "C" key to open a code file from the log now also works on an input help message.</source>
+</segment>
+</unit>
+<unit id="569dcd82-c838-4c37-9815-1d7665c5cb6d">
+<notes>
+<note appliesTo="source">line: 565</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Bugfix: The add-on can now start successfully when the number of logs to save is set to its maximum value.</source>
+</segment>
+</unit>
+<unit id="89d56807-e646-4e1e-86e3-12345f052297">
+<notes>
+<note appliesTo="source">line: 566</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Bugfix: Python console startup script's output does not prevent anymore to jump to the first result in the console when using result navigation commands.</source>
+</segment>
+</unit>
+<unit id="d2e9059b-1055-4dd5-846a-366de446aa99">
+<notes>
+<note appliesTo="source">line: 567</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Note: From now on, localization updates will not appear anymore in the change log.</source>
+</segment>
+</unit>
+<unit id="33bb4601-aef5-4f7c-87c9-b51b9f8a2772">
+<notes>
+<note appliesTo="source">line: 569</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Version 5.0</source>
+</segment>
+</unit>
+<unit id="ca8bcb55-21cd-44e3-92f0-94e7aee51af7">
+<notes>
+<note appliesTo="source">line: 571</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>If Instant Translate add-on is installed, it is now possible to have speech messages translated on the fly when using log reading commands.</source>
+</segment>
+</unit>
+<unit id="855df6a3-cafd-475d-88f7-63809b8d6254">
+<notes>
+<note appliesTo="source">line: 572</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>While in log reading mode, pressing E or shift+E now jumps to CRITICAL erorr messages as well as normal ERROR messages.</source>
+</segment>
+</unit>
+<unit id="d4f1be80-647a-4903-b2b1-c0efdfab55db">
+<notes>
+<note appliesTo="source">line: 573</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>New log quick navigation commands have been added to jump to input and to speech messages.</source>
+</segment>
+</unit>
+<unit id="87b58da3-bfec-42db-8c09-8fac61f39c34">
+<notes>
+<note appliesTo="source">line: 574</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>A new command allow to place a marker in the log; and specific quick navigation commands in log reading mode allow to jump to them.</source>
+</segment>
+</unit>
+<unit id="6d957e7e-29fd-4eb1-b0a5-9d45df78b2f1">
+<notes>
+<note appliesTo="source">line: 575</note>
+</notes>
+<segment>
+<source>  Credit: the initial idea for this feature comes from Debug Helper add-on by Luke Davis.</source>
+</segment>
+</unit>
+<unit id="adfadff1-f010-4275-ab82-d5b0c80d8b11">
+<notes>
+<note appliesTo="source">line: 576</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Bubfix: The memorization of the last error do not fail anymore in some cases.</source>
+</segment>
+</unit>
+<unit id="801c2316-5045-4913-a355-b030d086759b">
+<notes>
+<note appliesTo="source">line: 577</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Bugfix: The add-on can initialize again with NVDA 2019.2.1.</source>
+</segment>
+</unit>
+<unit id="1064c551-0701-4ebe-9bae-9d2ce989a2d3">
+<notes>
+<note appliesTo="source">line: 578</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Bugfix: Log saving feature will not fail anymore with non-ASCII logs.</source>
+</segment>
+</unit>
+<unit id="df8bf683-e800-4b19-bb19-cdae988bc0fa">
+<notes>
+<note appliesTo="source">line: 580</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Version 4.2</source>
+</segment>
+</unit>
+<unit id="6b74ef00-b8bd-4ff2-9a15-8340bf4b557c">
+<notes>
+<note appliesTo="source">line: 582</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Fixed an error with NVDA version below 2021.3.</source>
+</segment>
+</unit>
+<unit id="bffa4e72-af87-4c52-b950-8f71d909bc65">
+<notes>
+<note appliesTo="source">line: 583</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Fixed the stack trace log formatting.</source>
+</segment>
+</unit>
+<unit id="92930aca-4e83-4489-bfd2-446f80375df2">
+<notes>
+<note appliesTo="source">line: 584</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>First localizations.</source>
+</segment>
+</unit>
+<unit id="58a4d78d-d035-4ffe-bbc7-aa175dac5ee5">
+<notes>
+<note appliesTo="source">line: 586</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Version 4.1</source>
+</segment>
+</unit>
+<unit id="f7d6ab72-ae54-47e4-a56e-917a637bb886">
+<notes>
+<note appliesTo="source">line: 588</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Fixed a bug occurring in some situations while logging an error.</source>
+</segment>
+</unit>
+<unit id="734c8cea-598e-445d-987f-90a512ff4e59">
+<notes>
+<note appliesTo="source">line: 589</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>The add-on's settings can now be modified only when the default profile is active to avoid config issues.</source>
+</segment>
+</unit>
+<unit id="ce94a987-5a25-43bd-a65d-fd5e225624e7">
+<notes>
+<note appliesTo="source">line: 591</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Version 4.0</source>
+</segment>
+</unit>
+<unit id="c209b3c7-8923-43de-bdae-755347637a0d">
+<notes>
+<note appliesTo="source">line: 593</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Possibility to back up old logs and introduction of a logs manager.</source>
+</segment>
+</unit>
+<unit id="8e54ee6a-cda5-48cb-b4ea-3924f5ce1ad7">
+<notes>
+<note appliesTo="source">line: 594</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Added a script to report the last logged error.</source>
+</segment>
+</unit>
+<unit id="c7161b26-2502-4b7d-9646-e152087394c5">
+<notes>
+<note appliesTo="source">line: 595</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Fixed a bug preventing last log message to be read in older NVDA versions.</source>
+</segment>
+</unit>
+<unit id="93b60390-74ab-4569-826d-ca8fc4eb6594">
+<notes>
+<note appliesTo="source">line: 597</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Version 3.2</source>
+</segment>
+</unit>
+<unit id="f521ac22-cc7b-4566-907a-9659d5c7aa81">
+<notes>
+<note appliesTo="source">line: 599</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Compatibility with NVDA 2023.1.</source>
+</segment>
+</unit>
+<unit id="a72168e6-3485-4d93-8f4b-fda0ac8b25a0">
+<notes>
+<note appliesTo="source">line: 601</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Version 3.1</source>
+</segment>
+</unit>
+<unit id="e4c8c65d-7255-469d-b9b3-f89fafe69c0a">
+<notes>
+<note appliesTo="source">line: 603</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Fixed an error occurring when requesting unavailable information on an object.</source>
+</segment>
+</unit>
+<unit id="4ec6727e-368c-43dd-8f9f-96ed2a2a8906">
+<notes>
+<note appliesTo="source">line: 605</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Version 3.0</source>
+</segment>
+</unit>
+<unit id="beac70c3-8af3-4262-b8a7-f8727e030da1">
+<notes>
+<note appliesTo="source">line: 607</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>In a log, you can now press C on a message's header line to open the function/module which has emitted it.</source>
+</segment>
+</unit>
+<unit id="3484ab6f-5ba0-4cef-9311-51a84d83697f">
+<notes>
+<note appliesTo="source">line: 608</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>In the console, `openCodeFile` function can now receive as parameter the object or a string containing its name.</source>
+</segment>
+</unit>
+<unit id="0527643e-71ce-4d68-a387-c71a48944a13">
+<notes>
+<note appliesTo="source">line: 609</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>New feature: NVDA console startup file: If it exists, the file YourNVDAConfigFolder\ndtt\consoleStartup.py will be executed when NVDA console is first opened or when add-ons are reloaded.</source>
+</segment>
+</unit>
+<unit id="e8d13f6e-0931-4781-bd9c-a13b5e58d95e">
+<notes>
+<note appliesTo="source">line: 610</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Various minor fixes for `openCodeFile` Python console's function and the command to open the source file corresponding to a line in the log.</source>
+</segment>
+</unit>
+<unit id="6e5aaece-7e84-493e-a10f-c5351fe2d6df">
+<notes>
+<note appliesTo="source">line: 611</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Fixed an issue when trying to report roles/states for object explorer in older version of NVDA.</source>
+</segment>
+</unit>
+<unit id="2d47ce86-83e7-4355-9d1d-77dc531c3e37">
+<notes>
+<note appliesTo="source">line: 612</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>The add-on does not cause a problem anymore with the tree interceptor when using UIA in Edge.</source>
+</segment>
+</unit>
+<unit id="4c7d1bc5-db58-4d7e-8148-da82a838d19e">
+<notes>
+<note appliesTo="source">line: 614</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Version 2.1</source>
+</segment>
+</unit>
+<unit id="814dce86-2cad-4e43-a824-bd38e05d7d52">
+<notes>
+<note appliesTo="source">line: 616</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Various bugfixes and code refactoring/cleaning to address all use cases: all supported versions, installed vs. run from source, etc. (contribution from Łukasz Golonka)</source>
+</segment>
+</unit>
+<unit id="5372e248-5aca-426e-9e46-61d892c55f2c">
+<notes>
+<note appliesTo="source">line: 617</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Rewriting of the compa module (contribution from Łukasz Golonka)</source>
+</segment>
+</unit>
+<unit id="9b27c3e9-73d9-4021-83b3-626c10dba37e">
+<notes>
+<note appliesTo="source">line: 618</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>The restart dialog can now be opened only once.</source>
+</segment>
+</unit>
+<unit id="44a98056-1df0-4ffa-b675-85cf26ab3c9d">
+<notes>
+<note appliesTo="source">line: 619</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>The object explorer shortcuts are now unassigned by default and need to be mapped by the user.</source>
+</segment>
+</unit>
+<unit id="df31b60e-686b-4b59-b88c-042fa16cb022">
+<notes>
+<note appliesTo="source">line: 620</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>With the object explorer, a double-press to call the script to report the current object's property now displays the reported information in a browseable message.</source>
+</segment>
+</unit>
+<unit id="8a50ff69-08a4-4a76-90bb-2182d83d9399">
+<notes>
+<note appliesTo="source">line: 622</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Version 2.0</source>
+</segment>
+</unit>
+<unit id="d17cec54-9202-40ec-af1b-d786fd44bb07">
+<notes>
+<note appliesTo="source">line: 624</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>New feature: Enhanced restart dialog to specify some extra options when restarting NVDA.</source>
+</segment>
+</unit>
+<unit id="b88eeba7-93f6-42d8-96ce-43de9ad6a4ce">
+<notes>
+<note appliesTo="source">line: 625</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>New feature: extended description mode.</source>
+</segment>
+</unit>
+<unit id="0bf7b062-ae94-42bd-a836-17e4e70efad8">
+<notes>
+<note appliesTo="source">line: 626</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Play error sound feature harmonized between pre and post 2021.3 versions of NVDA.</source>
+</segment>
+</unit>
+<unit id="f8e478f3-ebc8-4aaa-9d5f-f8f47dfa3224">
+<notes>
+<note appliesTo="source">line: 627</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>New feature: Log reader commands are now available in the log viewer and also optionally in edit fields or webpages.</source>
+</segment>
+</unit>
+<unit id="cba9ec27-060d-423c-b7b9-eb8f9a11f529">
+<notes>
+<note appliesTo="source">line: 628</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>New feature: In the Python console, an `openCodeFile` function is available to view the source code of an object.</source>
+</segment>
+</unit>
+<unit id="b32630e6-8355-4edb-9873-729d8431e0f3">
+<notes>
+<note appliesTo="source">line: 629</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Some features are now disabled in secure mode for security reasons.</source>
+</segment>
+</unit>
+<unit id="15b8c83b-be1c-4b8e-a557-ad0cb4d33e5a">
+<notes>
+<note appliesTo="source">line: 630</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>The add-on's compatibility range has been extended (from 2019.2 to 2021.1).</source>
+</segment>
+</unit>
+<unit id="75e55dd8-25ff-442d-9454-015343e871e6">
+<notes>
+<note appliesTo="source">line: 631</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Releases are now performed with GitHub action instead of appVeyor.</source>
+</segment>
+</unit>
+<unit id="bbb5035a-4bd8-4bd8-bce0-f1b391d2426a">
+<notes>
+<note appliesTo="source">line: 633</note>
+<note appliesTo="source">prefix: ### </note>
+</notes>
+<segment>
+<source>Version 1.0</source>
+</segment>
+</unit>
+<unit id="b0b2a2d5-6426-4c59-8c19-55f543ff6c03">
+<notes>
+<note appliesTo="source">line: 635</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>Initial release.</source>
+</segment>
+</unit>
+<unit id="503df863-ec3e-4b24-9dfe-1998f6de37ee">
+<notes>
+<note appliesTo="source">line: 637</note>
+</notes>
+<segment>
+<source>[2]: https://www.nvaccess.org/files/nvda/documentation/userGuide.html#CommandLineOptions</source>
+</segment>
+</unit>
+<unit id="79edae95-61a3-4227-8aa5-f63db872e99d">
+<notes>
+<note appliesTo="source">line: 639</note>
+</notes>
+<segment>
+<source>[3]: https://addons.nvda-project.org/addons/instantTranslate.en.html</source>
+</segment>
+</unit>
+<unit id="74116cb6-99e4-4304-8457-9341376bd488">
+<notes>
+<note appliesTo="source">line: 641</note>
+</notes>
+<segment>
+<source>[4]: https://www.nvaccess.org/files/nvda/documentation/userGuide.html#PlayErrorSound</source>
+</segment>
+</unit>
+<unit id="2b1e7639-af8c-4ed2-ae08-08ff40bbf85a">
+<notes>
+<note appliesTo="source">line: 643</note>
+</notes>
+<segment>
+<source>[5]: https://github.com/nvaccess/nvda/security/advisories/GHSA-xg6w-23rw-39r8#event-132994</source>
+</segment>
+</unit>
+</file>
+</xliff>
