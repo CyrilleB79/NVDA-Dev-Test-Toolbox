@@ -13,7 +13,7 @@ NVDA Dev & Test Toolbox надає інструменти для налагод�
 
 * Вдосконалений діалог виходу з NVDA для вибору додаткових параметрів під час перезапуску NVDA.
 * Різноманітні функції, пов'язані із зафіксованими в журналі помилками.
-* Оглядач властивостей об'єктів.
+* Провідник властивостей об'єктів.
 * Інструменти для роботи зі скриптами та вихідним кодом: розширений режим опису скриптів і команди відкриття вихідного коду.
 * Команди для спрощення читання та аналізу журналу.
 * Резервні копії старих журналів
@@ -25,14 +25,14 @@ NVDA Dev & Test Toolbox надає інструменти для налагод�
 
 ## Команди
 
-Це доповнення використовує багатошарові команди для всіх нових команд, які воно додає.
+Цей додаток використовує багаторівневі команди для всіх нових команд, які він додає.
 Точкою входу для цих команд є `NVDA+Z`; тому всі команди повинні виконуватися за допомогою `NVDA+Z`, а потім ще однієї літери або жесту.
 За потреби ви можете змінити його в діалоговому вікні Жести вводу.
 
 У решті цієї документації ми називатимемо цей жест `Жест NDTT`.
 Наприклад, `Жест NDTT, S` означає `NVDA+Z, S`, якщо ви не змінили жест за замовчуванням.
 
-Ви можете переглянути список усіх доступних багатошарових команд, натиснувши `Жест NDTT, H`.
+Ви можете переглянути список усіх доступних багаторівневих команд, натиснувши `Жест NDTT, H`.
 
 Для команд, які ви використовуєте частіше, ви також можете визначити прямий жест у діалоговому вікні жестів вводу.
 
@@ -63,11 +63,11 @@ NVDA Dev & Test Toolbox надає інструменти для налагод�
 Проте комбінований список на панелі «Додаткові налаштування» не портується.
 Можливість вимкнути звуки помилок для будь-якої версії NVDA також не портується для версій, раніших за 2026.2.
 
-## Дослідник властивостей об’єктів
+## Провідник властивостей об'єктів
 
-Ця функція дозволяє повідомляти про деякі властивості поточного об’єкта навігатора, не відкриваючи переглядач журналу.
+Ця функція дозволяє повідомляти про деякі властивості поточного об'єкта навігатора, не відкриваючи переглядач журналу.
 
-Щоб отримати список властивостей об’єкта, перемістіть до нього об’єктний навігатор і скористайтеся такими командами:
+Щоб отримати список властивостей об'єкта, перемістіть до нього об'єктний навігатор і скористайтеся такими командами:
 
 * `Жест NDTT, Стрілка вгору`: вибирає попередню властивість і повідомляє її значення для об'єкта навігатора.
 * `Жест NDTT, Стрілка вниз`: вибирає наступну властивість і повідомляє її значення для об'єкта навігатора.
@@ -97,7 +97,7 @@ name, role, state, value, windowClassName, windowControlID, windowHandle, locati
 Дві інші команди дозволяють відкрити вихідний код за його шляхом:
 
 * `Жест NDTT, Shift+C` відкриває вихідний код, шлях до якого розташований під системним курсором.
-* Жест NDTT, Control+C відкриває вихідний код, шлях до якого розташований під курсором перегляду.
+* `Жест NDTT, Control+C` відкриває вихідний код, шлях до якого розташований під курсором перегляду.
 
 E.g. if the caret or the review cursor is located on the following line, the command will open the corresponding file in your editor:
 `C:\Users\username\AppData\Roaming\nvda\addons\addonName\globalPlugins\addonName\__init__.py:48`
@@ -115,7 +115,7 @@ E.g. if the caret or the review cursor is located on the following line, the com
 Жест для ввімкнення або вимкнення цієї функції — `Жест NDTT, D`.
 
 Виконання в режимі довідки введення жесту, прив'язаного до скрипта без опису, також створює запис для цього скрипта в діалозі керування жестами.
-- Цей запис розташовується у спеціальній категорії під назвою «Скрипти без опису (змінюйте на свій страх і ризик!)».
+Цей запис розташовується у спеціальній категорії під назвою «Скрипти без опису (змінюйте на свій страх і ризик!)».
 Це дозволяє легко додавати, видаляти або змінювати стандартні жести NVDA для таких скриптів.
 Проте майте на увазі, що відсутність опису часто передбачена навмисно, щоб користувач не міг змінити пов'язаний жест.
 Справді, цей жест може бути визначений відповідно до гарячої клавіші програми.
@@ -138,81 +138,81 @@ E.g. if the caret or the review cursor is located on the following line, the com
 
 Відома помилка: скрипт, доданий для певного класу, залишається видимим навіть тоді, коли менеджер жестів відкрито в іншому контексті.
 
-## Log reading and analyzing features
+## Функції читання та аналізу журналу
 
 <a id="logPlaceMarkers"></a>
-### Place markers in the log
+### Розміщення маркерів у журналі
 
-While testing or working, you may want to mark a specific moment in the log, so that you can turn to it easily later when reading the log.
-To add a marker message in the log, press `NDTTGesture, K`.
+Під час тестування чи роботи у вас може виникнути потреба позначити певний момент у журналі, щоб потім легко повернутися до нього під час перегляду логів.
+Щоб додати повідомлення-маркер до журналу, натисніть `Жест NDTT, K`.
 A message as follows will be logged at INFO level:
 `-- NDTT marker 0 --`
 
-You can add as many markers as you want in the log.
-The marker's number will be incremented each time you place a marker in the log; it will only be reset when NVDA is restarted.
+Ви можете додавати до журналу скільки завгодно маркерів.
+Номер маркера збільшуватиметься щоразу, коли ви додаєте його до журналу; лічильник скинеться лише після перезапуску NVDA.
 
-### Log reader mode
+### Режим читання журналу
 
-A log reader mode provides commands to ease log reading and analyzing.
-In the log viewer window and in the Pyton console output area, the log reader is enabled by default, thus log reading commands are available immediately.
-In another text reading area such as an editor (e.g. Notepad++) or a webpage (e.g. GitHub issue), you need to press `NDTTGesture, L` to enable log reader mode and use its commands.
-When you are done with log reading and analyzing tasks, you can disable again `NDTTGesture, L` to disable the log reader mode.
+Режим читання журналу надає команди для спрощення перегляду та аналізу логів.
+У вікні перегляду журналу та в області виводу консолі Python режим читання журналу ввімкнено за замовчуванням, тому відповідні команди доступні одразу.
+В іншій області читання тексту, такій як редактор (наприклад, Notepad++) або вебсторінка (наприклад, повідомлення про проблему на GitHub), потрібно натиснути `Жест NDTT, L`, щоб увімкнути режим читання журналу та користуватися його командами.
+Коли ви завершите читання й аналіз журналу, ви можете знову натиснути `Жест NDTT, L`, щоб вимкнути режим читання журналу.
 
-The commands available in log reader mode are described hereafter.
-In this mode, you can also press `control+H` to display all the commands available.
+Команди, доступні в режимі читання журналу, описані нижче.
+У цьому режимі ви також можете натиснути `Control+H`, щоб відобразити всі доступні команди.
 
 <a id="logReaderQuickNavigationCommands"></a>
-#### Quick navigation commands
+#### Команди швидкої навігації
 
-Single letter command similar to browse mode quick navigation keys allow to move to various type of log messages:
+Однолітерні команди, подібні до клавіш швидкої навігації в режимі перегляду, дозволяють переходити між різними типами повідомлень журналу:
 
-* m: any message
-* e: error messages (`ERROR` and `CRITICAL`)
-* w: warning messages (`WARNING`)
-* f: info messages (`INFO`)
-* k: markers previously [placed in the log](#logPlaceMarkers)
-* g: debug warning messages (`DEBUGWARNING`)
-* i: input/output messages (`IO`)
-* n: input messages
-* s: speech messages
-* b: braille messages
-* d: debug messages (`DEBUG`)
+* m: будь-яке повідомлення
+* e:  повідомлення про помилки (`ERROR` та `CRITICAL`)
+* w: попереджувальні повідомлення (`WARNING`)
+* f: інформаційні повідомлення (`INFO`)
+* k: маркери, раніше [додані до журналу](#logPlaceMarkers)
+* g: налагоджувальні попереджувальні повідомлення (`DEBUGWARNING`)
+* i: повідомлення введення/виведення (`IO`)
+* n: повідомлення введення
+* s: повідомлення мовлення
+* b: повідомлення брайля
+* d: налагоджувальні повідомлення (`DEBUG`)
 
-Pressing the single letter moves to the next occurrence of this message.
-Combining the letter with the shift key moves to the previous occurrence of this message.
+Натискання окремої літери здійснює перехід до наступного входження такого повідомлення.
+Комбінація літери з клавішею Shift переходить до попереднього входження такого повідомлення.
 
-In addition, inside certain types of messages, you can jump block by block pressing `O` or `shift+O`.
-The following message types and associated blocks are supported:
+Крім того, всередині певних типів повідомлень можна переміщуватися блок за блоком, натискаючи `O` або `Shift+O`.
+Підтримуються такі типи повідомлень і пов'язані з ними блоки:
 
-* In messages containing tracebacks, e.g. error messages, block navigation allows you to jump between tracebacks
-  <target/>
-* In the message listing the stacks for Python threads logged when a freeze occurs, block navigation allows you to jump between thread stacks.
-* In the message providing developer info for the navigator object logged when you press `NVDA+F1`, block navigation allows you to jump between groups of properties.
-  <target/>
+* У повідомленнях, що містять трасування (tracebacks), наприклад у повідомленнях про помилки, навігація блоками дозволяє переходити між окремими трасуваннями
+  Це особливо корисно, коли присутні кілька трасувань поспіль, наприклад коли помилка виникає в блоці «except» конструкції try/except.
+* У повідомленні зі списком стеків потоків Python, яке записується в журнал у разі зависання, навігація блоками дозволяє переходити між стеками різних потоків.
+* У повідомленні з інформацією для розробників про об'єкт навігатора, яке записується після натискання `NVDA+F1`, навігація блоками дозволяє переходити між групами властивостей.
+  Існує чотири групи властивостей: загальні властивості, властивості appModule, властивості вікна та властивості конкретного інтерфейсу (IAccessible, UIA).
 
-At last, inside a block, you may want to jump quickly to first or last line of interest of the block.
-Use `shift+L` to jump to the first line of interest of the current block's content, e.g. the first frame of a traceback.
-And `L` to jump to the last line of interest of the block's content, e.g. last frame of a thread stack or error below a traceback.
+Зрештою, всередині блоку може виникнути потреба швидко перейти до його першого або останнього потрібного рядка.
+Використовуйте `Shift+L` для переходу до першого потрібного рядка у вмісті поточного блоку, наприклад до першого кадру трасування.
+І клавішу `L` для переходу до останнього потрібного рядка у вмісті блоку, наприклад до останнього кадру стека потоку або рядка помилки під трасуванням.
 
-#### Translation of speech message
+#### Переклад повідомлень мовлення
 
-Sometimes, you may have to look at a log taken on a system in a foreignh language that you do not understand.
-E.g. the log was taken on a Chinese system / NVDA, whereas you only understand French.
-If you have [Instant Translate][3] add-on installed, you may use it in conjonction with [quick log navigation commands](#logReaderQuickNavigationCommands) to have speech messages translated.
+Іноді виникає потреба переглянути журнал, отриманий із системи іноземною мовою, якої ви не знаєте.
+Наприклад, журнал знято на китайській системі чи версії NVDA, тоді як ви розумієте лише французьку.
+Якщо у вас встановлено додаток [Instant Translate][3], ви можете використовувати його разом із [командами швидкої навігації журналом](#logReaderQuickNavigationCommands) для перекладу повідомлень мовлення.
 
-* First configure Instant Translate's languages.
-  <target/>
-  <target/>
-* Open the log
-* Press `control+T` to enable automatic speech translation in the log
-* Use Quick navigation commands in the log, e.g. S, I, etc. Whenever a speech message is encountered, it will be spoken in your language (French in our previous example)
+* Спочатку налаштуйте мови в Instant Translate.
+  Вихідною мовою має бути мова системи, з якої знято журнал (наприклад, китайська).
+  Цільовою мовою має бути ваша мова (наприклад, французька).
+* Відкрийте журнал
+* Натисніть `control+T`, щоб увімкнути автоматичний переклад мовлення в журналі
+* Використовуйте команди швидкої навігації в журналі, наприклад, S, I тощо. Щоразу, коли зустрічатиметься голосове повідомлення, воно буде озвучено вашою мовою (французькою в нашому попередньому прикладі).
 
-If you want to disable speech translation, press `control+T` again.
+Якщо ви хочете вимкнути переклад мовлення, знову натисніть `control+T`.
 
 <a id="logReaderOpenSourceFile"></a>
-#### Open the file of the source code in your editor
+#### Відкриття файлу вихідного коду у вашому редакторі
 
-In the log some line may refer to the source code:
+Деякі рядки в журналі можуть посилатися на вихідний код:
 
 * A line belonging to a traceback contains the path and the line in a file, e.g.:
   `  File "virtualBuffers\__init__.pyc", line 226, in _getStoryLength`
@@ -221,92 +221,92 @@ In the log some line may refer to the source code:
 * The content of a message logged in input help mode (logged at info level):
   `Input help: gesture kb(desktop):NVDA+t, bound to script title on globalCommands.GlobalCommands`
 
-You may want to open the file containing this code to understand the context of the traceback or the logged message.
-Just press C to open this file.
+У вас може виникнути потреба відкрити файл із цим кодом, щоб краще зрозуміти контекст трасування або зафіксованого повідомлення.
+Просто натисніть C, щоб відкрити цей файл.
 
-To use this feature, you need to have configured your [favorite editor's command](#settingsOpenCommand) in the add-on's settings.
-If you are not running NVDA from source, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
+Щоб користуватися цією функцією, потрібно попередньо налаштувати [команду вашого улюбленого редактора](#settingsOpenCommand) у параметрах додатка.
+Якщо ви запускаєте NVDA не з вихідного коду, також має бути налаштований [шлях до вихідного коду NVDA](#settingsNvdaSourcePath).
 
-#### Analysing a traceback
+#### Аналіз трасування
 
 Sometimes you may have error tracebacks in the log, as in the following example:
 
-    <target/>
+    ERROR - scriptHandler.executeScript (14:47:43.426) - MainThread (15492):
 error executing script: <bound method LogContainer.script_openSourceFile of <NVDAObjects.Dynamic_LogViewerLogContainerIAccessibleRichEdit50WindowNVDAObject object at 0x34C1E510>> with gesture 'c'
-    <target/>
-      <target/>
-      <target/>
-        <target/>
-           <target/>
-      <target/>
-        <target/>
-        <target/>
-    <target/>
+    Traceback (most recent call last):
+      File "scriptHandler.pyc", line 300, in executeScript
+      File "C:\Users\myUserName\AppData\Roaming\nvda\addons\nvdaDevTestToolbox\globalPlugins\ndtt\logReader.py", line 603, in script_openSourceFile
+        if self.openStackTraceLine(line):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "C:\Users\myUserName\AppData\Roaming\nvda\addons\nvdaDevTestToolbox\globalPlugins\ndtt\logReader.py", line 667, in openStackTraceLine
+        0 / 0  # An erroneaous code line
+        ~~^~~
+    ZeroDivisionError: division by zero
 
-For frames where the source code is available, you may have noticed markers with `^` (caret) and `~` (tilde) characters.
-That's the way Python visually indicates the error's location as well as its context in a traceback frame.
-Pressing `control+E` moves the cursor at the beginning of the error in the source code line, i.e. the text marked by `^` (caret) character.
-A double press select this text.
-A triple press selects the error with its context, i.e. the text of the source code line marked by `^` (caret) and `~` (tilde) characters.
+Для кадрів, де доступний вихідний код, ви могли помітити позначки із символами `^` (дашок) та `~` (тильда).
+Саме так Python наочно вказує місце помилки та її контекст у кадрі трасування.
+Натискання `Control+E` переміщує курсор на початок помилки в рядку вихідного коду, тобто до тексту, позначеного символом `^` (карет).
+Подвійне натискання виділяє цей текст.
+Потрійне натискання виділяє помилку разом із її контекстом, тобто фрагмент рядка коду, позначений символами `^` (карет) та `~` (тильда).
 
-Please note that for logs taken with an NVDA version before 2024.1, thus with Python 3.7 or older, Python only indicates the error with one `^` (caret) character.
-Thus the double or triple press actions of this command becomes rather useless.
+Зверніть увагу: у журналах, отриманих у версіях NVDA до 2024.1 (відповідно з Python 3.7 або старішим), Python позначає помилку лише одним символом `^` (дашок).
+Через це подвійне та потрійне натискання для цієї команди стають практично непотрібними.
 
-#### Getting a summary of the available commands
+#### Перегляд списку доступних команд
 
-To display a list of all the available commands in log reading mode, press `control+H`.
+Щоб переглянути список усіх команд, доступних у режимі читання журналу, натисніть `Control+H`.
 
-## Anonymize a log
+## Анонімізація журналу
 
-When reporting issues, you may have to provide a log.
-However, logs may contain sensitive information (user names, e-mails, etc.).
-This add-on provides a command to anonymize a log's content.
+Під час повідомлення про помилки у вас може виникнути потреба надати журнал.
+Проте журнали можуть містити конфіденційні дані (імена користувачів, адреси електронної пошти тощо).
+Цей додаток надає команду для анонімізації вмісту журналу.
 
-Select a part of the log or its whole content and press `NDTTGesture, A`.
-The anonymized log content will be put in the clipboard.
-You can paste it on the current selection to replace it or anywhere else you wish.
+Виділіть частину журналу або весь його вміст і натисніть `Жест NDTT, A`.
+Анонімізований вміст журналу буде скопійовано до буфера обміну.
+Ви можете вставити його замість поточного виділення, щоб замінити його, або в будь-яке інше місце на ваш розсуд.
 
-To use this feature, you need to customize the anonymization rules used by this command.
-The file to configure these rules is located at: `pathToNVDAConfig\ndtt\anonymizationRules.dic` (e.g. `C:\Users\myUserName\AppData\Roaming\nvda\ndtt\anonymizationRules.dic`).
-You will find all the instructions to write this file in its header.
-In case you have corrupted your anonymization rules file or if you have deleted the header's instructions, just delete or rename this file and a new version of this file will be generated at next startup.
+Щоб користуватися цією функцією, вам потрібно налаштувати правила анонімізації, які використовує ця команда.
+Файл для налаштування цих правил розташований за шляхом: `pathToNVDAConfig\ndtt\anonymizationRules.dic` (наприклад, `C:\Users\myUserName\AppData\Roaming\nvda\ndtt\anonymizationRules.dic`).
+Усі інструкції щодо заповнення цього файлу ви знайдете в його заголовку.
+Якщо файл правил анонімізації буде пошкоджено або ви видалите інструкції із заголовка, просто видаліть або перейменуйте цей файл — нову версію буде створено під час наступного запуску.
 
 <a id="oldLogsBackup"></a>
-## Backup of old logs
+## Резервне копіювання старих журналів
 
-NVDA already provides a backup of the log of the previous session of NVDA; the file is called `nvda-old.log`.
-Sometimes however you may want to access older logs, e.g. because you have had to restart NVDA again before looking at `nvda-old.log`.
-This add-on allows you to configure if you want to backup old logs and how many of them; this is done in the [add-on's settings](#settingsLogsBackup).
+NVDA вже зберігає резервну копію журналу попереднього сеансу — цей файл має назву `nvda-old.log`.
+Проте іноді може знадобитися доступ до ще старіших журналів, наприклад якщо вам довелося перезапустити NVDA ще раз до того, як ви встигли переглянути `nvda-old.log`.
+Цей додаток дозволяє налаштувати, чи потрібно зберігати резервні копії старих журналів і яку їхню кількість; це робиться в [налаштуваннях додатка](#settingsLogsBackup).
 
-A log manager dialog allows to view the backed up logs.
-It can be opened going to NVDA menu -> Tools -> Logs manager
-In this dialog, you can see the list of all the backup logs and perform various actions on the selected log:
+Переглянути збережені журнали можна у вікні «Менеджер журналів».
+Його можна відкрити через меню NVDA -> Інструменти -> Менеджер журналів
+У цьому діалозі відображається список усіх резервних копій журналів, де ви можете виконати різні дії з вибраним файлом:
 
-* open it (press `Enter`)
-* delete it (press `Delete`)
-* copy the log file (press `control+C`)
+* відкрити його (натисніть `Enter`);
+* видалити його (натисніть `Delete`);
+* скопіювати файл журналу (натисніть `Control+C`).
 
-You can also select multiple logs to perform an actions on all of them.
+Ви також можете вибрати кілька журналів одночасно, щоб застосувати дію до всіх них.
 
-To be able to open a log, you should first have configured the [Command to open a file in your favorite editor](#settingsOpenCommand).
+Щоб мати змогу відкривати журнал, попередньо налаштуйте [команду для відкриття файлу у вашому улюбленому редакторі](#settingsOpenCommand).
 
-## Python console extension
+## Розширення консолі Python
 
 <a id="pythonConsoleOpenCodeFile"></a>
-### `openCodeFile` function
+### Функція `openCodeFile`
 
 In the console, you can call the following function to view the source code that defines the variable `myVar`:
 `openCodeFile(myVar)`
 
-For this feature to work, you need to have configured your [favorite editor's command](#settingsOpenCommand) in the add-on's settings.
-If you are not running NVDA from source, the [location of NVDA source code](#settingsNvdaSourcePath) should also have been configured.
+Щоб ця функція працювала, потрібно попередньо налаштувати [команду вашого улюбленого редактора](#settingsOpenCommand) у параметрах додатка.
+Якщо ви запускаєте NVDA не з вихідного коду, також має бути налаштований [шлях до вихідного коду NVDA](#settingsNvdaSourcePath).
 
-The `openCodeFile` functions can be called on objects defined in NVDA's code or on objects defined by add-ons.
-It cannot be called on objects whose source code is not available such as python builtins.
+Функцію `openCodeFile` можна викликати для об'єктів, визначених у коді NVDA, або для об'єктів, визначених додатками.
+Її не можна викликати для об'єктів, вихідний код яких недоступний, як-от для вбудованих функцій і типів Python (builtins).
 
-If you have not yet imported the object in the console, you can also pass its name as parameter to the `openCodeFile` function.
+Якщо ви ще не імпортували об'єкт у консоль, ви також можете передати його назву рядком як параметр функції `openCodeFile`.
 
-Below are examples of call in NVDA's code:
+Нижче наведено приклади виклику для коду NVDA:
 
 * View the definition of the function `speech.speech.speak`:
   `openCodeFile(speech.speech.speak)`
@@ -321,322 +321,322 @@ Below are examples of call in NVDA's code:
 * Open the file `api.py` defining the module `api`:
   `openCodeFile(api)`
 
-### Python console startup script
+### Сценарій ініціалізації консолі Python
 
-You can define a custom script which will be executed in the Python console's namespace when it is first opened.
+Ви можете створити власний скрипт, який виконуватиметься в просторі імен консолі Python під час її першого відкриття.
 
 For example, the script allows you to execute new imports and define aliases that you will be able to use directly in the console, as shown below:
 
-    <target/>
-    <target/>
-    <target/>
-    <target/>
-    <target/>
-    <target/>
+    # Різні імпорти, які мені потрібні в консолі.
+    import globalVars as gv
+    import core
+    import ui
+    # Псевдоніми
+    ocf = openCodeFile
 
 The Python console script should be placed in the following location: `pathToNVDAConfig\ndtt\consoleStartup.py`
-For example: `C:\Users\myUserName\AppData\Roaming\nvda\ndtt\consoleStartup.py`
+Наприклад: `C:\Users\myUserName\AppData\Roaming\nvda\ndtt\consoleStartup.py`
 
-Note: In Python 2, i.e. with NVDA 2019.2.1 or earlier, only pure ASCII scripts are supported; any other encoding such as Unicode is not supported.
+Примітка: У Python 2 (тобто у версіях NVDA 2019.2.1 або старіших) підтримуються скрипти лише в чистому кодуванні ASCII; будь-яке інше кодування, зокрема Unicode, не підтримується.
 
-### Preserving Python console input history
+### Збереження історії введення консолі Python
 
-In Python console history, you can use up and down arrows to review and modify previous inputs.
-Though, the list of previous inputs is cleared when exiting NVDA.
-This add-on provide [an option](#settingsPreserveHistory), enabled by default, allowing to preserve Python console input history even when NVDA is restarted.
+В історії консолі Python можна використовувати стрілки вгору та вниз для перегляду й редагування попередніх команд.
+Проте список попередніх введень очищається після виходу з NVDA.
+Цей додаток надає [параметр](#settingsPreserveHistory), увімкнений за замовчуванням, який дозволяє зберігати історію введення консолі Python навіть після перезапуску NVDA.
 
 <a id="loggingFunctionCall"></a>
-## Logging function calls
+## Журналювання викликів функцій
 
-Sometimes, you may want to see which part of the code is responsible for speaking something.
-For this, you can enable the function calls logging for the `speech.speech.speak` function pressing `NDTTGesture, S`.
-Each time NVDA speaks, a corresponding message will be logged, including the stack trace, allowing you to identify the code that has caused this speech output.
-Once you are done, disable function calls logging with the same gesture.
+Іноді може виникнути потреба з'ясувати, яка саме частина коду відповідає за озвучення певного тексту.
+Для цього ви можете ввімкнути журналювання викликів для функції `speech.speech.speak`, натиснувши `Жест NDTT, S`.
+Щоразу, коли NVDA щось промовлятиме, до журналу записуватиметься відповідне повідомлення разом зі стеком викликів, що дозволить вам визначити код, який спричинив це мовлення.
+Після завершення вимкніть журналювання викликів функцій тим самим жестом.
 
-The same way, you can choose to log the calls of output functions `tones.beep`, `braille.BrailleBuffer.update` or `nvwave.playWaveFile` to track the origin of a beep, braille output or a sound (e.g. spelling error sound).
-The [target function](#targetFunctionForCallLogSetting) can be chosen in the add-on's parameters.
-You can even log the calls stack of a custom function.
+Так само ви можете журналювати виклики функцій виводу `tones.beep`, `braille.BrailleBuffer.update` або `nvwave.playWaveFile`, щоб відстежити походження звукового сигналу, брайлівського виводу або відтворення звуку (наприклад, звуку орфографічної помилки).
+[Цільову функцію](#targetFunctionForCallLogSetting) можна вибрати в параметрах додатка.
+Ви навіть можете записувати в журнал стек викликів довільної функції.
 
-By default, the log of the function calls is performed using the "settrace" method: it uses `sys.settrace`, `threading.settrace` and/or `threading.settrace_all_threads` to install a tracing callback that is invoked on target function return event.
-Alternatively, if you do not get satisfying results, you may opt for the "monkey patching" method where the target function (e.g. `speech.speech.speak`) is patched.
-Both methods have limitations that may prevent function calls to be logged in specific combined conditions.
-For example, the "settrace" method may not work with NVDA version lower than 2026.1, when the target function is run from a non-main thread and the function calls logging is enabled after the target function's thread has been started.
-On the other hand, the "monkey patching" method may not work when the target function is imported through a "from import" statement (e.g. `from tones import beep`).
+За замовчуванням журналювання викликів функцій виконується методом «settrace»: він використовує `sys.settrace`, `threading.settrace` та/або `threading.settrace_all_threads` для встановлення функції зворотного виклику трасування, яка спрацьовує під час повернення з цільової функції.
+Якщо ви не отримаєте бажаного результату, можна обрати альтернативний метод — «monkey patching» (динамічна заміна), за якого цільова функція (наприклад, `speech.speech.speak`) модифікується напряму.
+Обидва методи мають обмеження, які за певного збігу обставин можуть завадити журналюванню викликів.
+Наприклад, метод «settrace» може не працювати у версіях NVDA нижче 2026.1, якщо цільова функція виконується не в головному потоці, а журналювання викликів функцій увімкнено вже після запуску цього потоку.
+З іншого боку, метод «monkey patching» може не спрацювати, якщо цільову функцію імпортовано через конструкцію «from import» (наприклад, `from tones import beep`).
 
-You can toggle the method used to log function calls in [the dedicated setting](#functionCallLogMethodSetting) or pressing `NDTTGesture, shift+S`.
+Змінити метод журналювання викликів функцій можна у [відповідному параметрі](#functionCallLogMethodSetting) або натиснувши `Жест NDTT, Shift+S`.
 
 <a id="reverseTranslationCommand"></a>
-## Reverse translation command
+## Команда зворотного перекладу
 
-Many testers use NVDA in another language than English.
-But when reporting test results on GitHub, the description of the modified options or the messages reported by NVDA should be written in English.
-It's quite frustrating and time consuming to have to restart NVDA in English to check the exact wording of the options or messages.
+Багато тестувальників використовують NVDA не англійською, а іншими мовами.
+Проте під час публікації результатів тестування на GitHub опис змінених параметрів або повідомлень, які озвучує NVDA, слід писати англійською мовою.
+Необхідність перезапускати NVDA англійською мовою, щоб перевірити точне формулювання параметрів або повідомлень, завдає незручностей і забирає багато часу.
 
-To avoid this, the add-on provides two reverse translation commands allowing to reverse translate NVDA's interface such as messages, control labels in the GUI, etc.
+Щоб уникнути цього, додаток пропонує дві команди зворотного перекладу, які дозволяють отримати оригінальний англійський текст інтерфейсу NVDA: повідомлень, підписів елементів керування в графічному інтерфейсі тощо.
 
-* `NDTTGesture, R` uses NVDA's gettext translation to try to reverse translate the last speech.
-* `NDTTGesture, shift+R` uses gettext translations from NVDA and its add-ons to try to reverse translate the last speech.
+* `Жест NDTT, R` використовує переклади gettext самої NVDA для спроби зворотного перекладу останньої вимовленої фрази.
+* `Жест NDTT, Shift+R` використовує переклади gettext як NVDA, так і встановлених додатків для спроби зворотного перекладу останньої вимовленої фрази.
 
-More specifically, the first string of the last speech sequence is reverse translated.
+Точніше, зворотно перекладається перший фрагмент з останнього виголошеного повідомлення.
 
-For example, in French NVDA, if I arrow down to the Tools menu named "Outils", NVDA will say "Outils  sous-Menu  o" which stands for "Tools  subMenu  o".
-If I press the reverse translation command just after that, NVDA will reverse translate "Outils" to "Tools".
+Наприклад, в українській локалізації NVDA, якщо опуститися стрілкою вниз до меню інструментів під назвою «Інструменти», NVDA скаже «Інструменти  підменю  і», що відповідає «Tools  subMenu  o».
+Якщо одразу після цього натиснути команду зворотного перекладу, NVDA зворотно перекладе «Інструменти» як «Tools».
 
-Looking at the log afterwards, we can find the following lines:
+Переглянувши журнал згодом, можна знайти такі рядки:
 
-    <target/>
-    <target/>
+    IO - speech.speech.speak (23:38:24.450) - MainThread (2044):
+    Speaking ['Інструменти', 'підменю', CharacterModeCommand(True), 'і', CharacterModeCommand(False), CancellableSpeech (still valid)]
 
-This confirms that "Outils was the first string in the speech sequence.
+Це підтверджує, що «Інструменти» був першим текстовим елементом у черзі мовлення.
 
-In case the reverse translation leads to two or more possible results, a context menu is opened listing all the possibilities.
+Якщо зворотний переклад дає два або більше можливих варіантів, відкривається контекстне меню з усіма доступними варіантами.
 
-The result of the reverse translation is also copied to the clipboard if the corresponding [option](#settingsCopyReverseTranslation) is enabled, which is the default value.
+Результат зворотного перекладу також копіюється до буфера обміну, якщо ввімкнено відповідний [параметр](#settingsCopyReverseTranslation) (за замовчуванням увімкнено).
 
-Reverse translation of NVDA strings is only available for NVDA version 2022.1 or above.
-For earlier versions of NVDA, only the add-ons strings are available for reverse translation.
+Зворотний переклад рядків NVDA доступний лише у версії NVDA 2022.1 або новіших.
+Для старіших версій NVDA зворотний переклад можливий лише для рядків додатків.
 
-Besides, in NVDA version 2019.2.1 or earlier, in case no reverse translation is found, a second attempt is made in the first part of the string.
-Indeed, in these NVDA version, the speech sequence looks like this:
+Крім того, у версіях NVDA 2019.2.1 або раніших, якщо зворотний переклад не знайдено, виконується друга спроба для першої частини рядка.
+Річ у тім, що в цих версіях NVDA черга мовлення має такий вигляд:
 
-    <target/>
-    <target/>
+    IO - speech.speak (12:39:12.684):
+    Speaking [u'Інструменти  підменю  і']
 
-We can see that an object label may be concatenated with role, state, shortcut, etc.
-So if the reverse translation gives no result with the whole string, a second attempt is made on the part of the string before the double space ("  ").
-Though, this is not bullet-proof since we cannot exclude that a string actually natively contains a double space.
+Можна помітити, що мітка об'єкта може бути об'єднана з роллю, станом, комбінацією клавіш тощо.
+Тому, якщо зворотний переклад для всього рядка не дає результату, виконується друга спроба для тієї частини рядка, що передує подвійному пробілу («  »).
+Втім, цей спосіб не є на 100% надійним, оскільки не можна виключати, що рядок від самого початку містить подвійний пробіл.
 
 <a id="settings"></a>
-## Settings
+## Налаштування
 
-Some features of the add-on may require a specific configuration.
-A settings panel allows to enable them or to control how they work.
-To view and modify these settings, go to NVDA menu -> Preferences and select the category NVDA Dev & Test Toolbox.
-This settings dialog can also be accessed directly from the Logs Manager dialog.
+Деякі функції додатка можуть потребувати додаткового налаштування.
+Панель параметрів дозволяє вмикати їх або керувати їхньою роботою.
+Щоб переглянути та змінити ці параметри, перейдіть у меню NVDA -> Параметри -> Налаштування... і виберіть категорію «NVDA Dev & Test Toolbox».
+До цього вікна параметрів також можна перейти безпосередньо з діалогу «Менеджер журналів».
 
-These settings are global and can only be configured when the default profile is active.
+Ці параметри є глобальними й можуть налаштовуватися лише тоді, коли активний типовий профіль.
 
 <a id="settingsOpenCommand"></a>
-### Command to open a file in your favorite editor
+### Команда для відкриття файлу у вашому улюбленому редакторі
 
-Some features allow to see content in your favorite editor.
-This includes the commands to view the source file [from a log](#logReaderOpenSourceFile), [from an object in the console](#pythonConsoleOpenCodeFile) or [from a typed gesture](#sourceCodeOpeningCommands), as well as the [log manager](#oldLogsBackup)'s Open button.
+Деякі функції дозволяють переглядати вміст у вашому улюбленому редакторі.
+Сюди належать команди перегляду файлу вихідного коду [із журналу](#logReaderOpenSourceFile), [з об'єкта в консолі](#pythonConsoleOpenCodeFile) або [за введеним жестом](#sourceCodeOpeningCommands), а також кнопка «Відкрити» в [менеджері журналів](#oldLogsBackup).
 
-To use them, you first need to configure the command that will be called to open the file in your favorite editor.
+Щоб користуватися ними, спочатку потрібно налаштувати команду, яка викликатиметься для відкриття файлу у вашому редакторі.
 The command should be of the form:
 `"C:\path\to\my\editor\editor.exe" "{path}":{line}`
-You should of course modify this line according to the real name and location of your editor and the syntax used by it to open files.
-`{path}` will be replaced by the full path of the file to open and `{line}` by the line number where you want the cursor to be set.
+Вам, звісно, слід змінити цей рядок відповідно до реальної назви та розташування вашого редактора, а також синтаксису, який він використовує для відкриття файлів.
+`{path}` буде замінено на повний шлях до потрібного файлу, а `{line}` — на номер рядка, де має бути встановлено курсор.
 For Notepad++ for example the command to type in the console would be:
 `"C:\Program Files\Notepad++\notepad++.exe" "{path}" -n{line}`
 
 <a id="settingsNvdaSourcePath"></a>
-### NVDA source code path
+### Шлях до вихідного коду NVDA
 
-When using a command to view the source file [from a log](#logReaderOpenSourceFile), [from an object in the console](#pythonConsoleOpenCodeFile) or [from a typed gesture or a path](#sourceCodeOpeningCommands), the file may belong to NVDA itself.
-If you are not running NVDA from source, your NVDA only contains compiled files.
-Thus you may specify here an alternate location where the corresponding source file will be found, e.g. the place where you have cloned NVDA source files, so that a source file can be opened anyway.
+Під час використання команди для перегляду файлу вихідного коду [із журналу](#logReaderOpenSourceFile), [з об'єкта в консолі](#pythonConsoleOpenCodeFile) або [за введеним жестом чи шляхом](#sourceCodeOpeningCommands) цей файл може належати до самої NVDA.
+Якщо ви запускаєте NVDA не з вихідного коду, ваша копія NVDA містить лише скомпільовані файли.
+Тому тут ви можете вказати альтернативне розташування, де містяться відповідні вихідні файли (наприклад, каталог, куди ви клонували вихідний код NVDA), щоб файл вихідного коду все одно міг відкритися.
 The path should be such as:
 `C:\pathExample\GIT\nvda\source`
-Of course, replace the path of NVDA source with the correct one.
+Звісно, замініть цей шлях до вихідного коду NVDA на правильний.
 
-Be sure however that the version of your source file (e.g. GIT commit) is the same as the one of the running instance of NVDA.
+Проте переконайтеся, що версія вашого вихідного коду (наприклад, коміт у Git) збігається з версією запущеного екземпляра NVDA.
 
 <a id="settingsLogsBackup"></a>
-### Backup of old logs
+### Резервне копіювання старих журналів
 
-The combobox Backup of old logs allows to enable or disable the [feature](#oldLogsBackup).
-If it is enabled, you can also specify below in "Limit the number of backups" the maximum number of backups you want to keep.
-These settings only take effect at next NVDA startup when the backup takes place.
+Комбінований список «Резервне копіювання старих журналів» дозволяє ввімкнути або вимкнути цю [функцію](#oldLogsBackup).
+Якщо її ввімкнено, ви також можете вказати нижче в полі «Обмежити кількість резервних копій до» максимальну кількість копій, яку потрібно зберігати.
+Ці налаштування набувають чинності лише під час наступного запуску NVDA, коли власне і створюється резервна копія.
 
 <a id="settingsCopyReverseTranslation"></a>
-### Copy reverse translation to clipboard
+### Копіювання зворотного перекладу до буфера обміну
 
-This option allows to choose if the [reverse translation command](#reverseTranslationCommand) also copies its result to the clipboard.
+Ця опція дозволяє вибрати, чи [команда зворотного перекладу](#reverseTranslationCommand) також копіюватиме свій результат до буфера обміну.
 
 <a id="settingsPreserveHistory"></a>
-### Preserve console input history after restart
+### Зберігати історію введення консолі після перезапуску
 
-If this checkbox is checked, Python console input history will be preserved when NVDA is restarted.
-If it is checked, you can also specify below the maximum number of inputs that will be saved.
-If it is unchecked, NVDA will behave as usual, i.e. the console history will be empty after restart.
+Якщо цей прапорець позначено, історія введення консолі Python зберігатиметься після перезапуску NVDA.
+Якщо прапорець позначено, ви також можете вказати нижче максимальну кількість збережених команд.
+Якщо прапорець знято, NVDA працюватиме у звичному режимі, тобто після перезапуску історія консолі буде порожньою.
 
 <a id="targetFunctionForCallLogSetting"></a>
-### Target function for function call logging
+### Цільова функція для журналювання викликів функцій
 
-This combobox defines the function whose calls will be logged when enabling [function call logging](#loggingFunctionCall).
-You can select the function among various output functions or opt for the custom function choice.
+Цей комбінований список визначає функцію, виклики якої записуватимуться в журнал після ввімкнення [журналювання викликів функцій](#loggingFunctionCall).
+Ви можете обрати функцію серед кількох запропонованих функцій виводу або вибрати варіант користувацької функції.
 
-If you select the custom function choice, you will need to enter the complete name of the function you want log calls for.
-This complete name should include its location (package, module, class, etc.).
-Be careful to define the function with its original location, i.e. where it was actually defined, else, call logging is less likely to work.
-For example, use `speech.speech.getCurrentLanguage` which targets the function defined in `speech\speech.py`, not `speech.getCurrentLanguage` witch target the symbol imported in `speech\__init__.py`.
+Якщо вибрано користувацьку функцію, вам потрібно буде ввести її повну назву.
+Ця повна назва має містити шлях до місця її розташування (пакет, модуль, клас тощо).
+Зверніть увагу: функцію слід вказувати за її первинним місцем розташування, тобто там, де її було фактично визначено, інакше журналювання викликів, найімовірніше, не спрацює.
+Наприклад, використовуйте `speech.speech.getCurrentLanguage`, що вказує на функцію, визначену у файлі `speech\speech.py`, а не `speech.getCurrentLanguage`, яка посилається на символ, імпортований у `speech\__init__.py`.
 
 <a id="functionCallLogMethodSetting"></a>
-### Function call log method
+### Метод журналювання викликів функцій
 
-This combobox defines the method used to identify function calls when [function call logging](#loggingFunctionCall) is enabled.
-This parameter can also be toggled pressing `NDTTGesture, shift+S`.
-When this method is modified, it will first apply the next time the function call log is activated; that is, it does not apply to current function call logging if currently enabled.
+Цей розкривний список визначає метод, який використовується для виявлення викликів функцій, коли ввімкнено [журналювання викликів функцій](#loggingFunctionCall).
+Цей параметр також можна перемикати натисканням `Жест NDTT, Shift+S`.
+Якщо змінити цей метод, він почне діяти лише під час наступної активації журналювання викликів; тобто зміна не застосовується до вже активного на цей момент сеансу журналювання.
 
-## Change log
+## Журнал змін
 
-### Version 10.1
+### Версія 10.1
 
-* The commands entry point gesture has been changed to `NVDA+Z` to avoid conflict with new repeat last speech command.
-* The command to cycle "Play a sound for logged errors" has been updated to support the "No" value introduced in NVDA 2026.2.
+* Початковий жест команд змінено на `NVDA+Z`, щоб уникнути конфлікту з новою командою повторення останньої виголошеної фрази.
+* Команду циклічного перемикання параметра «Відтворювати звук для зафіксованих у журналі помилок» оновлено для підтримки значення «Ні», впровадженого в NVDA 2026.2.
 
-### Version 10.0
+### Версія 10.0
 
-* Log reader: when logging function calls, arguments and return values are now logged too. (with the contribution of hwf1324)
-* Log reader: when using navigation commands, some messages are no longer reported as truncated or empty.
-* When reporting last error, some messages are no longer reported uninterpolated (e.g. containing "%s").
-* Fixed some errors with NVDA 2019.2: first usage of Python console history, reporting of non-ASCII object names with Object property explorer.
-* Compatibility with NVDA 2026.1.
+* Засіб читання журналу: під час журналювання викликів функцій аргументи та значення, що повертаються, тепер також записуються до журналу (за участі hwf1324).
+* Засіб читання журналу: під час використання навігаційних команд деякі повідомлення більше не сповіщаються обірваними чи порожніми.
+* Під час сповіщення про останню помилку деякі повідомлення більше не виводяться неінтерпольованими (наприклад, із символами «%s»).
+* Виправлено деякі помилки у версії NVDA 2019.2: перше використання історії консолі Python, сповіщення не-ASCII назв об'єктів у провіднику властивостей об'єкта.
+* Сумісність з NVDA 2026.1.
 
-### Version 9.0
+### Версія 9.0
 
-* A new command to open a code file when the caret is on a file path/line has been added.
-* Function calls logging (previously known as stack logging) has been improved offering the possibility to log the call of any function and providing a more reliable method to identify function calls.
-* Fixed a security issue with the log reader ([GHSA-39pg-6xpm-mjgf](https://github.com/CyrilleB79/NVDA-Dev-Test-Toolbox/security/advisories/GHSA-39pg-6xpm-mjgf)).
-* IO beep messages are now correctly reported with NVDA 2019.2.1.
-* Log reading commands no longer fail to read some speech commands (e.g. when using Console Toolkit add-on)
-* Addressed an issues where, in case of multiple possible reverse translations, the last menu item was copied to clipboard, no matter the item actually clicked.
-* Prepared compatibility for NVDA 2026.1
+* Додано нову команду для відкриття файлу коду, коли курсор розташовано на шляху або номері рядка файлу.
+* Покращено журналювання викликів функцій (раніше відоме як журналювання стека): додано можливість записувати виклики будь-якої функції та реалізовано надійніший метод їхнього виявлення.
+* Виправлено проблему безпеки в засобі читання журналу ([GHSA-39pg-6xpm-mjgf](https://github.com/CyrilleB79/NVDA-Dev-Test-Toolbox/security/advisories/GHSA-39pg-6xpm-mjgf)).
+* Повідомлення про звукові сигнали вводу/виводу тепер коректно озвучуються у версії NVDA 2019.2.1.
+* Команди читання журналу більше не дають збою під час читання деяких команд мовлення (наприклад, під час використання додатка Console Toolkit).
+* Усунено проблему, коли за наявності кількох можливих варіантів зворотного перекладу до буфера обміну копіювався останній пункт меню, незалежно від фактично вибраного пункту.
+* Підготовлено сумісність з NVDA 2026.1
 
-### Version 8.0
+### Версія 8.0
 
-* Python console history can now be preserved accross restarts.
-* Reverse translation: Added a second command to reverse translate a string using both NVDA and its add-ons translations.
-* New log reader commans to jump to previous or next braille output message
-* New log reader commans to jump to previous or next block in a message, e.g. previous or next thread stack in a watchdog freeze report, previous or next block of properties in the developer info for navigator object, etc.
-* New log reader commands to jump to the first or last interesting line of a block, e.g. first or last frame of a traceback
-* A new log reader "Go to error" command to jump to the error in a traceback frame.
-* A new log reader command to display an help message listing all the available commands while reading a log.
-* The log reading mode is now enabled by default in the Python console output pane.
-* A new command to anonymize a log
-* The console startup script now supports unicode strings (for Python 3 only); full unicode file may not be supported though.
-* The Python console startup script will now only be executed once and only once when the console opens.
-A bug where this script could be executed many times when reloading the add-ons has been fixed.
-* Improved error handling in the console startup script.
-* Bugfix: An empty log files created when log is disabled do not fail anymore to be saved as old log.
-* Speech on demand is now supported in layered commands
-* Improved error handling of the script opener command (in case of wrong or missing configuration, or when a braille display is in use).
+* Історію консолі Python тепер можна зберігати між перезапусками.
+* Зворотний переклад: Додано другу команду для зворотного перекладу рядка з використанням перекладів як самої NVDA, так і її додатків.
+* Нові команди засобу читання журналу для переходу до попереднього або наступного повідомлення брайлівського виводу
+* Нові команди засобу читання журналу для переходу до попереднього або наступного блоку в повідомленні, наприклад, попереднього чи наступного стека потоку у звіті про зависання сторожового таймера (watchdog), попереднього чи наступного блоку властивостей у відомостях розробника про навігаторний об'єкт тощо.
+* Нові команди засобу читання журналу для переходу до першого або останнього важливого рядка блоку, наприклад, першого чи останнього фрейму трасування стека (traceback)
+* Нова команда засобу читання журналу «Перейти до помилки» для переходу до рядка з помилкою у фреймі трасування стека.
+* Нова команда засобу читання журналу для показу довідкового повідомлення зі списком усіх доступних команд під час читання журналу.
+* Режим читання журналу тепер за замовчуванням увімкнено на панелі виводу консолі Python.
+* Нова команда для анонімізації журналу
+* Скрипт ініціалізації консолі тепер підтримує рядки Unicode (лише для Python 3); однак файли повністю у форматі Unicode можуть не підтримуватися.
+* Скрипт ініціалізації консолі Python тепер виконуватиметься лише один-єдиний раз під час відкриття консолі.
+Виправлено помилку, через яку цей скрипт міг виконуватися кілька разів під час перезавантаження додатків.
+* Покращено обробку помилок у скрипті ініціалізації консолі.
+* Виправлення: порожні файли журналу, створені за вимкненого ведення журналу, тепер успішно зберігаються як старі журнали.
+* У багаторівневих командах тепер підтримується мовлення на вимогу (Speech on demand)
+* Покращено обробку помилок для команди відкриття скриптів (у разі неправильної чи відсутньої конфігурації або під час використання брайлівського дисплея).
 
-### Version 7.3
+### Версія 7.3
 
-* Bugfix: The command to activate layered commands of the add-on can now be assigned another gesture.
+* Виправлення: Команді активації багаторівневих команд додатка тепер можна призначити інший жест.
 
-### Version 7.1
+### Версія 7.1
 
-* Compatibility with NVDA 2025.1.
+* Сумісність із NVDA 2025.1.
 
-### Version 7.0
+### Версія 7.0
 
 * Layered commands have been introduced; the entry point is `NVDA+X`.
   The existing commands have been modified accordingly.
-* A new command (`NVDA+X, R`) to reverse translate the last spoken message.
-* A new command (`NVDA+X, C`) to open the source code of the script associated to the next pressed gesture.
-* Added speech on demand support.
-* The log manager now allows more actions, either with the dedicated buttons in the dialogs or using keyboard shortcuts in the list: `enter` to open the log, `control+C` to copy the log file and `delete` to delete a log file.
-* The sorting order in the log manager has been reversed (most recent log on top).
-* Fixed an issue when trying to open a Python module with openCodeFile function.
+* Нова команда (`NVDA+X, R`) для зворотного перекладу останнього вимовленого повідомлення.
+* Нова команда (`NVDA+X, C`) для відкриття вихідного коду скрипту, прив'язаного до наступного натиснутого жесту.
+* Додано підтримку мовлення на вимогу (Speech on demand).
+* Менеджер журналів тепер підтримує більше дій: за допомогою відповідних кнопок у діалогах або за допомогою комбінацій клавіш у списку: `Enter` для відкриття журналу, `Ctrl+C` для копіювання файлу журналу та `Delete` для видалення файлу журналу.
+* Порядок сортування в менеджері журналів змінено на зворотний (найновіший журнал зверху).
+* Виправлено проблему під час спроби відкрити модуль Python за допомогою функції openCodeFile.
 
-### Version 6.3
+### Версія 6.3
 
-* Compatibility with NVDA 2024.1.
+* Сумісність із NVDA 2024.1.
 
-### Version 6.2
+### Версія 6.2
 
-* Restores console opening for NVDA < 2021.1.
-* Addresses potential security issues related to [GHSA-xg6w-23rw-39r8][5] when using the add-on with older versions of NVDA.
-However, it is recommended to use NVDA 2023.3.3 or higher.
+* Відновлено відкриття консолі для NVDA < 2021.1.
+* Усуває потенційні проблеми безпеки, пов'язані з [GHSA-xg6w-23rw-39r8][5], під час використання додатка зі старішими версіями NVDA.
+Однак рекомендується використовувати NVDA 2023.3.3 або вище.
 
-### Version 6.1
+### Версія 6.1
 
-* Opening the source file of an object located in the submodule of a package is now working.
-* Bugfix: The enhanced exit dialog can now be reopened and used as expected after having been closed. (contribution from Łukasz Golonka)
+* Відкриття вихідного файлу об'єкта, розташованого в підмодулі пакета, тепер працює.
+* Виправлення: розширений діалог виходу тепер можна відкрити повторно й використовувати належним чином після закриття (внесок Łukasz Golonka)
 
-### Version 6.0
+### Версія 6.0
 
-* While using object navigation commands, a specific object property can be reported instead of NVDA usual object reporting.
-* In log reading mode, the "C" key to open a code file from the log now also works on an input help message.
-* Bugfix: The add-on can now start successfully when the number of logs to save is set to its maximum value.
-* Bugfix: Python console startup script's output does not prevent anymore to jump to the first result in the console when using result navigation commands.
-* Note: From now on, localization updates will not appear anymore in the change log.
+* Під час використання команд навігації об'єктами замість звичного сповіщення про об'єкт у NVDA може сповіщатися певна властивість об'єкта.
+* У режимі читання журналу клавіша «C» для відкриття файлу коду з журналу тепер також працює для повідомлень довідки введення.
+* Виправлення: додаток тепер успішно запускається, коли кількість журналів для збереження встановлено на максимальне значення.
+* Виправлення: вивід скрипту ініціалізації консолі Python більше не заважає переходу до першого результату в консолі під час використання команд навігації результатами.
+* Примітка: відтепер оновлення локалізації більше не з'являтимуться в журналі змін.
 
-### Version 5.0
+### Версія 5.0
 
-* If Instant Translate add-on is installed, it is now possible to have speech messages translated on the fly when using log reading commands.
-* While in log reading mode, pressing E or shift+E now jumps to CRITICAL erorr messages as well as normal ERROR messages.
-* New log quick navigation commands have been added to jump to input and to speech messages.
+* Якщо встановлено додаток Instant Translate, тепер можна перекладати повідомлення мовлення на льоту під час використання команд читання журналу.
+* У режимі читання журналу натискання E або Shift+E тепер здійснює перехід як до повідомлень про критичні помилки (CRITICAL), так і до звичайних повідомлень про помилки (ERROR).
+* Додано нові команди швидкої навігації журналом для переходу до введених даних і до повідомлень мовлення.
 * A new command allow to place a marker in the log; and specific quick navigation commands in log reading mode allow to jump to them.
   Credit: the initial idea for this feature comes from Debug Helper add-on by Luke Davis.
-* Bubfix: The memorization of the last error do not fail anymore in some cases.
-* Bugfix: The add-on can initialize again with NVDA 2019.2.1.
-* Bugfix: Log saving feature will not fail anymore with non-ASCII logs.
+* Виправлення: запам'ятовування останньої помилки в деяких випадках тепер працює без збоїв.
+* Виправлення: додаток знову може ініціалізуватися у версії NVDA 2019.2.1.
+* Виправлення: функція збереження журналу тепер без проблем працює з журналами, що містять символи поза межами таблиці ASCII.
 
-### Version 4.2
+### Версія 4.2
 
-* Fixed an error with NVDA version below 2021.3.
-* Fixed the stack trace log formatting.
-* First localizations.
+* Виправлено помилку для версій NVDA нижче 2021.3.
+* Виправлено форматування журналу трасування стека.
+* Перші локалізації.
 
-### Version 4.1
+### Версія 4.1
 
-* Fixed a bug occurring in some situations while logging an error.
-* The add-on's settings can now be modified only when the default profile is active to avoid config issues.
+* Виправлено помилку, що виникала в деяких випадках під час журналювання помилки.
+* Налаштування додатка тепер можна змінювати лише тоді, коли активний типовий профіль, щоб уникнути проблем із конфігурацією.
 
-### Version 4.0
+### Версія 4.0
 
-* Possibility to back up old logs and introduction of a logs manager.
-* Added a script to report the last logged error.
-* Fixed a bug preventing last log message to be read in older NVDA versions.
+* Можливість створювати резервні копії старих журналів та впровадження менеджера журналів.
+* Додано скрипт для сповіщення про останню зафіксовану в журналі помилку.
+* Виправлено помилку, яка заважала читати останнє повідомлення журналу в старіших версіях NVDA.
 
-### Version 3.2
+### Версія 3.2
 
-* Compatibility with NVDA 2023.1.
+* Сумісність із NVDA 2023.1.
 
-### Version 3.1
+### Версія 3.1
 
-* Fixed an error occurring when requesting unavailable information on an object.
+* Виправлено помилку, що виникала під час запиту недоступної інформації про об'єкт.
 
-### Version 3.0
+### Версія 3.0
 
-* In a log, you can now press C on a message's header line to open the function/module which has emitted it.
-* In the console, `openCodeFile` function can now receive as parameter the object or a string containing its name.
-* New feature: NVDA console startup file: If it exists, the file YourNVDAConfigFolder\ndtt\consoleStartup.py will be executed when NVDA console is first opened or when add-ons are reloaded.
-* Various minor fixes for `openCodeFile` Python console's function and the command to open the source file corresponding to a line in the log.
-* Fixed an issue when trying to report roles/states for object explorer in older version of NVDA.
-* The add-on does not cause a problem anymore with the tree interceptor when using UIA in Edge.
+* У журналі тепер можна натиснути C у рядку заголовка повідомлення, щоб відкрити функцію чи модуль, які його згенерували.
+* У консолі функція `openCodeFile` тепер може приймати як параметр сам об'єкт або рядок із його назвою.
+* Нова функція: файл ініціалізації консолі NVDA: якщо файл «ПапкаКонфігураціїNVDA\ndtt\consoleStartup.py» існує, він виконуватиметься під час першого відкриття консолі NVDA або під час перезавантаження додатків.
+* Різні дрібні виправлення для функції консолі Python `openCodeFile` та команди відкриття файлу вихідного коду, що відповідає рядку в журналі.
+* Виправлено проблему під час спроби сповістити про ролі та стани для провідника об'єктів у старіших версіях NVDA.
+* Додаток більше не створює проблем для перехоплювача дерева під час використання UIA в Edge.
 
-### Version 2.1
+### Версія 2.1
 
-* Various bugfixes and code refactoring/cleaning to address all use cases: all supported versions, installed vs. run from source, etc. (contribution from Łukasz Golonka)
-* Rewriting of the compa module (contribution from Łukasz Golonka)
-* The restart dialog can now be opened only once.
-* The object explorer shortcuts are now unassigned by default and need to be mapped by the user.
-* With the object explorer, a double-press to call the script to report the current object's property now displays the reported information in a browseable message.
+* Різні виправлення помилок, рефакторинг та очищення коду для врахування всіх сценаріїв використання: усі підтримувані версії, встановлена версія чи запуск із вихідного коду тощо (внесок Łukasz Golonka)
+* Переписування модуля compa (внесок Łukasz Golonka)
+* Діалог перезапуску тепер можна відкрити лише один раз.
+* Комбінації клавіш провідника об'єктів тепер за замовчуванням не призначені, їх має налаштувати користувач.
+* У провіднику об'єктів подвійне натискання для виклику скрипту сповіщення про властивість поточного об'єкта тепер показує отриману інформацію у вікні перегляду повідомлень.
 
-### Version 2.0
+### Версія 2.0
 
-* New feature: Enhanced restart dialog to specify some extra options when restarting NVDA.
-* New feature: extended description mode.
-* Play error sound feature harmonized between pre and post 2021.3 versions of NVDA.
-* New feature: Log reader commands are now available in the log viewer and also optionally in edit fields or webpages.
-* New feature: In the Python console, an `openCodeFile` function is available to view the source code of an object.
-* Some features are now disabled in secure mode for security reasons.
-* The add-on's compatibility range has been extended (from 2019.2 to 2021.1).
-* Releases are now performed with GitHub action instead of appVeyor.
+* Нова функція: розширений діалог перезапуску для зазначення додаткових параметрів під час перезапуску NVDA.
+* Нова функція: режим розширеного опису.
+* Функцію відтворення звуку помилки уніфіковано між версіями NVDA до та після 2021.3.
+* Нова функція: команди засобу читання журналу тепер доступні у вікні перегляду журналу, а також опціонально в полях редагування чи на вебсторінках.
+* Нова функція: у консолі Python доступна функція `openCodeFile` для перегляду вихідного коду об'єкта.
+* Деякі функції з міркувань безпеки тепер вимкнено в безпечному режимі.
+* Діапазон сумісності додатка розширено (з 2019.2 до 2021.1).
+* Випуски тепер виконуються за допомогою GitHub Actions замість AppVeyor.
 
-### Version 1.0
+### Версія 1.0
 
-* Initial release.
+* Початковий випуск.
 
-[2]: https://www.nvaccess.org/files/nvda/documentation/userGuide.html#CommandLineOptions
+[2]: https://www.nvaccess.org/files/nvda/documentation/uk/userGuide.html#CommandLineOptions
 
 [3]: https://addons.nvda-project.org/addons/instantTranslate.en.html
 
-[4]: https://www.nvaccess.org/files/nvda/documentation/userGuide.html#PlayErrorSound
+[4]: https://www.nvaccess.org/files/nvda/documentation/uk/userGuide.html#PlayErrorSound
 
 [5]: https://github.com/nvaccess/nvda/security/advisories/GHSA-xg6w-23rw-39r8#event-132994
