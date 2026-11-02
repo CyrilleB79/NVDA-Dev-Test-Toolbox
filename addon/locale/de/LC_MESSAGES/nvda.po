@@ -1,508 +1,769 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the nvdaDevTestToolbox package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: nvdaDevTestToolbox 4.0\n"
-"Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
-"POT-Creation-Date: 2023-06-16 14:09+0000\n"
-"PO-Revision-Date: 2023-10-06 20:43+0200\n"
-"Last-Translator: René Linke <rene.linke@hamburg.de>\n"
-"Language-Team: \n"
-"Language: de\n"
+"Project-Id-Version: nvdaaddons\n"
+"Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
+"POT-Creation-Date: 2026-08-31 02:46+0000\n"
+"PO-Revision-Date: 2026-11-01 10:42\n"
+"Last-Translator: \n"
+"Language-Team: German\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4\n"
-
-#. Translators: The description of a command of this add-on.
-#, python-brace-format
-msgid "Opens {name} settings"
-msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: nvdaaddons\n"
+"X-Crowdin-Project-ID: 780748\n"
+"X-Crowdin-Language: de\n"
+"X-Crowdin-File: nvdaDevTestToolbox.pot\n"
+"X-Crowdin-File-ID: 308\n"
 
 #. Translators: Input help mode message for a toggle command.
+#: addon\globalPlugins\ndtt\beepError.py:114
 msgid "Toggles play a sound for logged error."
 msgstr "Schaltet die Sound-Wiedergabe für protokollierte Fehler ein oder aus."
 
 #. Translators: Message reported when calling the command to toggle play a sound for logged errors
+#: addon\globalPlugins\ndtt\beepError.py:121
 msgid "Yes"
 msgstr "Ja"
 
 #. Translators: Message reported when calling the command to toggle play a sound for logged errors
+#: addon\globalPlugins\ndtt\beepError.py:128
+msgid "No"
+msgstr "NEIN"
+
+#. Translators: Message reported when calling the command to toggle play a sound for logged errors
+#: addon\globalPlugins\ndtt\beepError.py:132
 msgid "Only in NVDA test versions"
 msgstr "Nur bei NVDA-Test-Versionen"
 
 #. Translators: Input help mode message for a command.
-msgid ""
-"Report the last error logged. A second press clears the memorized last error."
-msgstr ""
-"Teilt den zuletzt gespeicherten Fehler mit. Zweimaliges Drücken löscht "
-"diesen Fehler."
+#: addon\globalPlugins\ndtt\beepError.py:137
+msgid "Report the last error logged. A second press clears the memorized last error."
+msgstr "Teilt den zuletzt gespeicherten Fehler mit. Zweimaliges Drücken löscht diesen Fehler."
 
 #. Translators: Message reported when calling the "report last error" command
+#: addon\globalPlugins\ndtt\beepError.py:148
 msgid "No error"
 msgstr "Kein Fehler"
 
 #. Translators: Message reported when calling the "report last error" command
+#: addon\globalPlugins\ndtt\beepError.py:152
 msgid "Last error cleared"
 msgstr "Letzter Fehler gelöscht"
 
 #. Translators: The name of a category in the Input gesture dialog
+#: addon\globalPlugins\ndtt\extScriptDesc.py:19
 msgid "Scripts without description (modify at your own risk!)"
 msgstr "Skripte ohne Beschreibung (Änderung auf eigene Gefahr!)"
 
 #. Translators: Input help mode message for a toggle command.
+#: addon\globalPlugins\ndtt\extScriptDesc.py:65
 msgid "Toggles the extended script description mode."
 msgstr "Schaltet den erweiterten Modus für Skript-Beschreibungen ein oder aus."
 
 #. Translators: A message reported when toggling Extended script description mode.
+#: addon\globalPlugins\ndtt\extScriptDesc.py:79
 msgid "Extended script description mode enabled"
 msgstr "Erweiterter Modus für Skript-Beschreibungen eingeschaltet"
 
+#. pyright: ignore[reportPrivateUsage]
 #. Translators: A message reported when toggling Extended script description mode.
+#: addon\globalPlugins\ndtt\extScriptDesc.py:83
 msgid "Extended script description mode disabled"
 msgstr "Erweiterter Modus für Skript-Beschreibungen ausgeschaltet"
 
 #. Translators: A message reported when trying to open a source file.
-msgid ""
-"No path configured for NVDA sources; please see documentation to configure "
-"it."
-msgstr ""
-"Kein Pfad für NVDA-Quellen konfiguriert; bitte lesen Sie die Dokumentation, "
-"um diesen richtig zu konfigurieren."
+#: addon\globalPlugins\ndtt\fileOpener.py:60
+msgid "No path configured for NVDA sources; please see documentation to configure it."
+msgstr "Kein Pfad für NVDA-Quellen konfiguriert; bitte lesen Sie die Dokumentation, um diesen richtig zu konfigurieren."
 
 #. Translators: A message reported when trying to open a source file.
-msgid ""
-"No open file command configured; please see documentation to configure it."
-msgstr ""
-"Es ist kein Befehl zum Öffnen von Dateien konfiguriert; bitte lesen Sie die "
-"Dokumentation, um diesen richtig zu konfigurieren."
+#: addon\globalPlugins\ndtt\fileOpener.py:65
+msgid "No open file command configured; please see documentation to configure it."
+msgstr "Es ist kein Befehl zum Öffnen von Dateien konfiguriert; bitte lesen Sie die Dokumentation, um diesen richtig zu konfigurieren."
 
 #. Translators: A message reported when trying to open a source file.
-msgid ""
-"Wrong format for the open file command in the configuration; please see "
-"documentation to configure it."
-msgstr ""
-"Falsches Format für den Befehl zum Öffnen von Dateien in der Konfiguration; "
-"bitte lesen Sie die Dokumentation, um diesen richtig zu konfigurieren."
+#: addon\globalPlugins\ndtt\fileOpener.py:71
+msgid "Wrong format for the open file command in the configuration; please see documentation to configure it."
+msgstr "Falsches Format für den Befehl zum Öffnen von Dateien in der Konfiguration; bitte lesen Sie die Dokumentation, um diesen richtig zu konfigurieren."
 
 #. Translators: A message reported when trying to open a source file.
+#: addon\globalPlugins\ndtt\fileOpener.py:78
+#, python-brace-format
 msgid "Editor not found at {}; please check your configuration."
 msgstr "Editor nicht gefunden in {}; bitte überprüfen Sie die Konfiguration."
 
 #. Translators: A message reported when trying to open a source file.
+#: addon\globalPlugins\ndtt\fileOpener.py:83
+#, python-brace-format
 msgid "Object not found: {}"
 msgstr "Objekt nicht gefunden: {}"
 
 #. Translators: A message reported when trying to open a source file.
+#: addon\globalPlugins\ndtt\fileOpener.py:88
+#, python-brace-format
 msgid "File not found: {}"
 msgstr "Datei nicht gefunden: {}"
 
+#. Translators: A possible choice for function calls log method setting
+#: addon\globalPlugins\ndtt\functionCallsLogging.py:30
+msgid "Monkey patching"
+msgstr "Anpassungen während des Betriebs"
+
+#. Translators: A possible choice for function calls log method setting
+#: addon\globalPlugins\ndtt\functionCallsLogging.py:32
+msgid "settrace"
+msgstr ""
+
+#. Translators: Input help mode message for a toggle command.
+#: addon\globalPlugins\ndtt\functionCallsLogging.py:45
+msgid "Toggles the function calls log."
+msgstr ""
+
+#. Translators: Reported when toggling the function call log feature.
+#: addon\globalPlugins\ndtt\functionCallsLogging.py:52
+#, python-brace-format
+msgid "Function calls log enabled for {function}"
+msgstr ""
+
+#. Translators: Reported when toggling the function call log feature.
+#: addon\globalPlugins\ndtt\functionCallsLogging.py:57
+msgid "Function calls log disabled"
+msgstr ""
+
+#. Translators: Input help mode message for a toggle command.
+#: addon\globalPlugins\ndtt\functionCallsLogging.py:62
+msgid "Toggles the function calls log method."
+msgstr ""
+
+#. Translators: Reported when toggling the function calls log method.
+#: addon\globalPlugins\ndtt\functionCallsLogging.py:76
+#, python-brace-format
+msgid "Function calls log uses {method}"
+msgstr ""
+
+#. Translators: Reported when toggling the function calls log feature.
+#: addon\globalPlugins\ndtt\functionCallsLogging.py:91
+#, python-brace-format
+msgid "{func} is not a valid function name."
+msgstr ""
+
+#. Translators: Reported when toggling the function calls log feature.
+#: addon\globalPlugins\ndtt\functionCallsLogging.py:206
+#, python-brace-format
+msgid "{location} is not a valid object name."
+msgstr ""
+
+#. Translators: Reported when toggling the function calls log feature.
+#: addon\globalPlugins\ndtt\functionCallsLogging.py:212
+#, python-brace-format
+msgid "{name} is not a valid function name."
+msgstr ""
+
 #. Translators: Part of the description for the layered command script.
+#: addon\globalPlugins\ndtt\layeredGestures.py:87
 #, python-brace-format
 msgid "Entry point for {name} layered commands"
 msgstr ""
 
 #. Translators: The description of a command of this add-on.
+#: addon\globalPlugins\ndtt\layeredGestures.py:106
 #, python-brace-format
 msgid "Displays help on {name} layered commands"
 msgstr ""
 
 #. Translators: Title of the layered command help window.
+#: addon\globalPlugins\ndtt\layeredGestures.py:110
 #, python-brace-format
 msgid "{name} layered commands"
 msgstr ""
 
 #. Translators: Separator between key names in the layered command help window.
+#: addon\globalPlugins\ndtt\layeredGestures.py:116
 msgid ", "
-msgstr ""
+msgstr ", "
 
 #. Translators: Text appearing in the date column of the log manager when the date cnanot be determined.
+#: addon\globalPlugins\ndtt\logManagement.py:324
 msgid "Unknown"
 msgstr "Unbekannt"
 
 #. Translators: The title of the Logs Manager Dialog
+#: addon\globalPlugins\ndtt\logManagement.py:361
 msgid "Logs Manager"
 msgstr "Protokollverwaltung"
 
 #. Translators: the label for the text on top of the logs manager window.
+#: addon\globalPlugins\ndtt\logManagement.py:371
 #, python-brace-format
 msgid "Logs in {folder}"
 msgstr "Protokolle in {folder}"
 
 #. Translators: The label for a column in logs list
+#: addon\globalPlugins\ndtt\logManagement.py:387
 msgid "Date"
 msgstr "Datum"
 
 #. Translators: The label for a column in logs list
+#: addon\globalPlugins\ndtt\logManagement.py:389
 msgid "Type"
 msgstr "Typ"
 
 #. Translators: The label for a column in logs list
+#: addon\globalPlugins\ndtt\logManagement.py:391
 msgid "File name"
 msgstr "Dateiname"
 
 #. Translators: The label for a button in Logs Manager dialog to open the selected logs.
+#: addon\globalPlugins\ndtt\logManagement.py:399
 msgid "&Open"
 msgstr "Ö&ffnen"
 
 #. Translators: The label for a button in Logs Manager dialog to copy the selected logs.
+#: addon\globalPlugins\ndtt\logManagement.py:403
 msgid "&Copy files"
-msgstr ""
+msgstr "&Dateien kopieren"
 
 #. Translators: The label for a button to delete the selected log(s) in Log Manager dialog.
+#: addon\globalPlugins\ndtt\logManagement.py:408
 msgid "&Delete"
 msgstr "&Löschen"
 
 #. Translators: The label of a button in Logs Manager to open the settings panel.
+#: addon\globalPlugins\ndtt\logManagement.py:423
 msgid "Settings..."
 msgstr "Einstellungen..."
 
 #. Translators: The label of a button to close the logs manager dialog.
+#: addon\globalPlugins\ndtt\logManagement.py:439
 msgid "&Close"
 msgstr "&Schließen"
 
 #. We open the message box only if no log can be opened
 #. Translators: A message displayed to the user when pressing the Open button in the logs manager dialog
+#: addon\globalPlugins\ndtt\logManagement.py:543
 msgid "The selected log(s) is (are) not available anymore"
 msgstr "Das (die) ausgewählte(n) Protokoll(e) ist (sind) nicht mehr verfügbar"
 
 #. Translators: A message displayed to the user when pressing the Delete button in the logs manager dialog
+#: addon\globalPlugins\ndtt\logManagement.py:549
 #, python-brace-format
-msgid ""
-"The following files will be removed:\n"
-"{logsList}\n"
-"\n"
+msgid "The following files will be removed:\n"
+"{logsList}\n\n"
 "Would you like to continue?"
-msgstr ""
-"Die folgenden Dateien werden entfernt:\n"
-"{logsList}\n"
-"\n"
+msgstr "Die folgenden Dateien werden entfernt:\n"
+"{logsList}\n\n"
 "Möchten Sie fortfahren?"
 
 #. Translators: The title of a dialog displayed to the user when pressing the Delete button in the
 #. logs manager dialog
+#: addon\globalPlugins\ndtt\logManagement.py:554
 msgid "Confirm deletion"
 msgstr "Löschen bestätigen"
 
 #. Translators: Message issued when 5 or more logs could not be deleted.
+#: addon\globalPlugins\ndtt\logManagement.py:584
 #, python-brace-format
 msgid "{nLogs} log files could not be deleted. See NVDA's log for details."
-msgstr ""
-"Die Protokolldateien für {nLogs} konnten nicht gelöscht werden. Schauen Sie "
-"bitte für Details in die Protokolldatei von NVDA nach."
+msgstr "Die Protokolldateien für {nLogs} konnten nicht gelöscht werden. Schauen Sie bitte für Details in die Protokolldatei von NVDA nach."
 
 #. Translators: Message issued when 1 to 4 logs could not be deleted.
-#, fuzzy, python-brace-format
-msgid ""
-"The following logs files could not be deleted.\n"
-"\n"
+#: addon\globalPlugins\ndtt\logManagement.py:590
+#, python-brace-format
+msgid "The following logs files could not be deleted.\n\n"
 "{files}"
-msgstr ""
-"Die folgenden Protokolldateien konnten nicht gelöscht werden.\n"
-"\n"
-"{file}"
+msgstr "Die folgenden Protokolldateien konnten nicht gelöscht werden.\n"
+"\\N\n"
+"{files}"
 
 #. Translators: The title of a dialog displayed to the user when pressing the Delete button in
 #. the logs manager dialog
 #. Translators: The title of a dialog displayed to the user when copying files in the logs manager dialog
 #. fails
+#. Translators: Caption of the message box error when calling the anonymization command
+#: addon\globalPlugins\ndtt\logManagement.py:595
+#: addon\globalPlugins\ndtt\logManagement.py:631
+#: addon\globalPlugins\ndtt\logManagement.py:713
 msgid "Error"
 msgstr "Fehler"
 
 #. Translators: reported when requesting to copy the logs selected in the logs manager dialog.
+#: addon\globalPlugins\ndtt\logManagement.py:637
 msgid "Log files copied"
-msgstr ""
+msgstr "Protokolldateien kopiert"
 
 #. Translators: reported when requesting to copy the logs selected in the logs manager dialog.
+#: addon\globalPlugins\ndtt\logManagement.py:641
 msgid "Unable to copy the selected logs; the clipboard is not available."
 msgstr ""
 
 #. Translators: menu item label to open the logs manager dialog.
+#: addon\globalPlugins\ndtt\logManagement.py:659
 msgid "&Logs manager..."
 msgstr "Protokoll&verwaltung..."
 
+#. Translators: Input help mode message for Copy and anonymize log script.
+#: addon\globalPlugins\ndtt\logManagement.py:682
+msgid "Copy the selection and anonymize it."
+msgstr ""
+
+#. Translators: a message reported when calling the anonymization command
+#: addon\globalPlugins\ndtt\logManagement.py:699
+msgid "No selection"
+msgstr ""
+
+#. Translators: a message reported when calling the anonymization command
+#: addon\globalPlugins\ndtt\logManagement.py:704
+msgid "Selected text anonymized and copied in the clipboard."
+msgstr ""
+
+#. Translators: message of the message box error when calling the anonymization command
+#: addon\globalPlugins\ndtt\logManagement.py:711
+#, python-brace-format
+msgid "Could not anonymize and copy selection.\n\n"
+"{}"
+msgstr ""
+
+#. Translators: a message reported when calling the anonymization command
+#: addon\globalPlugins\ndtt\logManagement.py:738
+#, python-brace-format
+msgid "Invalid regular expression in anonymization rules file.\n\n"
+"File: {}\n"
+"Line: {}\n"
+"Pattern: {}\n"
+"Error: {}"
+msgstr ""
+
 #. Translators: Reported when pressing a quick navigation command in the log.
+#: addon\globalPlugins\ndtt\logReader.py:828
 msgid "No more item"
 msgstr "Keine weiteren Einträge"
 
+#. Translators: Reported when pressing a quick navigation command in the log.
+#: addon\globalPlugins\ndtt\logReader.py:880
+msgid "No more block"
+msgstr ""
+
+#. Translators: Reported when pressing a quick navigation command in the log.
+#: addon\globalPlugins\ndtt\logReader.py:897
+msgid "No block here"
+msgstr ""
+
+#. Translators: Reported when pressing the Go to error command in the log
+#: addon\globalPlugins\ndtt\logReader.py:919
+msgid "No error indicator for this frame"
+msgstr ""
+
+#. Translators: Reported when pressing the go to error command in a traceback line.
+#: addon\globalPlugins\ndtt\logReader.py:948
+msgid "No traceback here"
+msgstr "Kein Traceback vorhanden"
+
 #. Translators: Input help mode message for log navigation commands. {st} will be replaced by
 #. the search type (Io, Debug, Message, etc.
+#: addon\globalPlugins\ndtt\logReader.py:965
 #, python-brace-format
 msgid "Moves to the next logged message of type {st}."
 msgstr "Springt zur nächsten protokollierten Meldung des Typs {st}."
 
 #. Translators: Input help mode message for log navigation commands. {st} will be replaced by the
 #. search type (Io, Debug, Message, etc.
+#: addon\globalPlugins\ndtt\logReader.py:969
 #, python-brace-format
 msgid "Moves to the previous logged message of type {st}."
 msgstr "Springt zur vorherigen protokollierten Meldung des Typs {st}."
 
 #. Translators: A message reported when toggling log reader commands.
+#: addon\globalPlugins\ndtt\logReader.py:1064
 msgid "Log Reader commands enabled."
 msgstr "Befehle für den Protokoll-Reader eingeschaltet."
 
 #. Translators: A message reported when toggling log reader commands.
+#: addon\globalPlugins\ndtt\logReader.py:1067
 msgid "Log Reader commands disabled."
 msgstr "Befehle für den Protokoll-Reader ausgeschaltet."
 
 #. Translators: Input help mode message for Toggle log translation script.
-#, fuzzy
+#: addon\globalPlugins\ndtt\logReader.py:1072
 msgid "Toggles speech translation in the log"
-msgstr "Sprach-Übersetzung im Protokoll umschalten"
+msgstr "Schaltet die Sprachübersetzung im Protokoll um."
+
+#. Translators: A message reported when disabling log translation.
+#: addon\globalPlugins\ndtt\logReader.py:1079
+msgid "Log translation disabled"
+msgstr "Protokollübersetzung deaktiviert"
+
+#. Translators: A message reported when enabling log translation.
+#: addon\globalPlugins\ndtt\logReader.py:1084
+msgid "Log translation enabled"
+msgstr "Protokollübersetzung aktiviert"
+
+#. Translators: A message reported when trying to enable log translation.
+#: addon\globalPlugins\ndtt\logReader.py:1088
+msgid "Cannot enable log translation. Please install or enable Instant Translate add-on."
+msgstr "Die Protokollübersetzung kann nicht aktiviert werden. Bitte installieren oder aktivieren Sie das Add-on „Instant Translate“."
 
 #. Translators: Input help mode message for Open source file script.
-msgid ""
-"Opens the source code file whose path is located at the caret's position."
-msgstr ""
-"Öffnet die Quellcode-Datei, deren Pfad sich an der Position des Cursors "
-"befindet."
+#: addon\globalPlugins\ndtt\logReader.py:1093
+msgid "Opens the source code file whose path is located at the caret's position."
+msgstr "Öffnet die Quellcode-Datei, deren Pfad sich an der Position des Cursors befindet."
 
 #. Translators: A message reported when trying to open the source code from the current line.
+#: addon\globalPlugins\ndtt\logReader.py:1113
 msgid "No file path or object found on this line."
 msgstr "Kein Dateipfad oder Objekt in dieser Zeile gefunden."
 
+#. Translators: Input help mode message for go to error script.
+#: addon\globalPlugins\ndtt\logReader.py:1118
+msgid "Move the caret at the error's position in a traceback frame. A second press selects the erroneous code. A third press selects the error with its context."
+msgstr "Bewegen Sie den Cursor an die Fehlerposition in einem Traceback-Frame. Ein zweiter Tastendruck wählt den fehlerhaften Code aus. Ein dritter Tastendruck wählt den Fehler mit seinem Kontext aus."
+
+#. Translators: A message reported when using block navigation command
+#: addon\globalPlugins\ndtt\logReader.py:1145
+#: addon\globalPlugins\ndtt\logReader.py:1175
+msgid "Not in a log message"
+msgstr "Nicht in einer Protokollmeldung"
+
+#. Translators: A message reported when using block navigation command
+#: addon\globalPlugins\ndtt\logReader.py:1150
+#: addon\globalPlugins\ndtt\logReader.py:1180
+msgid "No block in this message"
+msgstr "Kein Block in dieser Nachricht"
+
+#. Translators: Input help mode message for Log Reader help script.
+#: addon\globalPlugins\ndtt\logReader.py:1202
+msgid "Displays help for the Log reader commands"
+msgstr "Zeigt Hilfe zu den Befehlen des Protokolllesers an."
+
+#. Translators: Title of the Log Reader commands help window.
+#: addon\globalPlugins\ndtt\logReader.py:1207
+#, python-brace-format
+msgid "Log Reader commands ({name})"
+msgstr "Log Reader-Befehle ({name})"
+
 #. Translators: Input help mode message for Add marker in log script.
+#: addon\globalPlugins\ndtt\logReader.py:1317
 msgid "Adds a marker in the log."
 msgstr "Fügt ein Lesezeichen im Protokoll ein."
 
 #. Translators: a message telling the user that a marker has been inserted in the log.
+#: addon\globalPlugins\ndtt\logReader.py:1324
+#, python-brace-format
 msgid "Marker {} added in the log"
 msgstr "Lesezeichen {} im Protokoll hinzugefügt"
 
 #. Translators: Input help mode message for Toggle log Reader script.
+#: addon\globalPlugins\ndtt\logReader.py:1329
 msgid "Activates or deactivates the log Reader commands."
 msgstr "Aktiviert oder deaktiviert die Befehle für den Protokoll-Reader."
 
 #. Translators: A message when using Toggle log Reader script.
+#: addon\globalPlugins\ndtt\logReader.py:1344
 msgid "Not in a text area."
 msgstr ""
 
 #. Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
+#: addon\globalPlugins\ndtt\ndttGui.py:40
 msgid "Off"
 msgstr "Ausgeschaltet"
 
 #. Translators: This is a label of an item for the backup combo box in the NDTT Settings panel.
+#: addon\globalPlugins\ndtt\ndttGui.py:42
 msgid "On"
 msgstr "Eingeschaltet"
 
 #. Translators: A message presented in the settings panel when opened while no-default profile is active.
+#: addon\globalPlugins\ndtt\ndttGui.py:47
 #, python-brace-format
-msgid ""
-"{name} add-on can only be configured from the Normal Configuration profile.\n"
+msgid "{name} add-on can only be configured from the Normal Configuration profile.\n"
 "Please close this dialog, set your config profile to default and try again."
-msgstr ""
-"Die NVDA-Erweiterung {name} kann nur über das Profil Normale Konfiguration "
-"konfiguriert werden.\n"
-"Bitte schließen Sie das Dialogfeld, setzen Sie das Konfigurationsprofil auf "
-"Standard und versuchen Sie es erneut."
+msgstr "Die NVDA-Erweiterung {name} kann nur über das Profil Normale Konfiguration konfiguriert werden.\n"
+"Bitte schließen Sie das Dialogfeld, setzen Sie das Konfigurationsprofil auf Standard und versuchen Sie es erneut."
 
 #. Translators: This is a label for an edit field in the NDTT Settings panel.
+#: addon\globalPlugins\ndtt\ndttGui.py:63
 #, python-brace-format
-msgid ""
-"Command to open a file in your favorite editor\n"
+msgid "Command to open a file in your favorite editor\n"
 "(use \"{path}\" and \"{line}\" placeholders in this command)"
-msgstr ""
-"Befehl zum Öffnen einer Datei im bevorzugten Editor\n"
+msgstr "Befehl zum Öffnen einer Datei im bevorzugten Editor\n"
 "(verwenden Sie \"{path}\" und \"{line}\" als Platzhalter in diesem Befehl)"
 
 #. Translators: This is a label for an edit field in the NDTT Settings panel.
+#: addon\globalPlugins\ndtt\ndttGui.py:70
 msgid "NVDA source code path"
 msgstr "Pfad des NVDA-Quellcodes"
 
 #. Translators: The label of a button to browse for a directory or a file.
+#: addon\globalPlugins\ndtt\ndttGui.py:76
+#: addon\globalPlugins\ndtt\restartWithOptions.py:238
+#: addon\globalPlugins\ndtt\restartWithOptions.py:266
 msgid "Browse..."
 msgstr "Durchsuchen..."
 
 #. Translators: The title of the dialog presented when browsing for the directory.
+#: addon\globalPlugins\ndtt\ndttGui.py:78
+#: addon\globalPlugins\ndtt\restartWithOptions.py:268
 msgid "Select a directory"
 msgstr "Verzeichnis auswählen"
 
 #. Translators: This is a label for the combo box in the NDTT Settings panel.
+#: addon\globalPlugins\ndtt\ndttGui.py:85
 msgid "Backup of old logs:"
 msgstr "Sicherung von alten Protokollen:"
 
 #. Translators: This is a label for a setting in the settings panel
+#: addon\globalPlugins\ndtt\ndttGui.py:101
 msgid "Limit the number of backups to:"
 msgstr "Anzahl der Sicherungen begrenzen auf:"
 
 #. Translators: This is a label for a setting in the settings panel
+#: addon\globalPlugins\ndtt\ndttGui.py:112
 msgid "Copy reverse &translation to clipboard"
 msgstr ""
 
-#. Translators: Input help mode message for a command of the object property explorer.
-#, fuzzy
-msgid ""
-"Reports the currently selected property of the object property explorer for "
-"the navigator object."
+#. Translators: This is a label for a setting in the settings panel
+#: addon\globalPlugins\ndtt\ndttGui.py:123
+msgid "Preserve console input history after restart"
 msgstr ""
-"Wählt die nächste Eigenschaft des Objekt-Explorers aus und teilt diese für "
-"das Navigator-Objekt mit."
+
+#. Translators: This is a label for a setting in the settings panel
+#: addon\globalPlugins\ndtt\ndttGui.py:134
+msgid "Number of inputs preserved in Python console history"
+msgstr ""
+
+#. Translators: This is a label for a combo box in the NDTT Settings panel.
+#: addon\globalPlugins\ndtt\ndttGui.py:146
+msgid "Custom function"
+msgstr ""
+
+#. Translators: This is a label for a setting in the settings panel
+#: addon\globalPlugins\ndtt\ndttGui.py:150
+msgid "Target function for function call logging:"
+msgstr ""
+
+#. Translators: This is a label for an edit field in the NDTT Settings panel.
+#: addon\globalPlugins\ndtt\ndttGui.py:157
+msgid "Custom function for function call logging:"
+msgstr ""
+
+#. Translators: This is a label for the combo box in the NDTT Settings panel.
+#: addon\globalPlugins\ndtt\ndttGui.py:173
+msgid "Function call log method:"
+msgstr ""
 
 #. Translators: Input help mode message for a command of the object property explorer.
-#, fuzzy
-msgid ""
-"Displays the currently selected property of the object property explorer for "
-"the navigator object in a browseable message."
+#: addon\globalPlugins\ndtt\objPropExplorer.py:105
+msgid "Reports the currently selected property of the object property explorer for the navigator object."
 msgstr ""
-"Teilt die aktuell ausgewählte Eigenschaft des Objekt-Explorers für das "
-"Navigator-Objekt mit; zweimaliges Drücken zeigt diese Information in einer "
-"lesbaren Meldung an."
 
 #. Translators: Input help mode message for a command of the object property explorer.
-msgid ""
-"Selects the next property of the object property explorer and reports it for "
-"the navigator object."
+#: addon\globalPlugins\ndtt\objPropExplorer.py:116
+msgid "Displays the currently selected property of the object property explorer for the navigator object in a browseable message."
 msgstr ""
-"Wählt die nächste Eigenschaft des Objekt-Explorers aus und teilt diese für "
-"das Navigator-Objekt mit."
 
 #. Translators: Input help mode message for a command of the object property explorer.
-msgid ""
-"Selects the previous property of the object property explorer and reports it "
-"for the navigator object."
-msgstr ""
-"Wählt die vorherige Eigenschaft des Objekt-Explorers aus und teilt diese für "
-"das Navigator-Objekt mit."
+#: addon\globalPlugins\ndtt\objPropExplorer.py:127
+msgid "Selects the next property of the object property explorer and reports it for the navigator object."
+msgstr "Wählt die nächste Eigenschaft des Objekt-Explorers aus und teilt diese für das Navigator-Objekt mit."
 
 #. Translators: Input help mode message for a command of the object property explorer.
-#, fuzzy
-msgid ""
-"Toggles custom reporting of objects using the Object explorer's selected "
-"property when you use object navigation commands."
+#: addon\globalPlugins\ndtt\objPropExplorer.py:140
+msgid "Selects the previous property of the object property explorer and reports it for the navigator object."
+msgstr "Wählt die vorherige Eigenschaft des Objekt-Explorers aus und teilt diese für das Navigator-Objekt mit."
+
+#. Translators: Input help mode message for a command of the object property explorer.
+#: addon\globalPlugins\ndtt\objPropExplorer.py:172
+msgid "Toggles custom reporting of objects using the Object explorer's selected property when you use object navigation commands."
 msgstr ""
-"Schaltet die benutzerdefinierte Mitteilungen über Objekte mit Hilfe der "
-"ausgewählten Eigenschaft des Objekt-Explorers um, sofern die Befehle zur "
-"Objekt-Navigation verwendet werden."
 
 #. Translators: Message reported by a command of the object property explorer.
+#: addon\globalPlugins\ndtt\objPropExplorer.py:181
 msgid "Custom object reporting enabled"
 msgstr "Benutzerdefinierte Objekte mitteilen eingeschaltet"
 
 #. Translators: Message reported by a command of the object property explorer.
+#: addon\globalPlugins\ndtt\objPropExplorer.py:185
 msgid "Custom object reporting disabled"
 msgstr "Benutzerdefinierte Objekte mitteilen ausgeschaltet"
 
 #. Translators: The title of a file selector window
+#: addon\globalPlugins\ndtt\restartWithOptions.py:113
 msgid "Save As"
 msgstr "Speichern unter"
 
 #. Translators: the label for the NVDA log extension (log) file type
+#: addon\globalPlugins\ndtt\restartWithOptions.py:240
 #, python-brace-format
 msgid "NVDA log file (*.{ext})"
 msgstr "NVDA-Protokolldatei (*.{ext})"
 
 #. Translators: The title of the dialog presented when browsing for the file.
+#: addon\globalPlugins\ndtt\restartWithOptions.py:242
 msgid "Select a file"
 msgstr "Datei auswählen"
 
 #. Translators: This is the title for the Restart with options dialog
+#: addon\globalPlugins\ndtt\restartWithOptions.py:278
 msgid "Specify some options and restart"
 msgstr "Optionen festlegen und neustarten"
 
 #. Translators: The description of an NVDA start option, copied from the user guide (paragraph
 #. "Command Line Options")
+#: addon\globalPlugins\ndtt\restartWithOptions.py:302
 msgid "The file where log messages should be written to"
 msgstr "Die Datei, in die Protokollmeldungen geschrieben werden sollen"
 
 #. Translators: The description of an NVDA start option, copied from the user guide (paragraph
 #. "Command Line Options")
+#: addon\globalPlugins\ndtt\restartWithOptions.py:309
 msgid "The lowest level of message logged"
 msgstr "Die niedrigste Stufe der protokollierten Nachricht"
 
 #. Translators: The description of an NVDA start option, copied from the user guide (paragraph
 #. "Command Line Options")
+#: addon\globalPlugins\ndtt\restartWithOptions.py:324
 msgid "The path where all settings for NVDA are stored"
 msgstr "Der Pfad, in dem alle NVDA-Einstellungen gespeichert werden"
 
 #. Translators: The description of an NVDA start option, copied from the user guide (paragraph
 #. "Command Line Options")
+#: addon\globalPlugins\ndtt\restartWithOptions.py:331
 msgid "Override the configured NVDA language"
 msgstr "Eingestellte NVDA-Sprache überschreiben"
 
 #. Translators: The description of an NVDA start option, copied from the user guide (paragraph
 #. "Command Line Options")
+#: addon\globalPlugins\ndtt\restartWithOptions.py:346
 msgid "No sounds, no interface, no start message, etc."
 msgstr "Keine Sounds, keine Oberfläche, keine Startmeldungen, etc."
 
 #. Translators: The description of an NVDA start option, copied from the user guide (paragraph
 #. "Command Line Options")
+#: addon\globalPlugins\ndtt\restartWithOptions.py:353
 msgid "Secure mode"
 msgstr "Geschützter Modus"
 
 #. Translators: The description of an NVDA start option, copied from the user guide (paragraph
 #. "Command Line Options")
+#: addon\globalPlugins\ndtt\restartWithOptions.py:360
 msgid "Add-ons will have no effect"
 msgstr "Die NVDA-Erweiterungen haben keine Auswirkungen"
 
 #. Translators: The description of an NVDA start option, copied from the user guide (paragraph
 #. "Command Line Options")
+#: addon\globalPlugins\ndtt\restartWithOptions.py:371
 msgid "Don't change the global system screen reader flag"
 msgstr "Das globale System-Flag für den Screenreader nicht ändern"
 
 #. Translators: Input help mode message for Restart with options command.
+#: addon\globalPlugins\ndtt\restartWithOptions.py:418
 msgid "Restarts NVDA with specific options."
 msgstr "Startet NVDA mit bestimmten Optionen neu."
 
 #. Translators: Input help mode message for Reverse UI translation command
-msgid "Performs a reverse UI translation of the last speech"
+#: addon\globalPlugins\ndtt\reverseUITranslation.py:131
+msgid "Performs a reverse UI translation of the last speech, using NVDA translation catalogs."
+msgstr ""
+
+#. Translators: An error message when calling the NVDA reverse UI translation command
+#: addon\globalPlugins\ndtt\reverseUITranslation.py:141
+msgid "Message not found in NVDA's translation catalog"
+msgstr ""
+
+#. Translators: Input help mode message for Reverse UI translation command
+#: addon\globalPlugins\ndtt\reverseUITranslation.py:146
+msgid "Performs a reverse UI translation of the last speech, using NVDA and add-ons translation catalogs."
+msgstr ""
+
+#. Translators: An error message when calling the NVDA+add-ons reverse UI translation command
+#: addon\globalPlugins\ndtt\reverseUITranslation.py:158
+msgid "Message not found in NVDA's and addons translation catalogs"
+msgstr ""
+
+#. Translators: An error message when calling the NVDA+add-ons reverse UI translation command
+#: addon\globalPlugins\ndtt\reverseUITranslation.py:161
+msgid "Message not found in addons translation catalogs"
 msgstr ""
 
 #. Translators: An error message when calling the reverse UI translation command
-msgid "Reverse translation not available for this version of NVDA."
+#: addon\globalPlugins\ndtt\reverseUITranslation.py:169
+msgid "Reverse translation not available."
+msgstr ""
+
+#. Translators: An error message when calling the reverse UI translation command for older NVDA versions
+#: addon\globalPlugins\ndtt\reverseUITranslation.py:175
+msgid "Retrieving translated strings of NVDA not supported for this version of NVDA."
+msgstr ""
+
+#. Translators: An error message when calling the reverse UI translation command while NVDA is in English
+#: addon\globalPlugins\ndtt\reverseUITranslation.py:179
+msgid "Reverse translation not available: NVDA is not translated."
 msgstr ""
 
 #. Translators: An error message when calling the reverse UI translation command
+#: addon\globalPlugins\ndtt\reverseUITranslation.py:183
 msgid "No last spoken text"
 msgstr ""
 
-#. Translators: An error message when calling the reverse UI translation command
-msgid "Message not found in translation catalog"
-msgstr ""
-
 #. Translators: Input help mode message for a command.
-msgid ""
-"NVDA will open the code of the script of the next gesture instead of "
-"executing the corresponding command."
+#: addon\globalPlugins\ndtt\scriptOpener.py:50
+msgid "NVDA will open the code of the script of the next gesture instead of executing the corresponding command."
 msgstr ""
 
 #. Translators: Reported when executing the command to open the script corresponding to the next gesture.
+#: addon\globalPlugins\ndtt\scriptOpener.py:59
 msgid "Execute a gesture to open the code of the corresponding script."
 msgstr ""
 
 #. Translators: Reported when executing the command to open the script corresponding to the next gesture.
+#: addon\globalPlugins\ndtt\scriptOpener.py:79
 #, python-brace-format
 msgid "Script not found for {gestureName}"
 msgstr ""
 
-#. Translators: Input help mode message for a toggle command.
-msgid "Toggles the stack trace log when the speech function is called."
+#. Translators: Input help mode message for a command.
+#: addon\globalPlugins\ndtt\scriptOpener.py:85
+msgid "Opens the code of the path at the position of the system cursor"
 msgstr ""
-"Schaltet das Stack-Trace-Protokoll ein, sobald die Funktion der "
-"Sprachausgabe aufgerufen wird."
 
-#. Translators: Reported when toggling the stack trace log feature.
-msgid "Stacktrace log enabled"
-msgstr "Stacktrace-Protokoll eingeschaltet"
+#. Translators: Input help mode message for a command.
+#: addon\globalPlugins\ndtt\scriptOpener.py:105
+msgid "Opens the code of the path at the position of the review cursor"
+msgstr ""
 
-#. Translators: Reported when toggling the stack trace log feature.
-msgid "Stacktrace log disabled"
-msgstr "Stacktrace-Protokoll ausgeschaltet"
+#. Translators: Reported when executing the command to open the source code at the path/line at the caret or review position.
+#: addon\globalPlugins\ndtt\scriptOpener.py:124
+msgid "No path on this line"
+msgstr ""
+
+#. Translators: The description of a command of this add-on.
+#: addon\globalPlugins\ndtt\__init__.py:145
+#, python-brace-format
+msgid "Opens {name} settings"
+msgstr ""
 
 #. Add-on summary/title, usually the user visible name of the add-on
 #. Translators: Summary/title for this add-on
 #. to be shown on installation and add-on information found in add-on store
+#: buildVars.py:20
 msgid "NVDA Dev & Test Toolbox"
 msgstr "Dev & Test-Toolbox für NVDA"
 
 #. Add-on description
 #. Translators: Long description to be shown for this add-on on add-on information from add-on store
-msgid "A set of tools for NVDA developers and testers."
-msgstr "Eine Reihe von Tools für NVDA-Entwickler und -Tester."
+#: buildVars.py:23
+msgid "NVDA Dev & Test Toolbox provides tools for debugging and testing NVDA.\n"
+"Its log tools make it easier to navigate and analyze logs, inspect errors and tracebacks, save log backups, and anonymize logs before sharing them.\n"
+"Specific function calls and markers can also be logged.\n"
+"It is also possible to open the corresponding source code from a log items, console variables or even typing a command gesture.\n"
+"The add-on also extends the Python console and provides utilities such as reverse translation of NVDA's interface strings and an enhanced restart dialog."
+msgstr ""
 
-#~ msgid "Opens NVDA Dev & Test Toolbox add-on settings"
-#~ msgstr ""
-#~ "Öffnet die Einstellungen der NVDA-Erweiterung für die Dev & Test-Toolbox "
-#~ "für NVDA"
+#. Brief changelog for this version
+#. Translators: what's new content for the add-on version to be shown in the add-on store
+#: buildVars.py:32
+msgid "* The commands entry point gesture has been changed to `NVDA+Z` to avoid conflict with new repeat last speech command.\n"
+"* The command to cycle \"Play a sound for logged errors\" has been updated to support the \"No\" value introduced in NVDA 2026.2."
+msgstr ""
+
