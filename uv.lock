@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = "==3.13.*"
 
 [[package]]
@@ -218,6 +218,7 @@ source = { editable = "." }
 build = [
     { name = "markdown" },
     { name = "scons" },
+    { name = "tomlkit" },
 ]
 dev = [
     { name = "crowdin-api-client" },
@@ -231,6 +232,7 @@ dev = [
     { name = "pyright", extra = ["nodejs"] },
     { name = "ruff" },
     { name = "scons" },
+    { name = "tomlkit" },
     { name = "uv" },
 ]
 l10n = [
@@ -254,6 +256,7 @@ lint = [
 build = [
     { name = "markdown", specifier = "==3.10" },
     { name = "scons", specifier = "==4.10.1" },
+    { name = "tomlkit", specifier = "==0.15.0" },
 ]
 dev = [
     { name = "crowdin-api-client", specifier = "==1.24.1" },
@@ -267,6 +270,7 @@ dev = [
     { name = "pyright", extras = ["nodejs"], specifier = "==1.1.407" },
     { name = "ruff", specifier = "==0.14.5" },
     { name = "scons", specifier = "==4.10.1" },
+    { name = "tomlkit", specifier = "==0.15.0" },
     { name = "uv", specifier = "==0.13.4" },
 ]
 l10n = [
@@ -374,6 +378,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/7d/c9/2f430bb39e4eccba32ce8008df4a3206df651276422204e177a09e12b30b/scons-4.10.1.tar.gz", hash = "sha256:99c0e94a42a2c1182fa6859b0be697953db07ba936ecc9817ae0d218ced20b15", size = 3258403, upload-time = "2025-11-16T22:43:39.258Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ce/bf/931fb9fbb87234c32b8b1b1c15fba23472a10777c12043336675633809a7/scons-4.10.1-py3-none-any.whl", hash = "sha256:bd9d1c52f908d874eba92a8c0c0a8dcf2ed9f3b88ab956d0fce1da479c4e7126", size = 4136069, upload-time = "2025-11-16T22:43:35.933Z" },
+]
+
+[[package]]
+name = "tomlkit"
+version = "0.15.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/51/db/03eaf4331631ef6b27d6e3c9b68c54dc6f0d63d87201fed600cc409307fd/tomlkit-0.15.0.tar.gz", hash = "sha256:7d1a9ecba3086638211b13814ea79c90dd54dd11993564376f3aa92271f5c7a3", size = 161875, upload-time = "2026-05-10T07:38:22.245Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6a/43/8bd850ee71a191bf072e31302c73a66be413fecdd98fdcd111ecbcce13ca/tomlkit-0.15.0-py3-none-any.whl", hash = "sha256:4dbc8f0fc024412b57ced8757ac7461305126a648ff8c2c807fcb8e133a78738", size = 41328, upload-time = "2026-05-10T07:38:23.517Z" },
 ]
 
 [[package]]
