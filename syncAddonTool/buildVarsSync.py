@@ -153,11 +153,11 @@ def mergeBuildvarsFile(
 					):
 						# Handle direct literal values (strings, numbers, booleans)
 						isTranslatable: bool = keyName in ["addon_summary", "addon_description", "addon_changelog"]
-						
+
 						rawSourceText: str = ast.get_source_segment(tplContentText, kwItem.value) or ""
 						cleanedSourceText: str = rawSourceText.strip()
 						useDoubleQuotesBool: bool = cleanedSourceText.startswith('"') or cleanedSourceText.startswith('_("')
-						
+
 						formattedValueText = formatStringLiteral(
 							str(valueVal),
 							useDoubleQuotes=useDoubleQuotesBool,
