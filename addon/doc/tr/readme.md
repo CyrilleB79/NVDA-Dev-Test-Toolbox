@@ -232,7 +232,7 @@ NVDA'yı kaynak kodundan çalıştırmıyorsanız, [NVDA kaynak kodunun konumu](
 Sometimes you may have error tracebacks in the log, as in the following example:
 
     HATA - scriptHandler.executeScript (14:47:43.426) - MainThread (15492):
-komut dosyasını yürütürken hata oluştu: <bound method LogContainer.script_openSourceFile of <NVDAObjects.Dynamic_LogViewerLogContainerIAccessibleRichEdit50WindowNVDAObject object at 0x34C1E510>> with gesture 'c'
+Komut dosyasını yürütürken hata oluştu: <bound method LogContainer.script_openSourceFile of <NVDAObjects.Dynamic_LogViewerLogContainerIAccessibleRichEdit50WindowNVDAObject object at 0x34C1E510>> 'c' hareketiyle
     İzleme kaydı (en son çağrı):
       "scriptHandler.pyc" dosyasında, 300. satırda, executeScript fonksiyonunda
       "C:\Users\myUserName\AppData\Roaming\\nvda\\addons\\nvdaDevTestToolbox\globalPlugins\\ndtt\logReader.py" dosyasında, 603. satırda, script_openSourceFile fonksiyonunda
