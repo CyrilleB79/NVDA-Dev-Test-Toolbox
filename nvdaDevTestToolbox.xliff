@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en">
-<file id="readme.md" original="https://raw.githubusercontent.com/CyrilleB79/NVDA-Dev-Test-Toolbox/0112668bd1a9c808c515002e13d10504f69cf226/readme.md">
+<file id="readme.md" original="https://raw.githubusercontent.com/CyrilleB79/NVDA-Dev-Test-Toolbox/0e1901e945f7dc52603afc65a521370389982ccd/readme.md">
 <skeleton>
 # $(ID:a315dad3-b9b7-4e63-b7c6-c5e3fd0883b4)
 
@@ -103,7 +103,7 @@ $(ID:85f232c2-7b02-469b-ae8f-395f81a8dd37)
 * $(ID:9d356eb9-0af1-4d20-a7c6-b168315f7496)
 * $(ID:3c4573a0-d872-4b58-86bd-da70af354571)
 
-$(ID:a7f50aa5-f042-4a34-af2c-84ddd4bf03a9)
+$(ID:83e11972-57c8-4c3b-83ad-01bc32039be1)
 $(ID:5d3ff064-061d-4dbd-8223-8f85fb4e90e0)
 
 $(ID:26d11335-4247-4314-b19e-36790136a801)
@@ -149,8 +149,8 @@ $(ID:96dfbf56-abf0-4309-955a-f5c667507956)
 
 $(ID:18eae3b3-22d3-4ecc-80f7-be840a79028e)
 $(ID:3281840f-e1fb-464b-a999-64cb1d16a30f)
-$(ID:ad6cdb91-bbbe-4ab1-a557-a09833c6e00a)
-$(ID:d54c2518-9471-4f06-87f1-b72f49478d9d)
+$(ID:56e309e7-4e8a-4020-bdc7-d546621effc0)
+$(ID:20f78479-cbc8-4e5d-a381-0a2c30f19208)
 
 $(ID:7a3c1136-6609-4ca8-8235-78d12fcb15e7)
 $(ID:b71ff57e-dfd3-4430-b4af-9b09a4eee73e)
@@ -218,12 +218,12 @@ $(ID:40f873a1-6367-4b0e-816d-f160614bc642)
 
 $(ID:6d4b1575-4840-4615-9915-ac9818ba9549)
 
-* $(ID:fd760ef4-012b-446b-a2a5-a80c9b1dbe41)
-$(ID:694a1d10-45dc-423c-b991-062bb55e77cf)
-* $(ID:6209bcf2-581c-46c4-9c9d-04edd851c1ed)
-$(ID:1075d7ff-c2b9-4dca-b6eb-ee5198b03f7b)
-* $(ID:7a68ec56-1ac8-44cf-ac63-cb3db046e4d3)
-$(ID:16eeeeba-363d-4a90-b0e0-af8dfa73d430)
+* $(ID:d48753d0-ba6b-4cd2-9349-feefdf97feac)
+$(ID:177ecfcb-4f25-4f90-9e17-8fa4f352cd0f)
+* $(ID:633cf153-d8f5-401b-a85e-d4e237bcdf49)
+$(ID:e4085057-ab5b-4cc1-859e-d2c96a4ddc06)
+* $(ID:47c1d128-30b9-49b9-933c-83a8cb44c49a)
+$(ID:39c83b93-9f87-4b0e-a108-e0a6238f48f8)
 
 $(ID:993933cf-2f12-44d9-b429-a1b7bdaa983b)
 $(ID:edf71b6a-4900-4540-afcc-baa6a0697d39)
@@ -233,7 +233,7 @@ $(ID:2e0c87a3-17e6-4068-86cc-55f76afbb8fe)
 
 #### $(ID:5c393157-b805-48be-80b4-3fb9aa6ff15c)
 
-$(ID:0e1c39e1-f837-4193-8817-98a4d181ef70)
+$(ID:e35bbb84-9169-43ce-bad3-e3b5105afc6b)
 
 $(ID:ff78c39b-b5ea-4dbb-b834-7c7ee0732de2)
 $(ID:b41bcf3f-5b2b-4b0c-82e6-826cb4231b55)
@@ -299,8 +299,8 @@ $(ID:a8241871-3c24-4734-a19d-c5e35e2a35e3)
 $(ID:e738029e-e56a-4380-bdc5-273394713de9)
 ### $(ID:1b2e3b5a-c71d-4d90-af68-6c717e1d7153)
 
-$(ID:64cbd8c7-e8d2-4a10-b383-59e2e544b910)
-$(ID:6e878ca3-4149-46ee-81ef-92f875f163f5)
+$(ID:337f17fd-7ce5-4a86-bf73-15b6495995b1)
+$(ID:53f0abc4-3e26-46af-a429-033012afa923)
 
 $(ID:fd8d9324-304d-45d3-a9a2-3d13b3194ca5)
 $(ID:99fa1422-20b5-481f-8306-f26e7e37e932)
@@ -312,24 +312,24 @@ $(ID:22c2528a-d8e7-48f2-9bc3-00e955aaa61a)
 
 $(ID:174c5351-ee59-41df-8cd4-b6140748bfb9)
 
-* $(ID:ef391513-3a7d-4210-8b52-7870481c06a0)
-$(ID:e3de0112-ab12-4a33-9363-05c93a0e63ef)
-$(ID:1de70fa4-9cd0-4957-b51c-b0fba49cae84)
-$(ID:1abc4cdd-ccb9-4358-8be2-bd5d17aa1a43)
-* $(ID:23918c2f-0c8e-4478-b3e8-0856477f8951)
-$(ID:6383fc3c-63bd-4735-8fee-b6fb52e98ed8)
-* $(ID:1569c1dd-02ee-4084-a179-87e9a4efdc3c)
-$(ID:244c2bc4-aa61-4c1b-8600-7b3d548cf1fb)
-* $(ID:fd2fe740-779b-49f0-85b6-5b8abb889af1)
-$(ID:f90626e2-c02f-4e25-888b-c4149fc9b07c)
-* $(ID:cb9d0704-cca1-413e-ba82-b1ee7ddee5d1)
-$(ID:b23171ea-286f-43d3-9986-44e6f0f64ce5)
+* $(ID:0264ee60-230c-4914-a855-a0aa2f75f1de)
+$(ID:a78237c1-b9af-4754-843b-afc35c152f41)
+$(ID:13aa25e0-1359-4793-acb3-d7acb822fb71)
+$(ID:2901abea-08b2-4800-bafe-7425cf462618)
+* $(ID:b083928b-4c64-44cf-aa5c-4513da0294d7)
+$(ID:c9a2363c-e3fd-435c-be99-5996b07d5192)
+* $(ID:a27f5f41-9bb4-4074-98ae-034ec7dd1667)
+$(ID:781ddeb1-10a0-4bd6-bdc7-6ce4fb0d9454)
+* $(ID:79e6ae84-decb-42e1-98d8-0eb91d059825)
+$(ID:061caead-b28c-4412-829d-ddb82569a8ba)
+* $(ID:8cd3cb66-52dc-4f09-8d23-9c436e917c21)
+$(ID:f9733148-79ed-40ec-a177-518885c98e96)
 
 ### $(ID:b2af69e9-fc6e-44df-a8af-b7a7ecdcdb31)
 
 $(ID:96145ed5-5de0-4ee6-bd9a-07a11fb89f47)
 
-$(ID:eea4db4d-5b0f-4aee-9a6b-25b1481f17f4)
+$(ID:f2024233-b099-4174-a01a-4c93f8787150)
 
 $(ID:4ec543e0-ece0-40f8-a3ea-0d9cd7a080fb)
 $(ID:d23d8db3-fdb2-4b04-9315-74c9504ac39b)
@@ -338,7 +338,7 @@ $(ID:59c789b4-c48b-4920-b7fc-1e4e3e7db0e1)
 $(ID:21282316-0064-42f2-ad25-57b22b82d0e8)
 $(ID:a85ec2e7-c58b-4a26-a7a0-701d5c8261a2)
 
-$(ID:b6fd5db2-fe64-49b8-873a-2ed0b92ac6f2)
+$(ID:98cf8c63-c539-4aff-b46f-63bdeec86bcd)
 $(ID:39b3b900-07af-461a-bd7b-fb5ad8ad6d41)
 
 $(ID:fb89341e-c40d-4e8e-b81b-743b44dc4051)
@@ -427,11 +427,11 @@ $(ID:abb3e300-e0d8-4f64-94f1-3ad1316ec8da)
 $(ID:f426c5e5-074f-46fc-af62-5ddf087ff145)
 
 $(ID:47b039cf-ee25-47dc-a4f7-2774dc152ee2)
-$(ID:e1234c91-76f7-4326-bbff-480e6851eb54)
-$(ID:53e4fd52-df91-4d89-a6af-e7aa93626f5e)
+$(ID:07646181-1e92-4fca-aae5-844559c06ed1)
+$(ID:eac6c229-35cf-4862-92e8-6dab01f28dc5)
 $(ID:b9847f04-e107-4fa7-a0a8-871ab1e9424d)
 $(ID:c89b71cc-c221-4760-8e00-bc473763f5f0)
-$(ID:55c570fe-8e22-409f-81d1-b74b960d6cbe)
+$(ID:0430907a-960c-4a99-9bcb-52bee2adffb6)
 $(ID:08488e4a-ea12-456e-9172-923a48325e67)
 
 $(ID:86d58b94-a608-45bd-84a9-8b01bd9a43a4)
@@ -440,8 +440,8 @@ $(ID:86d58b94-a608-45bd-84a9-8b01bd9a43a4)
 $(ID:284d7c01-e016-4ab2-9ba4-81d9ae2b058a)
 $(ID:881bf5fc-dcb3-44d6-b941-660f5eda8a2e)
 $(ID:3996894c-512f-41bd-a892-c11a26a4d7f7)
-$(ID:0ad87d2d-956b-46c6-8060-cbced9c0117c)
-$(ID:0201d839-dacd-4755-af25-acc863c692e3)
+$(ID:72f8eaec-e026-498b-af09-94ca7604807a)
+$(ID:47b82bf5-bbec-40b9-a9aa-8080051e44c9)
 $(ID:6e60d402-bc0f-4238-a952-64ddcfe31ef9)
 
 $(ID:86f8c200-274e-4aac-8e68-27b8f0468114)
@@ -537,8 +537,8 @@ $(ID:18cbacc4-ec79-4fd5-a7b7-6c38becaad31)
 
 ### $(ID:6fb089aa-66ef-4595-8d40-9fb4eba0a3ac)
 
-* $(ID:cd8c149f-438d-44c4-a2dd-e1c720830307)
-$(ID:a12e19cb-3ea2-4bd7-b5a1-2504b7dfeadf)
+* $(ID:341bff05-424c-46a1-823b-89acd4ed398c)
+$(ID:8a52482b-825e-4b0e-973a-0cfe0deff5d8)
 * $(ID:9dbf5bae-e073-4f0a-b017-d899b55aa35e)
 * $(ID:8ee8e193-e3fb-4acb-8836-7330a5e3dcc3)
 * $(ID:a3ff971f-0e99-47ec-8a81-8e94d252874e)
@@ -574,8 +574,8 @@ $(ID:3536c2c2-da56-42cf-9a06-c7198242df41)
 * $(ID:ca8bcb55-21cd-44e3-92f0-94e7aee51af7)
 * $(ID:855df6a3-cafd-475d-88f7-63809b8d6254)
 * $(ID:d4f1be80-647a-4903-b2b1-c0efdfab55db)
-* $(ID:d9c47feb-8e95-42f5-a136-8abad20c3628)
-$(ID:30d8a0ad-3f7e-44e2-8ab7-2d509f3d4230)
+* $(ID:67ba4f22-4005-4c74-a820-4d363cfa942e)
+$(ID:e4c4c9fa-6cbf-4916-bd6c-1e21da92006c)
 * $(ID:adfadff1-f010-4275-ab82-d5b0c80d8b11)
 * $(ID:801c2316-5045-4913-a355-b030d086759b)
 * $(ID:1064c551-0701-4ebe-9bae-9d2ce989a2d3)
@@ -1222,7 +1222,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>`NDTTGesture, control+C`, opens the source code whose path is located under the review cursor.</source>
 </segment>
 </unit>
-<unit id="a7f50aa5-f042-4a34-af2c-84ddd4bf03a9">
+<unit id="83e11972-57c8-4c3b-83ad-01bc32039be1">
 <notes>
 <note appliesTo="source">line: 103</note>
 </notes>
@@ -1507,7 +1507,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>To add a marker message in the log, press `NDTTGesture, K`.</source>
 </segment>
 </unit>
-<unit id="ad6cdb91-bbbe-4ab1-a557-a09833c6e00a">
+<unit id="56e309e7-4e8a-4020-bdc7-d546621effc0">
 <notes>
 <note appliesTo="source">line: 149</note>
 </notes>
@@ -1515,7 +1515,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>A message as follows will be logged at INFO level:</source>
 </segment>
 </unit>
-<unit id="d54c2518-9471-4f06-87f1-b72f49478d9d">
+<unit id="20f78479-cbc8-4e5d-a381-0a2c30f19208">
 <notes>
 <note appliesTo="source">line: 150</note>
 </notes>
@@ -1937,7 +1937,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>In the log some line may refer to the source code:</source>
 </segment>
 </unit>
-<unit id="fd760ef4-012b-446b-a2a5-a80c9b1dbe41">
+<unit id="d48753d0-ba6b-4cd2-9349-feefdf97feac">
 <notes>
 <note appliesTo="source">line: 218</note>
 <note appliesTo="source">prefix: * </note>
@@ -1946,7 +1946,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>A line belonging to a traceback contains the path and the line in a file, e.g.:</source>
 </segment>
 </unit>
-<unit id="694a1d10-45dc-423c-b991-062bb55e77cf">
+<unit id="177ecfcb-4f25-4f90-9e17-8fa4f352cd0f">
 <notes>
 <note appliesTo="source">line: 219</note>
 </notes>
@@ -1954,7 +1954,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>  `  File "virtualBuffers\__init__.pyc", line 226, in _getStoryLength`</source>
 </segment>
 </unit>
-<unit id="6209bcf2-581c-46c4-9c9d-04edd851c1ed">
+<unit id="633cf153-d8f5-401b-a85e-d4e237bcdf49">
 <notes>
 <note appliesTo="source">line: 220</note>
 <note appliesTo="source">prefix: * </note>
@@ -1963,7 +1963,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>The header line of a logged message contains the function which has logged this message, e.g.:</source>
 </segment>
 </unit>
-<unit id="1075d7ff-c2b9-4dca-b6eb-ee5198b03f7b">
+<unit id="e4085057-ab5b-4cc1-859e-d2c96a4ddc06">
 <notes>
 <note appliesTo="source">line: 221</note>
 </notes>
@@ -1971,7 +1971,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>  `INFO - config.ConfigManager._loadConfig (22:45:26.145) - MainThread (16580):`</source>
 </segment>
 </unit>
-<unit id="7a68ec56-1ac8-44cf-ac63-cb3db046e4d3">
+<unit id="47c1d128-30b9-49b9-933c-83a8cb44c49a">
 <notes>
 <note appliesTo="source">line: 222</note>
 <note appliesTo="source">prefix: * </note>
@@ -1980,7 +1980,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>The content of a message logged in input help mode (logged at info level):</source>
 </segment>
 </unit>
-<unit id="16eeeeba-363d-4a90-b0e0-af8dfa73d430">
+<unit id="39c83b93-9f87-4b0e-a108-e0a6238f48f8">
 <notes>
 <note appliesTo="source">line: 223</note>
 </notes>
@@ -2029,7 +2029,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>Analysing a traceback</source>
 </segment>
 </unit>
-<unit id="0e1c39e1-f837-4193-8817-98a4d181ef70">
+<unit id="e35bbb84-9169-43ce-bad3-e3b5105afc6b">
 <notes>
 <note appliesTo="source">line: 233</note>
 </notes>
@@ -2421,7 +2421,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>`openCodeFile` function</source>
 </segment>
 </unit>
-<unit id="64cbd8c7-e8d2-4a10-b383-59e2e544b910">
+<unit id="337f17fd-7ce5-4a86-bf73-15b6495995b1">
 <notes>
 <note appliesTo="source">line: 299</note>
 </notes>
@@ -2429,7 +2429,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>In the console, you can call the following function to view the source code that defines the variable `myVar`:</source>
 </segment>
 </unit>
-<unit id="6e878ca3-4149-46ee-81ef-92f875f163f5">
+<unit id="53f0abc4-3e26-46af-a429-033012afa923">
 <notes>
 <note appliesTo="source">line: 300</note>
 </notes>
@@ -2485,7 +2485,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>Below are examples of call in NVDA's code:</source>
 </segment>
 </unit>
-<unit id="ef391513-3a7d-4210-8b52-7870481c06a0">
+<unit id="0264ee60-230c-4914-a855-a0aa2f75f1de">
 <notes>
 <note appliesTo="source">line: 312</note>
 <note appliesTo="source">prefix: * </note>
@@ -2494,7 +2494,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>View the definition of the function `speech.speech.speak`:</source>
 </segment>
 </unit>
-<unit id="e3de0112-ab12-4a33-9363-05c93a0e63ef">
+<unit id="a78237c1-b9af-4754-843b-afc35c152f41">
 <notes>
 <note appliesTo="source">line: 313</note>
 </notes>
@@ -2502,7 +2502,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>  `openCodeFile(speech.speech.speak)`</source>
 </segment>
 </unit>
-<unit id="1de70fa4-9cd0-4957-b51c-b0fba49cae84">
+<unit id="13aa25e0-1359-4793-acb3-d7acb822fb71">
 <notes>
 <note appliesTo="source">line: 314</note>
 </notes>
@@ -2510,7 +2510,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>  or with the name passed as parameter:</source>
 </segment>
 </unit>
-<unit id="1abc4cdd-ccb9-4358-8be2-bd5d17aa1a43">
+<unit id="2901abea-08b2-4800-bafe-7425cf462618">
 <notes>
 <note appliesTo="source">line: 315</note>
 </notes>
@@ -2518,7 +2518,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>  `openCodeFile("speech.speech.speak")`</source>
 </segment>
 </unit>
-<unit id="23918c2f-0c8e-4478-b3e8-0856477f8951">
+<unit id="b083928b-4c64-44cf-aa5c-4513da0294d7">
 <notes>
 <note appliesTo="source">line: 316</note>
 <note appliesTo="source">prefix: * </note>
@@ -2527,7 +2527,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>View the definition of the class `TextInfo`:</source>
 </segment>
 </unit>
-<unit id="6383fc3c-63bd-4735-8fee-b6fb52e98ed8">
+<unit id="c9a2363c-e3fd-435c-be99-5996b07d5192">
 <notes>
 <note appliesTo="source">line: 317</note>
 </notes>
@@ -2535,7 +2535,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>  `openCodeFile(textInfos.TextInfo)`</source>
 </segment>
 </unit>
-<unit id="1569c1dd-02ee-4084-a179-87e9a4efdc3c">
+<unit id="a27f5f41-9bb4-4074-98ae-034ec7dd1667">
 <notes>
 <note appliesTo="source">line: 318</note>
 <note appliesTo="source">prefix: * </note>
@@ -2544,7 +2544,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>View the definition of the method `copyToClipboard` of the class `TextInfo`:</source>
 </segment>
 </unit>
-<unit id="244c2bc4-aa61-4c1b-8600-7b3d548cf1fb">
+<unit id="781ddeb1-10a0-4bd6-bdc7-6ce4fb0d9454">
 <notes>
 <note appliesTo="source">line: 319</note>
 </notes>
@@ -2552,7 +2552,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>  `openCodeFile(textInfos.TextInfo.copyToClipboard)`</source>
 </segment>
 </unit>
-<unit id="fd2fe740-779b-49f0-85b6-5b8abb889af1">
+<unit id="79e6ae84-decb-42e1-98d8-0eb91d059825">
 <notes>
 <note appliesTo="source">line: 320</note>
 <note appliesTo="source">prefix: * </note>
@@ -2561,7 +2561,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>View the definition of the class of the focused object:</source>
 </segment>
 </unit>
-<unit id="f90626e2-c02f-4e25-888b-c4149fc9b07c">
+<unit id="061caead-b28c-4412-829d-ddb82569a8ba">
 <notes>
 <note appliesTo="source">line: 321</note>
 </notes>
@@ -2569,7 +2569,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>  `openCodeFile(focus)`</source>
 </segment>
 </unit>
-<unit id="cb9d0704-cca1-413e-ba82-b1ee7ddee5d1">
+<unit id="8cd3cb66-52dc-4f09-8d23-9c436e917c21">
 <notes>
 <note appliesTo="source">line: 322</note>
 <note appliesTo="source">prefix: * </note>
@@ -2578,7 +2578,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>Open the file `api.py` defining the module `api`:</source>
 </segment>
 </unit>
-<unit id="b23171ea-286f-43d3-9986-44e6f0f64ce5">
+<unit id="f9733148-79ed-40ec-a177-518885c98e96">
 <notes>
 <note appliesTo="source">line: 323</note>
 </notes>
@@ -2603,7 +2603,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>You can define a custom script which will be executed in the Python console's namespace when it is first opened.</source>
 </segment>
 </unit>
-<unit id="eea4db4d-5b0f-4aee-9a6b-25b1481f17f4">
+<unit id="f2024233-b099-4174-a01a-4c93f8787150">
 <notes>
 <note appliesTo="source">line: 329</note>
 </notes>
@@ -2659,7 +2659,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>    ocf = openCodeFile</source>
 </segment>
 </unit>
-<unit id="b6fd5db2-fe64-49b8-873a-2ed0b92ac6f2">
+<unit id="98cf8c63-c539-4aff-b46f-63bdeec86bcd">
 <notes>
 <note appliesTo="source">line: 338</note>
 </notes>
@@ -3146,7 +3146,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>To use them, you first need to configure the command that will be called to open the file in your favorite editor.</source>
 </segment>
 </unit>
-<unit id="e1234c91-76f7-4326-bbff-480e6851eb54">
+<unit id="07646181-1e92-4fca-aae5-844559c06ed1">
 <notes>
 <note appliesTo="source">line: 427</note>
 </notes>
@@ -3154,7 +3154,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>The command should be of the form:</source>
 </segment>
 </unit>
-<unit id="53e4fd52-df91-4d89-a6af-e7aa93626f5e">
+<unit id="eac6c229-35cf-4862-92e8-6dab01f28dc5">
 <notes>
 <note appliesTo="source">line: 428</note>
 </notes>
@@ -3178,7 +3178,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>`{path}` will be replaced by the full path of the file to open and `{line}` by the line number where you want the cursor to be set.</source>
 </segment>
 </unit>
-<unit id="55c570fe-8e22-409f-81d1-b74b960d6cbe">
+<unit id="0430907a-960c-4a99-9bcb-52bee2adffb6">
 <notes>
 <note appliesTo="source">line: 431</note>
 </notes>
@@ -3235,7 +3235,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>Thus you may specify here an alternate location where the corresponding source file will be found, e.g. the place where you have cloned NVDA source files, so that a source file can be opened anyway.</source>
 </segment>
 </unit>
-<unit id="0ad87d2d-956b-46c6-8060-cbced9c0117c">
+<unit id="72f8eaec-e026-498b-af09-94ca7604807a">
 <notes>
 <note appliesTo="source">line: 440</note>
 </notes>
@@ -3243,7 +3243,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>The path should be such as:</source>
 </segment>
 </unit>
-<unit id="0201d839-dacd-4755-af25-acc863c692e3">
+<unit id="47b82bf5-bbec-40b9-a9aa-8080051e44c9">
 <notes>
 <note appliesTo="source">line: 441</note>
 </notes>
@@ -3839,7 +3839,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>Version 7.0</source>
 </segment>
 </unit>
-<unit id="cd8c149f-438d-44c4-a2dd-e1c720830307">
+<unit id="341bff05-424c-46a1-823b-89acd4ed398c">
 <notes>
 <note appliesTo="source">line: 537</note>
 <note appliesTo="source">prefix: * </note>
@@ -3848,7 +3848,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>Layered commands have been introduced; the entry point is `NVDA+X`.</source>
 </segment>
 </unit>
-<unit id="a12e19cb-3ea2-4bd7-b5a1-2504b7dfeadf">
+<unit id="8a52482b-825e-4b0e-973a-0cfe0deff5d8">
 <notes>
 <note appliesTo="source">line: 538</note>
 </notes>
@@ -4080,7 +4080,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>New log quick navigation commands have been added to jump to input and to speech messages.</source>
 </segment>
 </unit>
-<unit id="d9c47feb-8e95-42f5-a136-8abad20c3628">
+<unit id="67ba4f22-4005-4c74-a820-4d363cfa942e">
 <notes>
 <note appliesTo="source">line: 574</note>
 <note appliesTo="source">prefix: * </note>
@@ -4089,7 +4089,7 @@ $(ID:2b1e7639-af8c-4ed2-ae08-08ff40bbf85a)
 <source>A new command allow to place a marker in the log; and specific quick navigation commands in log reading mode allow to jump to them.</source>
 </segment>
 </unit>
-<unit id="30d8a0ad-3f7e-44e2-8ab7-2d509f3d4230">
+<unit id="e4c4c9fa-6cbf-4916-bd6c-1e21da92006c">
 <notes>
 <note appliesTo="source">line: 575</note>
 </notes>
